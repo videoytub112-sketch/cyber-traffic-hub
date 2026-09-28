@@ -71,8 +71,7 @@
             <div class="vip-badge">👑 VIP СЛОТ</div>
             <div class="vip-title" id="lblVipTitle">Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК</div>
             <img src="" id="imgVipBanner" class="vip-banner-img" alt="VIP Реклама">
-            <!-- Умный обработчик ссылки под мобильные телефоны -->
-            <a href="vk://://vk.com" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
+            <button onclick="goToVkProfile()" id="btnVipLink" class="vk-btn">Написать админу в ВК</button>
         </div>
 
         <!-- РЕКЛАМНЫЙ ЧАТ ОНЛАЙН -->
@@ -101,6 +100,25 @@
 <script>
     const randomUserId = Math.floor(Math.random() * 899) + 100;
     const currentNick = "Гость #" + randomUserId;
+
+    // Умный принудительный редирект на вашу страницу ВК для любых мобилок
+    function goToVkProfile() {
+        const savedUrl = localStorage.getItem('vip_url') || '';
+        
+        // Если в админке вы ничего не настраивали — летим строго на вашу страницу idkirik99
+        if (!savedUrl) {
+            // Пробуем открыть напрямую через установленное приложение ВК на телефоне
+            window.location.href = "vk://://vk.com";
+            
+            // Если приложения нет, через секунду открываем чистую мобильную веб-версию
+            setTimeout(function() {
+                window.location.href = "https://://vk.com";
+            }, 500);
+        } else {
+            // Если в админке вы вставили чужую ссылку для рекламодателя
+            window.location.href = savedUrl;
+        }
+    }
 
     function linkifyText(text) {
         const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]|\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|\b(?:[A-Z0-9-]+\.)+(?:com|ru|net|org|biz|info|cc|me|tv|io|co|bot|xyz|shop|online|site|club|link)(w*)\/?(?:[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])?)/gi;
@@ -135,6 +153,7 @@
         const text = textInput.value.trim();
         if(!text) return alert("Введите текст рекламы!");
         
+        const box = document.getElementById('chatBox');
         let now = new Date();
         const timeStr = (now.getHours()<10?'0':'')+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
 
@@ -148,24 +167,3 @@
         renderChatMessages();
     }
 
-    function loadLiveBanner(elementId, htmlScript) {
-        const zone = document.getElementById(elementId);
-        if (!zone || !htmlScript) return;
-        zone.innerHTML = '';
-        const temp = document.createElement('div');
-        temp.innerHTML = htmlScript;
-        Array.from(temp.childNodes).forEach(node => {
-            if (node.tagName === 'SCRIPT') {
-                const sc = document.createElement('script');
-                Array.from(node.attributes).forEach(attr => sc.setAttribute(attr.name, attr.value));
-                sc.innerHTML = node.innerHTML;
-                zone.appendChild(sc);
-            } else {
-                zone.appendChild(node.cloneNode(true));
-            }
-        });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        renderChatMessages();
-        
