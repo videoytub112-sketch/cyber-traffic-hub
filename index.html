@@ -32,101 +32,144 @@
             gap: 18px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(102,252,241,0.05);
         }
+
         .portal-header { text-align: center; cursor: pointer; user-select: none; }
         .portal-header h1 { font-size: 24px; color: #66fcf1; text-shadow: 0 0 15px #66fcf1; font-weight: 900; }
         .portal-header p { font-size: 10px; color: #94a1c2; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
         .click-hint { font-size: 10px; color: #ffb167; height: 12px; margin-top: 4px; }
 
-        /* VIP БЛОК АДМИНИСТРАТОРА */
-        .vip-admin-block {
-            width: 100%;
+        /* ===== АДМИН-ПАНЕЛЬ ===== */
+        .admin-panel {
+            display: none;
+            flex-direction: column;
+            gap: 14px;
             background: linear-gradient(135deg, #16192e 0%, #0b0c16 100%);
             border: 2px solid #ffb167;
             border-radius: 18px;
             padding: 14px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            display: none;
-            flex-direction: column;
-            gap: 12px;
-            align-items: center;
             box-shadow: 0 0 20px rgba(255,177,103,0.25);
+            max-height: 75vh;
+            overflow-y: auto;
         }
-        .vip-admin-block.visible { display: flex; }
-        .vip-badge {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: #ffb167;
-            color: #0b0c10;
-            font-size: 9px;
+        .admin-panel.visible { display: flex; }
+        .admin-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13px;
             font-weight: bold;
-            padding: 3px 10px;
-            border-bottom-right-radius: 12px;
-        }
-        .admin-status {
-            font-size: 14px;
             color: #ffb167;
-            font-weight: 600;
-            margin-top: 8px;
+            letter-spacing: 1px;
         }
-        .action-btn {
-            width: 100%;
+        .admin-section {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
             padding: 12px;
+            background: rgba(255,255,255,0.04);
             border-radius: 12px;
-            border: none;
-            background: #ffb167;
-            color: #0b0c10;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.2s, opacity 0.2s;
         }
-        .action-btn:active { transform: scale(0.98); }
-        
-        /* КНОПКА ВЫХОДА ИЗ АДМИНКИ — NEW */
+        .section-title { font-size: 11px; color: #94a1c2; text-transform: uppercase; letter-spacing: 1px; }
+        .admin-input, .admin-textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid rgba(69,243,255,0.3);
+            background: rgba(255,255,255,0.06);
+            color: #fff;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+        }
+        .admin-input:focus, .admin-textarea:focus { border-color: #66fcf1; }
+        .admin-textarea { min-height: 90px; resize: vertical; }
+        .admin-list { display: flex; flex-direction: column; gap: 6px; }
+        .admin-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 12px;
+        }
+        .admin-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .del-btn {
+            flex-shrink: 0;
+            background: transparent;
+            border: 1px solid rgba(255,80,80,0.5);
+            color: #ff8080;
+            border-radius: 7px;
+            padding: 4px 9px;
+            font-size: 11px;
+            cursor: pointer;
+        }
+        .del-btn:hover { background: rgba(255,80,80,0.15); }
+        .empty { font-size: 11px; color: #5a6478; text-align: center; padding: 4px; }
+        .danger-btn {
+            width: 100%;
+            padding: 9px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,80,80,0.5);
+            background: transparent;
+            color: #ff8080;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .danger-btn:hover { background: rgba(255,80,80,0.15); }
         .exit-btn {
-            padding: 6px 12px;
+            padding: 5px 12px;
             border-radius: 8px;
             border: 1px solid rgba(255,255,255,0.3);
             background: transparent;
             color: #94a1c2;
             font-size: 11px;
             cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 6px;
         }
-        .exit-btn:hover {
-            border-color: #ffb167;
-            color: #ffb167;
-            background: rgba(255,177,103,0.1);
-        }
+        .exit-btn:hover { border-color: #ffb167; color: #ffb167; }
 
-        .traffic-stats {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            width: 100%;
-        }
-        .stat-card {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 10px;
-            border-radius: 12px;
-            text-align: center;
-        }
-        .stat-card span { display: block; font-size: 12px; color: #94a1c2; }
-        .stat-card strong { font-size: 16px; color: #66fcf1; }
+        /* ===== БАННЕРЫ ===== */
+        .banner-zone { display: flex; flex-direction: column; gap: 12px; }
+        .banner-item { text-align: center; }
+        .banner-title { font-size: 10px; color: #94a1c2; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .banner-holder { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
+        .banner-holder img { max-width: 100%; height: auto; }
 
-        /* ЧАТ */
-        .chat-block {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
+        /* ===== БЛОКИ ССЫЛОК ===== */
+        .link-zone { display: flex; flex-direction: column; gap: 12px; }
+        .link-block {
+            background: rgba(255,255,255,0.04);
+            border-radius: 14px;
+            padding: 12px;
         }
+        .link-block-title {
+            font-size: 11px;
+            color: #66fcf1;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .link-list { display: flex; flex-direction: column; gap: 6px; }
+        .link-item {
+            display: block;
+            padding: 8px 10px;
+            border-radius: 8px;
+            background: rgba(102,252,241,0.08);
+            border-left: 3px solid #66fcf1;
+            color: #d6f7f4;
+            text-decoration: none;
+            font-size: 13px;
+            word-break: break-word;
+            transition: background 0.2s;
+        }
+        .link-item:hover { background: rgba(102,252,241,0.18); }
+
+        /* ===== ЧАТ ===== */
+        .chat-block { width: 100%; display: flex; flex-direction: column; gap: 10px; }
         .chat-title { font-size: 11px; color: #94a1c2; text-transform: uppercase; letter-spacing: 1px; }
         .chat-messages {
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255,255,255,0.04);
             border-radius: 14px;
             padding: 10px;
             height: 180px;
@@ -136,7 +179,7 @@
             gap: 8px;
         }
         .msg {
-            background: rgba(102, 252, 241, 0.12);
+            background: rgba(102,252,241,0.12);
             border-left: 3px solid #66fcf1;
             border-radius: 8px;
             padding: 6px 10px;
@@ -149,8 +192,8 @@
             flex: 1;
             padding: 10px 12px;
             border-radius: 12px;
-            border: 1px solid rgba(69, 243, 255, 0.3);
-            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(69,243,255,0.3);
+            background: rgba(255,255,255,0.06);
             color: #fff;
             font-size: 14px;
             outline: none;
@@ -178,29 +221,41 @@
             <div class="click-hint" id="clickHint"></div>
         </header>
 
-        <!-- VIP ADMIN SECTION -->
-        <div class="vip-admin-block" id="vipAdmin">
-            <div class="vip-badge">ADMIN ACCESS</div>
-            <div class="admin-status">CONTROL PANEL ACTIVE</div>
-
-            <div class="traffic-stats">
-                <div class="stat-card">
-                    <span>Traffic</span>
-                    <strong id="trafficValue">1.2k/s</strong>
-                </div>
-                <div class="stat-card">
-                    <span>Nodes</span>
-                    <strong>42/42</strong>
-                </div>
+        <!-- ===== АДМИН-ПАНЕЛЬ ===== -->
+        <div class="admin-panel" id="adminPanel">
+            <div class="admin-head">
+                <span>ADMIN PANEL</span>
+                <button class="exit-btn" id="exitAdminBtn">Выйти</button>
             </div>
 
-            <button class="action-btn" onclick="manageTraffic()">MANAGE TRAFFIC</button>
+            <div class="admin-section">
+                <div class="section-title">Баннеры (код linkslot и др.)</div>
+                <input type="text" id="bannerTitle" class="admin-input" placeholder="Название (необязательно)">
+                <textarea id="bannerCode" class="admin-textarea"
+                    placeholder='Вставьте код баннера, например:&#10;&lt;div id="linkslot_172641"&gt;&lt;/div&gt;&lt;script src="//linkslot.ru/bancode.php?id=172641" async&gt;&lt;/script&gt;'></textarea>
+                <button class="action-btn" id="addBannerBtn" style="width:100%;padding:12px;border-radius:12px;border:none;background:#ffb167;color:#0b0c10;font-weight:bold;cursor:pointer;">Добавить баннер</button>
+                <div class="admin-list" id="bannerList"></div>
+            </div>
 
-            <!-- КНОПКА ВЫХОДА — NEW -->
-            <button class="exit-btn" id="exitAdminBtn">EXIT ADMIN</button>
+            <div class="admin-section">
+                <div class="section-title">Блок ссылок</div>
+                <input type="text" id="linkBlockTitle" class="admin-input" placeholder="Название блока (например, Партнёры)">
+                <textarea id="linkBlockData" class="admin-textarea"
+                    placeholder="Ссылки — по одной в строке, формат:&#10;Название | https://site.ru&#10;Второй сайт | https://site2.ru"></textarea>
+                <button class="action-btn" id="addLinkBlockBtn" style="width:100%;padding:12px;border-radius:12px;border:none;background:#ffb167;color:#0b0c10;font-weight:bold;cursor:pointer;">Добавить блок ссылок</button>
+                <div class="admin-list" id="linkBlockList"></div>
+            </div>
+
+            <button class="danger-btn" id="clearAllBtn">Удалить всё</button>
         </div>
 
-        <!-- ЧАТ -->
+        <!-- ===== БАННЕРЫ ===== -->
+        <div class="banner-zone" id="bannerZone"></div>
+
+        <!-- ===== БЛОКИ ССЫЛОК ===== -->
+        <div class="link-zone" id="linkZone"></div>
+
+        <!-- ===== ЧАТ ===== -->
         <div class="chat-block">
             <div class="chat-title">Chat</div>
             <div class="chat-messages" id="chatMessages"></div>
@@ -216,104 +271,248 @@
     </div>
 
     <script>
-        /* ===== ВХОД В АДМИНКУ ПО 5 КЛИКАМ ===== */
+    (function () {
+        'use strict';
+
+        /* ---------- ХРАНИЛИЩЕ ---------- */
+        const KEYS = { banners: 'mx_banners', links: 'mx_links', chat: 'mx_chat' };
+
+        function load(key, def) {
+            try { const v = JSON.parse(localStorage.getItem(key)); return v == null ? def : v; }
+            catch (e) { return def; }
+        }
+        function save(key, val) {
+            try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
+        }
+        const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+        let banners = load(KEYS.banners, []);
+        let linkBlocks = load(KEYS.links, []);
+        let chat = load(KEYS.chat, []);
+
+        /* ---------- ВСТАВКА КОДА С ВЫПОЛНЕНИЕМ <script> ---------- */
+        function injectCode(container, code) {
+            container.innerHTML = '';
+            const tpl = document.createElement('template');
+            tpl.innerHTML = code;
+            const nodes = Array.from(tpl.content.childNodes);
+            nodes.forEach(node => {
+                if (node.nodeType === 1 && node.tagName === 'SCRIPT') {
+                    const s = document.createElement('script');
+                    for (const a of Array.from(node.attributes)) s.setAttribute(a.name, a.value);
+                    s.textContent = node.textContent;
+                    container.appendChild(s);
+                } else {
+                    container.appendChild(node);
+                }
+            });
+        }
+
+        /* ---------- РЕНДЕР БАННЕРОВ ---------- */
+        const bannerZone = document.getElementById('bannerZone');
+        function renderBanners() {
+            bannerZone.innerHTML = '';
+            banners.forEach(b => {
+                const item = document.createElement('div');
+                item.className = 'banner-item';
+                if (b.title) {
+                    const t = document.createElement('div');
+                    t.className = 'banner-title';
+                    t.textContent = b.title;
+                    item.appendChild(t);
+                }
+                const holder = document.createElement('div');
+                holder.className = 'banner-holder';
+                item.appendChild(holder);
+                bannerZone.appendChild(item);
+                injectCode(holder, b.code);
+            });
+        }
+
+        /* ---------- РЕНДЕР БЛОКОВ ССЫЛОК ---------- */
+        const linkZone = document.getElementById('linkZone');
+        function renderLinks() {
+            linkZone.innerHTML = '';
+            linkBlocks.forEach(block => {
+                const box = document.createElement('div');
+                box.className = 'link-block';
+                if (block.title) {
+                    const t = document.createElement('div');
+                    t.className = 'link-block-title';
+                    t.textContent = block.title;
+                    box.appendChild(t);
+                }
+                const list = document.createElement('div');
+                list.className = 'link-list';
+                (block.links || []).forEach(l => {
+                    const a = document.createElement('a');
+                    a.className = 'link-item';
+                    a.href = l.url;
+                    a.target = '_blank';
+                    a.rel = 'noopener nofollow';
+                    a.textContent = l.name;
+                    list.appendChild(a);
+                });
+                box.appendChild(list);
+                linkZone.appendChild(box);
+            });
+        }
+
+        function parseLinks(text) {
+            return text.split('\n')
+                .map(s => s.trim()).filter(Boolean)
+                .map(line => {
+                    const parts = line.split('|');
+                    let name = (parts[0] || '').trim();
+                    let url = (parts[1] || '').trim();
+                    if (!url && /^https?:\/\//i.test(name)) { url = name; }
+                    if (url && !/^https?:\/\//i.test(url) && !/^\/\//.test(url)) url = 'https://' + url;
+                    return { name: name || url, url: url };
+                })
+                .filter(l => l.url);
+        }
+
+        /* ---------- СПИСКИ В АДМИНКЕ ---------- */
+        const bannerList = document.getElementById('bannerList');
+        const linkBlockList = document.getElementById('linkBlockList');
+
+        function renderAdminLists() {
+            bannerList.innerHTML = '';
+            if (!banners.length) {
+                bannerList.innerHTML = '<div class="empty">Пока нет баннеров</div>';
+            }
+            banners.forEach(b => {
+                const row = document.createElement('div');
+                row.className = 'admin-item';
+                const label = document.createElement('span');
+                label.textContent = b.title || 'Баннер';
+                const del = document.createElement('button');
+                del.className = 'del-btn';
+                del.textContent = 'Удалить';
+                del.onclick = () => {
+                    banners = banners.filter(x => x.id !== b.id);
+                    save(KEYS.banners, banners);
+                    renderBanners(); renderAdminLists();
+                };
+                row.appendChild(label); row.appendChild(del);
+                bannerList.appendChild(row);
+            });
+
+            linkBlockList.innerHTML = '';
+            if (!linkBlocks.length) {
+                linkBlockList.innerHTML = '<div class="empty">Пока нет блоков ссылок</div>';
+            }
+            linkBlocks.forEach(block => {
+                const row = document.createElement('div');
+                row.className = 'admin-item';
+                const label = document.createElement('span');
+                label.textContent = (block.title || 'Блок') + ' (' + (block.links || []).length + ')';
+                const del = document.createElement('button');
+                del.className = 'del-btn';
+                del.textContent = 'Удалить';
+                del.onclick = () => {
+                    linkBlocks = linkBlocks.filter(x => x.id !== block.id);
+                    save(KEYS.links, linkBlocks);
+                    renderLinks(); renderAdminLists();
+                };
+                row.appendChild(label); row.appendChild(del);
+                linkBlockList.appendChild(row);
+            });
+        }
+
+        /* ---------- ДОБАВЛЕНИЕ ---------- */
+        document.getElementById('addBannerBtn').onclick = () => {
+            const title = document.getElementById('bannerTitle').value.trim();
+            const code = document.getElementById('bannerCode').value.trim();
+            if (!code) { alert('Вставьте код баннера'); return; }
+            banners.push({ id: uid(), title: title, code: code });
+            save(KEYS.banners, banners);
+            document.getElementById('bannerTitle').value = '';
+            document.getElementById('bannerCode').value = '';
+            renderBanners(); renderAdminLists();
+        };
+
+        document.getElementById('addLinkBlockBtn').onclick = () => {
+            const title = document.getElementById('linkBlockTitle').value.trim();
+            const raw = document.getElementById('linkBlockData').value.trim();
+            if (!raw) { alert('Добавьте хотя бы одну ссылку'); return; }
+            const links = parseLinks(raw);
+            if (!links.length) { alert('Не удалось разобрать ссылки. Формат: Название | https://site.ru'); return; }
+            linkBlocks.push({ id: uid(), title: title, links: links });
+            save(KEYS.links, linkBlocks);
+            document.getElementById('linkBlockTitle').value = '';
+            document.getElementById('linkBlockData').value = '';
+            renderLinks(); renderAdminLists();
+        };
+
+        document.getElementById('clearAllBtn').onclick = () => {
+            if (confirm('Удалить все баннеры, блоки ссылок и сообщения чата?')) {
+                banners = []; linkBlocks = []; chat = [];
+                save(KEYS.banners, banners); save(KEYS.links, linkBlocks); save(KEYS.chat, chat);
+                renderBanners(); renderLinks(); renderAdminLists(); renderChat();
+            }
+        };
+
+        /* ---------- ВХОД/ВЫХОД ИЗ АДМИНКИ ---------- */
         const header = document.getElementById('portalHeader');
-        const vipAdmin = document.getElementById('vipAdmin');
+        const adminPanel = document.getElementById('adminPanel');
         const clickHint = document.getElementById('clickHint');
-        let clickCount = 0;
-        let resetTimer = null;
+        let clickCount = 0, resetTimer = null;
 
         header.addEventListener('click', () => {
             clickCount++;
             clearTimeout(resetTimer);
-            resetTimer = setTimeout(() => {
-                clickCount = 0;
-                clickHint.textContent = '';
-            }, 1500);
-
+            resetTimer = setTimeout(() => { clickCount = 0; clickHint.textContent = ''; }, 1500);
             if (clickCount < 5) {
-                clickHint.textContent = `Кликов: ${clickCount}/5`;
+                clickHint.textContent = 'Кликов: ' + clickCount + '/5';
             } else {
-                clickCount = 0;
-                clickHint.textContent = '';
-                vipAdmin.classList.add('visible');
+                clickCount = 0; clickHint.textContent = '';
+                adminPanel.classList.add('visible');
             }
         });
 
-        /* ===== ВЫХОД ИЗ АДМИНКИ — NEW ===== */
-        const exitAdminBtn = document.getElementById('exitAdminBtn');
-        exitAdminBtn.addEventListener('click', () => {
-            vipAdmin.classList.remove('visible');
-        });
+        document.getElementById('exitAdminBtn').onclick = () => adminPanel.classList.remove('visible');
 
-        /* ===== ИМИТАЦИЯ ТРАФИКА ===== */
-        let traffic = 1200;
-        const trafficEl = document.getElementById('trafficValue');
-        setInterval(() => {
-            traffic += Math.floor(Math.random() * 11 - 5);
-            if (traffic < 0) traffic = 0;
-            trafficEl.textContent = (traffic / 1000).toFixed(1) + 'k/s';
-        }, 2000);
-
-        function manageTraffic() {
-            alert('Управление трафиком: демо-режим.');
-        }
-
-        /* ===== ЧАТ С СОХРАНЕНИЕМ В localStorage ===== */
-        const STORAGE_KEY = 'matrix_chat_messages';
+        /* ---------- ЧАТ С СОХРАНЕНИЕМ ---------- */
         const chatMessages = document.getElementById('chatMessages');
         const chatInput = document.getElementById('chatInput');
         const chatSend = document.getElementById('chatSend');
 
-        function renderMessage(text, time) {
+        function appendMsg(text, time, scroll) {
             const el = document.createElement('div');
             el.className = 'msg';
-            el.dataset.time = time;
-            const textEl = document.createElement('span');
-            textEl.className = 'msg-text';
-            textEl.textContent = text;
-            const timeEl = document.createElement('span');
-            timeEl.className = 'msg-time';
-            timeEl.textContent = time;
-            el.appendChild(textEl);
-            el.appendChild(timeEl);
+            const t = document.createElement('span');
+            t.className = 'msg-text'; t.textContent = text;
+            const tm = document.createElement('span');
+            tm.className = 'msg-time'; tm.textContent = time;
+            el.appendChild(t); el.appendChild(tm);
             chatMessages.appendChild(el);
+            if (scroll !== false) chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        function renderChat() {
+            chatMessages.innerHTML = '';
+            chat.forEach(m => appendMsg(m.text, m.time, false));
             chatMessages.scrollTop = chatMessages.scrollHeight;
         }
-
-        function persist() {
-            const msgs = [...chatMessages.querySelectorAll('.msg')].map(el => ({
-                text: el.querySelector('.msg-text').textContent,
-                time: el.dataset.time
-            }));
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(msgs));
-        }
-
-        function loadMessages() {
-            try {
-                const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-                saved.forEach(m => renderMessage(m.text, m.time));
-            } catch (e) {
-                console.warn('Не удалось загрузить сообщения', e);
-            }
-        }
-
         function sendMessage() {
             const text = chatInput.value.trim();
             if (!text) return;
             const time = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-            renderMessage(text, time);
-            persist();
+            chat.push({ text: text, time: time });
+            save(KEYS.chat, chat);
+            appendMsg(text, time);
             chatInput.value = '';
             chatInput.focus();
         }
+        chatSend.onclick = sendMessage;
+        chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
 
-        chatSend.addEventListener('click', sendMessage);
-        chatInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-
-        loadMessages();
+        /* ---------- СТАРТ ---------- */
+        renderBanners();
+        renderLinks();
+        renderAdminLists();
+        renderChat();
+    })();
     </script>
 
 </body>
