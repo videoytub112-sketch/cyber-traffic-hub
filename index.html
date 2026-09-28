@@ -20,7 +20,7 @@
         body {
             background: radial-gradient(circle at 50% 0%, #0a1120 0%, #000000 100%);
             color: #fff;
-            font-family: 'Courier New', Courier, monospace; /* Шрифт как в матрице */
+            font-family: 'Courier New', Courier, monospace;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -29,7 +29,6 @@
             position: relative;
         }
 
-        /* Анимация фона */
         .matrix-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -155,7 +154,7 @@
             transform: translate(-50%, -50%);
         }
 
-        /* --- ПАРТНЕРСКИЕ БЛОКИ (СТАТИЧНЫЕ ДЛЯ ПОСЕТИТЕЛЯ) --- */
+        /* --- ПАРТНЕРСКИЕ БЛОКИ --- */
         .partners-section {
             margin-bottom: 20px;
         }
@@ -176,7 +175,7 @@
             margin-bottom: 8px;
             font-size: 12px;
             color: #fff;
-            cursor: default; /* Важно: не курсор руки, чтобы не было ощущения клика */
+            cursor: default;
         }
         .partner-block:hover {
             background: rgba(255, 255, 255, 0.06);
@@ -255,8 +254,34 @@
             cursor: pointer;
         }
 
-        /* --- АДМИНКА (СКРЫТАЯ) --- */
-        .admin-overlay {
+        /* --- КНОПКА ВЫЗОВА АДМИНКИ --- */
+        .admin-trigger-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--accent-cyan);
+            cursor: pointer;
+            z-index: 100;
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+            transition: transform 0.2s, background 0.2s;
+            backdrop-filter: blur(5px);
+        }
+        .admin-trigger-btn:hover {
+            transform: scale(1.1);
+            background: rgba(0, 242, 254, 0.1);
+        }
+
+        /* --- ОВЕРЛЕИ (ПОП-АПЫ) --- */
+        .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.95);
@@ -265,8 +290,16 @@
             justify-content: center;
             align-items: center;
             backdrop-filter: blur(10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
         }
-        .login-form, .main-admin-panel {
+        .overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .card {
             background: #0f111d;
             border: 1px solid var(--accent-orange);
             padding: 30px;
@@ -275,6 +308,7 @@
             width: 100%;
             max-width: 400px;
         }
+        
         .login-input {
             width: 100%;
             padding: 12px;
@@ -284,8 +318,9 @@
             background: #000;
             color: #fff;
             text-align: center;
+            font-size: 16px;
         }
-        .btn-admin {
+        .btn-action {
             width: 100%;
             padding: 12px;
             background: var(--accent-orange);
@@ -294,6 +329,7 @@
             border-radius: 8px;
             font-weight: bold;
             cursor: pointer;
+            font-size: 16px;
         }
         
         /* Стили для списка блоков в админке */
@@ -322,27 +358,6 @@
             border-radius: 4px;
             cursor: pointer;
             font-size: 10px;
-        }
-
-        /* Кнопка входа в админку (для отладки, если нужно) */
-        .debug-admin-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid var(--accent-cyan);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--accent-cyan);
-            cursor: pointer;
-            z-index: 999;
-            font-size: 16px;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
-            display: none; /* Скрыта по умолчанию, чтобы не палить админку */
         }
     </style>
 </head>
@@ -376,7 +391,7 @@
             </div>
         </div>
 
-        <!-- ПАРТНЕРСКИЕ БЛОКИ (ДЛЯ ПОСЕТИТЕЛЯ) -->
+        <!-- ПАРТНЕРСКИЕ БЛОКИ -->
         <div class="partners-section">
             <div class="section-title">
                 Приобрести ссылку на месяц можно у админа
@@ -402,38 +417,41 @@
         </div>
     </div>
 
-    <!-- АДМИНКА: ЭКРАН ВХОДА -->
-    <div class="admin-overlay" id="loginOverlay">
-        <div class="login-form">
+    <!-- Кнопка вызова админки -->
+    <div class="admin-trigger-btn" id="adminTriggerBtn" title="Админ-панель">🔐</div>
+
+    <!-- АДМИНКА: ЭКРАН ВХОДА (скрыт по умолчанию) -->
+    <div class="overlay" id="loginOverlay">
+        <div class="card">
             <h2 style="color:var(--accent-cyan); margin-bottom:20px;">Вход в админку</h2>
             <input type="password" id="adminPassInput" class="login-input" placeholder="Введите пароль">
-            <button class="btn-admin" onclick="checkAdminLogin()">Войти</button>
+            <button class="btn-action" onclick="checkAdminLogin()">Войти</button>
             <p style="margin-top:15px; font-size:10px; color:#666;">Пароль по умолчанию: admin123</p>
         </div>
     </div>
 
-    <!-- АДМИНКА: ПАНЕЛЬ УПРАВЛЕНИЯ -->
-    <div class="admin-overlay" id="adminPanelOverlay" style="display:none;">
-        <div class="main-admin-panel">
+    <!-- АДМИНКА: ПАНЕЛЬ УПРАВЛЕНИЯ (скрыта по умолчанию) -->
+    <div class="overlay" id="adminPanelOverlay">
+        <div class="card" style="max-width: 500px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
                 <h2 style="color:var(--accent-cyan);">Панель администратора</h2>
-                <button class="btn-admin" style="width:auto; padding:5px 15px; font-size:12px;" onclick="logoutAdmin()">Выйти</button>
+                <button class="btn-action" style="width:auto; padding:5px 15px; font-size:12px;" onclick="logoutAdmin()">Выйти</button>
             </div>
 
             <!-- Управление Стримом -->
             <div style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:15px;">
                 <h3 style="color:#fff; margin-bottom:10px;">Управление стримом / Баннером</h3>
                 <textarea id="streamCodeInput" class="login-input" rows="4" placeholder="Вставьте код (linkslot, iframe и т.д.)"></textarea>
-                <button class="btn-admin" onclick="saveStreamCode()">Опубликовать в стриме</button>
+                <button class="btn-action" onclick="saveStreamCode()">Опубликовать в стриме</button>
             </div>
 
-            <!-- Управление Партнерскими блоками (до 100 шт) -->
+            <!-- Управление Партнерскими блоками -->
             <div>
                 <h3 style="color:#fff; margin-bottom:10px;">Партнерские блоки (до 100 шт)</h3>
                 <div style="display:flex; gap:10px; margin-bottom:10px;">
                     <input type="text" id="partnerTitle" class="login-input" style="flex:1;" placeholder="Название блока">
                     <input type="text" id="partnerDesc" class="login-input" style="flex:2;" placeholder="Описание / Текст для посетителя">
-                    <button class="btn-admin" style="width:120px;" onclick="addPartnerBlock()">Добавить</button>
+                    <button class="btn-action" style="width:120px;" onclick="addPartnerBlock()">Добавить</button>
                 </div>
                 <div class="admin-list-container" id="partnersAdminList">
                     <!-- Список блоков -->
@@ -460,14 +478,12 @@
             renderPartnersPublic();
             renderChat();
             
-            // Проверка: если уже залогинен, показать админку, иначе вход
+            // ВАЖНО: Мы НЕ показываем вход сразу. 
+            // Вход вызывается кнопкой.
+            // Но если пользователь УЖЕ залогинен (метка в localStorage), 
+            // мы сразу открываем панель управления.
             if (localStorage.getItem('is_admin_logged_in') === 'true') {
-                document.getElementById('loginOverlay').style.display = 'none';
-                document.getElementById('adminPanelOverlay').style.display = 'flex';
-                renderAdminPartnersList();
-            } else {
-                document.getElementById('loginOverlay').style.display = 'flex';
-                document.getElementById('adminPanelOverlay').style.display = 'none';
+                openAdminPanel();
             }
         });
 
@@ -495,7 +511,6 @@
             zone.innerHTML = '';
             
             if (code) {
-                // Безопасная вставка скриптов
                 const tpl = document.createElement('template');
                 tpl.innerHTML = code;
                 const nodes = Array.from(tpl.content.childNodes);
@@ -560,7 +575,6 @@
             renderPartnersPublic();
         }
 
-        // Рендер для АДМИНКИ (список)
         function renderAdminPartnersList() {
             const list = getPartners();
             const container = document.getElementById('partnersAdminList');
@@ -585,7 +599,6 @@
             });
         }
 
-        // Рендер для ПОСЕТИТЕЛЯ (карточки)
         function renderPartnersPublic() {
             const list = getPartners();
             const container = document.getElementById('partnersPublicZone');
@@ -625,7 +638,6 @@
                 appendMessageToDOM(msg.name, msg.text);
             });
             
-            // Автопрокрутка вниз
             container.scrollTop = container.scrollHeight;
         }
 
@@ -634,7 +646,6 @@
             const text = input.value.trim();
             if (!text) return;
 
-            // Генерация имени гостя
             let guestCount = parseInt(localStorage.getItem('mx_guest_count') || '0');
             guestCount++;
             localStorage.setItem('mx_guest_count', guestCount);
@@ -642,18 +653,14 @@
 
             const msgObj = { name, text };
             
-            // Сохраняем в историю
             let history = getChatHistory();
             history.push(msgObj);
-            // Храним только последние 50 сообщений, чтобы не забить память
             if (history.length > 50) history = history.slice(-50);
             saveChatHistory(history);
 
-            // Отображаем
             appendMessageToDOM(name, text);
             input.value = '';
             
-            // Обновляем счетчик онлайн (просто +1 для примера, можно усложнить)
             const onlineEl = document.getElementById('onlineCount');
             let current = parseInt(onlineEl.innerText.replace('Онлайн: ', ''));
             onlineEl.innerText = `Онлайн: \${current + 1}`;
@@ -664,7 +671,6 @@
             const div = document.createElement('div');
             div.className = 'msg';
             
-            // Превращаем ссылки в кликабельны теги <a>
             const safeText = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
             
             div.innerHTML = `<strong>${name}</strong> ${safeText}`;
@@ -672,28 +678,45 @@
             container.scrollTop = container.scrollHeight;
         }
 
-        // Обработчики событий чата
         document.getElementById('chatSend').addEventListener('click', sendMessage);
         document.getElementById('chatInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
 
-        // === АДМИНКА (ЛОГИКА ВХОДА/ВЫХОДА) ===
+        // === АДМИНКА (ЛОГИКА КНОПОК) ===
+        
+        // Кнопка вызова меню
+        document.getElementById('adminTriggerBtn').addEventListener('click', () => {
+            // Если уже залогинен - открываем панель
+            if (localStorage.getItem('is_admin_logged_in') === 'true') {
+                openAdminPanel();
+            } else {
+                // Иначе показываем форму входа
+                document.getElementById('loginOverlay').classList.add('active');
+            }
+        });
+
         function checkAdminLogin() {
             const input = document.getElementById('adminPassInput');
             if (input.value === ADMIN_PASSWORD) {
                 localStorage.setItem('is_admin_logged_in', 'true');
-                document.getElementById('loginOverlay').style.display = 'none';
-                document.getElementById('adminPanelOverlay').style.display = 'flex';
-                renderAdminPartnersList();
+                document.getElementById('loginOverlay').classList.remove('active');
+                openAdminPanel();
             } else {
                 alert('Неверный пароль!');
             }
         }
 
+        function openAdminPanel() {
+            document.getElementById('adminPanelOverlay').classList.add('active');
+            renderAdminPartnersList();
+        }
+
         function logoutAdmin() {
             localStorage.setItem('is_admin_logged_in', 'false');
-            location.reload(); // Перезагрузка страницы
+            document.getElementById('adminPanelOverlay').classList.remove('active');
+            document.getElementById('loginOverlay').classList.remove('active');
+            // Можно не перезагружать, просто скрываем панель
         }
 
     </script>
