@@ -27,19 +27,16 @@
         .portal-header h1 { font-size: 24px; color: #66fcf1; text-shadow: 0 0 15px #66fcf1; font-weight: 900; }
         .portal-header p { font-size: 10px; color: #94a1c2; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* VIP БЛОК АДМИНИСТРАТОРА */
         .vip-admin-block { width: 100%; background: linear-gradient(135deg, #16192e 0%, #0b0c16 100%); border: 2px solid #ffb167; border-radius: 18px; padding: 14px; text-align: center; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; align-items: center; box-shadow: 0 0 20px rgba(255,177,103,0.25); }
         .vip-badge { position: absolute; top: 0; left: 0; background: #ffb167; color: #0b0c10; font-size: 9px; font-weight: bold; padding: 3px 10px; border-bottom-right-radius: 10px; }
         .vip-title { font-size: 13px; font-weight: 600; color: #fff; margin-top: 8px; line-height: 1.4; }
         .vip-banner-img { width: 100%; max-height: 80px; object-fit: cover; border-radius: 10px; display: none; }
         .vk-btn { width: 95%; height: 38px; background: linear-gradient(90deg, #0066ff 0%, #00bfff 100%); border: none; border-radius: 10px; color: #fff; font-size: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,102,255,0.4); }
         
-        /* РЕКЛАМНЫЕ ЗОНЫ */
         .banner-wrapper { width: 100%; display: flex; justify-content: center; align-items: center; text-align: center; overflow: hidden; }
         .links-wrapper { width: 100%; background: rgba(7, 8, 16, 0.6); border: 1px solid rgba(69, 243, 255, 0.2); border-radius: 16px; padding: 14px; font-size: 13px; color: #c5c6c7; display: flex; flex-direction: column; gap: 8px; }
         .links-title { font-size: 10px; color: #45f3ff; font-weight: bold; letter-spacing: 1px; border-bottom: 1px solid rgba(102,252,241,0.15); padding-bottom: 5px; text-transform: uppercase; }
         
-        /* ЧАТ НА ПРЯМЫХ СКРИПТАХ БРАУЗЕРА */
         .chat-container { width: 100%; background: rgba(7, 8, 16, 0.7); border: 1px solid rgba(69, 243, 255, 0.25); border-radius: 20px; display: flex; flex-direction: column; height: 310px; overflow: hidden; }
         .chat-header { background: linear-gradient(90deg, rgba(102,252,241,0.15) 0%, rgba(219,123,242,0.05) 100%); padding: 10px 14px; font-size: 11px; font-weight: bold; color: #66fcf1; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(102,252,241,0.15); }
         .chat-messages { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
@@ -68,11 +65,10 @@
             <div class="vip-badge">👑 VIP СЛОТ</div>
             <div class="vip-title" id="lblVipTitle">Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК</div>
             <img src="" id="imgVipBanner" class="vip-banner-img" alt="VIP Реклама">
-            <!-- Ссылка заменена на официальный стандарт .com -->
             <a href="https://vk.com" target="_blank" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
         </div>
 
-        <!-- БЕСПЛАТНЫЙ РЕКЛАМНЫЙ ЧАТ -->
+        <!-- РЕКЛАМНЫЙ ЧАТ ОНЛАЙН -->
         <div class="chat-container">
             <div class="chat-header">
                 <span>💬 РЕКЛАМНЫЙ СТРИМ ОНЛАЙН</span>
@@ -98,11 +94,9 @@
     <div class="footer-partner-block" id="slotBottomLinks"></div>
 
 <script>
-    // Случайный номер гостя
     const randomUserId = Math.floor(Math.random() * 899) + 100;
     const currentNick = "Гость #" + randomUserId;
 
-    // Прямой вывод сообщений на экран на чистом JavaScript (Без риска блокировки кэшем)
     function sendChatMessage() {
         const textInput = document.getElementById('chatMsg');
         const text = textInput.value.trim();
@@ -112,17 +106,15 @@
         const now = new Date();
         const timeStr = (now.getHours()<10?'0':'')+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
 
-        // Создаем элемент сообщения и напрямую вставляем его в окно
         const newMsg = document.createElement('div');
         newMsg.className = 'msg-item';
         newMsg.innerHTML = `<div class="msg-meta"><span>${currentNick}</span> <span>${timeStr}</span></div>${text}`;
         
         box.appendChild(newMsg);
         textInput.value = '';
-        box.scrollTop = box.scrollHeight; // Автоматический скролл вниз
+        box.scrollTop = box.scrollHeight;
     }
 
-    // Подгрузка скриптов рекламы
     function loadLiveBanner(elementId, htmlScript) {
         const zone = document.getElementById(elementId);
         if (!zone || !htmlScript) return;
@@ -142,7 +134,6 @@
     }
 
     window.addEventListener('DOMContentLoaded', () => {
-        // Подгружаем сохраненную рекламу
         const txt = localStorage.getItem('vip_text') || '';
         const url = localStorage.getItem('vip_url') || 'https://vk.com';
         const lt = localStorage.getItem('ls_top');
@@ -165,3 +156,8 @@
 
         if(lt) loadLiveBanner('zoneTop', lt);
         if(lm) loadLiveBanner('zoneMid', lm);
+        if(ll) loadLiveBanner('linkslotContainer', ll);
+    });
+</script>
+</body>
+</html>
