@@ -16,19 +16,18 @@
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        /* --- ФОН (ЦИФРОВОЙ ДОЖДЬ) --- */
         body {
             background: radial-gradient(circle at 50% 0%, #0a1120 0%, #000000 100%);
             color: #fff;
             font-family: 'Courier New', Courier, monospace;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column; /* Теперь колонка */
             min-height: 100vh;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
         }
 
+        /* --- ФОН (ЦИФРОВОЙ ДОЖДЬ) --- */
         .matrix-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -46,18 +45,21 @@
             to { transform: translateY(110vh); }
         }
 
-        /* --- ОСНОВНОЙ КОНТЕЙНЕР --- */
+        /* --- ОСНОВНОЙ КОНТЕЙНЕР (ТЕПЕРЬ ВВЕРХУ) --- */
         .container {
             width: 100%;
             max-width: 420px;
-            background: rgba(15, 17, 29, 0.85);
+            background: rgba(15, 17, 29, 0.95); /* Чуть прозрачнее для фона */
             backdrop-filter: blur(12px);
             border: 1px solid var(--border-glow);
-            border-radius: 20px;
+            border-radius: 0 0 20px 20px; /* Скругление только снизу */
             padding: 20px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 242, 254, 0.1);
             position: relative;
             z-index: 10;
+            margin-top: 20px; /* Отступ сверху от края экрана */
+            margin-left: auto;
+            margin-right: auto;
         }
 
         h1 {
@@ -78,7 +80,7 @@
             margin-bottom: 20px;
         }
 
-        /* --- VIP СЛОТ --- */
+        /* --- VIP СЛОТ (ТОЛЬКО ДЛЯ СВЯЗИ С АДМИНОМ) --- */
         .vip-slot-card {
             border: 1px solid rgba(255, 177, 103, 0.3);
             border-radius: 12px;
@@ -118,13 +120,15 @@
             font-family: inherit;
         }
 
-        /* --- СТРИМ / БАННЕР --- */
+        /* --- СТРИМ / БАННЕР (АВТОМАТИЧЕСКОЕ МЕСТО) --- */
         .stream-card {
             border-radius: 12px;
             background: #000000;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 15px;
+            padding: 10px;
             margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
         }
         .stream-header {
             display: flex;
@@ -135,9 +139,11 @@
             color: var(--accent-cyan);
             text-transform: uppercase;
         }
-        .stream-placeholder {
+        /* Контейнер для кода, чтобы он не ломал верстку */
+        .stream-content-wrapper {
             width: 100%;
-            height: 140px;
+            height: auto;
+            min-height: 140px;
             background: #0f101a;
             border-radius: 8px;
             display: flex;
@@ -146,12 +152,13 @@
             color: var(--text-gray);
             border: 1px dashed rgba(255, 255, 255, 0.1);
             position: relative;
+            overflow: hidden;
         }
-        .stream-placeholder::after {
-            content: 'Рекламный стрим / Баннер';
+        .stream-placeholder-text {
             position: absolute;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%);
+            text-align: center;
         }
 
         /* --- ПАРТНЕРСКИЕ БЛОКИ --- */
@@ -332,7 +339,6 @@
             font-size: 16px;
         }
         
-        /* Стили для списка блоков в админке */
         .admin-list-container {
             margin-top: 20px;
             max-height: 300px;
@@ -366,12 +372,12 @@
     <!-- Фон -->
     <div class="matrix-bg" id="matrixBg"></div>
 
-    <!-- Основной интерфейс -->
+    <!-- Основной интерфейс (ТЕПЕРЬ ВВЕРХУ) -->
     <div class="container" id="mainInterface">
         <h1>MATRIX TRAFFIC</h1>
         <p class="subtitle">Автоматическая рекламная платформа</p>
 
-        <!-- VIP СЛОТ -->
+        <!-- VIP СЛОТ (Только связь с админом, НЕ для кода) -->
         <div class="vip-slot-card">
             <div class="vip-badge">VIP СЛОТ</div>
             <div class="vip-text">
@@ -380,14 +386,17 @@
             <button class="vip-btn" onclick="window.open('https://vk.com/ваш_админ', '_blank')">Написать админу в ВК</button>
         </div>
 
-        <!-- СТРИМ -->
+        <!-- СТРИМ / БАННЕР (Сюда админка вставляет код) -->
         <div class="stream-card">
             <div class="stream-header">
-                <span>Рекламный стрим</span>
+                <span>Рекламный стрим / Баннер</span>
                 <span style="color:#00ff88; font-size:10px;">Без модерации</span>
             </div>
-            <div class="stream-placeholder" id="streamZone">
-                <!-- Сюда админка вставляет код -->
+            <div class="stream-content-wrapper" id="streamZone">
+                <div class="stream-placeholder-text">
+                    Здесь появится код из админки.<br>
+                    Автоматически подстроится под размер.
+                </div>
             </div>
         </div>
 
@@ -408,7 +417,6 @@
                 <span class="online-count" id="onlineCount">Онлайн: 1</span>
             </div>
             <div class="chat-messages" id="chatMessages">
-                <!-- Сообщения -->
             </div>
             <div class="chat-input-row">
                 <input type="text" class="chat-input" id="chatInput" placeholder="Напишите свою рекламу..." maxlength="200">
@@ -420,7 +428,7 @@
     <!-- Кнопка вызова админки -->
     <div class="admin-trigger-btn" id="adminTriggerBtn" title="Админ-панель">🔐</div>
 
-    <!-- АДМИНКА: ЭКРАН ВХОДА (скрыт по умолчанию) -->
+    <!-- Окно входа -->
     <div class="overlay" id="loginOverlay">
         <div class="card">
             <h2 style="color:var(--accent-cyan); margin-bottom:20px;">Вход в админку</h2>
@@ -430,7 +438,7 @@
         </div>
     </div>
 
-    <!-- АДМИНКА: ПАНЕЛЬ УПРАВЛЕНИЯ (скрыта по умолчанию) -->
+    <!-- Панель админа -->
     <div class="overlay" id="adminPanelOverlay">
         <div class="card" style="max-width: 500px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
@@ -438,56 +446,49 @@
                 <button class="btn-action" style="width:auto; padding:5px 15px; font-size:12px;" onclick="logoutAdmin()">Выйти</button>
             </div>
 
-            <!-- Управление Стримом -->
             <div style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:15px;">
                 <h3 style="color:#fff; margin-bottom:10px;">Управление стримом / Баннером</h3>
-                <textarea id="streamCodeInput" class="login-input" rows="4" placeholder="Вставьте код (linkslot, iframe и т.д.)"></textarea>
+                <textarea id="streamCodeInput" class="login-input" rows="4" placeholder="Вставьте код (iframe, linkslot, div и т.д.)"></textarea>
                 <button class="btn-action" onclick="saveStreamCode()">Опубликовать в стриме</button>
+                <p style="font-size:10px; color:#666; margin-top:5px;">Код автоматически займет место под заголовком.</p>
             </div>
 
-            <!-- Управление Партнерскими блоками -->
             <div>
                 <h3 style="color:#fff; margin-bottom:10px;">Партнерские блоки (до 100 шт)</h3>
                 <div style="display:flex; gap:10px; margin-bottom:10px;">
                     <input type="text" id="partnerTitle" class="login-input" style="flex:1;" placeholder="Название блока">
-                    <input type="text" id="partnerDesc" class="login-input" style="flex:2;" placeholder="Описание / Текст для посетителя">
+                    <input type="text" id="partnerDesc" class="login-input" style="flex:2;" placeholder="Описание / Текст">
                     <button class="btn-action" style="width:120px;" onclick="addPartnerBlock()">Добавить</button>
                 </div>
                 <div class="admin-list-container" id="partnersAdminList">
-                    <!-- Список блоков -->
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        // === НАСТРОЙКИ ===
-        const ADMIN_PASSWORD = 'admin123'; // <-- МЕНЯЙ ЗДЕСЬ ПАРОЛЬ
+        const ADMIN_PASSWORD = 'admin123';
         
-        // === ДАННЫЕ (ХРАНИЛИЩЕ) ===
         const STORAGE_KEYS = {
             stream: 'mx_stream_code',
             partners: 'mx_partners_list',
             chat: 'mx_chat_history'
         };
 
-        // === ИНИЦИАЛИЗАЦИЯ ===
         document.addEventListener('DOMContentLoaded', () => {
             initMatrixBg();
             renderStream();
             renderPartnersPublic();
             renderChat();
             
-            // ВАЖНО: Мы НЕ показываем вход сразу. 
-            // Вход вызывается кнопкой.
-            // Но если пользователь УЖЕ залогинен (метка в localStorage), 
-            // мы сразу открываем панель управления.
+            // ГЛАВНОЕ ИЗМЕНЕНИЕ:
+            // Мы НЕ показываем вход сразу.
+            // Если пользователь уже залогинен — показываем панель.
             if (localStorage.getItem('is_admin_logged_in') === 'true') {
                 openAdminPanel();
             }
         });
 
-        // === ФОН (ЦИФРОВОЙ ДОЖДЬ) ===
         function initMatrixBg() {
             const bg = document.getElementById('matrixBg');
             const chars = '0123456789ABCDEF';
@@ -504,7 +505,6 @@
             }
         }
 
-        // === СТРИМ (БАННЕР) ===
         function renderStream() {
             const code = localStorage.getItem(STORAGE_KEYS.stream) || '';
             const zone = document.getElementById('streamZone');
@@ -535,7 +535,6 @@
             alert('Код сохранен и отображен в стриме!');
         }
 
-        // === ПАРТНЕРСКИЕ БЛОКИ ===
         function getPartners() {
             try {
                 const data = localStorage.getItem(STORAGE_KEYS.partners);
@@ -617,7 +616,6 @@
             });
         }
 
-        // === ЧАТ ===
         function getChatHistory() {
             try {
                 const data = localStorage.getItem(STORAGE_KEYS.chat);
@@ -646,9 +644,12 @@
             const text = input.value.trim();
             if (!text) return;
 
+            // Просто считаем гостей
             let guestCount = parseInt(localStorage.getItem('mx_guest_count') || '0');
             guestCount++;
             localStorage.setItem('mx_guest_count', guestCount);
+            
+            // Имя теперь просто "Гость #1"
             const name = `Гость #\${guestCount}`;
 
             const msgObj = { name, text };
@@ -683,15 +684,11 @@
             if (e.key === 'Enter') sendMessage();
         });
 
-        // === АДМИНКА (ЛОГИКА КНОПОК) ===
-        
-        // Кнопка вызова меню
+        // Логика кнопки вызова админки
         document.getElementById('adminTriggerBtn').addEventListener('click', () => {
-            // Если уже залогинен - открываем панель
             if (localStorage.getItem('is_admin_logged_in') === 'true') {
                 openAdminPanel();
             } else {
-                // Иначе показываем форму входа
                 document.getElementById('loginOverlay').classList.add('active');
             }
         });
@@ -716,9 +713,7 @@
             localStorage.setItem('is_admin_logged_in', 'false');
             document.getElementById('adminPanelOverlay').classList.remove('active');
             document.getElementById('loginOverlay').classList.remove('active');
-            // Можно не перезагружать, просто скрываем панель
         }
-
     </script>
 </body>
 </html>
