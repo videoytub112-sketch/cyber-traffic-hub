@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Premium Traffic Portal</title>
-    <!-- Подключаем профессиональное серверное ядро реального времени -->
+    <!-- Подключаем серверную библиотеку мгновенных сообщений Socket.io -->
     <script src="https://jsdelivr.net"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -33,21 +33,20 @@
         .vip-admin-block { width: 100%; background: linear-gradient(135deg, #16192e 0%, #0b0c16 100%); border: 2px solid #ffb167; border-radius: 18px; padding: 14px; text-align: center; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; align-items: center; box-shadow: 0 0 20px rgba(255,177,103,0.25); }
         .vip-badge { position: absolute; top: 0; left: 0; background: #ffb167; color: #0b0c10; font-size: 9px; font-weight: bold; padding: 3px 10px; border-bottom-right-radius: 10px; }
         .vip-title { font-size: 13px; font-weight: 600; color: #fff; margin-top: 8px; line-height: 1.4; }
-        .vip-banner-img { width: 100%; max-height: 80px; object-fit: cover; border-radius: 10px; display: none; }
         .vk-btn { width: 95%; height: 38px; background: linear-gradient(90deg, #0066ff 0%, #00bfff 100%); border: none; border-radius: 10px; color: #fff; font-size: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,102,255,0.4); }
         
         .banner-wrapper { width: 100%; display: flex; justify-content: center; align-items: center; text-align: center; overflow: hidden; }
         .links-wrapper { width: 100%; background: rgba(7, 8, 16, 0.6); border: 1px solid rgba(69, 243, 255, 0.2); border-radius: 16px; padding: 14px; font-size: 13px; color: #c5c6c7; display: flex; flex-direction: column; gap: 8px; }
         .links-title { font-size: 10px; color: #45f3ff; font-weight: bold; letter-spacing: 1px; border-bottom: 1px solid rgba(102,252,241,0.15); padding-bottom: 5px; text-transform: uppercase; }
         
-        /* СЕРВЕРНЫЙ ЧАТ РЕАЛЬНОГО ВРЕМЕНИ */
+        /* РЕКЛАМНЫЙ ЧАТ */
         .chat-container { width: 100%; background: rgba(7, 8, 16, 0.7); border: 1px solid rgba(69, 243, 255, 0.25); border-radius: 20px; display: flex; flex-direction: column; height: 310px; overflow: hidden; }
         .chat-header { background: linear-gradient(90deg, rgba(102,252,241,0.15) 0%, rgba(219,123,242,0.05) 100%); padding: 10px 14px; font-size: 11px; font-weight: bold; color: #66fcf1; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(102,252,241,0.15); }
         .chat-messages { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         .msg-item { background: rgba(31, 40, 51, 0.5); padding: 10px 12px; border-radius: 12px; border-left: 3px solid #db7bf2; word-break: break-all; }
         .msg-meta { font-size: 10px; color: #45f3ff; font-weight: bold; margin-bottom: 3px; display: flex; justify-content: space-between; }
         
-        /* Стили для кликабельных синих ссылок */
+        /* Автоматические синие кликабельные ссылки в чате */
         .chat-messages a { color: #45f3ff; text-decoration: underline; font-weight: bold; cursor: pointer; }
         .chat-messages a:hover { color: #db7bf2; }
         
@@ -73,7 +72,7 @@
         <div class="vip-admin-block">
             <div class="vip-badge">👑 VIP СЛОТ</div>
             <div class="vip-title" id="lblVipTitle">Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК</div>
-            <img src="" id="imgVipBanner" class="vip-banner-img" alt="VIP Реклама">
+            <!-- Ссылка на вашу личную страницу зафиксирована намертво -->
             <a href="https://vk.ru" target="_blank" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
         </div>
 
@@ -102,14 +101,12 @@
 
     <div class="footer-partner-block" id="slotBottomLinks"></div>
 
+<!-- Код скрипта вынесен из стилей на свое законное место -->
 <script>
     const randomUserId = Math.floor(Math.random() * 899) + 100;
     const currentNick = "Гость #" + randomUserId;
 
-    // Подключаемся к выделенному отказоустойчивому Node.js серверу трансляций
-    const socket = io('https://glitch.me');
-
-    // Функция детекции ссылок и превращения их в кликабельные синие кнопки
+    // Автономный движок вывода сообщений на чистом JavaScript
     function linkifyText(text) {
         const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]|\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|\b(?:[A-Z0-9-]+\.)+(?:com|ru|net|org|biz|info|cc|me|tv|io|co|bot|xyz|shop|online|site|club|link)(w*)\/?(?:[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])?)/gi;
         return text.replace(urlPattern, function(url) {
@@ -119,44 +116,47 @@
         });
     }
 
-    // Сервер присылает историю чата и новые сообщения в реальном времени
-    socket.on('chat-history', function(messages) {
-        const box = document.getElementById('chatBox');
-        if(!box || !messages.length) return;
-        
-        const sysMsg = document.getElementById('sys-welcome');
-        if(sysMsg) sysMsg.remove();
-
-        box.innerHTML = '';
-        messages.forEach(m => {
-            const cleanText = linkifyText(m.text);
-            box.innerHTML += `<div class="msg-item"><div class="msg-meta"><span>${m.name}</span> <span>${m.time}</span></div>${cleanText}</div>`;
-        });
-        box.scrollTop = box.scrollHeight;
-    });
-
-    socket.on('new-message', function(m) {
+    function renderChatMessages() {
         const box = document.getElementById('chatBox');
         if(!box) return;
-
-        const sysMsg = document.getElementById('sys-welcome');
-        if(sysMsg) sysMsg.remove();
-
-        const cleanText = linkifyText(m.text);
-        box.innerHTML += `<div class="msg-item"><div class="msg-meta"><span>${m.name}</span> <span>${m.time}</span></div>${cleanText}</div>`;
+        const msgs = JSON.parse(localStorage.getItem('matrix_pure_local_chat') || '[]');
+        
+        if (msgs.length === 0) {
+            box.innerHTML = `<div class="msg-item" id="sys-welcome"><div class="msg-meta"><span>Система</span></div>Добро пожаловать! Здесь вы можете бесплатно оставить ссылку на свой проект. Спам разрешен!</div>`;
+            return;
+        }
+        box.innerHTML = '';
+        msgs.forEach(m => {
+            const cleanText = linkifyText(m.text);
+            box.innerHTML += `<div class="msg-item"><div class="msg-meta"><span>${m.name}</span> <span>${m.time || ''}</span></div>${cleanText}</div>`;
+        });
         box.scrollTop = box.scrollHeight;
-    });
+    }
 
-    // Отправка сообщений на постоянный сервер
     function sendChatMessage() {
         const textInput = document.getElementById('chatMsg');
         const text = textInput.value.trim();
         if(!text) return alert("Введите текст рекламы!");
         
+        const box = document.getElementById('chatBox');
         let now = new Date();
         const timeStr = (now.getHours()<10?'0':'')+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
 
-        // Передаем пакет данных на постоянный Node-сервер
-        socket.emit('send-message', {
-            name: currentNick,
-            text: text,
+        let msgs = JSON.parse(localStorage.getItem('matrix_pure_local_chat') || '[]');
+        msgs.push({ name: currentNick, text: text, time: timeStr });
+        
+        if(msgs.length > 40) msgs.shift();
+        
+        localStorage.setItem('matrix_pure_local_chat', JSON.stringify(msgs));
+        textInput.value = '';
+        renderChatMessages();
+    }
+
+    function loadLiveBanner(elementId, htmlScript) {
+        const zone = document.getElementById(elementId);
+        if (!zone || !htmlScript) return;
+        zone.innerHTML = '';
+        const temp = document.createElement('div');
+        temp.innerHTML = htmlScript;
+        Array.from(temp.childNodes).forEach(node => {
+            if (node.tagName === 'SCRIPT') {
