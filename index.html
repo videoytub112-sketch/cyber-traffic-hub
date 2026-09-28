@@ -6,73 +6,71 @@
     <title>Matrix Premium Traffic Portal</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { 
-            background: radial-gradient(circle at top, #141526 0%, #070810 100%); 
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
-            color: #fff; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            min-height: 100vh; 
-            padding: 15px; 
-            gap: 15px; 
-            overflow-x: hidden; 
+        body {
+            background: radial-gradient(circle at top, #141526 0%, #070810 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 15px;
+            gap: 15px;
+            overflow-x: hidden;
         }
-        
-        .portal-shell { 
-            width: 100%; 
-            max-width: 400px; 
-            background: rgba(31, 40, 51, 0.65); 
+        .portal-shell {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(31, 40, 51, 0.65);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(69, 243, 255, 0.25); 
-            border-radius: 28px; 
-            display: flex; 
-            flex-direction: column; 
-            padding: 20px; 
-            gap: 18px; 
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(102,252,241,0.05); 
+            border: 1px solid rgba(69, 243, 255, 0.25);
+            border-radius: 28px;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            gap: 18px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(102,252,241,0.05);
         }
-        
         .portal-header { text-align: center; cursor: pointer; user-select: none; }
         .portal-header h1 { font-size: 24px; color: #66fcf1; text-shadow: 0 0 15px #66fcf1; font-weight: 900; }
         .portal-header p { font-size: 10px; color: #94a1c2; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        
+        .click-hint { font-size: 10px; color: #ffb167; height: 12px; margin-top: 4px; }
+
         /* VIP БЛОК АДМИНИСТРАТОРА */
-        .vip-admin-block { 
-            width: 100%; 
-            background: linear-gradient(135deg, #16192e 0%, #0b0c16 100%); 
-            border: 2px solid #ffb167; 
-            border-radius: 18px; 
-            padding: 14px; 
-            text-align: center; 
-            position: relative; 
-            overflow: hidden; 
-            display: flex; 
-            flex-direction: column; 
-            gap: 12px; 
-            align-items: center; 
-            box-shadow: 0 0 20px rgba(255,177,103,0.25); 
+        .vip-admin-block {
+            width: 100%;
+            background: linear-gradient(135deg, #16192e 0%, #0b0c16 100%);
+            border: 2px solid #ffb167;
+            border-radius: 18px;
+            padding: 14px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(255,177,103,0.25);
         }
-
-        .vip-badge { 
-            position: absolute; 
-            top: 0; 
-            left: 0; 
-            background: #ffb167; 
-            color: #0b0c10; 
-            font-size: 9px; 
-            font-weight: bold; 
-            padding: 3px 10px; 
-            border-bottom-right-radius: 12px; /* Исправлено */
+        .vip-admin-block.visible { display: flex; }
+        .vip-badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #ffb167;
+            color: #0b0c10;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 3px 10px;
+            border-bottom-right-radius: 12px;
         }
-
         .admin-status {
             font-size: 14px;
             color: #ffb167;
             font-weight: 600;
+            margin-top: 8px;
         }
-
         .action-btn {
             width: 100%;
             padding: 12px;
@@ -84,54 +82,92 @@
             cursor: pointer;
             transition: transform 0.2s, opacity 0.2s;
         }
-
-        .action-btn:active {
-            transform: scale(0.98);
-        }
-
+        .action-btn:active { transform: scale(0.98); }
         .traffic-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 10px;
             width: 100%;
         }
-
         .stat-card {
             background: rgba(255, 255, 255, 0.05);
             padding: 10px;
             border-radius: 12px;
             text-align: center;
         }
+        .stat-card span { display: block; font-size: 12px; color: #94a1c2; }
+        .stat-card strong { font-size: 16px; color: #66fcf1; }
 
-        .stat-card span {
-            display: block;
-            font-size: 12px;
-            color: #94a1c2;
+        /* ЧАТ */
+        .chat-block {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
-
-        .stat-card strong {
-            font-size: 16px;
-            color: #66fcf1;
+        .chat-title { font-size: 11px; color: #94a1c2; text-transform: uppercase; letter-spacing: 1px; }
+        .chat-messages {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 14px;
+            padding: 10px;
+            height: 180px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
         }
+        .msg {
+            background: rgba(102, 252, 241, 0.12);
+            border-left: 3px solid #66fcf1;
+            border-radius: 8px;
+            padding: 6px 10px;
+            font-size: 13px;
+            word-break: break-word;
+        }
+        .msg .msg-time { display: block; font-size: 10px; color: #94a1c2; margin-top: 3px; }
+        .chat-input-row { display: flex; gap: 8px; }
+        .chat-input {
+            flex: 1;
+            padding: 10px 12px;
+            border-radius: 12px;
+            border: 1px solid rgba(69, 243, 255, 0.3);
+            background: rgba(255, 255, 255, 0.06);
+            color: #fff;
+            font-size: 14px;
+            outline: none;
+        }
+        .chat-input:focus { border-color: #66fcf1; }
+        .chat-send {
+            padding: 10px 16px;
+            border-radius: 12px;
+            border: none;
+            background: #66fcf1;
+            color: #0b0c10;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .chat-send:active { transform: scale(0.97); }
+        .footer-note { text-align: center; color: #94a1c2; font-size: 13px; }
     </style>
 </head>
 <body>
 
     <div class="portal-shell">
-        <header class="portal-header">
+        <header class="portal-header" id="portalHeader">
             <h1>MATRIX</h1>
             <p>Premium Traffic Management</p>
+            <div class="click-hint" id="clickHint"></div>
         </header>
 
         <!-- VIP ADMIN SECTION -->
-        <div class="vip-admin-block">
+        <div class="vip-admin-block" id="vipAdmin">
             <div class="vip-badge">ADMIN ACCESS</div>
             <div class="admin-status">CONTROL PANEL ACTIVE</div>
-            
+
             <div class="traffic-stats">
                 <div class="stat-card">
                     <span>Traffic</span>
-                    <strong>1.2k/s</strong>
+                    <strong id="trafficValue">1.2k/s</strong>
                 </div>
                 <div class="stat-card">
                     <span>Nodes</span>
@@ -139,14 +175,118 @@
                 </div>
             </div>
 
-            <button class="action-btn">MANAGE TRAFFIC</button>
+            <button class="action-btn" onclick="manageTraffic()">MANAGE TRAFFIC</button>
         </div>
 
-        <!-- MAIN CONTENT AREA -->
-        <div style="text-align: center; color: #94a1c2; font-size: 13px;">
+        <!-- ЧАТ -->
+        <div class="chat-block">
+            <div class="chat-title">Chat</div>
+            <div class="chat-messages" id="chatMessages"></div>
+            <div class="chat-input-row">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение..." maxlength="300">
+                <button class="chat-send" id="chatSend">→</button>
+            </div>
+        </div>
+
+        <div class="footer-note">
             <p>All systems operational. Monitoring real-time data flow.</p>
         </div>
     </div>
+
+    <script>
+        /* ===== ВХОД В АДМИНКУ ПО 5 КЛИКАМ ===== */
+        const header = document.getElementById('portalHeader');
+        const vipAdmin = document.getElementById('vipAdmin');
+        const clickHint = document.getElementById('clickHint');
+        let clickCount = 0;
+        let resetTimer = null;
+
+        header.addEventListener('click', () => {
+            clickCount++;
+            clearTimeout(resetTimer);
+            resetTimer = setTimeout(() => {
+                clickCount = 0;
+                clickHint.textContent = '';
+            }, 1500);
+
+            if (clickCount < 5) {
+                clickHint.textContent = `Кликов: ${clickCount}/5`;
+            } else {
+                clickCount = 0;
+                clickHint.textContent = '';
+                vipAdmin.classList.add('visible');
+            }
+        });
+
+        /* ===== ИМИТАЦИЯ ТРАФИКА ===== */
+        let traffic = 1200;
+        const trafficEl = document.getElementById('trafficValue');
+        setInterval(() => {
+            traffic += Math.floor(Math.random() * 11 - 5);
+            if (traffic < 0) traffic = 0;
+            trafficEl.textContent = (traffic / 1000).toFixed(1) + 'k/s';
+        }, 2000);
+
+        function manageTraffic() {
+            alert('Управление трафиком: демо-режим.');
+        }
+
+        /* ===== ЧАТ С СОХРАНЕНИЕМ В localStorage ===== */
+        const STORAGE_KEY = 'matrix_chat_messages';
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+
+        function renderMessage(text, time) {
+            const el = document.createElement('div');
+            el.className = 'msg';
+            el.dataset.time = time;
+            const textEl = document.createElement('span');
+            textEl.className = 'msg-text';
+            textEl.textContent = text;
+            const timeEl = document.createElement('span');
+            timeEl.className = 'msg-time';
+            timeEl.textContent = time;
+            el.appendChild(textEl);
+            el.appendChild(timeEl);
+            chatMessages.appendChild(el);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function persist() {
+            const msgs = [...chatMessages.querySelectorAll('.msg')].map(el => ({
+                text: el.querySelector('.msg-text').textContent,
+                time: el.dataset.time
+            }));
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(msgs));
+        }
+
+        function loadMessages() {
+            try {
+                const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+                saved.forEach(m => renderMessage(m.text, m.time));
+            } catch (e) {
+                console.warn('Не удалось загрузить сообщения', e);
+            }
+        }
+
+        function sendMessage() {
+            const text = chatInput.value.trim();
+            if (!text) return;
+            const time = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
+            renderMessage(text, time);
+            persist();
+            chatInput.value = '';
+            chatInput.focus();
+        }
+
+        chatSend.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        loadMessages();
+    </script>
 
 </body>
 </html>
