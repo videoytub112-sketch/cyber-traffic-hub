@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Premium Traffic Portal</title>
-    <!-- Подключаем серверную библиотеку мгновенных сообщений Socket.io -->
-    <script src="https://jsdelivr.net"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: radial-gradient(circle at top, #141526 0%, #070810 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #fff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; gap: 15px; overflow-x: hidden; }
@@ -33,6 +31,7 @@
         .vip-admin-block { width: 100%; background: linear-gradient(135deg, #16192e 0%, #0b0c16 100%); border: 2px solid #ffb167; border-radius: 18px; padding: 14px; text-align: center; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; align-items: center; box-shadow: 0 0 20px rgba(255,177,103,0.25); }
         .vip-badge { position: absolute; top: 0; left: 0; background: #ffb167; color: #0b0c10; font-size: 9px; font-weight: bold; padding: 3px 10px; border-bottom-right-radius: 10px; }
         .vip-title { font-size: 13px; font-weight: 600; color: #fff; margin-top: 8px; line-height: 1.4; }
+        .vip-banner-img { width: 100%; max-height: 80px; object-fit: cover; border-radius: 10px; display: none; }
         .vk-btn { width: 95%; height: 38px; background: linear-gradient(90deg, #0066ff 0%, #00bfff 100%); border: none; border-radius: 10px; color: #fff; font-size: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,102,255,0.4); }
         
         .banner-wrapper { width: 100%; display: flex; justify-content: center; align-items: center; text-align: center; overflow: hidden; }
@@ -46,7 +45,6 @@
         .msg-item { background: rgba(31, 40, 51, 0.5); padding: 10px 12px; border-radius: 12px; border-left: 3px solid #db7bf2; word-break: break-all; }
         .msg-meta { font-size: 10px; color: #45f3ff; font-weight: bold; margin-bottom: 3px; display: flex; justify-content: space-between; }
         
-        /* Автоматические синие кликабельные ссылки в чате */
         .chat-messages a { color: #45f3ff; text-decoration: underline; font-weight: bold; cursor: pointer; }
         .chat-messages a:hover { color: #db7bf2; }
         
@@ -72,7 +70,7 @@
         <div class="vip-admin-block">
             <div class="vip-badge">👑 VIP СЛОТ</div>
             <div class="vip-title" id="lblVipTitle">Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК</div>
-            <!-- Ссылка на вашу личную страницу зафиксирована намертво -->
+            <img src="" id="imgVipBanner" class="vip-banner-img" alt="VIP Реклама">
             <a href="https://vk.ru" target="_blank" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
         </div>
 
@@ -80,11 +78,9 @@
         <div class="chat-container">
             <div class="chat-header">
                 <span>💬 РЕКЛАМНЫЙ СТРИМ ОНЛАЙН</span>
-                <span style="color: #ffb167; font-size: 9px; font-weight: 800;">24/7 СЕРВЕР</span>
+                <span style="color: #ffb167; font-size: 9px; font-weight: 800;">БЕЗ МОДЕРАЦИИ</span>
             </div>
-            <div class="chat-messages" id="chatBox">
-                <div class="msg-item" id="sys-welcome"><div class="msg-meta"><span>Система</span></div>Добро пожаловать! Здесь вы можете бесплатно оставить ссылку на свой проект. Спам разрешен!</div>
-            </div>
+            <div class="chat-messages" id="chatBox"></div>
             <div class="chat-inputs">
                 <input type="text" id="chatMsg" class="chat-in" placeholder="Текст вашего объявления или ссылка...">
                 <button class="btn-send" style="height: 36px;" onclick="sendChatMessage()">Опубликовать бесплатно</button>
@@ -101,12 +97,10 @@
 
     <div class="footer-partner-block" id="slotBottomLinks"></div>
 
-<!-- Код скрипта вынесен из стилей на свое законное место -->
 <script>
     const randomUserId = Math.floor(Math.random() * 899) + 100;
     const currentNick = "Гость #" + randomUserId;
 
-    // Автономный движок вывода сообщений на чистом JavaScript
     function linkifyText(text) {
         const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]|\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|\b(?:[A-Z0-9-]+\.)+(?:com|ru|net|org|biz|info|cc|me|tv|io|co|bot|xyz|shop|online|site|club|link)(w*)\/?(?:[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])?)/gi;
         return text.replace(urlPattern, function(url) {
@@ -160,3 +154,14 @@
         temp.innerHTML = htmlScript;
         Array.from(temp.childNodes).forEach(node => {
             if (node.tagName === 'SCRIPT') {
+                const sc = document.createElement('script');
+                Array.from(node.attributes).forEach(attr => sc.setAttribute(attr.name, attr.value));
+                sc.innerHTML = node.innerHTML;
+                zone.appendChild(sc);
+            } else {
+                zone.appendChild(node.cloneNode(true));
+            }
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
