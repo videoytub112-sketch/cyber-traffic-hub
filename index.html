@@ -1,1 +1,149 @@
 
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Premium Traffic Portal</title>
+    <!-- База реального времени -->
+    <script src="https://jsdelivr.net"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: radial-gradient(circle at top, #141526 0%, #070810 100%); font-family: -apple-system, sans-serif; color: #fff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; gap: 15px; overflow-x: hidden; }
+        .portal-shell { width: 100%; max-width: 400px; background: rgba(31, 40, 51, 0.65); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); border: 1px solid rgba(69, 243, 255, 0.25); border-radius: 28px; display: flex; flex-direction: column; padding: 20px; gap: 18px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); }
+        .portal-header { text-align: center; }
+        .portal-header h1 { font-size: 24px; color: #66fcf1; text-shadow: 0 0 15px #66fcf1; font-weight: 900; }
+        .portal-header p { font-size: 10px; color: #94a1c2; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .vip-admin-block { width: 100%; background: linear-gradient(135deg, #16192e 0%, #0b0c16 100%); border: 2px solid #ffb167; border-radius: 18px; padding: 14px; text-align: center; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; align-items: center; box-shadow: 0 0 20px rgba(255,177,103,0.25); }
+        .vip-badge { position: absolute; top: 0; left: 0; background: #ffb167; color: #0b0c10; font-size: 9px; font-weight: bold; padding: 3px 10px; border-bottom-right-radius: 10px; }
+        .vip-title { font-size: 13px; font-weight: 600; color: #fff; margin-top: 8px; line-height: 1.4; }
+        .vip-banner-img { width: 100%; max-height: 80px; object-fit: cover; border-radius: 10px; display: none; }
+        .vk-btn { width: 95%; height: 38px; background: linear-gradient(90deg, #0066ff 0%, #00bfff 100%); border: none; border-radius: 10px; color: #fff; font-size: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,102,255,0.4); }
+        .banner-wrapper { width: 100%; background: rgba(7, 8, 16, 0.5); border: 1px dashed rgba(102,252,241,0.4); border-radius: 14px; display: flex; justify-content: center; align-items: center; padding: 10px; text-align: center; font-size: 11px; color: #66fcf1; min-height: 55px; overflow: hidden; }
+        .links-wrapper { width: 100%; background: rgba(7, 8, 16, 0.6); border: 1px solid rgba(69, 243, 255, 0.2); border-radius: 16px; padding: 14px; font-size: 13px; color: #c5c6c7; display: flex; flex-direction: column; gap: 8px; }
+        .links-title { font-size: 10px; color: #45f3ff; font-weight: bold; letter-spacing: 1px; border-bottom: 1px solid rgba(102,252,241,0.15); padding-bottom: 5px; text-transform: uppercase; }
+        .screen { display: none; flex-direction: column; gap: 15px; width: 100%; }
+        .screen.active { display: flex; }
+        .chat-container { width: 100%; background: rgba(7, 8, 16, 0.7); border: 1px solid rgba(69, 243, 255, 0.25); border-radius: 20px; display: flex; flex-direction: column; height: 310px; overflow: hidden; }
+        .chat-header { background: linear-gradient(90deg, rgba(102,252,241,0.15) 0%, rgba(219,123,242,0.05) 100%); padding: 10px 14px; font-size: 11px; font-weight: bold; color: #66fcf1; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(102,252,241,0.15); }
+        .chat-messages { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .msg-item { background: rgba(31, 40, 51, 0.5); padding: 10px 12px; border-radius: 12px; border-left: 3px solid #db7bf2; word-break: break-all; }
+        .msg-meta { font-size: 10px; color: #45f3ff; font-weight: bold; margin-bottom: 3px; display: flex; justify-content: space-between; }
+        .chat-inputs { display: flex; flex-direction: column; gap: 8px; padding: 12px; background: #1f2833; border-top: 1px solid rgba(102,252,241,0.15); }
+        .chat-in { background: #0b0c10; border: 1px solid rgba(69, 243, 255, 0.2); padding: 10px; border-radius: 10px; color: #fff; font-size: 13px; outline: none; }
+        .btn-send { background: linear-gradient(90deg, #66fcf1 0%, #db7bf2 100%); border: none; color: #0b0c10; font-weight: bold; border-radius: 10px; font-size: 11px; cursor: pointer; text-transform: uppercase; }
+    </style>
+</head>
+<body>
+
+    <div class="header-partner-block" id="zoneTop">[ Ожидание верхнего баннера ]</div>
+
+    <div class="portal-shell">
+        <div class="portal-header">
+            <h1>MATRIX TRAFFIC</h1>
+            <p>Автоматическая рекламная платформа</p>
+        </div>
+
+        <div class="vip-admin-block">
+            <div class="vip-badge">👑 VIP СЛОТ</div>
+            <div class="vip-title" id="lblVipTitle">Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК</div>
+            <img src="" id="imgVipBanner" class="vip-banner-img" alt="VIP Реклама">
+            <a href="https://vk.ru" target="_blank" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
+        </div>
+
+        <div class="screen active" id="scrAuth">
+            <div class="chat-inputs" style="border-top:none; border-radius:16px; background: rgba(7, 8, 16, 0.4); border: 1px solid rgba(102,252,241,0.15);">
+                <p style="font-size:12px; text-align:center; color:#c5c6c7; margin-bottom:5px;">Введите ваш никнейм для доступа к функциям чата витрины</p>
+                <input type="text" id="inAuthNick" class="chat-in" placeholder="Ваш ник..." style="text-align:center;" maxlength="15">
+                <button class="btn-send" style="height:44px;" onclick="handlePortalLogin()">Войти в чат</button>
+            </div>
+        </div>
+
+        <div class="screen" id="scrGame">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <span>💬 РЕКЛАМНЫЙ СТРИМ ОНЛАЙН</span>
+                    <span style="color: #ffb167; font-size: 9px; font-weight: 800;">БЕЗ МОДЕРАЦИИ</span>
+                </div>
+                <div class="chat-messages" id="chatBox"></div>
+                <div class="chat-inputs">
+                    <input type="text" id="chatMsg" class="chat-in" placeholder="Текст вашего объявления или ссылка...">
+                    <button class="btn-send" style="height: 34px;" onclick="sendChatMessage()">Опубликовать бесплатно</button>
+                </div>
+            </div>
+
+            <div class="banner-wrapper" id="zoneMid" style="min-height: 100px;">
+                [ Ожидание основного баннера ]
+            </div>
+
+            <div class="links-wrapper" id="zoneLinks">
+                <div class="links-title">🔗 РЕКОМЕНДУЕМЫЕ ССЫЛКИ ПАРТНЕРОВ:</div>
+                <div id="linkslotContainer">Загрузка контекстных ссылок витрины...</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-partner-block" id="slotBottomLinks">[ Ожидание нижних ссылок ]</div>
+
+<script>
+    let currentNick = "Гость";
+    const db = Gun(['https://herokuapp.com']).get('matrix_traffic_zone_v1');
+
+    function openScreen(id) {
+        document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function handlePortalLogin() {
+        let val = document.getElementById('inAuthNick').value.trim();
+        if(!val) return alert("Введите никнейм!");
+        currentNick = val;
+        openScreen('scrGame');
+        listenToCloudChat();
+    }
+
+    function loadLiveBanner(elementId, htmlScript) {
+        const zone = document.getElementById(elementId);
+        if (!zone || !htmlScript) return;
+        zone.innerHTML = '';
+        const temp = document.createElement('div');
+        temp.innerHTML = htmlScript;
+        Array.from(temp.childNodes).forEach(node => {
+            if (node.tagName === 'SCRIPT') {
+                const sc = document.createElement('script');
+                Array.from(node.attributes).forEach(attr => sc.setAttribute(attr.name, attr.value));
+                sc.innerHTML = node.innerHTML;
+                zone.appendChild(sc);
+            } else {
+                zone.appendChild(node.cloneNode(true));
+            }
+        });
+    }
+
+    // ПОЛУЧЕНИЕ НАСТРОЕК РЕКЛАМЫ ИЗ АДМИНКИ НА ЛЕТУ
+    db.get('config').on(data => {
+        if(data) {
+            const titleLbl = document.getElementById('lblVipTitle');
+            const imgBanner = document.getElementById('imgVipBanner');
+            const linkBtn = document.getElementById('btnVipLink');
+            
+            linkBtn.href = data.vip_url || 'https://vk.ru';
+            if(data.vip_text && (data.vip_text.startsWith('http://') || data.vip_text.startsWith('https://'))) {
+                titleLbl.style.display = 'none'; imgBanner.src = data.vip_text; imgBanner.style.display = 'block';
+                linkBtn.innerText = "Перейти по рекламе";
+            } else if(data.vip_text) {
+                imgBanner.style.display = 'none'; titleLbl.innerText = data.vip_text; titleLbl.style.display = 'block';
+                linkBtn.innerText = "Перейти к контактам";
+            }
+            if(data.code_top) loadLiveBanner('zoneTop', data.code_top);
+            if(data.code_mid) loadLiveBanner('zoneMid', data.code_mid);
+            if(data.code_links) loadLiveBanner('linkslotContainer', data.code_links);
+        }
+    });
+
+    // РАБОТА С ОБЛАЧНЫМ РЕКЛАМНЫМ ЧАТОМ
+    function listenToCloudChat() {
+        const box = document.getElementById('chatBox');
+        box.innerHTML = '';
+        db.get('chat').map().on((msg, id) => {
+            if(msg && msg.name && msg.text) {
