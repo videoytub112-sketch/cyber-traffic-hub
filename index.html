@@ -42,6 +42,11 @@
         .chat-messages { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
         .msg-item { background: rgba(31, 40, 51, 0.5); padding: 10px 12px; border-radius: 12px; border-left: 3px solid #db7bf2; word-break: break-all; }
         .msg-meta { font-size: 10px; color: #45f3ff; font-weight: bold; margin-bottom: 3px; display: flex; justify-content: space-between; }
+        
+        /* Стили для кликабельных синих ссылок в чате */
+        .chat-messages a { color: #45f3ff; text-decoration: underline; font-weight: bold; cursor: pointer; }
+        .chat-messages a:hover { color: #db7bf2; }
+        
         .chat-inputs { display: flex; flex-direction: column; gap: 8px; padding: 12px; background: #1f2833; border-top: 1px solid rgba(102,252,241,0.15); }
         .chat-in { background: #0b0c10; border: 1px solid rgba(69, 243, 255, 0.2); padding: 10px; border-radius: 10px; color: #fff; font-size: 13px; outline: none; }
         .btn-send { background: linear-gradient(90deg, #66fcf1 0%, #db7bf2 100%); border: none; color: #0b0c10; font-weight: bold; border-radius: 10px; font-size: 11px; cursor: pointer; text-transform: uppercase; }
@@ -65,7 +70,7 @@
             <div class="vip-badge">👑 VIP СЛОТ</div>
             <div class="vip-title" id="lblVipTitle">Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК</div>
             <img src="" id="imgVipBanner" class="vip-banner-img" alt="VIP Реклама">
-            <a href="https://vk.com" target="_blank" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
+            <a href="https://vk.ru" target="_blank" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
         </div>
 
         <!-- РЕКЛАМНЫЙ ЧАТ ОНЛАЙН -->
@@ -74,9 +79,7 @@
                 <span>💬 РЕКЛАМНЫЙ СТРИМ ОНЛАЙН</span>
                 <span style="color: #ffb167; font-size: 9px; font-weight: 800;">БЕЗ МОДЕРАЦИИ</span>
             </div>
-            <div class="chat-messages" id="chatBox">
-                <div class="msg-item"><div class="msg-meta"><span>Система</span></div>Добро пожаловать! Здесь вы можете бесплатно оставить ссылку на свой проект. Спам разрешен!</div>
-            </div>
+            <div class="chat-messages" id="chatBox"></div>
             <div class="chat-inputs">
                 <input type="text" id="chatMsg" class="chat-in" placeholder="Текст вашего объявления или ссылка...">
                 <button class="btn-send" style="height: 36px;" onclick="sendChatMessage()">Опубликовать бесплатно</button>
@@ -97,22 +100,52 @@
     const randomUserId = Math.floor(Math.random() * 899) + 100;
     const currentNick = "Гость #" + randomUserId;
 
+    // Скрипт автоматического поиска доменов и превращения их в ссылки
+    function linkifyText(text) {
+        const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]|\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|\b(?:[A-Z0-9-]+\.)+(?:com|ru|net|org|biz|info|cc|me|tv|io|co|bot|xyz|shop|online|site|club|link)(?:\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])?)/gi;
+        return text.replace(urlPattern, function(url) {
+            let href = url;
+            if (!/^https?:\/\//i.test(url)) {
+                href = 'https://' + url;
+            }
+            return `<a href="${href}" target="_blank">${url}</a>`;
+        });
+    }
+
+    // Загрузка сообщений из стабильной памяти браузера
+    function renderChatMessages() {
+        const box = document.getElementById('chatBox');
+        if(!box) return;
+        const msgs = JSON.parse(localStorage.getItem('matrix_pure_local_chat') || '[]');
+        
+        if (msgs.length === 0) {
+            box.innerHTML = `<div class="msg-item"><div class="msg-meta"><span>Система</span></div>Добро пожаловать! Здесь вы можете бесплатно оставить ссылку на свой проект. Спам разрешен!</div>`;
+            return;
+        }
+        box.innerHTML = '';
+        msgs.forEach(m => {
+            const cleanText = linkifyText(m.text);
+            box.innerHTML += `<div class="msg-item"><div class="msg-meta"><span>${m.name}</span> <span>${m.time || ''}</span></div>${cleanText}</div>`;
+        });
+        box.scrollTop = box.scrollHeight;
+    }
+
     function sendChatMessage() {
         const textInput = document.getElementById('chatMsg');
         const text = textInput.value.trim();
-        if(!text) return alert("Введите текст рекламы!");
+        if(!text) return alert("Введите text рекламы!");
         
-        const box = document.getElementById('chatBox');
-        const now = new Date();
+        let now = new Date();
         const timeStr = (now.getHours()<10?'0':'')+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
 
-        const newMsg = document.createElement('div');
-        newMsg.className = 'msg-item';
-        newMsg.innerHTML = `<div class="msg-meta"><span>${currentNick}</span> <span>${timeStr}</span></div>${text}`;
+        let msgs = JSON.parse(localStorage.getItem('matrix_pure_local_chat') || '[]');
+        msgs.push({ name: currentNick, text: text, time: timeStr });
         
-        box.appendChild(newMsg);
+        if(msgs.length > 40) msgs.shift();
+        
+        localStorage.setItem('matrix_pure_local_chat', JSON.stringify(msgs));
         textInput.value = '';
-        box.scrollTop = box.scrollHeight;
+        renderChatMessages();
     }
 
     function loadLiveBanner(elementId, htmlScript) {
@@ -131,33 +164,3 @@
                 zone.appendChild(node.cloneNode(true));
             }
         });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        const txt = localStorage.getItem('vip_text') || '';
-        const url = localStorage.getItem('vip_url') || 'https://vk.com';
-        const lt = localStorage.getItem('ls_top');
-        const lm = localStorage.getItem('ls_mid');
-        const ll = localStorage.getItem('ls_links');
-
-        const titleLbl = document.getElementById('lblVipTitle');
-        const imgBanner = document.getElementById('imgVipBanner');
-        const linkBtn = document.getElementById('btnVipLink');
-
-        linkBtn.href = url;
-
-        if(txt.startsWith('http://') || txt.startsWith('https://')) {
-            titleLbl.style.display = 'none'; imgBanner.src = txt; imgBanner.style.display = 'block';
-            linkBtn.innerText = "Перейти по рекламе";
-        } else if(txt) {
-            imgBanner.style.display = 'none'; titleLbl.innerText = txt; titleLbl.style.display = 'block';
-            linkBtn.innerText = "Перейти к контактам";
-        }
-
-        if(lt) loadLiveBanner('zoneTop', lt);
-        if(lm) loadLiveBanner('zoneMid', lm);
-        if(ll) loadLiveBanner('linkslotContainer', ll);
-    });
-</script>
-</body>
-</html>
