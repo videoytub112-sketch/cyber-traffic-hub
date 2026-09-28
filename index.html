@@ -45,7 +45,6 @@
         .msg-item { background: rgba(31, 40, 51, 0.5); padding: 10px 12px; border-radius: 12px; border-left: 3px solid #db7bf2; word-break: break-all; }
         .msg-meta { font-size: 10px; color: #45f3ff; font-weight: bold; margin-bottom: 3px; display: flex; justify-content: space-between; }
         
-        /* Стили для кликабельных синих ссылок в чате */
         .chat-messages a { color: #45f3ff; text-decoration: underline; font-weight: bold; cursor: pointer; }
         .chat-messages a:hover { color: #db7bf2; }
         
@@ -72,7 +71,8 @@
             <div class="vip-badge">👑 VIP СЛОТ</div>
             <div class="vip-title" id="lblVipTitle">Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК</div>
             <img src="" id="imgVipBanner" class="vip-banner-img" alt="VIP Реклама">
-            <a href="https://vk.ru/idkirik99" target="_blank" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
+            <!-- Умный обработчик ссылки под мобильные телефоны -->
+            <a href="vk://://vk.com" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
         </div>
 
         <!-- РЕКЛАМНЫЙ ЧАТ ОНЛАЙН -->
@@ -102,9 +102,8 @@
     const randomUserId = Math.floor(Math.random() * 899) + 100;
     const currentNick = "Гость #" + randomUserId;
 
-    // Скрипт автоматического поиска доменов и превращения их в ссылки
     function linkifyText(text) {
-        const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]|\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|\b(?:[A-Z0-9-]+\.)+(?:com|ru|net|org|biz|info|cc|me|tv|io|co|bot|xyz|shop|online|site|club|link)(?:\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])?)/gi;
+        const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]|\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|\b(?:[A-Z0-9-]+\.)+(?:com|ru|net|org|biz|info|cc|me|tv|io|co|bot|xyz|shop|online|site|club|link)(w*)\/?(?:[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])?)/gi;
         return text.replace(urlPattern, function(url) {
             let href = url;
             if (!/^https?:\/\//i.test(url)) {
@@ -114,7 +113,6 @@
         });
     }
 
-    // Загрузка сообщений из памяти браузера
     function renderChatMessages() {
         const box = document.getElementById('chatBox');
         if(!box) return;
@@ -137,7 +135,6 @@
         const text = textInput.value.trim();
         if(!text) return alert("Введите текст рекламы!");
         
-        const box = document.getElementById('chatBox');
         let now = new Date();
         const timeStr = (now.getHours()<10?'0':'')+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
 
@@ -164,3 +161,11 @@
                 sc.innerHTML = node.innerHTML;
                 zone.appendChild(sc);
             } else {
+                zone.appendChild(node.cloneNode(true));
+            }
+        });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        renderChatMessages();
+        
