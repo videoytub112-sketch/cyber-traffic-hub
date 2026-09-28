@@ -3,517 +3,555 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matrix Premium Traffic Portal</title>
+    <title>MATRIX TRAFFIC — Автоматическая рекламная платформа</title>
     <style>
+        :root {
+            --bg-dark: #0b0c16;
+            --panel-dark: #16192e;
+            --accent-cyan: #66fcf1;
+            --accent-orange: #ffb167;
+            --text-gray: #94a1c2;
+            --border-glow: rgba(109, 255, 240, 0.15);
+        }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background: radial-gradient(circle at top, #141526 0%, #070810 100%);
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: #000000;
             color: #fff;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 15px;
-            gap: 15px;
-            overflow-x: hidden;
-        }
-        .portal-shell {
-            width: 100%;
-            max-width: 400px;
-            background: rgba(31, 40, 51, 0.65);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(69, 243, 255, 0.25);
-            border-radius: 28px;
-            display: flex;
-            flex-direction: column;
             padding: 20px;
-            gap: 18px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(102,252,241,0.05);
+        }
+        .container {
+            width: 100%;
+            max-width: 420px;
+            background: var(--panel-dark);
+            border-radius: 24px;
+            border: 1px solid var(--border-glow);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(102, 252, 241, 0.1);
+            padding: 20px;
+            backdrop-filter: blur(10px);
+        }
+        h1 {
+            font-size: 22px;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-align: center;
+            margin-bottom: 4px;
+            text-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 11px;
+            color: var(--text-gray);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .portal-header { text-align: center; cursor: pointer; user-select: none; }
-        .portal-header h1 { font-size: 24px; color: #66fcf1; text-shadow: 0 0 15px #66fcf1; font-weight: 900; }
-        .portal-header p { font-size: 10px; color: #94a1c2; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .click-hint { font-size: 10px; color: #ffb167; height: 12px; margin-top: 4px; }
-
-        /* ===== АДМИН-ПАНЕЛЬ ===== */
-        .admin-panel {
-            display: none;
-            flex-direction: column;
-            gap: 14px;
-            background: linear-gradient(135deg, #16192e 0%, #0b0c16 100%);
-            border: 2px solid #ffb167;
-            border-radius: 18px;
-            padding: 14px;
-            box-shadow: 0 0 20px rgba(255,177,103,0.25);
-            max-height: 75vh;
-            overflow-y: auto;
+        /* VIP СЛОТ */
+        .vip-slot-card {
+            border: 1px solid rgba(255, 177, 103, 0.4);
+            border-radius: 16px;
+            background: rgba(255, 177, 103, 0.08);
+            padding: 16px;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
         }
-        .admin-panel.visible { display: flex; }
-        .admin-head {
+        .vip-badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--accent-orange);
+            color: #000;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-bottom-right-radius: 8px;
+            text-transform: uppercase;
+        }
+        .vip-text {
+            font-size: 13px;
+            color: #fff;
+            line-height: 1.4;
+            margin-bottom: 12px;
+        }
+        .vip-btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(90deg, #00a8ff, #00f7c8);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .vip-btn:active { transform: scale(0.98); }
+
+        /* РЕКЛАМНЫЙ СТРИМ */
+        .stream-card {
+            border-radius: 16px;
+            background: #000000;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        .stream-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 13px;
-            font-weight: bold;
-            color: #ffb167;
-            letter-spacing: 1px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
         }
-        .admin-section {
+        .stream-status {
+            font-size: 10px;
+            color: #00ff88;
+            background: rgba(0, 255, 136, 0.1);
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+        .stream-placeholder {
+            width: 100%;
+            height: 140px;
+            background: #0f101a;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+        }
+        .stream-input-group {
+            margin-top: 12px;
+        }
+        .stream-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+        .stream-btn {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            border: none;
+            color: #000;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        /* ПАРТНЕРСКИЕ ССЫЛКИ */
+        .links-card {
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.02);
+            padding: 16px;
+        }
+        .links-header {
+            font-size: 12px;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .links-header::before {
+            content: "⚙️";
+            font-size: 12px;
+        }
+        .links-list {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            padding: 12px;
-            background: rgba(255,255,255,0.04);
-            border-radius: 12px;
         }
-        .section-title { font-size: 11px; color: #94a1c2; text-transform: uppercase; letter-spacing: 1px; }
-        .admin-input, .admin-textarea {
-            width: 100%;
+        .link-item {
+            display: block;
             padding: 10px;
-            border-radius: 10px;
-            border: 1px solid rgba(69,243,255,0.3);
-            background: rgba(255,255,255,0.06);
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-cyan);
             color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
             font-size: 13px;
-            font-family: inherit;
-            outline: none;
+            transition: all 0.2s;
         }
-        .admin-input:focus, .admin-textarea:focus { border-color: #66fcf1; }
-        .admin-textarea { min-height: 90px; resize: vertical; }
-        .admin-list { display: flex; flex-direction: column; gap: 6px; }
+        .link-item:hover {
+            background: rgba(102, 252, 241, 0.1);
+            transform: translateX(4px);
+        }
+
+        /* АДМИН ПАНЕЛЬ (скрыта по умолчанию) */
+        .admin-panel {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        .admin-panel.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .admin-card {
+            background: var(--panel-dark);
+            border: 1px solid var(--accent-orange);
+            border-radius: 20px;
+            padding: 20px;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            color: var(--accent-orange);
+            font-weight: bold;
+            font-size: 18px;
+        }
+        .admin-close {
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 20px;
+            cursor: pointer;
+        }
+        .form-group { margin-bottom: 15px; }
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 12px;
+            color: var(--text-gray);
+            text-transform: uppercase;
+        }
+        .form-input, .form-textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            font-family: inherit;
+        }
+        .form-textarea { min-height: 100px; resize: vertical; }
+        .admin-btn {
+            width: 100%;
+            padding: 12px;
+            background: var(--accent-orange);
+            color: #000;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+        }
+        .admin-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 15px;
+        }
         .admin-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 8px;
-            padding: 7px 10px;
-            font-size: 12px;
-        }
-        .admin-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .del-btn {
-            flex-shrink: 0;
-            background: transparent;
-            border: 1px solid rgba(255,80,80,0.5);
-            color: #ff8080;
-            border-radius: 7px;
-            padding: 4px 9px;
-            font-size: 11px;
-            cursor: pointer;
-        }
-        .del-btn:hover { background: rgba(255,80,80,0.15); }
-        .empty { font-size: 11px; color: #5a6478; text-align: center; padding: 4px; }
-        .danger-btn {
-            width: 100%;
-            padding: 9px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,80,80,0.5);
-            background: transparent;
-            color: #ff8080;
-            font-size: 12px;
-            cursor: pointer;
-        }
-        .danger-btn:hover { background: rgba(255,80,80,0.15); }
-        .exit-btn {
-            padding: 5px 12px;
-            border-radius: 8px;
-            border: 1px solid rgba(255,255,255,0.3);
-            background: transparent;
-            color: #94a1c2;
-            font-size: 11px;
-            cursor: pointer;
-        }
-        .exit-btn:hover { border-color: #ffb167; color: #ffb167; }
-
-        /* ===== БАННЕРЫ ===== */
-        .banner-zone { display: flex; flex-direction: column; gap: 12px; }
-        .banner-item { text-align: center; }
-        .banner-title { font-size: 10px; color: #94a1c2; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-        .banner-holder { display: flex; justify-content: center; flex-wrap: wrap; gap: 8px; }
-        .banner-holder img { max-width: 100%; height: auto; }
-
-        /* ===== БЛОКИ ССЫЛОК ===== */
-        .link-zone { display: flex; flex-direction: column; gap: 12px; }
-        .link-block {
-            background: rgba(255,255,255,0.04);
-            border-radius: 14px;
-            padding: 12px;
-        }
-        .link-block-title {
-            font-size: 11px;
-            color: #66fcf1;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-        }
-        .link-list { display: flex; flex-direction: column; gap: 6px; }
-        .link-item {
-            display: block;
-            padding: 8px 10px;
-            border-radius: 8px;
-            background: rgba(102,252,241,0.08);
-            border-left: 3px solid #66fcf1;
-            color: #d6f7f4;
-            text-decoration: none;
-            font-size: 13px;
-            word-break: break-word;
-            transition: background 0.2s;
-        }
-        .link-item:hover { background: rgba(102,252,241,0.18); }
-
-        /* ===== ЧАТ ===== */
-        .chat-block { width: 100%; display: flex; flex-direction: column; gap: 10px; }
-        .chat-title { font-size: 11px; color: #94a1c2; text-transform: uppercase; letter-spacing: 1px; }
-        .chat-messages {
-            background: rgba(255,255,255,0.04);
-            border-radius: 14px;
             padding: 10px;
-            height: 180px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-        .msg {
-            background: rgba(102,252,241,0.12);
-            border-left: 3px solid #66fcf1;
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 8px;
-            padding: 6px 10px;
-            font-size: 13px;
-            word-break: break-word;
         }
-        .msg .msg-time { display: block; font-size: 10px; color: #94a1c2; margin-top: 3px; }
-        .chat-input-row { display: flex; gap: 8px; }
-        .chat-input {
-            flex: 1;
-            padding: 10px 12px;
-            border-radius: 12px;
-            border: 1px solid rgba(69,243,255,0.3);
-            background: rgba(255,255,255,0.06);
-            color: #fff;
-            font-size: 14px;
-            outline: none;
-        }
-        .chat-input:focus { border-color: #66fcf1; }
-        .chat-send {
-            padding: 10px 16px;
-            border-radius: 12px;
+        .del-btn {
+            background: rgba(255, 0, 0, 0.2);
+            color: #ff5555;
             border: none;
-            background: #66fcf1;
-            color: #0b0c10;
-            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 11px;
         }
-        .chat-send:active { transform: scale(0.97); }
-        .footer-note { text-align: center; color: #94a1c2; font-size: 13px; }
+
+        /* Кнопка входа в админку (маленькая) */
+        .admin-trigger {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--accent-cyan);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--accent-cyan);
+            cursor: pointer;
+            z-index: 10;
+            font-size: 16px;
+            box-shadow: 0 0 15px rgba(102, 252, 241, 0.3);
+            transition: transform 0.2s;
+        }
+        .admin-trigger:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
 
-    <div class="portal-shell">
-        <header class="portal-header" id="portalHeader">
-            <h1>MATRIX</h1>
-            <p>Premium Traffic Management</p>
-            <div class="click-hint" id="clickHint"></div>
-        </header>
+    <div class="container">
+        <h1>MATRIX TRAFFIC</h1>
+        <p class="subtitle">Автоматическая рекламная платформа</p>
 
-        <!-- ===== АДМИН-ПАНЕЛЬ ===== -->
-        <div class="admin-panel" id="adminPanel">
-            <div class="admin-head">
-                <span>ADMIN PANEL</span>
-                <button class="exit-btn" id="exitAdminBtn">Выйти</button>
+        <!-- VIP СЛОТ -->
+        <div class="vip-slot-card">
+            <div class="vip-badge">VIP СЛОТ</div>
+            <div class="vip-text">
+                Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК.
             </div>
-
-            <div class="admin-section">
-                <div class="section-title">Баннеры (код linkslot и др.)</div>
-                <input type="text" id="bannerTitle" class="admin-input" placeholder="Название (необязательно)">
-                <textarea id="bannerCode" class="admin-textarea"
-                    placeholder='Вставьте код баннера, например:&#10;&lt;div id="linkslot_172641"&gt;&lt;/div&gt;&lt;script src="//linkslot.ru/bancode.php?id=172641" async&gt;&lt;/script&gt;'></textarea>
-                <button class="action-btn" id="addBannerBtn" style="width:100%;padding:12px;border-radius:12px;border:none;background:#ffb167;color:#0b0c10;font-weight:bold;cursor:pointer;">Добавить баннер</button>
-                <div class="admin-list" id="bannerList"></div>
-            </div>
-
-            <div class="admin-section">
-                <div class="section-title">Блок ссылок</div>
-                <input type="text" id="linkBlockTitle" class="admin-input" placeholder="Название блока (например, Партнёры)">
-                <textarea id="linkBlockData" class="admin-textarea"
-                    placeholder="Ссылки — по одной в строке, формат:&#10;Название | https://site.ru&#10;Второй сайт | https://site2.ru"></textarea>
-                <button class="action-btn" id="addLinkBlockBtn" style="width:100%;padding:12px;border-radius:12px;border:none;background:#ffb167;color:#0b0c10;font-weight:bold;cursor:pointer;">Добавить блок ссылок</button>
-                <div class="admin-list" id="linkBlockList"></div>
-            </div>
-
-            <button class="danger-btn" id="clearAllBtn">Удалить всё</button>
+            <button class="vip-btn" onclick="window.open('https://vk.com/ваш_админ')">Написать админу в ВК</button>
         </div>
 
-        <!-- ===== БАННЕРЫ ===== -->
-        <div class="banner-zone" id="bannerZone"></div>
-
-        <!-- ===== БЛОКИ ССЫЛОК ===== -->
-        <div class="link-zone" id="linkZone"></div>
-
-        <!-- ===== ЧАТ ===== -->
-        <div class="chat-block">
-            <div class="chat-title">Chat</div>
-            <div class="chat-messages" id="chatMessages"></div>
-            <div class="chat-input-row">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Введите сообщение..." maxlength="300">
-                <button class="chat-send" id="chatSend">→</button>
+        <!-- РЕКЛАМНЫЙ СТРИМ -->
+        <div class="stream-card">
+            <div class="stream-header">
+                <span>Рекламный стрим онлайн</span>
+                <span class="stream-status">Без модерации</span>
+            </div>
+            <div class="stream-placeholder">
+                Здесь будет ваш стрим или баннер
+            </div>
+            <div class="stream-input-group">
+                <input type="text" class="stream-input" id="streamInput" placeholder="Вставьте код баннера (например, linkslot)">
+                <button class="stream-btn" onclick="addStream()">Опубликовать бесплатно</button>
             </div>
         </div>
 
-        <div class="footer-note">
-            <p>All systems operational. Monitoring real-time data flow.</p>
+        <!-- ПАРТНЕРСКИЕ ССЫЛКИ -->
+        <div class="links-card">
+            <div class="links-header">
+                Рекомендуемые ссылки партнеров:
+            </div>
+            <div class="links-list" id="linksList">
+                <!-- Сюда JS добавит ссылки -->
+                <div style="color:var(--text-gray); font-size:12px;">Здесь будут отображаться контекстные ссылки...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- КНОПКА ВХОДА В АДМИНКУ -->
+    <div class="admin-trigger" onclick="toggleAdmin()">⚙️</div>
+
+    <!-- АДМИН ПАНЕЛЬ -->
+    <div class="admin-panel" id="adminPanel">
+        <div class="admin-card">
+            <div class="admin-header">
+                <span>Панель администратора</span>
+                <button class="admin-close" onclick="toggleAdmin()">&times;</button>
+            </div>
+
+            <!-- УПРАВЛЕНИЕ VIP СЛОТОМ (ссылка) -->
+            <div class="form-group">
+                <label class="form-label">Ссылка для кнопки "Написать админу в ВК"</label>
+                <input type="url" class="form-input" id="vipLink" placeholder="https://vk.com/...">
+                <button class="admin-btn" onclick="updateVipLink()">Сохранить ссылку</button>
+            </div>
+
+            <!-- ДОБАВЛЕНИЕ СТРИМА/БАННЕРА -->
+            <div class="form-group">
+                <label class="form-label">Код баннера / Стрима (HTML)</label>
+                <textarea class="form-textarea" id="bannerCode" placeholder="&lt;div id='linkslot_...'&gt;&lt;/div&gt;..."></textarea>
+                <button class="admin-btn" onclick="addStreamFromAdmin()">Добавить в стрим-блок</button>
+                <div class="admin-list" id="streamList">
+                    <div style="color:var(--text-gray)">Список активных баннеров пуст</div>
+                </div>
+            </div>
+
+            <!-- ДОБАВЛЕНИЕ ССЫЛОК -->
+            <div class="form-group">
+                <label class="form-label">Добавить партнерскую ссылку</label>
+                <input type="text" class="form-input" id="linkName" placeholder="Название ссылки">
+                <input type="url" class="form-input" id="linkUrl" placeholder="https://site.com">
+                <button class="admin-btn" onclick="addLink()">Добавить ссылку</button>
+            </div>
+            <div class="admin-list" id="linksAdminList">
+                <!-- Список ссылок -->
+            </div>
         </div>
     </div>
 
     <script>
-    (function () {
-        'use strict';
+        // === ДАННЫЕ (JSON) ===
+        // В ЭТОМ БЛОКЕ ХРАНЯТСЯ ВСЕ ДАННЫЕ. 
+        // КОГДА ТЫ МЕНЯЕШЬ ИХ В АДМИНКЕ, ОНИ АВТОМАТИЧЕСКИ ПОЯВЛЯЮТСЯ ЗДЕСЬ.
+        // ДЛЯ ТОГО ЧТОБЫ ДАННЫЕ ВИДЕЛИ ВСЕ ПОСЕТИТЕЛИ, ТЕБЕ НУЖНО СКОПИРОВАТЬ ЭТОТ JSON 
+        // И ВСТАВИТЬ ЕГО В ФАЙЛ НА СЕРВЕРЕ (ИЛИ ВСТАВИТЬ ПРЯМО В ЭТОТ КОД В КОНЦЕ).
+        const DATA = {
+            vipLink: "https://vk.com/ваш_админ",
+            streamBanners: [], // Сюда попадают баннеры из админки
+            links: [
+                { name: "Первый партнер", url: "https://example.com" },
+                { name: "Второй партнер", url: "https://example.org" }
+            ]
+        };
 
-        /* ---------- ХРАНИЛИЩЕ ---------- */
-        const KEYS = { banners: 'mx_banners', links: 'mx_links', chat: 'mx_chat' };
+        // === ФУНКЦИИ ОТРИСОВКИ ===
+        function init() {
+            // 1. Обновляем кнопку VIP
+            const btn = document.querySelector('.vip-btn');
+            if(btn) btn.onclick = () => window.open(DATA.vipLink);
 
-        function load(key, def) {
-            try { const v = JSON.parse(localStorage.getItem(key)); return v == null ? def : v; }
-            catch (e) { return def; }
-        }
-        function save(key, val) {
-            try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {}
-        }
-        const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
-
-        let banners = load(KEYS.banners, []);
-        let linkBlocks = load(KEYS.links, []);
-        let chat = load(KEYS.chat, []);
-
-        /* ---------- ВСТАВКА КОДА С ВЫПОЛНЕНИЕМ <script> ---------- */
-        function injectCode(container, code) {
-            container.innerHTML = '';
-            const tpl = document.createElement('template');
-            tpl.innerHTML = code;
-            const nodes = Array.from(tpl.content.childNodes);
-            nodes.forEach(node => {
-                if (node.nodeType === 1 && node.tagName === 'SCRIPT') {
-                    const s = document.createElement('script');
-                    for (const a of Array.from(node.attributes)) s.setAttribute(a.name, a.value);
-                    s.textContent = node.textContent;
-                    container.appendChild(s);
+            // 2. Отрисовываем ссылки
+            const list = document.getElementById('linksList');
+            if (list) {
+                list.innerHTML = '';
+                if (DATA.links.length === 0) {
+                    list.innerHTML = '<div style="color:var(--text-gray)">Здесь будут отображаться контекстные ссылки...</div>';
                 } else {
-                    container.appendChild(node);
+                    DATA.links.forEach(l => {
+                        const a = document.createElement('a');
+                        a.className = 'link-item';
+                        a.href = l.url;
+                        a.target = '_blank';
+                        a.rel = 'noopener';
+                        a.textContent = l.name;
+                        list.appendChild(a);
+                    });
                 }
-            });
-        }
+            }
 
-        /* ---------- РЕНДЕР БАННЕРОВ ---------- */
-        const bannerZone = document.getElementById('bannerZone');
-        function renderBanners() {
-            bannerZone.innerHTML = '';
-            banners.forEach(b => {
-                const item = document.createElement('div');
-                item.className = 'banner-item';
-                if (b.title) {
-                    const t = document.createElement('div');
-                    t.className = 'banner-title';
-                    t.textContent = b.title;
-                    item.appendChild(t);
-                }
-                const holder = document.createElement('div');
-                holder.className = 'banner-holder';
-                item.appendChild(holder);
-                bannerZone.appendChild(item);
-                injectCode(holder, b.code);
-            });
-        }
-
-        /* ---------- РЕНДЕР БЛОКОВ ССЫЛОК ---------- */
-        const linkZone = document.getElementById('linkZone');
-        function renderLinks() {
-            linkZone.innerHTML = '';
-            linkBlocks.forEach(block => {
-                const box = document.createElement('div');
-                box.className = 'link-block';
-                if (block.title) {
-                    const t = document.createElement('div');
-                    t.className = 'link-block-title';
-                    t.textContent = block.title;
-                    box.appendChild(t);
-                }
-                const list = document.createElement('div');
-                list.className = 'link-list';
-                (block.links || []).forEach(l => {
-                    const a = document.createElement('a');
-                    a.className = 'link-item';
-                    a.href = l.url;
-                    a.target = '_blank';
-                    a.rel = 'noopener nofollow';
-                    a.textContent = l.name;
-                    list.appendChild(a);
+            // 3. Отрисовываем баннеры в стриме
+            const placeholder = document.querySelector('.stream-placeholder');
+            if (placeholder && DATA.streamBanners.length > 0) {
+                placeholder.innerHTML = '';
+                DATA.streamBanners.forEach(b => {
+                    const div = document.createElement('div');
+                    div.style.width = '100%';
+                    div.style.marginBottom = '10px';
+                    // Безопасная вставка HTML
+                    div.innerHTML = b.code; 
+                    placeholder.appendChild(div);
                 });
-                box.appendChild(list);
-                linkZone.appendChild(box);
-            });
+            }
         }
 
-        function parseLinks(text) {
-            return text.split('\n')
-                .map(s => s.trim()).filter(Boolean)
-                .map(line => {
-                    const parts = line.split('|');
-                    let name = (parts[0] || '').trim();
-                    let url = (parts[1] || '').trim();
-                    if (!url && /^https?:\/\//i.test(name)) { url = name; }
-                    if (url && !/^https?:\/\//i.test(url) && !/^\/\//.test(url)) url = 'https://' + url;
-                    return { name: name || url, url: url };
-                })
-                .filter(l => l.url);
+        // === ФУНКЦИИ АДМИНКИ ===
+        function toggleAdmin() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('active');
+            renderAdminLists();
         }
 
-        /* ---------- СПИСКИ В АДМИНКЕ ---------- */
-        const bannerList = document.getElementById('bannerList');
-        const linkBlockList = document.getElementById('linkBlockList');
+        function updateVipLink() {
+            const val = document.getElementById('vipLink').value.trim();
+            if(val) {
+                DATA.vipLink = val;
+                alert('Ссылка обновлена! (В реальном проекте нужно сохранить в файл)');
+                init();
+            }
+        }
+
+        function addStream() {
+            const code = document.getElementById('streamInput').value.trim();
+            if (!code) return alert('Вставьте код');
+            DATA.streamBanners.push({ code: code });
+            document.getElementById('streamInput').value = '';
+            alert('Баннер добавлен в очередь. Обновите страницу.');
+            renderAdminLists();
+            init();
+        }
+
+        function addStreamFromAdmin() {
+            const code = document.getElementById('bannerCode').value.trim();
+            if (!code) return alert('Вставьте код');
+            DATA.streamBanners.push({ code: code });
+            document.getElementById('bannerCode').value = '';
+            alert('Баннер добавлен. Обновите страницу, чтобы увидеть результат.');
+            renderAdminLists();
+            init();
+        }
+
+        function addLink() {
+            const name = document.getElementById('linkName').value.trim();
+            const url = document.getElementById('linkUrl').value.trim();
+            if (!name || !url) return alert('Заполните оба поля');
+            DATA.links.push({ name: name, url: url });
+            document.getElementById('linkName').value = '';
+            document.getElementById('linkUrl').value = '';
+            alert('Ссылка добавлена. Обновите страницу.');
+            renderAdminLists();
+            init();
+        }
+
+        function deleteStream(index) {
+            if(confirm('Удалить?')) {
+                DATA.streamBanners.splice(index, 1);
+                renderAdminLists();
+                init();
+            }
+        }
+
+        function deleteLink(index) {
+            if(confirm('Удалить?')) {
+                DATA.links.splice(index, 1);
+                renderAdminLists();
+                init();
+            }
+        }
 
         function renderAdminLists() {
-            bannerList.innerHTML = '';
-            if (!banners.length) {
-                bannerList.innerHTML = '<div class="empty">Пока нет баннеров</div>';
-            }
-            banners.forEach(b => {
-                const row = document.createElement('div');
-                row.className = 'admin-item';
-                const label = document.createElement('span');
-                label.textContent = b.title || 'Баннер';
-                const del = document.createElement('button');
-                del.className = 'del-btn';
-                del.textContent = 'Удалить';
-                del.onclick = () => {
-                    banners = banners.filter(x => x.id !== b.id);
-                    save(KEYS.banners, banners);
-                    renderBanners(); renderAdminLists();
-                };
-                row.appendChild(label); row.appendChild(del);
-                bannerList.appendChild(row);
-            });
-
-            linkBlockList.innerHTML = '';
-            if (!linkBlocks.length) {
-                linkBlockList.innerHTML = '<div class="empty">Пока нет блоков ссылок</div>';
-            }
-            linkBlocks.forEach(block => {
-                const row = document.createElement('div');
-                row.className = 'admin-item';
-                const label = document.createElement('span');
-                label.textContent = (block.title || 'Блок') + ' (' + (block.links || []).length + ')';
-                const del = document.createElement('button');
-                del.className = 'del-btn';
-                del.textContent = 'Удалить';
-                del.onclick = () => {
-                    linkBlocks = linkBlocks.filter(x => x.id !== block.id);
-                    save(KEYS.links, linkBlocks);
-                    renderLinks(); renderAdminLists();
-                };
-                row.appendChild(label); row.appendChild(del);
-                linkBlockList.appendChild(row);
-            });
-        }
-
-        /* ---------- ДОБАВЛЕНИЕ ---------- */
-        document.getElementById('addBannerBtn').onclick = () => {
-            const title = document.getElementById('bannerTitle').value.trim();
-            const code = document.getElementById('bannerCode').value.trim();
-            if (!code) { alert('Вставьте код баннера'); return; }
-            banners.push({ id: uid(), title: title, code: code });
-            save(KEYS.banners, banners);
-            document.getElementById('bannerTitle').value = '';
-            document.getElementById('bannerCode').value = '';
-            renderBanners(); renderAdminLists();
-        };
-
-        document.getElementById('addLinkBlockBtn').onclick = () => {
-            const title = document.getElementById('linkBlockTitle').value.trim();
-            const raw = document.getElementById('linkBlockData').value.trim();
-            if (!raw) { alert('Добавьте хотя бы одну ссылку'); return; }
-            const links = parseLinks(raw);
-            if (!links.length) { alert('Не удалось разобрать ссылки. Формат: Название | https://site.ru'); return; }
-            linkBlocks.push({ id: uid(), title: title, links: links });
-            save(KEYS.links, linkBlocks);
-            document.getElementById('linkBlockTitle').value = '';
-            document.getElementById('linkBlockData').value = '';
-            renderLinks(); renderAdminLists();
-        };
-
-        document.getElementById('clearAllBtn').onclick = () => {
-            if (confirm('Удалить все баннеры, блоки ссылок и сообщения чата?')) {
-                banners = []; linkBlocks = []; chat = [];
-                save(KEYS.banners, banners); save(KEYS.links, linkBlocks); save(KEYS.chat, chat);
-                renderBanners(); renderLinks(); renderAdminLists(); renderChat();
-            }
-        };
-
-        /* ---------- ВХОД/ВЫХОД ИЗ АДМИНКИ ---------- */
-        const header = document.getElementById('portalHeader');
-        const adminPanel = document.getElementById('adminPanel');
-        const clickHint = document.getElementById('clickHint');
-        let clickCount = 0, resetTimer = null;
-
-        header.addEventListener('click', () => {
-            clickCount++;
-            clearTimeout(resetTimer);
-            resetTimer = setTimeout(() => { clickCount = 0; clickHint.textContent = ''; }, 1500);
-            if (clickCount < 5) {
-                clickHint.textContent = 'Кликов: ' + clickCount + '/5';
+            // Список баннеров
+            const sList = document.getElementById('streamList');
+            sList.innerHTML = '';
+            if (DATA.streamBanners.length === 0) {
+                sList.innerHTML = '<div style="color:var(--text-gray)">Список активных баннеров пуст</div>';
             } else {
-                clickCount = 0; clickHint.textContent = '';
-                adminPanel.classList.add('visible');
+                DATA.streamBanners.forEach((b, i) => {
+                    const div = document.createElement('div');
+                    div.className = 'admin-item';
+                    div.innerHTML = `<span>Баннер #${i+1}</span><button class="del-btn" onclick="deleteStream(${i})">Удалить</button>`;
+                    sList.appendChild(div);
+                });
             }
-        });
 
-        document.getElementById('exitAdminBtn').onclick = () => adminPanel.classList.remove('visible');
-
-        /* ---------- ЧАТ С СОХРАНЕНИЕМ ---------- */
-        const chatMessages = document.getElementById('chatMessages');
-        const chatInput = document.getElementById('chatInput');
-        const chatSend = document.getElementById('chatSend');
-
-        function appendMsg(text, time, scroll) {
-            const el = document.createElement('div');
-            el.className = 'msg';
-            const t = document.createElement('span');
-            t.className = 'msg-text'; t.textContent = text;
-            const tm = document.createElement('span');
-            tm.className = 'msg-time'; tm.textContent = time;
-            el.appendChild(t); el.appendChild(tm);
-            chatMessages.appendChild(el);
-            if (scroll !== false) chatMessages.scrollTop = chatMessages.scrollHeight;
+            // Список ссылок
+            const lList = document.getElementById('linksAdminList');
+            lList.innerHTML = '';
+            if (DATA.links.length === 0) {
+                lList.innerHTML = '<div style="color:var(--text-gray)">Список ссылок пуст</div>';
+            } else {
+                DATA.links.forEach((l, i) => {
+                    const div = document.createElement('div');
+                    div.className = 'admin-item';
+                    div.innerHTML = `<span>${l.name}</span><button class="del-btn" onclick="deleteLink(${i})">Удалить</button>`;
+                    lList.appendChild(div);
+                });
+            }
         }
-        function renderChat() {
-            chatMessages.innerHTML = '';
-            chat.forEach(m => appendMsg(m.text, m.time, false));
-            chatMessages.scrollTop = chatMessages.scrollHeight;
-        }
-        function sendMessage() {
-            const text = chatInput.value.trim();
-            if (!text) return;
-            const time = new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' });
-            chat.push({ text: text, time: time });
-            save(KEYS.chat, chat);
-            appendMsg(text, time);
-            chatInput.value = '';
-            chatInput.focus();
-        }
-        chatSend.onclick = sendMessage;
-        chatInput.addEventListener('keydown', e => { if (e.key === 'Enter') sendMessage(); });
 
-        /* ---------- СТАРТ ---------- */
-        renderBanners();
-        renderLinks();
-        renderAdminLists();
-        renderChat();
-    })();
+        // Запуск
+        init();
     </script>
-
 </body>
 </html>
