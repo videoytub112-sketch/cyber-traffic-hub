@@ -3,719 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATRIX TRAFFIC — Рекламная платформа</title>
+    <title>Чат на Firebase — полная версия</title>
+
+    <!-- Подключаем Firebase SDK (обязательно) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
     <style>
         :root {
-            --bg-dark: #05060f;
-            --panel-dark: #0f111d;
-            --accent-cyan: #00f2fe;
-            --accent-orange: #ffb167;
-            --text-gray: #a1b0c4;
-            --border-glow: rgba(0, 242, 254, 0.15);
+            --primary-color: #3b82f6;
+            --bg-color: #f3f4f6;
+            --chat-bg: #ffffff;
+            --msg-user: #e0f2fe;
+            --msg-other: #f9fafb;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
         body {
-            background: radial-gradient(circle at 50% 0%, #0a1120 0%, #000000 100%);
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
-
-        /* --- ФОН (СТАТИЧНЫЙ МАТРИЧНЫЙ ДОЖДЬ) --- */
-        .matrix-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none; /* Чтобы клики проходили сквозь фон */
-        }
-        .symbol {
-            position: absolute;
-            color: rgba(0, 242, 254, 0.6);
-            font-size: 16px;
-            text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
-            /* Убрали анимацию из класса, чтобы не было мерцания. 
-               Анимация будет добавлена через JS для каждого символа отдельно */
-        }
-
-        /* --- ОСНОВНОЙ КОНТЕЙНЕР (ВВЕРХУ) --- */
-        .container {
-            width: 100%;
-            max-width: 420px;
-            background: rgba(15, 17, 29, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border-glow);
-            border-radius: 0 0 20px 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
             padding: 20px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 242, 254, 0.1);
-            position: relative;
-            z-index: 10;
-            margin-top: 20px;
-            margin-left: auto;
-            margin-right: auto;
         }
 
-        h1 {
-            font-size: 20px;
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-align: center;
-            margin-bottom: 4px;
-            text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-        }
-        .subtitle {
-            text-align: center;
-            font-size: 10px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-
-        /* --- VIP СЛОТ --- */
-        .vip-slot-card {
-            border: 1px solid rgba(255, 177, 103, 0.3);
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--chat-bg);
             border-radius: 12px;
-            background: rgba(255, 177, 103, 0.05);
-            padding: 15px;
-            margin-bottom: 20px;
-            position: relative;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
             overflow: hidden;
-        }
-        .vip-badge {
-            position: absolute;
-            top: 0; left: 0;
-            background: var(--accent-orange);
-            color: #000;
-            font-size: 9px;
-            font-weight: bold;
-            padding: 3px 8px;
-            border-bottom-right-radius: 8px;
-            text-transform: uppercase;
-        }
-        .vip-text {
-            font-size: 12px;
-            color: #fff;
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-        .vip-btn {
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(90deg, #00a8ff, #00f7c8);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        /* --- СТРИМ / БАННЕР --- */
-        .stream-card {
-            border-radius: 12px;
-            background: #000000;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 10px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        .stream-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 11px;
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-        }
-        .stream-content-wrapper {
-            width: 100%;
-            height: auto;
-            min-height: 140px;
-            background: #0f101a;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-gray);
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        .stream-placeholder-text {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        /* --- ПАРТНЕРСКИЕ БЛОКИ --- */
-        .partners-section {
-            margin-bottom: 20px;
-        }
-        .section-title {
-            font-size: 11px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .partner-block {
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid var(--accent-cyan);
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            font-size: 12px;
-            color: #fff;
-            cursor: default;
-        }
-        .partner-block:hover {
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        /* --- ЧАТ --- */
-        .chat-block {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 12px;
-            padding: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .chat-header {
-            font-size: 11px;
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .online-count {
-            font-size: 10px;
-            color: #00ff88;
-            background: rgba(0, 255, 136, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        .chat-messages {
-            height: 180px;
-            overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-bottom: 10px;
+            height: 80vh;
         }
-        .msg {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            line-height: 1.4;
-            border-left: 3px solid var(--accent-cyan);
-            word-wrap: break-word;
+
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 15px 20px;
+            font-weight: 600;
         }
-        .msg strong {
-            color: var(--accent-cyan);
-            margin-right: 5px;
-        }
-        .msg a {
-            color: var(--accent-orange);
-            text-decoration: underline;
-            word-break: break-all;
-        }
-        .chat-input-row {
-            display: flex;
-            gap: 8px;
-        }
-        .chat-input {
+
+        #chat-box {
             flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            font-family: inherit;
-            outline: none;
-        }
-        .chat-input:focus { border-color: var(--accent-cyan); }
-        .chat-send {
-            padding: 10px 16px;
-            border-radius: 8px;
-            border: none;
-            background: var(--accent-cyan);
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        /* --- КНОПКА ВЫЗОВА АДМИНКИ (НЕ МЕШАЕТ ЧАТУ) --- */
-        .admin-trigger-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--accent-cyan);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--accent-cyan);
-            cursor: pointer;
-            z-index: 100;
-            font-size: 20px;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
-            transition: transform 0.2s, background 0.2s;
-            backdrop-filter: blur(5px);
-            pointer-events: auto; /* Кнопка кликабельна */
-        }
-        .admin-trigger-btn:hover {
-            transform: scale(1.1);
-            background: rgba(0, 242, 254, 0.1);
-        }
-
-        /* --- ОВЕРЛЕИ (ПОП-АПЫ) --- */
-        .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .card {
-            background: #0f111d;
-            border: 1px solid var(--accent-orange);
-            padding: 30px;
-            border-radius: 16px;
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        .login-input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            background: #000;
-            color: #fff;
-            text-align: center;
-            font-size: 16px;
-        }
-        .btn-action {
-            width: 100%;
-            padding: 12px;
-            background: var(--accent-orange);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        
-        .admin-list-container {
-            margin-top: 20px;
-            max-height: 300px;
+            padding: 20px;
             overflow-y: auto;
-            border: 1px solid #333;
-            padding: 10px;
-            border-radius: 8px;
+            background-color: #f9fafb;
         }
-        .admin-list-item {
+
+        .message {
+            margin-bottom: 12px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            max-width: 75%;
+            word-wrap: break-word;
+            font-size: 14px;
+        }
+
+        .message.other {
+            background-color: var(--msg-other);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .message.own {
+            background-color: var(--msg-user);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+            text-align: right;
+        }
+
+        .message .time {
+            display: block;
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .message.other .time {
+            text-align: left;
+        }
+
+        footer {
+            padding: 15px;
+            background-color: white;
+            border-top: 1px solid #e5e7eb;
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px;
-            background: rgba(255,255,255,0.05);
-            margin-bottom: 5px;
-            border-radius: 6px;
+            gap: 10px;
         }
-        .del-btn-admin {
-            background: #ff5555;
+
+        #message-input {
+            flex: 1;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        #send-btn {
+            padding: 12px 20px;
+            background-color: var(--primary-color);
             color: white;
             border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 10px;
+            font-weight: 500;
+        }
+
+        #send-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* Стили для полосы прокрутки */
+        #chat-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        #chat-box::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 3px;
         }
     </style>
 </head>
 <body>
 
-    <!-- Фон -->
-    <div class="matrix-bg" id="matrixBg"></div>
+    <div class="container">
+        <header>Чат в реальном времени</header>
 
-    <!-- Основной интерфейс -->
-    <div class="container" id="mainInterface">
-        <h1>MATRIX TRAFFIC</h1>
-        <p class="subtitle">Автоматическая рекламная платформа</p>
+        <div id="chat-box"></div>
 
-        <!-- VIP СЛОТ -->
-        <div class="vip-slot-card">
-            <div class="vip-badge">VIP СЛОТ</div>
-            <div class="vip-text">
-                Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК.
-            </div>
-            <button class="vip-btn" onclick="window.open('https://vk.com/ваш_админ', '_blank')">Написать админу в ВК</button>
-        </div>
-
-        <!-- СТРИМ / БАННЕР -->
-        <div class="stream-card">
-            <div class="stream-header">
-                <span>Рекламный стрим / Баннер</span>
-                <span style="color:#00ff88; font-size:10px;">Без модерации</span>
-            </div>
-            <div class="stream-content-wrapper" id="streamZone">
-                <div class="stream-placeholder-text">
-                    Здесь появится код из админки.<br>
-                    Автоматически подстроится под размер.
-                </div>
-            </div>
-        </div>
-
-        <!-- ПАРТНЕРСКИЕ БЛОКИ -->
-        <div class="partners-section">
-            <div class="section-title">
-                Приобрести ссылку на месяц можно у админа
-            </div>
-            <div id="partnersPublicZone">
-            </div>
-        </div>
-
-        <!-- ЧАТ -->
-        <div class="chat-block">
-            <div class="chat-header">
-                <span>Live Chat</span>
-                <span class="online-count" id="onlineCount">Онлайн: 1</span>
-            </div>
-            <div class="chat-messages" id="chatMessages">
-            </div>
-            <div class="chat-input-row">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Напишите свою рекламу..." maxlength="200">
-                <button class="chat-send" id="chatSend">→</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Кнопка вызова админки (НЕ перекрывает чат) -->
-    <div class="admin-trigger-btn" id="adminTriggerBtn" title="Админ-панель">🔐</div>
-
-    <!-- Окно входа -->
-    <div class="overlay" id="loginOverlay">
-        <div class="card">
-            <h2 style="color:var(--accent-cyan); margin-bottom:20px;">Вход в админку</h2>
-            <input type="password" id="adminPassInput" class="login-input" placeholder="Введите пароль">
-            <button class="btn-action" onclick="checkAdminLogin()">Войти</button>
-            <p style="margin-top:15px; font-size:10px; color:#666;">Пароль по умолчанию: admin123</p>
-        </div>
-    </div>
-
-    <!-- Панель админа -->
-    <div class="overlay" id="adminPanelOverlay">
-        <div class="card" style="max-width: 500px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h2 style="color:var(--accent-cyan);">Панель администратора</h2>
-                <button class="btn-action" style="width:auto; padding:5px 15px; font-size:12px;" onclick="logoutAdmin()">Выйти</button>
-            </div>
-
-            <div style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:15px;">
-                <h3 style="color:#fff; margin-bottom:10px;">Управление стримом / Баннером</h3>
-                <textarea id="streamCodeInput" class="login-input" rows="4" placeholder="Вставьте код (iframe, linkslot, div и т.д.)"></textarea>
-                <button class="btn-action" onclick="saveStreamCode()">Опубликовать в стриме</button>
-                <p style="font-size:10px; color:#666; margin-top:5px;">Код автоматически займет место под заголовком.</p>
-            </div>
-
-            <div>
-                <h3 style="color:#fff; margin-bottom:10px;">Партнерские блоки (до 100 шт)</h3>
-                <div style="display:flex; gap:10px; margin-bottom:10px;">
-                    <input type="text" id="partnerTitle" class="login-input" style="flex:1;" placeholder="Название блока">
-                    <input type="text" id="partnerDesc" class="login-input" style="flex:2;" placeholder="Описание / Текст">
-                    <button class="btn-action" style="width:120px;" onclick="addPartnerBlock()">Добавить</button>
-                </div>
-                <div class="admin-list-container" id="partnersAdminList">
-                </div>
-            </div>
-        </div>
+        <footer>
+            <input type="text" id="message-input" placeholder="Введите сообщение..." autocomplete="off" />
+            <button id="send-btn">➤</button>
+        </footer>
     </div>
 
     <script>
-        const ADMIN_PASSWORD = 'admin123';
-        
-        const STORAGE_KEYS = {
-            stream: 'mx_stream_code',
-            partners: 'mx_partners_list',
-            chat: 'mx_chat_history'
+        // --- НАСТРОЙКИ (ТВОЙ URL УЖЕ ЗДЕСЬ) ---
+        const FIREBASE_URL = 'https://matrix-traffic-default-rtdb.firebaseio.com/';
+        // ---------------------------------------
+
+        // Инициализация Firebase
+        const firebaseConfig = {
+            databaseURL: FIREBASE_URL
         };
+        firebase.initializeApp(firebaseConfig);
+        const dbRef = firebase.database().ref('messages');
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initMatrixBg();
-            renderStream();
-            renderPartnersPublic();
-            renderChat();
-            
-            // Проверка статуса админа при загрузке
-            if (localStorage.getItem('is_admin_logged_in') === 'true') {
-                openAdminPanel();
-            }
-        });
+        const chatBox = document.getElementById('chat-box');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
 
-        /* --- ИНИЦИАЛИЗАЦИЯ ФОНА (ОДИН РАЗ) --- */
-        function initMatrixBg() {
-            const bg = document.getElementById('matrixBg');
-            const chars = '0123456789ABCDEF';
-            const count = 150;
-            
-            for (let i = 0; i < count; i++) {
-                const symbol = document.createElement('div');
-                symbol.className = 'symbol';
-                symbol.textContent = chars[Math.floor(Math.random() * chars.length)];
-                symbol.style.left = Math.random() * 100 + 'vw';
-                
-                // Добавляем уникальную анимацию для каждого символа
-                const duration = Math.random() * 3 + 2;
-                const delay = '-' + (Math.random() * 3) + 's';
-                
-                symbol.style.animation = `fall ${duration}s linear infinite ${delay}`;
-                
-                bg.appendChild(symbol);
-            }
+        // Функция форматирования времени (HH:MM)
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            const hours = String(date.getHours()).padStart(2, '0');
+            const minutes = String(date.getMinutes()).padStart(2, '0');
+            return `${hours}:${minutes}`;
         }
 
-        function renderStream() {
-            const code = localStorage.getItem(STORAGE_KEYS.stream) || '';
-            const zone = document.getElementById('streamZone');
-            zone.innerHTML = '';
-            
-            if (code) {
-                const tpl = document.createElement('template');
-                tpl.innerHTML = code;
-                const nodes = Array.from(tpl.content.childNodes);
-                nodes.forEach(node => {
-                    if (node.nodeType === 1 && node.tagName === 'SCRIPT') {
-                        const s = document.createElement('script');
-                        for (const a of Array.from(node.attributes)) s.setAttribute(a.name, a.value);
-                        s.textContent = node.textContent;
-                        zone.appendChild(s);
-                    } else {
-                        zone.appendChild(node);
-                    }
-                });
-            }
-        }
-
-        function saveStreamCode() {
-            const code = document.getElementById('streamCodeInput').value.trim();
-            if (!code) return alert('Код не может быть пустым');
-            localStorage.setItem(STORAGE_KEYS.stream, code);
-            renderStream();
-            alert('Код сохранен и отображен в стриме!');
-        }
-
-        function getPartners() {
-            try {
-                const data = localStorage.getItem(STORAGE_KEYS.partners);
-                return data ? JSON.parse(data) : [];
-            } catch (e) { return []; }
-        }
-
-        function savePartners(list) {
-            localStorage.setItem(STORAGE_KEYS.partners, JSON.stringify(list));
-        }
-
-        function addPartnerBlock() {
-            const title = document.getElementById('partnerTitle').value.trim();
-            const desc = document.getElementById('partnerDesc').value.trim();
-            
-            if (!title || !desc) return alert('Заполните название и описание');
-            
-            const list = getPartners();
-            if (list.length >= 100) return alert('Максимум 100 блоков!');
-            
-            list.push({ id: Date.now(), title, desc });
-            savePartners(list);
-            
-            document.getElementById('partnerTitle').value = '';
-            document.getElementById('partnerDesc').value = '';
-            
-            renderAdminPartnersList();
-            renderPartnersPublic();
-        }
-
-        function deletePartnerBlock(id) {
-            if(!confirm('Удалить блок?')) return;
-            let list = getPartners();
-            list = list.filter(p => p.id !== id);
-            savePartners(list);
-            renderAdminPartnersList();
-            renderPartnersPublic();
-        }
-
-        function renderAdminPartnersList() {
-            const list = getPartners();
-            const container = document.getElementById('partnersAdminList');
-            container.innerHTML = '';
-            
-            if (list.length === 0) {
-                container.innerHTML = '<div style="color:#666">Список блоков пуст</div>';
-                return;
-            }
-
-            list.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'admin-list-item';
-                div.innerHTML = `
-                    <div>
-                        <strong>\${p.title}</strong><br>
-                        <small style="color:#888">\${p.desc}</small>
-                    </div>
-                    <button class="del-btn-admin" onclick="deletePartnerBlock(\${p.id})">Удалить</button>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function renderPartnersPublic() {
-            const list = getPartners();
-            const container = document.getElementById('partnersPublicZone');
-            container.innerHTML = '';
-            
-            if (list.length === 0) {
-                container.innerHTML = '<div style="color:#666; font-size:12px; padding:10px;">Пока нет активных партнерских предложений</div>';
-                return;
-            }
-
-            list.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'partner-block';
-                div.textContent = `${p.title}: ${p.desc}`;
-                container.appendChild(div);
-            });
-        }
-
-        function getChatHistory() {
-            try {
-                const data = localStorage.getItem(STORAGE_KEYS.chat);
-                return data ? JSON.parse(data) : [];
-            } catch (e) { return []; }
-        }
-
-        function saveChatHistory(history) {
-            localStorage.setItem(STORAGE_KEYS.chat, JSON.stringify(history));
-        }
-
-        function renderChat() {
-            const history = getChatHistory();
-            const container = document.getElementById('chatMessages');
-            container.innerHTML = '';
-            
-            history.forEach(msg => {
-                appendMessageToDOM(msg.name, msg.text);
-            });
-            
-            container.scrollTop = container.scrollHeight;
-        }
-
+        // Функция отправки сообщения
         function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
+            const text = messageInput.value.trim();
             if (!text) return;
 
-            // Считаем гостей
-            let guestCount = parseInt(localStorage.getItem('mx_guest_count') || '0');
-            guestCount++;
-            localStorage.setItem('mx_guest_count', guestCount);
-            
-            // Имя теперь просто "Гость #1"
-            const name = `Гость #\${guestCount}`;
+            const newMessage = {
+                text: text,
+                timestamp: Date.now(),
+                sender: 'me' // Можно расширить до реального ID пользователя
+            };
 
-            const msgObj = { name, text };
-            
-            let history = getChatHistory();
-            history.push(msgObj);
-            if (history.length > 50) history = history.slice(-50);
-            saveChatHistory(history);
-
-            appendMessageToDOM(name, text);
-            input.value = '';
-            
-            const onlineEl = document.getElementById('onlineCount');
-            let current = parseInt(onlineEl.innerText.replace('Онлайн: ', ''));
-            onlineEl.innerText = `Онлайн: \${current + 1}`;
+            // Отправляем в базу данных
+            dbRef.push(newMessage)
+                .then(() => {
+                    messageInput.value = '';
+                    messageInput.focus();
+                })
+                .catch(err => console.error('Ошибка отправки:', err));
         }
 
-        function appendMessageToDOM(name, text) {
-            const container = document.getElementById('chatMessages');
-            const div = document.createElement('div');
-            div.className = 'msg';
-            
-            const safeText = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
-            
-            div.innerHTML = `<strong>${name}</strong> ${safeText}`;
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        document.getElementById('chatSend').addEventListener('click', sendMessage);
-        document.getElementById('chatInput').addEventListener('keypress', (e) => {
+        // Обработка нажатия Enter
+        messageInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') sendMessage();
         });
 
-        // Логика кнопки вызова админки
-        document.getElementById('adminTriggerBtn').addEventListener('click', () => {
-            if (localStorage.getItem('is_admin_logged_in') === 'true') {
-                openAdminPanel();
-            } else {
-                document.getElementById('loginOverlay').classList.add('active');
-            }
+        // Обработка клика по кнопке
+        sendBtn.addEventListener('click', sendMessage);
+
+        // Получение и отображение сообщений в реальном времени
+        dbRef.on('child_added', (snapshot) => {
+            const msg = snapshot.val();
+            const div = document.createElement('div');
+            
+            // Определяем, своё это сообщение или чужое (по полю sender)
+            const isOwn = msg.sender === 'me';
+            div.className = `message \${isOwn ? 'own' : 'other'}`;
+            
+            div.innerHTML = `
+                <span>\${msg.text}</span>
+                <span class="time">\${formatTime(msg.timestamp)}</span>
+            `;
+            
+            chatBox.appendChild(div);
+            chatBox.scrollTop = chatBox.scrollHeight; // Прокрутка вниз
         });
 
-        function checkAdminLogin() {
-            const input = document.getElementById('adminPassInput');
-            if (input.value === ADMIN_PASSWORD) {
-                localStorage.setItem('is_admin_logged_in', 'true');
-                document.getElementById('loginOverlay').classList.remove('active');
-                openAdminPanel();
-            } else {
-                alert('Неверный пароль!');
-            }
-        }
-
-        function openAdminPanel() {
-            document.getElementById('adminPanelOverlay').classList.add('active');
-            renderAdminPartnersList();
-        }
-
-        function logoutAdmin() {
-            localStorage.setItem('is_admin_logged_in', 'false');
-            document.getElementById('adminPanelOverlay').classList.remove('active');
-            document.getElementById('loginOverlay').classList.remove('active');
-        }
+        // Начальная прокрутка при загрузке
+        chatBox.scrollTop = chatBox.scrollHeight;
     </script>
 </body>
 </html>
