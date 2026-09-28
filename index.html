@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Premium Traffic Portal</title>
-    <!-- Подключаем облачную распределенную базу данных реального времени -->
-    <script src="https://jsdelivr.net"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: radial-gradient(circle at top, #141526 0%, #070810 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #fff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; gap: 15px; overflow-x: hidden; }
@@ -65,6 +63,7 @@
         .msg-meta { font-size: 10px; color: #45f3ff; font-weight: bold; margin-bottom: 3px; display: flex; justify-content: space-between; }
         
         .chat-messages a { color: #45f3ff; text-decoration: underline; font-weight: bold; cursor: pointer; }
+        .chat-messages a:hover { color: #db7bf2; }
         .chat-inputs { display: flex; flex-direction: column; gap: 8px; padding: 12px; background: #1f2833; border-top: 1px solid rgba(102,252,241,0.15); }
         .chat-in { background: #0b0c10; border: 1px solid rgba(69, 243, 255, 0.2); padding: 10px; border-radius: 10px; color: #fff; font-size: 13px; outline: none; }
         .btn-send { background: linear-gradient(90deg, #66fcf1 0%, #db7bf2 100%); border: none; color: #0b0c10; font-weight: bold; border-radius: 10px; font-size: 11px; cursor: pointer; text-transform: uppercase; }
@@ -84,17 +83,16 @@
 </head>
 <body>
 
-    <!-- ВЕРХНИЙ БАННЕР -->
     <div class="header-partner-block" id="zoneTop"></div>
 
     <!-- ОСНОВНОЙ САЙТ -->
     <div class="portal-shell" id="userSiteUI">
+        <!-- 5 кликов по этому блоку откроют админку -->
         <div class="portal-header" onclick="triggerSecretAdmin()">
             <h1>MATRIX TRAFFIC</h1>
             <p>Автоматическая рекламная платформа</p>
         </div>
 
-        <!-- VIP СЛОТ -->
         <div class="vip-admin-block">
             <div class="vip-badge">👑 VIP СЛОТ</div>
             <div class="vip-title" id="lblVipTitle">Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК</div>
@@ -115,49 +113,45 @@
             </div>
         </div>
 
-        <!-- СРЕДНИЙ БАННЕР -->
         <div class="banner-wrapper" id="zoneMid"></div>
 
-        <!-- КОНТЕКСТНЫЕ ССЫЛКИ -->
         <div class="links-wrapper" id="zoneLinks">
             <div class="links-title">🔗 РЕКОМЕНДУЕМЫЕ ССЫЛКИ ПАРТНЕРОВ:</div>
-            <div id="linkslotContainer">Ожидание загрузки партнерских ссылок...</div>
+            <div id="linkslotContainer">Здесь будут отображаться контекстные ссылки...</div>
         </div>
     </div>
 
-    <!-- СЕКРЕТНАЯ АДМИНКА (ОТКРЫВАЕТСЯ НА ЭТОМ ЖЕ ЭКРАНЕ) -->
+    <!-- СЕКРЕТНАЯ АДМИНКА -->
     <div class="admin-modal" id="adminSiteUI">
         <h2 style="text-align:center; font-size:14px; color:#e74c3c;">ПАНЕЛЬ УПРАВЛЕНИЯ ПОРТАЛОМ</h2>
-        
-        <div class="adm-field">
-            <label>Текст VIP блока (или URL картинки баннера):</label>
-            <input type="text" id="admVipText" class="adm-input">
-        </div>
-        <div class="adm-field">
-            <label>Ссылка для кнопки VIP блока (Ваш ВК):</label>
-            <input type="text" id="admVipUrl" class="adm-input">
-        </div>
-        <div class="adm-field">
-            <label>Код Верхнего Рекламного Блока (468x60):</label>
-            <textarea id="admCodeTop" class="adm-text"></textarea>
-        </div>
-        <div class="adm-field">
-            <label>Код Среднего Рекламного Блока (300x250):</label>
-            <textarea id="admCodeMid" class="adm-text"></textarea>
-        </div>
-        <div class="adm-field">
-            <label>Код Текстовых Ссылок:</label>
-            <textarea id="admCodeLinks" class="adm-text"></textarea>
-        </div>
-        
-        <button class="adm-btn" style="background:#2ecc71;" onclick="saveAdminData()">Сохранить рекламу в облако</button>
-        <button class="adm-btn" style="background:#e74c3c;" onclick="clearGlobalChat()">Очистить рекламный чат</button>
+        <div class="adm-field"><label>Текст VIP блока:</label><input type="text" id="admVipText" class="adm-input"></div>
+        <div class="adm-field"><label>Ссылка для кнопки VIP блока:</label><input type="text" id="admVipUrl" class="adm-input"></div>
+        <div class="adm-field"><label>Код Верхнего Блока (468x60):</label><textarea id="admCodeTop" class="adm-text"></textarea></div>
+        <div class="adm-field"><label>Код Среднего Блока (300x250):</label><textarea id="admCodeMid" class="adm-text"></textarea></div>
+        <div class="adm-field"><label>Код Текстовых Ссылок:</label><textarea id="admCodeLinks" class="adm-text"></textarea></div>
+        <button class="adm-btn" style="background:#2ecc71;" onclick="saveAdminData()">Сохранить настройки</button>
+        <button class="adm-btn" style="background:#e74c3c;" onclick="clearGlobalChat()">Очистить чат</button>
         <button class="adm-btn" style="background:#7f8c8d;" onclick="closeAdminPanel()">Выйти на сайт</button>
     </div>
 
-    <!-- НИЖНИЕ ССЫЛКИ -->
     <div class="footer-partner-block" id="slotBottomLinks"></div>
 
 <script>
-    // Подключаемся к стабильной европейской сети обмена данными Gun DB
-    const db = Gun(['https://herokuapp.com', 'https://herokuapp.com']).get('matrix_cyber_traffic_v5');
+    const randomUserId = Math.floor(Math.random() * 899) + 100;
+    const currentNick = "Гость #" + randomUserId;
+    let clickCount = 0;
+
+    function triggerSecretAdmin() {
+        clickCount++;
+        if(clickCount >= 5) {
+            clickCount = 0;
+            const pass = prompt("Введите секретный код администратора:");
+            if (pass === "1234") {
+                document.getElementById('userSiteUI').style.display = 'none';
+                document.getElementById('adminSiteUI').classList.add('active');
+            }
+        }
+    }
+
+    function closeAdminPanel() {
+        document.getElementById('adminSiteUI').classList.remove('active');
