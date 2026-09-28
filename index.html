@@ -83,6 +83,25 @@
             transition: transform 0.2s, opacity 0.2s;
         }
         .action-btn:active { transform: scale(0.98); }
+        
+        /* КНОПКА ВЫХОДА ИЗ АДМИНКИ — NEW */
+        .exit-btn {
+            padding: 6px 12px;
+            border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.3);
+            background: transparent;
+            color: #94a1c2;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 6px;
+        }
+        .exit-btn:hover {
+            border-color: #ffb167;
+            color: #ffb167;
+            background: rgba(255,177,103,0.1);
+        }
+
         .traffic-stats {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -176,6 +195,9 @@
             </div>
 
             <button class="action-btn" onclick="manageTraffic()">MANAGE TRAFFIC</button>
+
+            <!-- КНОПКА ВЫХОДА — NEW -->
+            <button class="exit-btn" id="exitAdminBtn">EXIT ADMIN</button>
         </div>
 
         <!-- ЧАТ -->
@@ -216,6 +238,12 @@
                 clickHint.textContent = '';
                 vipAdmin.classList.add('visible');
             }
+        });
+
+        /* ===== ВЫХОД ИЗ АДМИНКИ — NEW ===== */
+        const exitAdminBtn = document.getElementById('exitAdminBtn');
+        exitAdminBtn.addEventListener('click', () => {
+            vipAdmin.classList.remove('visible');
         });
 
         /* ===== ИМИТАЦИЯ ТРАФИКА ===== */
