@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Premium Traffic Portal</title>
-    <!-- Подключаем мировую библиотеку мгновенных сообщений Pusher -->
+    <!-- Официальная библиотека Pusher -->
     <script src="https://pusher.com"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -47,7 +47,6 @@
         .msg-item { background: rgba(31, 40, 51, 0.5); padding: 10px 12px; border-radius: 12px; border-left: 3px solid #db7bf2; word-break: break-all; }
         .msg-meta { font-size: 10px; color: #45f3ff; font-weight: bold; margin-bottom: 3px; display: flex; justify-content: space-between; }
         
-        /* Стили для ссылок */
         .chat-messages a { color: #45f3ff; text-decoration: underline; font-weight: bold; cursor: pointer; }
         .chat-messages a:hover { color: #db7bf2; }
         
@@ -77,10 +76,10 @@
             <button onclick="goToVkProfile()" id="btnVipLink" class="vk-btn">Написать админу в ВК</button>
         </div>
 
-        <!-- РЕКЛАМНЫЙ ЧАТ ОНЛАЙН -->
+        <!-- РЕКЛАМНЫЙ ЧАТ -->
         <div class="chat-container">
             <div class="chat-header">
-                <span>💬 РЕКЛАМНЫЙ СТРИМ ОНЛАЙН</span>
+                <span>💬 РЕКЛАМНЫЙ СТРИМ ОНЛАЙн</span>
                 <span style="color: #ffb167; font-size: 9px; font-weight: 800;">БЕЗ МОДЕРАЦИИ</span>
             </div>
             <div class="chat-messages" id="chatBox">
@@ -103,15 +102,13 @@
     <div class="footer-partner-block" id="slotBottomLinks"></div>
 
 <script>
-    // Генератор случайного никнейма
     const randomUserId = Math.floor(Math.random() * 899) + 100;
-    const currentNick = "Предприниматель #" + randomUserId;
+    const currentNick = "Гость #" + randomUserId;
 
-    // Инициализация глобального моста Pusher с вашими личными ключами
+    // Инициализируем Pusher с вашими личными ключами
     const pusher = new Pusher('76a1a92c929ae9316205', { cluster: 'eu' });
     const channel = pusher.subscribe('matrix-chat-channel');
 
-    // Автоматический поиск доменов и превращение их в синие ссылки
     function linkifyText(text) {
         const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]|\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|\b(?:[A-Z0-9-]+\.)+(?:com|ru|net|org|biz|info|cc|me|tv|io|co|bot|xyz|shop|online|site|club|link)(w*)\/?(?:[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])?)/gi;
         return text.replace(urlPattern, function(url) {
@@ -121,12 +118,11 @@
         });
     }
 
-    // Слушаем эфир: когда кто-то отправляет смс, оно мгновенно вылетает у всех пользователей
+    // Принимаем сообщение из мирового эфира
     channel.bind('new-message', function(data) {
         const box = document.getElementById('chatBox');
         if(!box) return;
         
-        // Удаляем приветствие системы при первом реальном сообщении
         const sysMsg = document.getElementById('sys-welcome');
         if(sysMsg) sysMsg.remove();
 
@@ -136,10 +132,10 @@
         newMsgDiv.innerHTML = `<div class="msg-meta"><span>${data.name}</span> <span>${data.time}</span></div>${cleanText}`;
         
         box.appendChild(newMsgDiv);
-        box.scrollTop = box.scrollHeight; // Скролл вниз
+        box.scrollTop = box.scrollHeight;
     });
 
-    // Отправка сообщений в мировой эфир через бесплатный шлюз
+    // Прямая отправка без посредников через стабильный шлюз-транслятор
     function sendChatMessage() {
         const textInput = document.getElementById('chatMsg');
         const text = textInput.value.trim();
@@ -148,8 +144,16 @@
         let now = new Date();
         const timeStr = (now.getHours()<10?'0':'')+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
 
-        // Отправляем пакет данных на бесплатный широковещательный сервер
-        fetch('https://allorigins.win' + encodeURIComponent(`https://glitch.me{encodeURIComponent(currentNick)}&text=${encodeURIComponent(text)}&time=${timeStr}`))
-        .then(() => {
-            textInput.value = '';
-        }).catch(() => {
+        // Сразу выводим локально, чтобы человек мгновенно видел свой результат без задержек
+        const box = document.getElementById('chatBox');
+        const sysMsg = document.getElementById('sys-welcome');
+        if(sysMsg) sysMsg.remove();
+
+        const cleanText = linkifyText(text);
+        const newMsgDiv = document.createElement('div');
+        newMsgDiv.className = 'msg-item';
+        newMsgDiv.innerHTML = `<div class="msg-meta"><span>${currentNick}</span> <span>${timeStr}</span></div>${cleanText}`;
+        box.appendChild(newMsgDiv);
+        box.scrollTop = box.scrollHeight;
+
+        // Отправляем в общий эфир для остальных пользователей через прямой веб-хук
