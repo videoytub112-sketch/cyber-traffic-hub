@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Premium Traffic Portal</title>
+    <!-- Подключаем облачную распределенную базу данных реального времени -->
+    <script src="https://jsdelivr.net"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: radial-gradient(circle at top, #141526 0%, #070810 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #fff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; gap: 15px; overflow-x: hidden; }
@@ -23,7 +25,7 @@
             box-shadow: 0 20px 50px rgba(0,0,0,0.5), 0 0 30px rgba(102,252,241,0.05); 
         }
         
-        .portal-header { text-align: center; }
+        .portal-header { text-align: center; cursor: pointer; user-select: none; }
         .portal-header h1 { font-size: 24px; color: #66fcf1; text-shadow: 0 0 15px #66fcf1; font-weight: 900; }
         .portal-header p { font-size: 10px; color: #94a1c2; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
         
@@ -31,6 +33,7 @@
         .vip-admin-block { width: 100%; background: linear-gradient(135deg, #16192e 0%, #0b0c16 100%); border: 2px solid #ffb167; border-radius: 18px; padding: 14px; text-align: center; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; align-items: center; box-shadow: 0 0 20px rgba(255,177,103,0.25); }
         .vip-badge { position: absolute; top: 0; left: 0; background: #ffb167; color: #0b0c10; font-size: 9px; font-weight: bold; padding: 3px 10px; border-bottom-right-radius: 10px; }
         .vip-title { font-size: 13px; font-weight: 600; color: #fff; margin-top: 8px; line-height: 1.4; }
+        .vip-banner-img { width: 100%; max-height: 80px; object-fit: cover; border-radius: 10px; display: none; }
         
         .vk-btn { 
             width: 95%; 
@@ -58,15 +61,22 @@
         .chat-container { width: 100%; background: rgba(7, 8, 16, 0.7); border: 1px solid rgba(69, 243, 255, 0.25); border-radius: 20px; display: flex; flex-direction: column; height: 310px; overflow: hidden; }
         .chat-header { background: linear-gradient(90deg, rgba(102,252,241,0.15) 0%, rgba(219,123,242,0.05) 100%); padding: 10px 14px; font-size: 11px; font-weight: bold; color: #66fcf1; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(102,252,241,0.15); }
         .chat-messages { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .msg-item { background: rgba(31, 40, 51, 0.5); padding: 10px 12px; border-radius: 12px; border-left: 3px solid #db7bf2; word-break: break-all; }
+        .msg-item { background: rgba(31, 40, 51, 0.5); padding: 10px 12px; border-radius: 12px; border-left: 3px solid #db7bf2; word-break: break-all; font-size: 13px; }
         .msg-meta { font-size: 10px; color: #45f3ff; font-weight: bold; margin-bottom: 3px; display: flex; justify-content: space-between; }
         
         .chat-messages a { color: #45f3ff; text-decoration: underline; font-weight: bold; cursor: pointer; }
-        .chat-messages a:hover { color: #db7bf2; }
-        
         .chat-inputs { display: flex; flex-direction: column; gap: 8px; padding: 12px; background: #1f2833; border-top: 1px solid rgba(102,252,241,0.15); }
         .chat-in { background: #0b0c10; border: 1px solid rgba(69, 243, 255, 0.2); padding: 10px; border-radius: 10px; color: #fff; font-size: 13px; outline: none; }
         .btn-send { background: linear-gradient(90deg, #66fcf1 0%, #db7bf2 100%); border: none; color: #0b0c10; font-weight: bold; border-radius: 10px; font-size: 11px; cursor: pointer; text-transform: uppercase; }
+        
+        /* СКРЫТАЯ АДМИН ПАНЕЛЬ */
+        .admin-modal { display: none; width: 100%; max-width: 400px; background: #16192e; border: 2px solid #e74c3c; border-radius: 24px; padding: 20px; flex-direction: column; gap: 12px; box-shadow: 0 0 30px rgba(231,76,60,0.3); }
+        .admin-modal.active { display: flex; }
+        .adm-field { display: flex; flex-direction: column; gap: 4px; }
+        .adm-field label { font-size: 10px; color: #ffb167; font-weight: bold; text-transform: uppercase; }
+        .adm-input, .adm-text { background: #070810; border: 1px solid #2c3147; padding: 8px; border-radius: 8px; color: #fff; font-size: 12px; outline: none; }
+        .adm-text { height: 50px; resize: none; }
+        .adm-btn { width: 100%; height: 38px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; text-transform: uppercase; font-size: 11px; color: #fff; margin-top: 5px; }
         
         .header-partner-block { width: 100%; max-width: 400px; display: flex; justify-content: center; align-items: center; text-align: center; }
         .footer-partner-block { width: 100%; max-width: 400px; display: flex; justify-content: center; align-items: center; text-align: center; }
@@ -74,23 +84,25 @@
 </head>
 <body>
 
+    <!-- ВЕРХНИЙ БАННЕР -->
     <div class="header-partner-block" id="zoneTop"></div>
 
-    <div class="portal-shell">
-        <div class="portal-header">
+    <!-- ОСНОВНОЙ САЙТ -->
+    <div class="portal-shell" id="userSiteUI">
+        <div class="portal-header" onclick="triggerSecretAdmin()">
             <h1>MATRIX TRAFFIC</h1>
             <p>Автоматическая рекламная платформа</p>
         </div>
 
-        <!-- VIP БЛОК АДМИНИСТРАТОРА -->
+        <!-- VIP СЛОТ -->
         <div class="vip-admin-block">
             <div class="vip-badge">👑 VIP СЛОТ</div>
-            <div class="vip-title">Связь с админом по поводу рекламы! Купить этот block напрямую через ВК</div>
-            <!-- ПОЛНАЯ ССЫЛКА НА ВАШ ПРОФИЛЬ ВШИТА НАМЕРТВО СЮДА -->
-            <a href="https://vk.ru" target="_blank" class="vk-btn">Написать админу в ВК</a>
+            <div class="vip-title" id="lblVipTitle">Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК</div>
+            <img src="" id="imgVipBanner" class="vip-banner-img" alt="VIP Реклама">
+            <a href="https://vk.ru" target="_blank" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
         </div>
 
-        <!-- РЕКЛАМНЫЙ ЧАТ ОНЛАЙН -->
+        <!-- РЕКЛАМНЫЙ ЧАТ -->
         <div class="chat-container">
             <div class="chat-header">
                 <span>💬 РЕКЛАМНЫЙ СТРИМ ОНЛАЙН</span>
@@ -103,81 +115,49 @@
             </div>
         </div>
 
+        <!-- СРЕДНИЙ БАННЕР -->
         <div class="banner-wrapper" id="zoneMid"></div>
 
+        <!-- КОНТЕКСТНЫЕ ССЫЛКИ -->
         <div class="links-wrapper" id="zoneLinks">
             <div class="links-title">🔗 РЕКОМЕНДУЕМЫЕ ССЫЛКИ ПАРТНЕРОВ:</div>
-            <div id="linkslotContainer">Здесь будут отображаться контекстные ссылки...</div>
+            <div id="linkslotContainer">Ожидание загрузки партнерских ссылок...</div>
         </div>
     </div>
 
+    <!-- СЕКРЕТНАЯ АДМИНКА (ОТКРЫВАЕТСЯ НА ЭТОМ ЖЕ ЭКРАНЕ) -->
+    <div class="admin-modal" id="adminSiteUI">
+        <h2 style="text-align:center; font-size:14px; color:#e74c3c;">ПАНЕЛЬ УПРАВЛЕНИЯ ПОРТАЛОМ</h2>
+        
+        <div class="adm-field">
+            <label>Текст VIP блока (или URL картинки баннера):</label>
+            <input type="text" id="admVipText" class="adm-input">
+        </div>
+        <div class="adm-field">
+            <label>Ссылка для кнопки VIP блока (Ваш ВК):</label>
+            <input type="text" id="admVipUrl" class="adm-input">
+        </div>
+        <div class="adm-field">
+            <label>Код Верхнего Рекламного Блока (468x60):</label>
+            <textarea id="admCodeTop" class="adm-text"></textarea>
+        </div>
+        <div class="adm-field">
+            <label>Код Среднего Рекламного Блока (300x250):</label>
+            <textarea id="admCodeMid" class="adm-text"></textarea>
+        </div>
+        <div class="adm-field">
+            <label>Код Текстовых Ссылок:</label>
+            <textarea id="admCodeLinks" class="adm-text"></textarea>
+        </div>
+        
+        <button class="adm-btn" style="background:#2ecc71;" onclick="saveAdminData()">Сохранить рекламу в облако</button>
+        <button class="adm-btn" style="background:#e74c3c;" onclick="clearGlobalChat()">Очистить рекламный чат</button>
+        <button class="adm-btn" style="background:#7f8c8d;" onclick="closeAdminPanel()">Выйти на сайт</button>
+    </div>
+
+    <!-- НИЖНИЕ ССЫЛКИ -->
     <div class="footer-partner-block" id="slotBottomLinks"></div>
 
 <script>
-    const randomUserId = Math.floor(Math.random() * 899) + 100;
-    const currentNick = "Гость #" + randomUserId;
-
-    function linkifyText(text) {
-        const urlPattern = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|]|\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b|\b(?:[A-Z0-9-]+\.)+(?:com|ru|net|org|biz|info|cc|me|tv|io|co|bot|xyz|shop|online|site|club|link)(w*)\/?(?:[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])?)/gi;
-        return text.replace(urlPattern, function(url) {
-            let href = url;
-            if (!/^https?:\/\//i.test(url)) href = 'https://' + url;
-            return `<a href="${href}" target="_blank">${url}</a>`;
-        });
-    }
-
-    function renderChatMessages() {
-        const box = document.getElementById('chatBox');
-        if(!box) return;
-        const msgs = JSON.parse(localStorage.getItem('matrix_pure_local_chat') || '[]');
-        
-        if (msgs.length === 0) {
-            box.innerHTML = `<div class="msg-item" id="sys-welcome"><div class="msg-meta"><span>Система</span></div>Добро пожаловать! Здесь вы можете бесплатно оставить ссылку на свой проект. Спам разрешен!</div>`;
-            return;
-        }
-        box.innerHTML = '';
-        msgs.forEach(m => {
-            const cleanText = linkifyText(m.text);
-            box.innerHTML += `<div class="msg-item"><div class="msg-meta"><span>${m.name}</span> <span>${m.time || ''}</span></div>${cleanText}</div>`;
-        });
-        box.scrollTop = box.scrollHeight;
-    }
-
-    function sendChatMessage() {
-        const textInput = document.getElementById('chatMsg');
-        const text = textInput.value.trim();
-        if(!text) return alert("Введите текст рекламы!");
-        
-        const box = document.getElementById('chatBox');
-        let now = new Date();
-        const timeStr = (now.getHours()<10?'0':'')+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
-
-        let msgs = JSON.parse(localStorage.getItem('matrix_pure_local_chat') || '[]');
-        msgs.push({ name: currentNick, text: text, time: timeStr });
-        
-        if(msgs.length > 40) msgs.shift();
-        
-        localStorage.setItem('matrix_pure_local_chat', JSON.stringify(msgs));
-        textInput.value = '';
-        renderChatMessages();
-    }
-
-    function loadLiveBanner(elementId, htmlScript) {
-        const zone = document.getElementById(elementId);
-        if (!zone || !htmlScript) return;
-        zone.innerHTML = '';
-        const temp = document.createElement('div');
-        temp.innerHTML = htmlScript;
-        Array.from(temp.childNodes).forEach(node => {
-            if (node.tagName === 'SCRIPT') {
-                const sc = document.createElement('script');
-                Array.from(node.attributes).forEach(attr => sc.setAttribute(attr.name, attr.value));
-                sc.innerHTML = node.innerHTML;
-                zone.appendChild(sc);
-            } else {
-                zone.appendChild(node.cloneNode(true));
-            }
-        });
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
+    // Подключаемся к стабильной европейской сети обмена данными Gun DB
+    const db = Gun(['https://herokuapp.com', 'https://herokuapp.com']).get('matrix_cyber_traffic_v5');
