@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MATRIX TRAFFIC — Рекламная платформа</title>
-    <!-- Подключаем Firebase для синхронизации чата -->
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
 
@@ -31,7 +30,6 @@
             position: relative;
         }
 
-        /* --- ФОН (СТАТИЧНЫЙ МАТРИЧНЫЙ ДОЖДЬ) --- */
         .matrix-bg {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -46,7 +44,6 @@
             text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
         }
 
-        /* --- ОСНОВНОЙ КОНТЕЙНЕР --- */
         .container {
             width: 100%;
             max-width: 420px;
@@ -81,7 +78,6 @@
             margin-bottom: 20px;
         }
 
-        /* --- VIP СЛОТ --- */
         .vip-slot-card {
             border: 1px solid rgba(255, 177, 103, 0.3);
             border-radius: 12px;
@@ -121,7 +117,6 @@
             font-family: inherit;
         }
 
-        /* --- СТРИМ / БАННЕР (ИСПРАВЛЕНО) --- */
         .stream-card {
             border-radius: 12px;
             background: #000000;
@@ -140,10 +135,9 @@
             color: var(--accent-cyan);
             text-transform: uppercase;
         }
-        /* Контейнер для баннера: фиксированная высота, скролл если нужно */
         .stream-content-wrapper {
             width: 100%;
-            height: 200px; /* Фиксированная высота для сохранения верстки */
+            height: 200px;
             background: #0f101a;
             border-radius: 8px;
             display: flex;
@@ -153,7 +147,6 @@
             border: 1px dashed rgba(255, 255, 255, 0.1);
             position: relative;
             overflow: hidden;
-            /* Если нужно, чтобы баннер растягивался по контенту, поставь height: auto */
         }
         .stream-placeholder-text {
             position: absolute;
@@ -162,7 +155,6 @@
             text-align: center;
         }
 
-        /* --- ПАРТНЕРСКИЕ БЛОКИ (ИСПРАВЛЕНО) --- */
         .partners-section {
             margin-bottom: 20px;
         }
@@ -205,7 +197,6 @@
             margin-top: 4px;
         }
 
-        /* --- ЧАТ --- */
         .chat-block {
             background: rgba(0, 0, 0, 0.4);
             border-radius: 12px;
@@ -278,7 +269,6 @@
             cursor: pointer;
         }
 
-        /* --- КНОПКА АДМИНКИ --- */
         .admin-trigger-btn {
             position: fixed;
             bottom: 20px;
@@ -304,7 +294,6 @@
             background: rgba(0, 242, 254, 0.1);
         }
 
-        /* --- ОВЕРЛЕИ --- */
         .overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -386,15 +375,12 @@
 </head>
 <body>
 
-    <!-- Фон -->
     <div class="matrix-bg" id="matrixBg"></div>
 
-    <!-- Основной интерфейс -->
     <div class="container" id="mainInterface">
         <h1>MATRIX TRAFFIC</h1>
         <p class="subtitle">Автоматическая рекламная платформа</p>
 
-        <!-- VIP СЛОТ -->
         <div class="vip-slot-card">
             <div class="vip-badge">VIP СЛОТ</div>
             <div class="vip-text">
@@ -403,7 +389,6 @@
             <button class="vip-btn" onclick="window.open('https://vk.com/ваш_админ', '_blank')">Написать админу в ВК</button>
         </div>
 
-        <!-- СТРИМ / БАННЕР -->
         <div class="stream-card">
             <div class="stream-header">
                 <span>Рекламный стрим / Баннер</span>
@@ -417,7 +402,6 @@
             </div>
         </div>
 
-        <!-- ПАРТНЕРСКИЕ БЛОКИ -->
         <div class="partners-section">
             <div class="section-title">
                 Партнерские предложения
@@ -426,7 +410,6 @@
             </div>
         </div>
 
-        <!-- ЧАТ -->
         <div class="chat-block">
             <div class="chat-header">
                 <span>Live Chat</span>
@@ -441,10 +424,8 @@
         </div>
     </div>
 
-    <!-- Кнопка вызова админки -->
     <div class="admin-trigger-btn" id="adminTriggerBtn" title="Админ-панель">🔐</div>
 
-    <!-- Окно входа -->
     <div class="overlay" id="loginOverlay">
         <div class="card">
             <h2 style="color:var(--accent-cyan); margin-bottom:20px;">Вход в админку</h2>
@@ -454,7 +435,6 @@
         </div>
     </div>
 
-    <!-- Панель админа -->
     <div class="overlay" id="adminPanelOverlay">
         <div class="card" style="max-width: 500px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
@@ -484,36 +464,46 @@
 
     <script>
         // ================= НАСТРОЙКИ =================
-        // URL твоей базы данных Firebase (ссылка уже вставлена)
         const FIREBASE_URL = 'https://matrix-traffic-default-rtdb.firebaseio.com/';
-
         const ADMIN_PASSWORD = 'admin123';
 
         const STORAGE_KEYS = {
             stream: 'mx_stream_code',
-            partners: 'mx_partners_list'
+            partners: 'mx_partners_list',
+            guestName: 'mx_guest_name'
         };
 
         // ================= ИНИЦИАЛИЗАЦИЯ FIREBASE =================
-        let firebaseRef = null;
-
-        // Инициализируем Firebase на дефолтном приложении,
-        // чтобы firebase.database() ниже нашёл нужную базу
         firebase.initializeApp({ databaseURL: FIREBASE_URL });
-        firebaseRef = firebase.database().ref('chat_messages');
+        const db = firebase.database();
+        const firebaseRef = db.ref('chat_messages');
+        const presenceRef = db.ref('presence');
+
+        // Уникальный ID этого браузера (нужен для счётчика онлайн)
+        const MY_CLIENT_ID = 'client_' + Math.random().toString(36).slice(2, 10);
+
+        // Постоянное имя гостя для этого браузера
+        function getGuestName() {
+            let name = localStorage.getItem(STORAGE_KEYS.guestName);
+            if (!name) {
+                const num = Math.floor(Math.random() * 9000) + 1000;
+                name = 'Гость #' + num;
+                localStorage.setItem(STORAGE_KEYS.guestName, name);
+            }
+            return name;
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             initMatrixBg();
             renderStream();
             renderPartnersPublic();
 
-            // Проверка статуса админа
             if (localStorage.getItem('is_admin_logged_in') === 'true') {
                 openAdminPanel();
             }
 
-            // Запуск чата
             initChat();
+            initPresence();
         });
 
         /* --- ФОН --- */
@@ -537,25 +527,19 @@
             }
         }
 
-        /* --- СТРИМ (ИСПРАВЛЕНО) --- */
+        /* --- СТРИМ --- */
         function renderStream() {
             const code = localStorage.getItem(STORAGE_KEYS.stream) || '';
             const zone = document.getElementById('streamZone');
             zone.innerHTML = '';
 
             if (code) {
-                // Безопасная вставка кода, чтобы скрипты работали
                 const tpl = document.createElement('template');
                 tpl.innerHTML = code;
-
-                // Клонируем содержимое шаблона
                 const clone = tpl.content.cloneNode(true);
-
-                // Проходим по всем элементам и добавляем их
                 const nodes = Array.from(clone.childNodes);
                 nodes.forEach(node => {
                     if (node.nodeType === 1 && node.tagName === 'SCRIPT') {
-                        // Для скриптов создаем новый элемент, чтобы браузер его выполнил
                         const s = document.createElement('script');
                         for (const a of Array.from(node.attributes)) s.setAttribute(a.name, a.value);
                         s.textContent = node.textContent;
@@ -575,7 +559,7 @@
             alert('Код сохранен и отображен в стриме!');
         }
 
-        /* --- ПАРТНЕРЫ (ИСПРАВЛЕНО) --- */
+        /* --- ПАРТНЕРЫ --- */
         function getPartners() {
             try {
                 const data = localStorage.getItem(STORAGE_KEYS.partners);
@@ -652,7 +636,6 @@
             list.forEach(p => {
                 const div = document.createElement('div');
                 div.className = 'partner-block';
-                // Теперь это кликабельный блок
                 div.innerHTML = `
                     <a href="${p.title}" target="_blank" class="partner-link-text">${p.title}</a>
                     <span class="partner-desc">${p.desc}</span>
@@ -661,53 +644,28 @@
             });
         }
 
-        /* --- ЧАТ (ИСПРАВЛЕНО: СИНХРОНИЗАЦИЯ) --- */
+        /* --- ЧАТ --- */
         function initChat() {
-            renderChat();
+            // Один раз слушаем новые сообщения от всех (включая свои)
+            firebaseRef.on('child_added', (snapshot) => {
+                const msg = snapshot.val();
+                appendMessageToDOM(msg.name, msg.text);
+            });
 
-            if (firebaseRef) {
-                // Слушаем новые сообщения от всех
-                firebaseRef.on('child_added', (snapshot) => {
-                    const msg = snapshot.val();
-                    appendMessageToDOM(msg.name, msg.text);
-                    updateOnlineCount();
-                });
-
-                // Слушаем удаление (если нужно)
-                firebaseRef.on('child_removed', () => {
-                    renderChat(); // Перерисовать
-                });
-            }
+            firebaseRef.on('child_removed', () => {
+                renderChat();
+            });
         }
 
         function renderChat() {
-            // Если Firebase есть, берем оттуда. Если нет - из localStorage (для теста)
-            if (firebaseRef) {
-                // Для Firebase мы не храним историю в localStorage, она приходит потоком
-                // Но для первого запуска нужно очистить DOM
-                const container = document.getElementById('chatMessages');
-                container.innerHTML = '';
-            } else {
-                // Локальный режим (если Firebase не настроен)
-                const history = getChatHistory();
-                const container = document.getElementById('chatMessages');
-                container.innerHTML = '';
-
-                history.forEach(msg => {
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = '';
+            firebaseRef.once('value', (snapshot) => {
+                snapshot.forEach(child => {
+                    const msg = child.val();
                     appendMessageToDOM(msg.name, msg.text);
                 });
-            }
-        }
-
-        function getChatHistory() {
-            try {
-                const data = localStorage.getItem('mx_chat_history');
-                return data ? JSON.parse(data) : [];
-            } catch (e) { return []; }
-        }
-
-        function saveChatHistory(history) {
-            localStorage.setItem('mx_chat_history', JSON.stringify(history));
+            });
         }
 
         function sendMessage() {
@@ -715,28 +673,18 @@
             const text = input.value.trim();
             if (!text) return;
 
-            // Считаем гостей
-            let guestCount = parseInt(localStorage.getItem('mx_guest_count') || '0');
-            guestCount++;
-            localStorage.setItem('mx_guest_count', guestCount);
+            const name = getGuestName();
 
-            const name = `Гость #${guestCount}`;
-            const msgObj = { name, text };
-
-            // Если есть Firebase - отправляем туда
-            if (firebaseRef) {
-                firebaseRef.push(msgObj);
-            } else {
-                // Локальное сохранение
-                let history = getChatHistory();
-                history.push(msgObj);
-                if (history.length > 50) history = history.slice(-50);
-                saveChatHistory(history);
-            }
-
-            appendMessageToDOM(name, text);
-            input.value = '';
-            updateOnlineCount();
+            // Отправляем ТОЛЬКО в Firebase.
+            // Отрисовка произойдёт через child_added — без дублей.
+            firebaseRef.push({ name, text })
+                .then(() => {
+                    input.value = '';
+                })
+                .catch(err => {
+                    console.error('Ошибка отправки:', err);
+                    alert('Не удалось отправить сообщение: ' + err.message);
+                });
         }
 
         function appendMessageToDOM(name, text) {
@@ -744,17 +692,11 @@
             const div = document.createElement('div');
             div.className = 'msg';
 
-            const safeText = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+            const safeText = String(text).replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
 
             div.innerHTML = `<strong>${name}</strong> ${safeText}`;
             container.appendChild(div);
             container.scrollTop = container.scrollHeight;
-        }
-
-        function updateOnlineCount() {
-            const onlineEl = document.getElementById('onlineCount');
-            let current = parseInt(onlineEl.innerText.replace('Онлайн: ', ''));
-            onlineEl.innerText = `Онлайн: ${current + 1}`;
         }
 
         document.getElementById('chatSend').addEventListener('click', sendMessage);
@@ -762,7 +704,26 @@
             if (e.key === 'Enter') sendMessage();
         });
 
-        // Логика кнопки вызова админки
+        /* --- ПРИСУТСТВИЕ (СЧЁТЧИК ОНЛАЙН) --- */
+        function initPresence() {
+            const connectedRef = db.ref('.info/connected');
+            const myPresenceRef = presenceRef.child(MY_CLIENT_ID);
+
+            connectedRef.on('value', (snap) => {
+                if (snap.val() === true) {
+                    // При разрыве связи удаляем себя из списка онлайн
+                    myPresenceRef.onDisconnect().remove();
+                    myPresenceRef.set(true);
+                }
+            });
+
+            presenceRef.on('value', (snap) => {
+                const count = snap.numChildren();
+                document.getElementById('onlineCount').innerText = 'Онлайн: ' + count;
+            });
+        }
+
+        /* --- АДМИНКА --- */
         document.getElementById('adminTriggerBtn').addEventListener('click', () => {
             if (localStorage.getItem('is_admin_logged_in') === 'true') {
                 openAdminPanel();
