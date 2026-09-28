@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Matrix Premium Traffic Portal</title>
-    <!-- База реального времени -->
+    <!-- Официальная библиотека Supabase для моментальной связи -->
     <script src="https://jsdelivr.net"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { background: radial-gradient(circle at top, #141526 0%, #070810 100%); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #fff; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 15px; gap: 15px; overflow-x: hidden; }
         
-        /* Стеклянный неоновый корпус портала */
         .portal-shell { 
             width: 100%; 
             max-width: 400px; 
@@ -30,19 +29,16 @@
         .portal-header h1 { font-size: 24px; color: #66fcf1; text-shadow: 0 0 15px #66fcf1; font-weight: 900; }
         .portal-header p { font-size: 10px; color: #94a1c2; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* VIP БЛОК АДМИНИСТРАТОРА */
         .vip-admin-block { width: 100%; background: linear-gradient(135deg, #16192e 0%, #0b0c16 100%); border: 2px solid #ffb167; border-radius: 18px; padding: 14px; text-align: center; position: relative; overflow: hidden; display: flex; flex-direction: column; gap: 12px; align-items: center; box-shadow: 0 0 20px rgba(255,177,103,0.25); }
         .vip-badge { position: absolute; top: 0; left: 0; background: #ffb167; color: #0b0c10; font-size: 9px; font-weight: bold; padding: 3px 10px; border-bottom-right-radius: 10px; }
         .vip-title { font-size: 13px; font-weight: 600; color: #fff; margin-top: 8px; line-height: 1.4; }
         .vip-banner-img { width: 100%; max-height: 80px; object-fit: cover; border-radius: 10px; display: none; }
         .vk-btn { width: 95%; height: 38px; background: linear-gradient(90deg, #0066ff 0%, #00bfff 100%); border: none; border-radius: 10px; color: #fff; font-size: 12px; font-weight: bold; cursor: pointer; text-transform: uppercase; display: flex; justify-content: center; align-items: center; text-decoration: none; box-shadow: 0 4px 15px rgba(0,102,255,0.4); }
         
-        /* РЕКЛАМНЫЕ ЗОНЫ */
         .banner-wrapper { width: 100%; background: rgba(7, 8, 16, 0.5); border: 1px dashed rgba(102,252,241,0.4); border-radius: 14px; display: flex; justify-content: center; align-items: center; padding: 10px; text-align: center; font-size: 11px; color: #66fcf1; min-height: 55px; overflow: hidden; }
         .links-wrapper { width: 100%; background: rgba(7, 8, 16, 0.6); border: 1px solid rgba(69, 243, 255, 0.2); border-radius: 16px; padding: 14px; font-size: 13px; color: #c5c6c7; display: flex; flex-direction: column; gap: 8px; }
         .links-title { font-size: 10px; color: #45f3ff; font-weight: bold; letter-spacing: 1px; border-bottom: 1px solid rgba(102,252,241,0.15); padding-bottom: 5px; text-transform: uppercase; }
         
-        /* ЧАТ БЕЗ ОГРАНИЧЕНИЙ */
         .chat-container { width: 100%; background: rgba(7, 8, 16, 0.7); border: 1px solid rgba(69, 243, 255, 0.25); border-radius: 20px; display: flex; flex-direction: column; height: 310px; overflow: hidden; }
         .chat-header { background: linear-gradient(90deg, rgba(102,252,241,0.15) 0%, rgba(219,123,242,0.05) 100%); padding: 10px 14px; font-size: 11px; font-weight: bold; color: #66fcf1; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(102,252,241,0.15); }
         .chat-messages { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
@@ -66,7 +62,6 @@
             <p>Автоматическая рекламная платформа</p>
         </div>
 
-        <!-- VIP БЛОК АДМИНИСТРАТОРА -->
         <div class="vip-admin-block">
             <div class="vip-badge">👑 VIP СЛОТ</div>
             <div class="vip-title" id="lblVipTitle">Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК</div>
@@ -74,13 +69,14 @@
             <a href="https://vk.ru" target="_blank" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
         </div>
 
-        <!-- ЧАТ СРАЗУ ОТКРЫТ И ЖИВЕТ СВОЕЙ ЖИЗНЬЮ -->
         <div class="chat-container">
             <div class="chat-header">
                 <span>💬 РЕКЛАМНЫЙ СТРИМ ОНЛАЙН</span>
                 <span style="color: #ffb167; font-size: 9px; font-weight: 800;">БЕЗ МОДЕРАЦИИ</span>
             </div>
-            <div class="chat-messages" id="chatBox"></div>
+            <div class="chat-messages" id="chatBox">
+                <div class="msg-item"><div class="msg-meta"><span>Система</span></div>Загрузка сообщений рекламной ленты...</div>
+            </div>
             <div class="chat-inputs">
                 <input type="text" id="chatMsg" class="chat-in" placeholder="Текст вашего объявления или ссылка...">
                 <button class="btn-send" style="height: 36px;" onclick="sendChatMessage()">Опубликовать бесплатно</button>
@@ -100,11 +96,13 @@
     <div class="footer-partner-block" id="slotBottomLinks">[ Ожидание нижних ссылок ]</div>
 
 <script>
-    // Генерируем случайный номер гостя один раз для сессии, чтобы не просить вводить ник
-    const randomUserId = Math.floor(Math.random() * 900) + 100;
-    const currentNick = "Предприниматель #" + randomUserId;
+    // Подключаемся к вашей надежной и быстрой базе Supabase
+    const SUPABASE_URL = "https://supabase.co";
+    const SUPABASE_KEY = "sb_publishable_VK50ydZk9GUtIiimQcOR8w_dLN7q2Ux";
+    const client = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    const db = Gun(['https://herokuapp.com']).get('matrix_traffic_zone_v1');
+    const randomUserId = Math.floor(Math.random() * 899) + 100;
+    const currentNick = "Гость #" + randomUserId;
 
     function loadLiveBanner(elementId, htmlScript) {
         const zone = document.getElementById(elementId);
@@ -124,34 +122,36 @@
         });
     }
 
-    // НАСТРОЙКИ РЕКЛАМЫ ИЗ ОТДЕЛЬНОЙ АДМИНКИ
-    db.get('config').on(data => {
-        if(data) {
-            const titleLbl = document.getElementById('lblVipTitle');
-            const imgBanner = document.getElementById('imgVipBanner');
-            const linkBtn = document.getElementById('btnVipLink');
-            
-            linkBtn.href = data.vip_url || 'https://vk.ru';
-            if(data.vip_text && (data.vip_text.startsWith('http://') || data.vip_text.startsWith('https://'))) {
-                titleLbl.style.display = 'none'; imgBanner.src = data.vip_text; imgBanner.style.display = 'block';
-                linkBtn.innerText = "Перейти по рекламе";
-            } else if(data.vip_text) {
-                imgBanner.style.display = 'none'; titleLbl.innerText = data.vip_text; titleLbl.style.display = 'block';
-                linkBtn.innerText = "Перейти к контактам";
-            }
-            if(data.code_top) loadLiveBanner('zoneTop', data.code_top);
-            if(data.code_mid) loadLiveBanner('zoneMid', data.code_mid);
-            if(data.code_links) loadLiveBanner('linkslotContainer', data.code_links);
-        }
-    });
-
-    // ПОДКЛЮЧЕНИЕ ОБЛАЧНОГО ЧАТА
-    function listenToCloudChat() {
+    // Загрузка сообщений чата из таблицы базы данных Supabase
+    async function listenToCloudChat() {
         const box = document.getElementById('chatBox');
         if(!box) return;
+
+        let { data, error } = await client.from('users').select('*').order('id', { ascending: true });
+        
+        if (error || !data || data.length === 0) {
+            box.innerHTML = `<div class="msg-item"><div class="msg-meta"><span>Система</span></div>Лента объявлений пуста. Оставьте свою ссылку первым!</div>`;
+            return;
+        }
+
         box.innerHTML = '';
-        db.get('chat').map().on((msg, id) => {
-            if(msg && msg.name && msg.text) {
-                if(!document.getElementById(id)) {
-                    const div = document.createElement('div');
-                    div.id = id;
+        data.forEach(m => {
+            if(m.username && m.last_free_spin) { // Используем столбцы таблицы для хранения автора и текста объявления
+                box.innerHTML += `<div class="msg-item"><div class="msg-meta"><span>${m.username}</span> <span>${m.attempts || ''}</span></div>${m.last_free_spin}</div>`;
+            }
+        });
+        box.scrollTop = box.scrollHeight;
+    }
+
+    // Функция отправки сообщений в Supabase в один клик
+    async function sendChatMessage() {
+        let text = document.getElementById('chatMsg').value.trim();
+        if(!text) return alert("Введите текст рекламы!");
+        
+        let now = new Date();
+        let timeStr = (now.getHours()<10?'0':'')+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
+
+        // Сохраняем в готовую свободную таблицу
+        const { error } = await client.from('users').insert([{ username: currentNick, last_free_spin: text, attempts: timeStr }]);
+        
+        if(error) {
