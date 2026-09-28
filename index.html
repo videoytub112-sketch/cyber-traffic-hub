@@ -39,7 +39,7 @@
         .links-wrapper { width: 100%; background: rgba(7, 8, 16, 0.6); border: 1px solid rgba(69, 243, 255, 0.2); border-radius: 16px; padding: 14px; font-size: 13px; color: #c5c6c7; display: flex; flex-direction: column; gap: 8px; }
         .links-title { font-size: 10px; color: #45f3ff; font-weight: bold; letter-spacing: 1px; border-bottom: 1px solid rgba(102,252,241,0.15); padding-bottom: 5px; text-transform: uppercase; }
         
-        /* ЧАТ БЕЗ ОГРАНИЧЕНИЙ */
+        /* ЧАТ НА ПРЯМЫХ СКРИПТАХ БРАУЗЕРА */
         .chat-container { width: 100%; background: rgba(7, 8, 16, 0.7); border: 1px solid rgba(69, 243, 255, 0.25); border-radius: 20px; display: flex; flex-direction: column; height: 310px; overflow: hidden; }
         .chat-header { background: linear-gradient(90deg, rgba(102,252,241,0.15) 0%, rgba(219,123,242,0.05) 100%); padding: 10px 14px; font-size: 11px; font-weight: bold; color: #66fcf1; display: flex; justify-content: space-between; border-bottom: 1px solid rgba(102,252,241,0.15); }
         .chat-messages { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
@@ -68,6 +68,7 @@
             <div class="vip-badge">👑 VIP СЛОТ</div>
             <div class="vip-title" id="lblVipTitle">Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК</div>
             <img src="" id="imgVipBanner" class="vip-banner-img" alt="VIP Реклама">
+            <!-- Ссылка заменена на официальный стандарт .com -->
             <a href="https://vk.com" target="_blank" id="btnVipLink" class="vk-btn">Написать админу в ВК</a>
         </div>
 
@@ -77,7 +78,9 @@
                 <span>💬 РЕКЛАМНЫЙ СТРИМ ОНЛАЙН</span>
                 <span style="color: #ffb167; font-size: 9px; font-weight: 800;">БЕЗ МОДЕРАЦИИ</span>
             </div>
-            <div class="chat-messages" id="chatBox"></div>
+            <div class="chat-messages" id="chatBox">
+                <div class="msg-item"><div class="msg-meta"><span>Система</span></div>Добро пожаловать! Здесь вы можете бесплатно оставить ссылку на свой проект. Спам разрешен!</div>
+            </div>
             <div class="chat-inputs">
                 <input type="text" id="chatMsg" class="chat-in" placeholder="Текст вашего объявления или ссылка...">
                 <button class="btn-send" style="height: 36px;" onclick="sendChatMessage()">Опубликовать бесплатно</button>
@@ -95,42 +98,28 @@
     <div class="footer-partner-block" id="slotBottomLinks"></div>
 
 <script>
-    // Генератор случайного ID гостя
+    // Случайный номер гостя
     const randomUserId = Math.floor(Math.random() * 899) + 100;
     const currentNick = "Гость #" + randomUserId;
 
-    // Локальная база данных реального времени, встроенная в браузер
-    function renderChatMessages() {
-        const box = document.getElementById('chatBox');
-        if(!box) return;
-        const msgs = JSON.parse(localStorage.getItem('matrix_live_chat_data') || '[]');
-        
-        if (msgs.length === 0) {
-            box.innerHTML = `<div class="msg-item"><div class="msg-meta"><span>Система</span></div>Добро пожаловать! Здесь вы можете бесплатно оставить ссылку на свой проект. Спам разрешен!</div>`;
-            return;
-        }
-        box.innerHTML = '';
-        msgs.forEach(m => {
-            box.innerHTML += `<div class="msg-item"><div class="msg-meta"><span>${m.name}</span> <span>${m.time || ''}</span></div>${m.text}</div>`;
-        });
-        box.scrollTop = box.scrollHeight;
-    }
-
+    // Прямой вывод сообщений на экран на чистом JavaScript (Без риска блокировки кэшем)
     function sendChatMessage() {
-        let text = document.getElementById('chatMsg').value.trim();
+        const textInput = document.getElementById('chatMsg');
+        const text = textInput.value.trim();
         if(!text) return alert("Введите текст рекламы!");
         
-        let now = new Date();
-        let timeStr = (now.getHours()<10?'0':'')+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
+        const box = document.getElementById('chatBox');
+        const now = new Date();
+        const timeStr = (now.getHours()<10?'0':'')+now.getHours()+':'+(now.getMinutes()<10?'0':'')+now.getMinutes();
 
-        let msgs = JSON.parse(localStorage.getItem('matrix_live_chat_data') || '[]');
-        msgs.push({ name: currentNick, text: text, time: timeStr });
+        // Создаем элемент сообщения и напрямую вставляем его в окно
+        const newMsg = document.createElement('div');
+        newMsg.className = 'msg-item';
+        newMsg.innerHTML = `<div class="msg-meta"><span>${currentNick}</span> <span>${timeStr}</span></div>${text}`;
         
-        if(msgs.length > 30) msgs.shift(); // Ограничение на 30 строк для скорости работы
-        
-        localStorage.setItem('matrix_live_chat_data', JSON.stringify(msgs));
-        document.getElementById('chatMsg').value = '';
-        renderChatMessages();
+        box.appendChild(newMsg);
+        textInput.value = '';
+        box.scrollTop = box.scrollHeight; // Автоматический скролл вниз
     }
 
     // Подгрузка скриптов рекламы
@@ -152,10 +141,7 @@
         });
     }
 
-    // Рендеринг блоков при входе
     window.addEventListener('DOMContentLoaded', () => {
-        renderChatMessages();
-        
         // Подгружаем сохраненную рекламу
         const txt = localStorage.getItem('vip_text') || '';
         const url = localStorage.getItem('vip_url') || 'https://vk.com';
@@ -169,3 +155,13 @@
 
         linkBtn.href = url;
 
+        if(txt.startsWith('http://') || txt.startsWith('https://')) {
+            titleLbl.style.display = 'none'; imgBanner.src = txt; imgBanner.style.display = 'block';
+            linkBtn.innerText = "Перейти по рекламе";
+        } else if(txt) {
+            imgBanner.style.display = 'none'; titleLbl.innerText = txt; titleLbl.style.display = 'block';
+            linkBtn.innerText = "Перейти к контактам";
+        }
+
+        if(lt) loadLiveBanner('zoneTop', lt);
+        if(lm) loadLiveBanner('zoneMid', lm);
