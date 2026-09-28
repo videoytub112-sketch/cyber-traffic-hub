@@ -3,82 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATRIX TRAFFIC — Автоматическая рекламная платформа</title>
+    <title>MATRIX TRAFFIC — Рекламная платформа</title>
     <style>
         :root {
-            --bg-dark: #0b0c16;
-            --panel-dark: #16192e;
-            --accent-cyan: #66fcf1;
+            --bg-dark: #05060f;
+            --panel-dark: #0f111d;
+            --accent-cyan: #00f2fe;
             --accent-orange: #ffb167;
-            --text-gray: #94a1c2;
-            --border-glow: rgba(109, 255, 240, 0.15);
+            --text-gray: #a1b0c4;
+            --border-glow: rgba(0, 242, 254, 0.15);
         }
+
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        /* --- ФОН (ЦИФРОВОЙ ДОЖДЬ) --- */
         body {
-            background-color: #000000;
+            background: radial-gradient(circle at 50% 0%, #0a1120 0%, #000000 100%);
             color: #fff;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Courier New', Courier, monospace; /* Шрифт как в матрице */
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            overflow: hidden;
+            position: relative;
         }
+
+        /* Анимация фона */
+        .matrix-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .symbol {
+            position: absolute;
+            color: rgba(0, 242, 254, 0.6);
+            font-size: 16px;
+            text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
+            animation: fall linear forwards;
+        }
+        @keyframes fall {
+            to { transform: translateY(110vh); }
+        }
+
+        /* --- ОСНОВНОЙ КОНТЕЙНЕР --- */
         .container {
             width: 100%;
             max-width: 420px;
-            background: var(--panel-dark);
-            border-radius: 24px;
+            background: rgba(15, 17, 29, 0.85);
+            backdrop-filter: blur(12px);
             border: 1px solid var(--border-glow);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(102, 252, 241, 0.1);
+            border-radius: 20px;
             padding: 20px;
-            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 242, 254, 0.1);
+            position: relative;
+            z-index: 10;
         }
+
         h1 {
-            font-size: 22px;
+            font-size: 20px;
             color: var(--accent-cyan);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-align: center;
             margin-bottom: 4px;
-            text-shadow: 0 0 10px rgba(102, 252, 241, 0.5);
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
         }
         .subtitle {
             text-align: center;
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-gray);
-            margin-bottom: 20px;
             text-transform: uppercase;
             letter-spacing: 1px;
+            margin-bottom: 20px;
         }
 
-        /* VIP СЛОТ */
+        /* --- VIP СЛОТ --- */
         .vip-slot-card {
-            border: 1px solid rgba(255, 177, 103, 0.4);
-            border-radius: 16px;
-            background: rgba(255, 177, 103, 0.08);
-            padding: 16px;
+            border: 1px solid rgba(255, 177, 103, 0.3);
+            border-radius: 12px;
+            background: rgba(255, 177, 103, 0.05);
+            padding: 15px;
             margin-bottom: 20px;
             position: relative;
             overflow: hidden;
         }
         .vip-badge {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 0; left: 0;
             background: var(--accent-orange);
             color: #000;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: bold;
-            padding: 4px 10px;
+            padding: 3px 8px;
             border-bottom-right-radius: 8px;
             text-transform: uppercase;
         }
         .vip-text {
-            font-size: 13px;
+            font-size: 12px;
             color: #fff;
             line-height: 1.4;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         .vip-btn {
             width: 100%;
@@ -86,181 +112,180 @@
             background: linear-gradient(90deg, #00a8ff, #00f7c8);
             color: #000;
             border: none;
-            border-radius: 10px;
+            border-radius: 8px;
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            transition: transform 0.2s;
+            font-family: inherit;
         }
-        .vip-btn:active { transform: scale(0.98); }
 
-        /* РЕКЛАМНЫЙ СТРИМ */
+        /* --- СТРИМ / БАННЕР --- */
         .stream-card {
-            border-radius: 16px;
+            border-radius: 12px;
             background: #000000;
             border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 16px;
+            padding: 15px;
             margin-bottom: 20px;
         }
         .stream-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
-            font-size: 12px;
+            margin-bottom: 10px;
+            font-size: 11px;
             color: var(--accent-cyan);
             text-transform: uppercase;
         }
-        .stream-status {
+        .stream-placeholder {
+            width: 100%;
+            height: 140px;
+            background: #0f101a;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-gray);
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+        .stream-placeholder::after {
+            content: 'Рекламный стрим / Баннер';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* --- ПАРТНЕРСКИЕ БЛОКИ (СТАТИЧНЫЕ ДЛЯ ПОСЕТИТЕЛЯ) --- */
+        .partners-section {
+            margin-bottom: 20px;
+        }
+        .section-title {
+            font-size: 11px;
+            color: var(--text-gray);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .partner-block {
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 3px solid var(--accent-cyan);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: #fff;
+            cursor: default; /* Важно: не курсор руки, чтобы не было ощущения клика */
+        }
+        .partner-block:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        /* --- ЧАТ --- */
+        .chat-block {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 12px;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .chat-header {
+            font-size: 11px;
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .online-count {
             font-size: 10px;
             color: #00ff88;
             background: rgba(0, 255, 136, 0.1);
             padding: 2px 6px;
             border-radius: 4px;
         }
-        .stream-placeholder {
-            width: 100%;
-            height: 140px;
-            background: #0f101a;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-gray);
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-        }
-        .stream-input-group {
-            margin-top: 12px;
-        }
-        .stream-input {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            padding: 10px;
-            border-radius: 10px;
-            font-size: 13px;
-            margin-bottom: 8px;
-        }
-        .stream-btn {
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-            border: none;
-            color: #000;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-radius: 10px;
-            cursor: pointer;
-        }
-
-        /* ПАРТНЕРСКИЕ ССЫЛКИ */
-        .links-card {
-            border-radius: 16px;
-            background: rgba(255, 255, 255, 0.02);
-            padding: 16px;
-        }
-        .links-header {
-            font-size: 12px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .links-header::before {
-            content: "⚙️";
-            font-size: 12px;
-        }
-        .links-list {
+        .chat-messages {
+            height: 180px;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
             gap: 8px;
+            margin-bottom: 10px;
         }
-        .link-item {
-            display: block;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid var(--accent-cyan);
-            color: #fff;
-            text-decoration: none;
+        .msg {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 12px;
             border-radius: 8px;
-            font-size: 13px;
-            transition: all 0.2s;
+            font-size: 12px;
+            line-height: 1.4;
+            border-left: 3px solid var(--accent-cyan);
+            word-wrap: break-word;
         }
-        .link-item:hover {
-            background: rgba(102, 252, 241, 0.1);
-            transform: translateX(4px);
+        .msg strong {
+            color: var(--accent-cyan);
+            margin-right: 5px;
+        }
+        .msg a {
+            color: var(--accent-orange);
+            text-decoration: underline;
+            word-break: break-all;
+        }
+        .chat-input-row {
+            display: flex;
+            gap: 8px;
+        }
+        .chat-input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            color: #fff;
+            font-family: inherit;
+            outline: none;
+        }
+        .chat-input:focus { border-color: var(--accent-cyan); }
+        .chat-send {
+            padding: 10px 16px;
+            border-radius: 8px;
+            border: none;
+            background: var(--accent-cyan);
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
         }
 
-        /* АДМИН ПАНЕЛЬ (скрыта по умолчанию) */
-        .admin-panel {
+        /* --- АДМИНКА (СКРЫТАЯ) --- */
+        .admin-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.95);
-            z-index: 9999;
+            z-index: 1000;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            backdrop-filter: blur(5px);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
+            backdrop-filter: blur(10px);
         }
-        .admin-panel.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .admin-card {
-            background: var(--panel-dark);
+        .login-form, .main-admin-panel {
+            background: #0f111d;
             border: 1px solid var(--accent-orange);
-            border-radius: 20px;
-            padding: 20px;
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
             width: 100%;
-            max-width: 500px;
-            max-height: 90vh;
-            overflow-y: auto;
+            max-width: 400px;
         }
-        .admin-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            color: var(--accent-orange);
-            font-weight: bold;
-            font-size: 18px;
-        }
-        .admin-close {
-            background: none;
-            border: none;
-            color: var(--text-gray);
-            font-size: 20px;
-            cursor: pointer;
-        }
-        .form-group { margin-bottom: 15px; }
-        .form-label {
-            display: block;
-            margin-bottom: 6px;
-            font-size: 12px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-        }
-        .form-input, .form-textarea {
+        .login-input {
             width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            padding: 10px;
+            padding: 12px;
+            margin-bottom: 15px;
             border-radius: 8px;
-            font-family: inherit;
+            border: 1px solid #333;
+            background: #000;
+            color: #fff;
+            text-align: center;
         }
-        .form-textarea { min-height: 100px; resize: vertical; }
-        .admin-btn {
+        .btn-admin {
             width: 100%;
             padding: 12px;
             background: var(--accent-orange);
@@ -268,41 +293,45 @@
             border: none;
             border-radius: 8px;
             font-weight: bold;
-            text-transform: uppercase;
             cursor: pointer;
         }
-        .admin-list {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-top: 15px;
+        
+        /* Стили для списка блоков в админке */
+        .admin-list-container {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            padding: 10px;
+            border-radius: 8px;
         }
-        .admin-item {
+        .admin-list-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
+            padding: 8px;
+            background: rgba(255,255,255,0.05);
+            margin-bottom: 5px;
+            border-radius: 6px;
         }
-        .del-btn {
-            background: rgba(255, 0, 0, 0.2);
-            color: #ff5555;
+        .del-btn-admin {
+            background: #ff5555;
+            color: white;
             border: none;
-            padding: 4px 10px;
+            padding: 4px 8px;
             border-radius: 4px;
             cursor: pointer;
-            font-size: 11px;
+            font-size: 10px;
         }
 
-        /* Кнопка входа в админку (маленькая) */
-        .admin-trigger {
+        /* Кнопка входа в админку (для отладки, если нужно) */
+        .debug-admin-btn {
             position: fixed;
             bottom: 20px;
             right: 20px;
             width: 40px;
             height: 40px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.1);
             border: 1px solid var(--accent-cyan);
             border-radius: 50%;
             display: flex;
@@ -310,17 +339,20 @@
             align-items: center;
             color: var(--accent-cyan);
             cursor: pointer;
-            z-index: 10;
+            z-index: 999;
             font-size: 16px;
-            box-shadow: 0 0 15px rgba(102, 252, 241, 0.3);
-            transition: transform 0.2s;
+            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
+            display: none; /* Скрыта по умолчанию, чтобы не палить админку */
         }
-        .admin-trigger:hover { transform: scale(1.1); }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <!-- Фон -->
+    <div class="matrix-bg" id="matrixBg"></div>
+
+    <!-- Основной интерфейс -->
+    <div class="container" id="mainInterface">
         <h1>MATRIX TRAFFIC</h1>
         <p class="subtitle">Автоматическая рекламная платформа</p>
 
@@ -330,228 +362,340 @@
             <div class="vip-text">
                 Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК.
             </div>
-            <button class="vip-btn" onclick="window.open('https://vk.com/ваш_админ')">Написать админу в ВК</button>
+            <button class="vip-btn" onclick="window.open('https://vk.com/ваш_админ', '_blank')">Написать админу в ВК</button>
         </div>
 
-        <!-- РЕКЛАМНЫЙ СТРИМ -->
+        <!-- СТРИМ -->
         <div class="stream-card">
             <div class="stream-header">
-                <span>Рекламный стрим онлайн</span>
-                <span class="stream-status">Без модерации</span>
+                <span>Рекламный стрим</span>
+                <span style="color:#00ff88; font-size:10px;">Без модерации</span>
             </div>
-            <div class="stream-placeholder">
-                Здесь будет ваш стрим или баннер
-            </div>
-            <div class="stream-input-group">
-                <input type="text" class="stream-input" id="streamInput" placeholder="Вставьте код баннера (например, linkslot)">
-                <button class="stream-btn" onclick="addStream()">Опубликовать бесплатно</button>
+            <div class="stream-placeholder" id="streamZone">
+                <!-- Сюда админка вставляет код -->
             </div>
         </div>
 
-        <!-- ПАРТНЕРСКИЕ ССЫЛКИ -->
-        <div class="links-card">
-            <div class="links-header">
-                Рекомендуемые ссылки партнеров:
+        <!-- ПАРТНЕРСКИЕ БЛОКИ (ДЛЯ ПОСЕТИТЕЛЯ) -->
+        <div class="partners-section">
+            <div class="section-title">
+                Приобрести ссылку на месяц можно у админа
             </div>
-            <div class="links-list" id="linksList">
-                <!-- Сюда JS добавит ссылки -->
-                <div style="color:var(--text-gray); font-size:12px;">Здесь будут отображаться контекстные ссылки...</div>
+            <div id="partnersPublicZone">
+                <!-- Сюда JS рендерит блоки для посетителя -->
+            </div>
+        </div>
+
+        <!-- ЧАТ -->
+        <div class="chat-block">
+            <div class="chat-header">
+                <span>Live Chat</span>
+                <span class="online-count" id="onlineCount">Онлайн: 1</span>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <!-- Сообщения -->
+            </div>
+            <div class="chat-input-row">
+                <input type="text" class="chat-input" id="chatInput" placeholder="Напишите свою рекламу..." maxlength="200">
+                <button class="chat-send" id="chatSend">→</button>
             </div>
         </div>
     </div>
 
-    <!-- КНОПКА ВХОДА В АДМИНКУ -->
-    <div class="admin-trigger" onclick="toggleAdmin()">⚙️</div>
+    <!-- АДМИНКА: ЭКРАН ВХОДА -->
+    <div class="admin-overlay" id="loginOverlay">
+        <div class="login-form">
+            <h2 style="color:var(--accent-cyan); margin-bottom:20px;">Вход в админку</h2>
+            <input type="password" id="adminPassInput" class="login-input" placeholder="Введите пароль">
+            <button class="btn-admin" onclick="checkAdminLogin()">Войти</button>
+            <p style="margin-top:15px; font-size:10px; color:#666;">Пароль по умолчанию: admin123</p>
+        </div>
+    </div>
 
-    <!-- АДМИН ПАНЕЛЬ -->
-    <div class="admin-panel" id="adminPanel">
-        <div class="admin-card">
-            <div class="admin-header">
-                <span>Панель администратора</span>
-                <button class="admin-close" onclick="toggleAdmin()">&times;</button>
+    <!-- АДМИНКА: ПАНЕЛЬ УПРАВЛЕНИЯ -->
+    <div class="admin-overlay" id="adminPanelOverlay" style="display:none;">
+        <div class="main-admin-panel">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+                <h2 style="color:var(--accent-cyan);">Панель администратора</h2>
+                <button class="btn-admin" style="width:auto; padding:5px 15px; font-size:12px;" onclick="logoutAdmin()">Выйти</button>
             </div>
 
-            <!-- УПРАВЛЕНИЕ VIP СЛОТОМ (ссылка) -->
-            <div class="form-group">
-                <label class="form-label">Ссылка для кнопки "Написать админу в ВК"</label>
-                <input type="url" class="form-input" id="vipLink" placeholder="https://vk.com/...">
-                <button class="admin-btn" onclick="updateVipLink()">Сохранить ссылку</button>
+            <!-- Управление Стримом -->
+            <div style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:15px;">
+                <h3 style="color:#fff; margin-bottom:10px;">Управление стримом / Баннером</h3>
+                <textarea id="streamCodeInput" class="login-input" rows="4" placeholder="Вставьте код (linkslot, iframe и т.д.)"></textarea>
+                <button class="btn-admin" onclick="saveStreamCode()">Опубликовать в стриме</button>
             </div>
 
-            <!-- ДОБАВЛЕНИЕ СТРИМА/БАННЕРА -->
-            <div class="form-group">
-                <label class="form-label">Код баннера / Стрима (HTML)</label>
-                <textarea class="form-textarea" id="bannerCode" placeholder="&lt;div id='linkslot_...'&gt;&lt;/div&gt;..."></textarea>
-                <button class="admin-btn" onclick="addStreamFromAdmin()">Добавить в стрим-блок</button>
-                <div class="admin-list" id="streamList">
-                    <div style="color:var(--text-gray)">Список активных баннеров пуст</div>
+            <!-- Управление Партнерскими блоками (до 100 шт) -->
+            <div>
+                <h3 style="color:#fff; margin-bottom:10px;">Партнерские блоки (до 100 шт)</h3>
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                    <input type="text" id="partnerTitle" class="login-input" style="flex:1;" placeholder="Название блока">
+                    <input type="text" id="partnerDesc" class="login-input" style="flex:2;" placeholder="Описание / Текст для посетителя">
+                    <button class="btn-admin" style="width:120px;" onclick="addPartnerBlock()">Добавить</button>
                 </div>
-            </div>
-
-            <!-- ДОБАВЛЕНИЕ ССЫЛОК -->
-            <div class="form-group">
-                <label class="form-label">Добавить партнерскую ссылку</label>
-                <input type="text" class="form-input" id="linkName" placeholder="Название ссылки">
-                <input type="url" class="form-input" id="linkUrl" placeholder="https://site.com">
-                <button class="admin-btn" onclick="addLink()">Добавить ссылку</button>
-            </div>
-            <div class="admin-list" id="linksAdminList">
-                <!-- Список ссылок -->
+                <div class="admin-list-container" id="partnersAdminList">
+                    <!-- Список блоков -->
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // === ДАННЫЕ (JSON) ===
-        // В ЭТОМ БЛОКЕ ХРАНЯТСЯ ВСЕ ДАННЫЕ. 
-        // КОГДА ТЫ МЕНЯЕШЬ ИХ В АДМИНКЕ, ОНИ АВТОМАТИЧЕСКИ ПОЯВЛЯЮТСЯ ЗДЕСЬ.
-        // ДЛЯ ТОГО ЧТОБЫ ДАННЫЕ ВИДЕЛИ ВСЕ ПОСЕТИТЕЛИ, ТЕБЕ НУЖНО СКОПИРОВАТЬ ЭТОТ JSON 
-        // И ВСТАВИТЬ ЕГО В ФАЙЛ НА СЕРВЕРЕ (ИЛИ ВСТАВИТЬ ПРЯМО В ЭТОТ КОД В КОНЦЕ).
-        const DATA = {
-            vipLink: "https://vk.com/ваш_админ",
-            streamBanners: [], // Сюда попадают баннеры из админки
-            links: [
-                { name: "Первый партнер", url: "https://example.com" },
-                { name: "Второй партнер", url: "https://example.org" }
-            ]
+        // === НАСТРОЙКИ ===
+        const ADMIN_PASSWORD = 'admin123'; // <-- МЕНЯЙ ЗДЕСЬ ПАРОЛЬ
+        
+        // === ДАННЫЕ (ХРАНИЛИЩЕ) ===
+        const STORAGE_KEYS = {
+            stream: 'mx_stream_code',
+            partners: 'mx_partners_list',
+            chat: 'mx_chat_history'
         };
 
-        // === ФУНКЦИИ ОТРИСОВКИ ===
-        function init() {
-            // 1. Обновляем кнопку VIP
-            const btn = document.querySelector('.vip-btn');
-            if(btn) btn.onclick = () => window.open(DATA.vipLink);
-
-            // 2. Отрисовываем ссылки
-            const list = document.getElementById('linksList');
-            if (list) {
-                list.innerHTML = '';
-                if (DATA.links.length === 0) {
-                    list.innerHTML = '<div style="color:var(--text-gray)">Здесь будут отображаться контекстные ссылки...</div>';
-                } else {
-                    DATA.links.forEach(l => {
-                        const a = document.createElement('a');
-                        a.className = 'link-item';
-                        a.href = l.url;
-                        a.target = '_blank';
-                        a.rel = 'noopener';
-                        a.textContent = l.name;
-                        list.appendChild(a);
-                    });
-                }
-            }
-
-            // 3. Отрисовываем баннеры в стриме
-            const placeholder = document.querySelector('.stream-placeholder');
-            if (placeholder && DATA.streamBanners.length > 0) {
-                placeholder.innerHTML = '';
-                DATA.streamBanners.forEach(b => {
-                    const div = document.createElement('div');
-                    div.style.width = '100%';
-                    div.style.marginBottom = '10px';
-                    // Безопасная вставка HTML
-                    div.innerHTML = b.code; 
-                    placeholder.appendChild(div);
-                });
-            }
-        }
-
-        // === ФУНКЦИИ АДМИНКИ ===
-        function toggleAdmin() {
-            const panel = document.getElementById('adminPanel');
-            panel.classList.toggle('active');
-            renderAdminLists();
-        }
-
-        function updateVipLink() {
-            const val = document.getElementById('vipLink').value.trim();
-            if(val) {
-                DATA.vipLink = val;
-                alert('Ссылка обновлена! (В реальном проекте нужно сохранить в файл)');
-                init();
-            }
-        }
-
-        function addStream() {
-            const code = document.getElementById('streamInput').value.trim();
-            if (!code) return alert('Вставьте код');
-            DATA.streamBanners.push({ code: code });
-            document.getElementById('streamInput').value = '';
-            alert('Баннер добавлен в очередь. Обновите страницу.');
-            renderAdminLists();
-            init();
-        }
-
-        function addStreamFromAdmin() {
-            const code = document.getElementById('bannerCode').value.trim();
-            if (!code) return alert('Вставьте код');
-            DATA.streamBanners.push({ code: code });
-            document.getElementById('bannerCode').value = '';
-            alert('Баннер добавлен. Обновите страницу, чтобы увидеть результат.');
-            renderAdminLists();
-            init();
-        }
-
-        function addLink() {
-            const name = document.getElementById('linkName').value.trim();
-            const url = document.getElementById('linkUrl').value.trim();
-            if (!name || !url) return alert('Заполните оба поля');
-            DATA.links.push({ name: name, url: url });
-            document.getElementById('linkName').value = '';
-            document.getElementById('linkUrl').value = '';
-            alert('Ссылка добавлена. Обновите страницу.');
-            renderAdminLists();
-            init();
-        }
-
-        function deleteStream(index) {
-            if(confirm('Удалить?')) {
-                DATA.streamBanners.splice(index, 1);
-                renderAdminLists();
-                init();
-            }
-        }
-
-        function deleteLink(index) {
-            if(confirm('Удалить?')) {
-                DATA.links.splice(index, 1);
-                renderAdminLists();
-                init();
-            }
-        }
-
-        function renderAdminLists() {
-            // Список баннеров
-            const sList = document.getElementById('streamList');
-            sList.innerHTML = '';
-            if (DATA.streamBanners.length === 0) {
-                sList.innerHTML = '<div style="color:var(--text-gray)">Список активных баннеров пуст</div>';
+        // === ИНИЦИАЛИЗАЦИЯ ===
+        document.addEventListener('DOMContentLoaded', () => {
+            initMatrixBg();
+            renderStream();
+            renderPartnersPublic();
+            renderChat();
+            
+            // Проверка: если уже залогинен, показать админку, иначе вход
+            if (localStorage.getItem('is_admin_logged_in') === 'true') {
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('adminPanelOverlay').style.display = 'flex';
+                renderAdminPartnersList();
             } else {
-                DATA.streamBanners.forEach((b, i) => {
-                    const div = document.createElement('div');
-                    div.className = 'admin-item';
-                    div.innerHTML = `<span>Баннер #${i+1}</span><button class="del-btn" onclick="deleteStream(${i})">Удалить</button>`;
-                    sList.appendChild(div);
-                });
+                document.getElementById('loginOverlay').style.display = 'flex';
+                document.getElementById('adminPanelOverlay').style.display = 'none';
             }
+        });
 
-            // Список ссылок
-            const lList = document.getElementById('linksAdminList');
-            lList.innerHTML = '';
-            if (DATA.links.length === 0) {
-                lList.innerHTML = '<div style="color:var(--text-gray)">Список ссылок пуст</div>';
-            } else {
-                DATA.links.forEach((l, i) => {
-                    const div = document.createElement('div');
-                    div.className = 'admin-item';
-                    div.innerHTML = `<span>${l.name}</span><button class="del-btn" onclick="deleteLink(${i})">Удалить</button>`;
-                    lList.appendChild(div);
+        // === ФОН (ЦИФРОВОЙ ДОЖДЬ) ===
+        function initMatrixBg() {
+            const bg = document.getElementById('matrixBg');
+            const chars = '0123456789ABCDEF';
+            const count = 150;
+            
+            for (let i = 0; i < count; i++) {
+                const symbol = document.createElement('div');
+                symbol.className = 'symbol';
+                symbol.textContent = chars[Math.floor(Math.random() * chars.length)];
+                symbol.style.left = Math.random() * 100 + 'vw';
+                symbol.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                symbol.style.animationDelay = '-' + (Math.random() * 3) + 's';
+                bg.appendChild(symbol);
+            }
+        }
+
+        // === СТРИМ (БАННЕР) ===
+        function renderStream() {
+            const code = localStorage.getItem(STORAGE_KEYS.stream) || '';
+            const zone = document.getElementById('streamZone');
+            zone.innerHTML = '';
+            
+            if (code) {
+                // Безопасная вставка скриптов
+                const tpl = document.createElement('template');
+                tpl.innerHTML = code;
+                const nodes = Array.from(tpl.content.childNodes);
+                nodes.forEach(node => {
+                    if (node.nodeType === 1 && node.tagName === 'SCRIPT') {
+                        const s = document.createElement('script');
+                        for (const a of Array.from(node.attributes)) s.setAttribute(a.name, a.value);
+                        s.textContent = node.textContent;
+                        zone.appendChild(s);
+                    } else {
+                        zone.appendChild(node);
+                    }
                 });
             }
         }
 
-        // Запуск
-        init();
+        function saveStreamCode() {
+            const code = document.getElementById('streamCodeInput').value.trim();
+            if (!code) return alert('Код не может быть пустым');
+            localStorage.setItem(STORAGE_KEYS.stream, code);
+            renderStream();
+            alert('Код сохранен и отображен в стриме!');
+        }
+
+        // === ПАРТНЕРСКИЕ БЛОКИ ===
+        function getPartners() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEYS.partners);
+                return data ? JSON.parse(data) : [];
+            } catch (e) { return []; }
+        }
+
+        function savePartners(list) {
+            localStorage.setItem(STORAGE_KEYS.partners, JSON.stringify(list));
+        }
+
+        function addPartnerBlock() {
+            const title = document.getElementById('partnerTitle').value.trim();
+            const desc = document.getElementById('partnerDesc').value.trim();
+            
+            if (!title || !desc) return alert('Заполните название и описание');
+            
+            const list = getPartners();
+            if (list.length >= 100) return alert('Максимум 100 блоков!');
+            
+            list.push({ id: Date.now(), title, desc });
+            savePartners(list);
+            
+            document.getElementById('partnerTitle').value = '';
+            document.getElementById('partnerDesc').value = '';
+            
+            renderAdminPartnersList();
+            renderPartnersPublic();
+        }
+
+        function deletePartnerBlock(id) {
+            if(!confirm('Удалить блок?')) return;
+            let list = getPartners();
+            list = list.filter(p => p.id !== id);
+            savePartners(list);
+            renderAdminPartnersList();
+            renderPartnersPublic();
+        }
+
+        // Рендер для АДМИНКИ (список)
+        function renderAdminPartnersList() {
+            const list = getPartners();
+            const container = document.getElementById('partnersAdminList');
+            container.innerHTML = '';
+            
+            if (list.length === 0) {
+                container.innerHTML = '<div style="color:#666">Список блоков пуст</div>';
+                return;
+            }
+
+            list.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'admin-list-item';
+                div.innerHTML = `
+                    <div>
+                        <strong>\${p.title}</strong><br>
+                        <small style="color:#888">\${p.desc}</small>
+                    </div>
+                    <button class="del-btn-admin" onclick="deletePartnerBlock(\${p.id})">Удалить</button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // Рендер для ПОСЕТИТЕЛЯ (карточки)
+        function renderPartnersPublic() {
+            const list = getPartners();
+            const container = document.getElementById('partnersPublicZone');
+            container.innerHTML = '';
+            
+            if (list.length === 0) {
+                container.innerHTML = '<div style="color:#666; font-size:12px; padding:10px;">Пока нет активных партнерских предложений</div>';
+                return;
+            }
+
+            list.forEach(p => {
+                const div = document.createElement('div');
+                div.className = 'partner-block';
+                div.textContent = `${p.title}: ${p.desc}`;
+                container.appendChild(div);
+            });
+        }
+
+        // === ЧАТ ===
+        function getChatHistory() {
+            try {
+                const data = localStorage.getItem(STORAGE_KEYS.chat);
+                return data ? JSON.parse(data) : [];
+            } catch (e) { return []; }
+        }
+
+        function saveChatHistory(history) {
+            localStorage.setItem(STORAGE_KEYS.chat, JSON.stringify(history));
+        }
+
+        function renderChat() {
+            const history = getChatHistory();
+            const container = document.getElementById('chatMessages');
+            container.innerHTML = '';
+            
+            history.forEach(msg => {
+                appendMessageToDOM(msg.name, msg.text);
+            });
+            
+            // Автопрокрутка вниз
+            container.scrollTop = container.scrollHeight;
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const text = input.value.trim();
+            if (!text) return;
+
+            // Генерация имени гостя
+            let guestCount = parseInt(localStorage.getItem('mx_guest_count') || '0');
+            guestCount++;
+            localStorage.setItem('mx_guest_count', guestCount);
+            const name = `Гость #\${guestCount}`;
+
+            const msgObj = { name, text };
+            
+            // Сохраняем в историю
+            let history = getChatHistory();
+            history.push(msgObj);
+            // Храним только последние 50 сообщений, чтобы не забить память
+            if (history.length > 50) history = history.slice(-50);
+            saveChatHistory(history);
+
+            // Отображаем
+            appendMessageToDOM(name, text);
+            input.value = '';
+            
+            // Обновляем счетчик онлайн (просто +1 для примера, можно усложнить)
+            const onlineEl = document.getElementById('onlineCount');
+            let current = parseInt(onlineEl.innerText.replace('Онлайн: ', ''));
+            onlineEl.innerText = `Онлайн: \${current + 1}`;
+        }
+
+        function appendMessageToDOM(name, text) {
+            const container = document.getElementById('chatMessages');
+            const div = document.createElement('div');
+            div.className = 'msg';
+            
+            // Превращаем ссылки в кликабельны теги <a>
+            const safeText = text.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
+            
+            div.innerHTML = `<strong>${name}</strong> ${safeText}`;
+            container.appendChild(div);
+            container.scrollTop = container.scrollHeight;
+        }
+
+        // Обработчики событий чата
+        document.getElementById('chatSend').addEventListener('click', sendMessage);
+        document.getElementById('chatInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+
+        // === АДМИНКА (ЛОГИКА ВХОДА/ВЫХОДА) ===
+        function checkAdminLogin() {
+            const input = document.getElementById('adminPassInput');
+            if (input.value === ADMIN_PASSWORD) {
+                localStorage.setItem('is_admin_logged_in', 'true');
+                document.getElementById('loginOverlay').style.display = 'none';
+                document.getElementById('adminPanelOverlay').style.display = 'flex';
+                renderAdminPartnersList();
+            } else {
+                alert('Неверный пароль!');
+            }
+        }
+
+        function logoutAdmin() {
+            localStorage.setItem('is_admin_logged_in', 'false');
+            location.reload(); // Перезагрузка страницы
+        }
+
     </script>
 </body>
 </html>
