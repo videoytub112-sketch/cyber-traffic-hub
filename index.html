@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATRIX TRAFFIC — Рекламная платформа</title>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
-
+    <title>Matrix Trading Demo</title>
     <style>
         :root {
             --bg-dark: #05060f;
@@ -15,744 +12,374 @@
             --accent-orange: #ffb167;
             --text-gray: #a1b0c4;
             --border-glow: rgba(0, 242, 254, 0.15);
+            --red-candle: #ff3333;
+            --green-candle: #00ff88;
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
         body {
-            background: radial-gradient(circle at 50% 0%, #0a1120 0%, #000000 100%);
-            color: #fff;
-            font-family: 'Courier New', Courier, monospace;
+            background-color: var(--bg-dark);
+            color: white;
+            font-family: 'Courier New', monospace;
+            margin: 0;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        /* Верхняя панель */
+        header {
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            overflow-x: hidden;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-glow);
+            background: rgba(15, 17, 29, 0.8);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 10;
+        }
+
+        .symbol-info h1 {
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 0;
+            font-size: 24px;
+        }
+        .symbol-info p {
+            color: var(--text-gray);
+            font-size: 12px;
+            margin: 2px 0 0;
+        }
+
+        .stats-bar span {
+            margin-left: 20px;
+            font-size: 14px;
+        }
+        .stats-bar .price { color: var(--accent-cyan); font-weight: bold; }
+        .stats-bar .change.up { color: var(--green-candle); }
+        .stats-bar .change.down { color: var(--red-candle); }
+
+        /* Основной контейнер */
+        .container {
+            display: grid;
+            grid-template-columns: 3fr 1fr; /* График 75%, Панель 25% */
+            height: calc(100vh - 60px);
             position: relative;
         }
 
-        .matrix-bg {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: -1;
+        /* График */
+        .chart-area {
+            position: relative;
+            background-color: var(--bg-dark);
+            border-right: 1px solid var(--border-glow);
             overflow: hidden;
+        }
+
+        canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        /* Правая панель */
+        .sidebar {
+            background: rgba(15, 17, 29, 0.9);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            border-left: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .panel-title {
+            color: var(--accent-cyan);
+            text-transform: uppercase;
+            font-size: 12px;
+            border-bottom: 1px solid var(--border-glow);
+            padding-bottom: 5px;
+        }
+
+        .order-form input, .order-form select {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--border-glow);
+            color: white;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+            box-sizing: border-box;
+            font-family: inherit;
+        }
+
+        .btn-trade {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            color: black;
+            font-weight: bold;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-buy { background: var(--green-candle); }
+        .btn-sell { background: var(--red-candle); }
+        .btn-trade:hover { transform: scale(1.02); }
+
+        /* Нижняя панель инструментов */
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            left: 20px;
+            right: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 8px;
+            z-index: 20;
+        }
+        
+        .timeframes button {
+            background: transparent;
+            border: 1px solid var(--text-gray);
+            color: var(--text-gray);
+            padding: 5px 10px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .timeframes button.active {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+        }
+
+        /* Декоративные элементы (матрица) */
+        .matrix-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
         }
         .symbol {
             position: absolute;
-            color: rgba(0, 242, 254, 0.6);
-            font-size: 16px;
-            text-shadow: 0 0 5px rgba(0, 242, 254, 0.5);
-        }
-
-        .container {
-            width: 100%;
-            max-width: 420px;
-            background: rgba(15, 17, 29, 0.95);
-            backdrop-filter: blur(12px);
-            border: 1px solid var(--border-glow);
-            border-radius: 0 0 20px 20px;
-            padding: 20px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8), 0 0 20px rgba(0, 242, 254, 0.1);
-            position: relative;
-            z-index: 10;
-            margin-top: 20px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        h1 {
-            font-size: 20px;
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            text-align: center;
-            margin-bottom: 4px;
-            text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
-        }
-        .subtitle {
-            text-align: center;
-            font-size: 10px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-        }
-
-        .vip-slot-card {
-            border: 1px solid rgba(255, 177, 103, 0.3);
-            border-radius: 12px;
-            background: rgba(255, 177, 103, 0.05);
-            padding: 15px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        .vip-badge {
-            position: absolute;
-            top: 0; left: 0;
-            background: var(--accent-orange);
-            color: #000;
-            font-size: 9px;
-            font-weight: bold;
-            padding: 3px 8px;
-            border-bottom-right-radius: 8px;
-            text-transform: uppercase;
-        }
-        .vip-text {
-            font-size: 12px;
-            color: #fff;
-            line-height: 1.4;
-            margin-bottom: 10px;
-        }
-        .vip-btn {
-            width: 100%;
-            padding: 10px;
-            background: linear-gradient(90deg, #00a8ff, #00f7c8);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            text-transform: uppercase;
-            cursor: pointer;
-            font-family: inherit;
-        }
-
-        .stream-card {
-            border-radius: 12px;
-            background: #000000;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            padding: 10px;
-            margin-bottom: 20px;
-            position: relative;
-            overflow: hidden;
-        }
-        .stream-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 11px;
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-        }
-        .stream-content-wrapper {
-            width: 100%;
-            height: 200px;
-            background: #0f101a;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-gray);
-            border: 1px dashed rgba(255, 255, 255, 0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        .stream-placeholder-text {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        .partners-section {
-            margin-bottom: 20px;
-        }
-        .section-title {
-            font-size: 11px;
-            color: var(--text-gray);
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .partner-block {
-            background: rgba(255, 255, 255, 0.03);
-            border-left: 3px solid var(--accent-cyan);
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            font-size: 12px;
-            color: #fff;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .partner-block:hover {
-            background: rgba(255, 255, 255, 0.1);
-            transform: translateX(5px);
-        }
-        .partner-link-text {
-            color: var(--accent-cyan);
-            text-decoration: none;
-            font-weight: bold;
-            cursor: pointer;
-        }
-        .partner-desc {
-            font-size: 10px;
-            color: var(--text-gray);
-            margin-top: 4px;
-        }
-
-        .chat-block {
-            background: rgba(0, 0, 0, 0.4);
-            border-radius: 12px;
-            padding: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        .chat-header {
-            font-size: 11px;
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .online-count {
-            font-size: 10px;
-            color: #00ff88;
-            background: rgba(0, 255, 136, 0.1);
-            padding: 2px 6px;
-            border-radius: 4px;
-        }
-        .chat-messages {
-            height: 180px;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin-bottom: 10px;
-        }
-        .msg {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 8px 12px;
-            border-radius: 8px;
-            font-size: 12px;
-            line-height: 1.4;
-            border-left: 3px solid var(--accent-cyan);
-            word-wrap: break-word;
-        }
-        .msg strong {
-            color: var(--accent-cyan);
-            margin-right: 5px;
-        }
-        .msg a {
-            color: var(--accent-orange);
-            text-decoration: underline;
-            word-break: break-all;
-        }
-        .chat-input-row {
-            display: flex;
-            gap: 8px;
-        }
-        .chat-input {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            background: rgba(255, 255, 255, 0.05);
-            color: #fff;
-            font-family: inherit;
-            outline: none;
-        }
-        .chat-input:focus { border-color: var(--accent-cyan); }
-        .chat-send {
-            padding: 10px 16px;
-            border-radius: 8px;
-            border: none;
-            background: var(--accent-cyan);
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .admin-trigger-btn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--accent-cyan);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: var(--accent-cyan);
-            cursor: pointer;
-            z-index: 100;
-            font-size: 20px;
-            box-shadow: 0 0 15px rgba(0, 242, 254, 0.3);
-            transition: transform 0.2s, background 0.2s;
-            backdrop-filter: blur(5px);
-        }
-        .admin-trigger-btn:hover {
-            transform: scale(1.1);
-            background: rgba(0, 242, 254, 0.1);
-        }
-
-        .overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 1000;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .card {
-            background: #0f111d;
-            border: 1px solid var(--accent-orange);
-            padding: 30px;
-            border-radius: 16px;
-            text-align: center;
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: 1px solid #333;
-            background: #000;
-            color: #fff;
-            text-align: center;
-            font-size: 16px;
-        }
-        .btn-action {
-            width: 100%;
-            padding: 12px;
-            background: var(--accent-orange);
-            color: #000;
-            border: none;
-            border-radius: 8px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-        }
-
-        .admin-list-container {
-            margin-top: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-            border: 1px solid #333;
-            padding: 10px;
-            border-radius: 8px;
-        }
-        .admin-list-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px;
-            background: rgba(255,255,255,0.05);
-            margin-bottom: 5px;
-            border-radius: 6px;
-        }
-        .del-btn-admin {
-            background: #ff5555;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 10px;
+            color: rgba(0, 242, 254, 0.4);
+            font-size: 14px;
+            text-shadow: 0 0 5px rgba(0, 242, 254, 0.2);
         }
     </style>
 </head>
 <body>
 
-    <div class="matrix-bg" id="matrixBg"></div>
+    <header>
+        <div class="symbol-info">
+            <h1 id="symbol-name">BTC/USDT</h1>
+            <p>Bitcoin / TetherUS</p>
+        </div>
+        <div class="stats-bar">
+            <span>Last Price: <span id="last-price" class="price">45,000.00</span></span>
+            <span>Change: <span id="change-val" class="change up">+2.5%</span></span>
+            <span>Volume: <span id="volume-val">12.5B</span></span>
+        </div>
+    </header>
 
-    <div class="container" id="mainInterface">
-        <h1>MATRIX TRAFFIC</h1>
-        <p class="subtitle">Автоматическая рекламная платформа</p>
+    <div class="container">
+        <!-- Фон матрицы -->
+        <div class="matrix-overlay" id="matrix-bg"></div>
 
-        <div class="vip-slot-card">
-            <div class="vip-badge">VIP СЛОТ</div>
-            <div class="vip-text">
-                Связь с админом по поводу рекламы! Купить этот блок напрямую через ВК.
-            </div>
-            <button class="vip-btn" onclick="window.open('https://vk.com/ваш_админ', '_blank')">Написать админу в ВК</button>
+        <!-- График -->
+        <div class="chart-area">
+            <canvas id="trading-chart"></canvas>
         </div>
 
-        <div class="stream-card">
-            <div class="stream-header">
-                <span>Рекламный стрим / Баннер</span>
-                <span style="color:#00ff88; font-size:10px;">Без модерации</span>
-            </div>
-            <div class="stream-content-wrapper" id="streamZone">
-                <div class="stream-placeholder-text">
-                    Здесь появится код из админки.<br>
-                    Фиксированная высота для стабильности.
-                </div>
-            </div>
-        </div>
-
-        <div class="partners-section">
-            <div class="section-title">
-                Партнерские предложения
-            </div>
-            <div id="partnersPublicZone">
-            </div>
-        </div>
-
-        <div class="chat-block">
-            <div class="chat-header">
-                <span>Live Chat</span>
-                <span class="online-count" id="onlineCount">Онлайн: 0</span>
-            </div>
-            <div class="chat-messages" id="chatMessages">
-            </div>
-            <div class="chat-input-row">
-                <input type="text" class="chat-input" id="chatInput" placeholder="Напишите свою рекламу..." maxlength="200">
-                <button class="chat-send" id="chatSend">→</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="admin-trigger-btn" id="adminTriggerBtn" title="Админ-панель">🔐</div>
-
-    <div class="overlay" id="loginOverlay">
-        <div class="card">
-            <h2 style="color:var(--accent-cyan); margin-bottom:20px;">Вход в админку</h2>
-            <input type="password" id="adminPassInput" class="login-input" placeholder="Введите пароль">
-            <button class="btn-action" onclick="checkAdminLogin()">Войти</button>
-            <p style="margin-top:15px; font-size:10px; color:#666;">Пароль по умолчанию: admin123</p>
-        </div>
-    </div>
-
-    <div class="overlay" id="adminPanelOverlay">
-        <div class="card" style="max-width: 500px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
-                <h2 style="color:var(--accent-cyan);">Панель администратора</h2>
-                <button class="btn-action" style="width:auto; padding:5px 15px; font-size:12px;" onclick="logoutAdmin()">Выйти</button>
-            </div>
-
-            <div style="margin-bottom:20px; border-bottom:1px solid #333; padding-bottom:15px;">
-                <h3 style="color:#fff; margin-bottom:10px;">Управление стримом / Баннером</h3>
-                <textarea id="streamCodeInput" class="login-input" rows="4" placeholder="Вставьте код (iframe, script, div)"></textarea>
-                <button class="btn-action" onclick="saveStreamCode()">Опубликовать в стриме</button>
-                <p style="font-size:10px; color:#666; margin-top:5px;">Код займет место в блоке выше. Высота фиксирована.</p>
+        <!-- Панель управления -->
+        <aside class="sidebar">
+            <div>
+                <div class="panel-title">Order Book</div>
+                <div style="font-size: 10px; color: var(--text-gray); margin-bottom: 5px;">Top 3 Bids</div>
+                <div style="font-size: 12px; margin-bottom: 10px;">44,990.00 (0.5 BTC)</div>
+                <div style="font-size: 12px; margin-bottom: 10px;">44,985.00 (1.2 BTC)</div>
+                <div style="font-size: 12px; margin-bottom: 10px;">44,980.00 (0.8 BTC)</div>
             </div>
 
             <div>
-                <h3 style="color:#fff; margin-bottom:10px;">Партнерские блоки (до 100 шт)</h3>
-                <div style="display:flex; gap:10px; margin-bottom:10px;">
-                    <input type="text" id="partnerTitle" class="login-input" style="flex:1;" placeholder="Название (ссылка)">
-                    <input type="text" id="partnerDesc" class="login-input" style="flex:2;" placeholder="Описание">
-                    <button class="btn-action" style="width:120px;" onclick="addPartnerBlock()">Добавить</button>
-                </div>
-                <div class="admin-list-container" id="partnersAdminList">
+                <div class="panel-title">New Order</div>
+                <div class="order-form">
+                    <input type="text" value="0.001" placeholder="Amount">
+                    <select>
+                        <option>Market</option>
+                        <option>Limit</option>
+                    </select>
+                    <button class="btn-trade btn-buy">BUY</button>
+                    <button class="btn-trade btn-sell">SELL</button>
                 </div>
             </div>
+
+            <div style="margin-top: auto;">
+                <div class="panel-title">Status</div>
+                <div style="font-size: 10px; color: #00ff88;">Connection: OK</div>
+                <div style="font-size: 10px; color: var(--text-gray);">Server: Matrix Node #7</div>
+            </div>
+        </aside>
+    </div>
+
+    <div class="controls">
+        <div class="timeframes">
+            <button onclick="setTimeframe('1m')" class="active">1M</button>
+            <button onclick="setTimeframe('5m')">5M</button>
+            <button onclick="setTimeframe('15m')">15M</button>
+            <button onclick="setTimeframe('1H')">1H</button>
+            <button onclick="setTimeframe('4H')">4H</button>
+            <button onclick="setTimeframe('1D')">1D</button>
+        </div>
+        <div style="font-size: 12px; color: var(--text-gray);">
+            Demo Mode - Data is simulated
         </div>
     </div>
 
     <script>
-        // ================= НАСТРОЙКИ =================
-        const FIREBASE_URL = 'https://matrix-traffic-default-rtdb.firebaseio.com/';
-        const ADMIN_PASSWORD = 'admin123';
+        // --- Логика генерации данных (упрощенная) ---
+        const ctx = document.getElementById('trading-chart').getContext('2d');
+        const width = ctx.canvas.width = window.innerWidth;
+        const height = ctx.canvas.height = window.innerHeight - 60; // минус хедер
+        
+        let candles = [];
+        let currentPrice = 45000;
+        let volumeMultiplier = 1000;
 
-        const STORAGE_KEYS = {
-            stream: 'mx_stream_code',
-            partners: 'mx_partners_list',
-            guestName: 'mx_guest_name'
-        };
-
-        // ================= ИНИЦИАЛИЗАЦИЯ FIREBASE =================
-        firebase.initializeApp({ databaseURL: FIREBASE_URL });
-        const db = firebase.database();
-        const firebaseRef = db.ref('chat_messages');
-        const presenceRef = db.ref('presence');
-
-        // Уникальный ID этого браузера (нужен для счётчика онлайн)
-        const MY_CLIENT_ID = 'client_' + Math.random().toString(36).slice(2, 10);
-
-        // Постоянное имя гостя для этого браузера
-        function getGuestName() {
-            let name = localStorage.getItem(STORAGE_KEYS.guestName);
-            if (!name) {
-                const num = Math.floor(Math.random() * 9000) + 1000;
-                name = 'Гость #' + num;
-                localStorage.setItem(STORAGE_KEYS.guestName, name);
+        // Генерация начальных данных
+        function generateData() {
+            candles = [];
+            let price = 45000;
+            for (let i = 0; i < 50; i++) {
+                const open = price;
+                const change = (Math.random() - 0.5) * 200; // случайное движение
+                const close = open + change;
+                const high = Math.max(open, close) + Math.random() * 50;
+                const low = Math.min(open, close) - Math.random() * 50;
+                const volume = Math.random() * volumeMultiplier;
+                
+                candles.push({ open, high, low, close, volume });
+                price = close;
             }
-            return name;
+            currentPrice = close;
+            updateUI();
+            drawChart();
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initMatrixBg();
-            renderStream();
-            renderPartnersPublic();
-
-            if (localStorage.getItem('is_admin_logged_in') === 'true') {
-                openAdminPanel();
-            }
-
-            initChat();
-            initPresence();
-        });
-
-        /* --- ФОН --- */
-        function initMatrixBg() {
-            const bg = document.getElementById('matrixBg');
-            const chars = '0123456789ABCDEF';
-            const count = 150;
-
-            for (let i = 0; i < count; i++) {
-                const symbol = document.createElement('div');
-                symbol.className = 'symbol';
-                symbol.textContent = chars[Math.floor(Math.random() * chars.length)];
-                symbol.style.left = Math.random() * 100 + 'vw';
-
-                const duration = Math.random() * 3 + 2;
-                const delay = '-' + (Math.random() * 3) + 's';
-
-                symbol.style.animation = `fall ${duration}s linear infinite ${delay}`;
-
-                bg.appendChild(symbol);
-            }
-        }
-
-        /* --- СТРИМ --- */
-        function renderStream() {
-            const code = localStorage.getItem(STORAGE_KEYS.stream) || '';
-            const zone = document.getElementById('streamZone');
-            zone.innerHTML = '';
-
-            if (code) {
-                const tpl = document.createElement('template');
-                tpl.innerHTML = code;
-                const clone = tpl.content.cloneNode(true);
-                const nodes = Array.from(clone.childNodes);
-                nodes.forEach(node => {
-                    if (node.nodeType === 1 && node.tagName === 'SCRIPT') {
-                        const s = document.createElement('script');
-                        for (const a of Array.from(node.attributes)) s.setAttribute(a.name, a.value);
-                        s.textContent = node.textContent;
-                        zone.appendChild(s);
-                    } else {
-                        zone.appendChild(node);
-                    }
-                });
-            }
-        }
-
-        function saveStreamCode() {
-            const code = document.getElementById('streamCodeInput').value.trim();
-            if (!code) return alert('Код не может быть пустым');
-            localStorage.setItem(STORAGE_KEYS.stream, code);
-            renderStream();
-            alert('Код сохранен и отображен в стриме!');
-        }
-
-        /* --- ПАРТНЕРЫ --- */
-        function getPartners() {
-            try {
-                const data = localStorage.getItem(STORAGE_KEYS.partners);
-                return data ? JSON.parse(data) : [];
-            } catch (e) { return []; }
-        }
-
-        function savePartners(list) {
-            localStorage.setItem(STORAGE_KEYS.partners, JSON.stringify(list));
-        }
-
-        function addPartnerBlock() {
-            const title = document.getElementById('partnerTitle').value.trim();
-            const desc = document.getElementById('partnerDesc').value.trim();
-
-            if (!title || !desc) return alert('Заполните название и описание');
-
-            const list = getPartners();
-            if (list.length >= 100) return alert('Максимум 100 блоков!');
-
-            list.push({ id: Date.now(), title, desc });
-            savePartners(list);
-
-            document.getElementById('partnerTitle').value = '';
-            document.getElementById('partnerDesc').value = '';
-
-            renderAdminPartnersList();
-            renderPartnersPublic();
-        }
-
-        function deletePartnerBlock(id) {
-            if(!confirm('Удалить блок?')) return;
-            let list = getPartners();
-            list = list.filter(p => p.id !== id);
-            savePartners(list);
-            renderAdminPartnersList();
-            renderPartnersPublic();
-        }
-
-        function renderAdminPartnersList() {
-            const list = getPartners();
-            const container = document.getElementById('partnersAdminList');
-            container.innerHTML = '';
-
-            if (list.length === 0) {
-                container.innerHTML = '<div style="color:#666">Список блоков пуст</div>';
-                return;
+        // --- Отрисовка графика ---
+        function drawChart() {
+            const barWidth = width / candles.length * 0.8;
+            const padding = 40; // отступы
+            
+            ctx.clearRect(0, 0, width, height);
+            
+            // Рисуем сетку
+            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+            ctx.lineWidth = 1;
+            const gridLines = 10;
+            for(let i=0; i<=gridLines; i++) {
+                const y = padding + (height - padding * 2) * (i / gridLines);
+                ctx.beginPath();
+                ctx.moveTo(padding, y);
+                ctx.lineTo(width - padding, y);
+                ctx.stroke();
             }
 
-            list.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'admin-list-item';
-                div.innerHTML = `
-                    <div>
-                        <strong>${p.title}</strong><br>
-                        <small style="color:#888">${p.desc}</small>
-                    </div>
-                    <button class="del-btn-admin" onclick="deletePartnerBlock(${p.id})">Удалить</button>
-                `;
-                container.appendChild(div);
+            // Рисуем свечи
+            candles.forEach((c, index) => {
+                const x = padding + index * (width / candles.length);
+                const bodyHeight = Math.abs(c.close - c.open);
+                const bodyY = c.close > c.open 
+                    ? height - padding - c.close 
+                    : height - padding - c.open;
+                
+                // Тень (wick)
+                ctx.strokeStyle = c.close > c.open ? '#00ff88' : '#ff3333';
+                ctx.beginPath();
+                ctx.moveTo(x + barWidth/2, height - padding - c.high);
+                ctx.lineTo(x + barWidth/2, height - padding - c.low);
+                ctx.stroke();
+
+                // Тело свечи
+                ctx.fillStyle = c.close > c.open ? '#00ff88' : '#ff3333';
+                ctx.fillRect(x, bodyY, barWidth, bodyHeight);
             });
         }
 
-        function renderPartnersPublic() {
-            const list = getPartners();
-            const container = document.getElementById('partnersPublicZone');
-            container.innerHTML = '';
+        // --- Обновление UI ---
+        function updateUI() {
+            document.getElementById('last-price').innerText = currentPrice.toLocaleString('en-US', {minimumFractionDigits: 2});
+            const change = ((currentPrice - (currentPrice - 100)) / (currentPrice - 100)) * 100; // заглушка
+            const changeEl = document.getElementById('change-val');
+            changeEl.innerText = '+' + (Math.random() * 5).toFixed(2) + '%';
+            changeEl.className = 'change up';
+            document.getElementById('volume-val').innerText = (Math.random() * 20).toFixed(1) + 'B';
+        }
 
-            if (list.length === 0) {
-                container.innerHTML = '<div style="color:#666; font-size:12px; padding:10px;">Пока нет активных партнерских предложений</div>';
-                return;
+        // --- Анимация матрицы на фоне ---
+        function initMatrix() {
+            const bg = document.getElementById('matrix-bg');
+            const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const count = 100;
+            
+            for(let i=0; i<count; i++) {
+                const span = document.createElement('span');
+                span.className = 'symbol';
+                span.innerText = chars[Math.floor(Math.random() * chars.length)];
+                span.style.left = Math.random() * 100 + 'vw';
+                span.style.top = Math.random() * 100 + 'vh';
+                span.style.animation = `fall \${Math.random() * 5 + 5}s linear infinite`;
+                bg.appendChild(span);
             }
-
-            list.forEach(p => {
-                const div = document.createElement('div');
-                div.className = 'partner-block';
-                div.innerHTML = `
-                    <a href="${p.title}" target="_blank" class="partner-link-text">${p.title}</a>
-                    <span class="partner-desc">${p.desc}</span>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        /* --- ЧАТ --- */
-        function initChat() {
-            // Один раз слушаем новые сообщения от всех (включая свои)
-            firebaseRef.on('child_added', (snapshot) => {
-                const msg = snapshot.val();
-                appendMessageToDOM(msg.name, msg.text);
-            });
-
-            firebaseRef.on('child_removed', () => {
-                renderChat();
-            });
-        }
-
-        function renderChat() {
-            const container = document.getElementById('chatMessages');
-            container.innerHTML = '';
-            firebaseRef.once('value', (snapshot) => {
-                snapshot.forEach(child => {
-                    const msg = child.val();
-                    appendMessageToDOM(msg.name, msg.text);
-                });
-            });
-        }
-
-        function sendMessage() {
-            const input = document.getElementById('chatInput');
-            const text = input.value.trim();
-            if (!text) return;
-
-            const name = getGuestName();
-
-            // Отправляем ТОЛЬКО в Firebase.
-            // Отрисовка произойдёт через child_added — без дублей.
-            firebaseRef.push({ name, text })
-                .then(() => {
-                    input.value = '';
-                })
-                .catch(err => {
-                    console.error('Ошибка отправки:', err);
-                    alert('Не удалось отправить сообщение: ' + err.message);
-                });
-        }
-
-        function appendMessageToDOM(name, text) {
-            const container = document.getElementById('chatMessages');
-            const div = document.createElement('div');
-            div.className = 'msg';
-
-            const safeText = String(text).replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank">$1</a>');
-
-            div.innerHTML = `<strong>${name}</strong> ${safeText}`;
-            container.appendChild(div);
-            container.scrollTop = container.scrollHeight;
-        }
-
-        document.getElementById('chatSend').addEventListener('click', sendMessage);
-        document.getElementById('chatInput').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendMessage();
-        });
-
-        /* --- ПРИСУТСТВИЕ (СЧЁТЧИК ОНЛАЙН) --- */
-        function initPresence() {
-            const connectedRef = db.ref('.info/connected');
-            const myPresenceRef = presenceRef.child(MY_CLIENT_ID);
-
-            connectedRef.on('value', (snap) => {
-                if (snap.val() === true) {
-                    // При разрыве связи удаляем себя из списка онлайн
-                    myPresenceRef.onDisconnect().remove();
-                    myPresenceRef.set(true);
+            
+            // Добавляем CSS анимацию динамически
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes fall {
+                    from { transform: translateY(-10vh); opacity: 0; }
+                    to { transform: translateY(110vh); opacity: 1; }
                 }
-            });
-
-            presenceRef.on('value', (snap) => {
-                const count = snap.numChildren();
-                document.getElementById('onlineCount').innerText = 'Онлайн: ' + count;
-            });
+            `;
+            document.head.appendChild(style);
         }
 
-        /* --- АДМИНКА --- */
-        document.getElementById('adminTriggerBtn').addEventListener('click', () => {
-            if (localStorage.getItem('is_admin_logged_in') === 'true') {
-                openAdminPanel();
-            } else {
-                document.getElementById('loginOverlay').classList.add('active');
+        // --- Интерактив ---
+        function setTimeframe(tf) {
+            // Здесь можно добавить логику смены таймфрейма
+            alert('Смена таймфрейма: ' + tf + ' (в демо режиме данные не меняются)');
+        }
+
+        // Запуск
+        initMatrix();
+        generateData();
+
+        // Обновление цены каждые 2 секунды (имитация тиков)
+        setInterval(() => {
+            const change = (Math.random() - 0.5) * 50;
+            currentPrice += change;
+            // Добавляем новую свечу каждые N тиков (упрощено)
+            if(Math.random() > 0.9) {
+                const last = candles[candles.length - 1];
+                const newCandle = {
+                    open: last.close,
+                    high: Math.max(last.close, last.close + change + 20),
+                    low: Math.min(last.close, last.close + change - 20),
+                    close: last.close + change,
+                    volume: Math.random() * volumeMultiplier
+                };
+                candles.push(newCandle);
+                if(candles.length > 50) candles.shift(); // удаляем старые
+                drawChart();
+                updateUI();
             }
+        }, 2000);
+
+        // Ресайз окна
+        window.addEventListener('resize', () => {
+            ctx.canvas.width = window.innerWidth;
+            ctx.canvas.height = window.innerHeight - 60;
+            drawChart();
         });
-
-        function checkAdminLogin() {
-            const input = document.getElementById('adminPassInput');
-            if (input.value === ADMIN_PASSWORD) {
-                localStorage.setItem('is_admin_logged_in', 'true');
-                document.getElementById('loginOverlay').classList.remove('active');
-                openAdminPanel();
-            } else {
-                alert('Неверный пароль!');
-            }
-        }
-
-        function openAdminPanel() {
-            document.getElementById('adminPanelOverlay').classList.add('active');
-            renderAdminPartnersList();
-        }
-
-        function logoutAdmin() {
-            localStorage.setItem('is_admin_logged_in', 'false');
-            document.getElementById('adminPanelOverlay').classList.remove('active');
-            document.getElementById('loginOverlay').classList.remove('active');
-        }
     </script>
 </body>
 </html>
