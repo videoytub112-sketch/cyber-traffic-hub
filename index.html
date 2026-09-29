@@ -3,413 +3,724 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>АУРА — автономные ИИ-сотрудники для бизнеса</title>
+<title>NEXUS 2060 — квантовая рекламная сеть</title>
 <style>
-    :root{
-        --bg:#050510;
-        --violet:#7c3aed;
-        --cyan:#22d3ee;
-        --pink:#ec4899;
-        --white:#f5f6ff;
-        --muted:#9aa0c0;
-        --glass:rgba(255,255,255,0.05);
-        --border:rgba(255,255,255,0.1);
-    }
-    *{margin:0;padding:0;box-sizing:border-box;}
-    html{scroll-behavior:smooth;}
-    body{
-        background:var(--bg);
-        color:var(--white);
-        font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-        overflow-x:hidden;
-        line-height:1.6;
-    }
-    #bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
-    .aurora{
-        position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
-    }
-    .aurora span{
-        position:absolute;border-radius:50%;filter:blur(90px);opacity:.45;
-        animation:float 18s ease-in-out infinite;
-    }
-    .aurora .a1{width:520px;height:520px;background:var(--violet);top:-160px;left:-120px;}
-    .aurora .a2{width:460px;height:460px;background:var(--cyan);bottom:-160px;right:-100px;animation-delay:-6s;}
-    .aurora .a3{width:380px;height:380px;background:var(--pink);top:40%;left:55%;animation-delay:-11s;}
-    @keyframes float{
-        0%,100%{transform:translate(0,0) scale(1);}
-        50%{transform:translate(60px,-40px) scale(1.15);}
-    }
-    .wrap{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:0 22px;}
+:root{
+    --bg:#03030a;
+    --panel:rgba(11,14,32,0.62);
+    --stroke:rgba(120,180,255,0.16);
+    --cyan:#4de2ff;
+    --violet:#8b5cf6;
+    --magenta:#ff4d9d;
+    --lime:#5cffb1;
+    --amber:#ffc857;
+    --text:#dfe6ff;
+    --dim:#7f8bb5;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    overflow:hidden;
+    position:relative;
+}
+#space{position:fixed;inset:0;z-index:0;}
+.scan{
+    position:fixed;inset:0;z-index:1;pointer-events:none;
+    background:repeating-linear-gradient(180deg,rgba(255,255,255,0.025) 0 1px,transparent 1px 3px);
+    mix-blend-mode:screen;
+}
+.glow{
+    position:fixed;width:520px;height:520px;border-radius:50%;z-index:1;pointer-events:none;
+    background:radial-gradient(circle,rgba(139,92,246,0.16),transparent 65%);
+    transform:translate(-50%,-50%);transition:opacity .4s;left:-999px;top:-999px;
+}
 
-    /* Навигация */
-    header{
-        position:sticky;top:0;z-index:50;
-        backdrop-filter:blur(16px);
-        background:rgba(5,5,16,0.6);
-        border-bottom:1px solid var(--border);
-    }
-    nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
-    .logo{
-        font-size:1.5rem;font-weight:800;letter-spacing:3px;
-        background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));
-        -webkit-background-clip:text;background-clip:text;color:transparent;
-    }
-    .nav-links{display:flex;gap:28px;font-size:.92rem;}
-    .nav-links a{color:var(--muted);text-decoration:none;transition:.2s;}
-    .nav-links a:hover{color:var(--white);}
-    .nav-cta{
-        padding:10px 22px;border-radius:30px;border:1px solid var(--border);
-        background:var(--glass);color:var(--white);text-decoration:none;font-size:.9rem;
-        transition:.3s;
-    }
-    .nav-cta:hover{background:var(--violet);border-color:var(--violet);}
+/* ШАПКА */
+header{
+    position:relative;z-index:5;height:74px;
+    display:flex;align-items:center;gap:22px;
+    padding:0 20px;
+    border-bottom:1px solid var(--stroke);
+    background:linear-gradient(180deg,rgba(8,10,26,0.9),rgba(8,10,26,0.4));
+    backdrop-filter:blur(14px);
+}
+.brand{display:flex;align-items:center;gap:12px;}
+.core{
+    width:38px;height:38px;border-radius:12px;position:relative;
+    background:conic-gradient(from 0deg,var(--cyan),var(--violet),var(--magenta),var(--cyan));
+    animation:spin 6s linear infinite;
+    box-shadow:0 0 22px rgba(77,226,255,0.5);
+}
+.core::after{
+    content:"";position:absolute;inset:5px;border-radius:8px;background:#05060f;
+}
+@keyframes spin{to{transform:rotate(360deg);}}
+.brand h1{
+    font-size:1.15rem;letter-spacing:3px;font-weight:800;
+    background:linear-gradient(90deg,var(--cyan),var(--violet),var(--magenta));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.brand p{font-size:.66rem;color:var(--dim);letter-spacing:1.6px;text-transform:uppercase;}
+.head-stats{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.78rem;}
+.hstat{text-align:right;line-height:1.25;}
+.hstat b{display:block;font-size:.98rem;font-family:'Consolas',monospace;color:var(--cyan);}
+.hstat span{color:var(--dim);font-size:.68rem;text-transform:uppercase;letter-spacing:1px;}
+.loadbar{width:110px;height:6px;border-radius:6px;background:rgba(255,255,255,0.08);overflow:hidden;}
+.loadbar i{display:block;height:100%;width:40%;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .8s;}
+.clock{font-family:'Consolas',monospace;font-size:1rem;color:var(--lime);letter-spacing:1px;}
 
-    /* Hero */
-    .hero{padding:110px 0 90px;text-align:center;}
-    .tag{
-        display:inline-block;padding:7px 18px;border-radius:30px;
-        border:1px solid var(--border);background:var(--glass);
-        font-size:.8rem;color:var(--cyan);letter-spacing:1px;margin-bottom:28px;
-        animation:fadeUp .8s ease both;
-    }
-    .hero h1{
-        font-size:clamp(2.1rem,6vw,4.2rem);line-height:1.1;font-weight:800;
-        letter-spacing:-1px;margin-bottom:24px;animation:fadeUp .8s .1s ease both;
-    }
-    .hero h1 .grad{
-        background:linear-gradient(120deg,var(--cyan),var(--violet),var(--pink));
-        -webkit-background-clip:text;background-clip:text;color:transparent;
-    }
-    .hero p{
-        max-width:620px;margin:0 auto 40px;color:var(--muted);font-size:clamp(1rem,2.5vw,1.2rem);
-        animation:fadeUp .8s .2s ease both;
-    }
-    .hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;animation:fadeUp .8s .3s ease both;}
-    .btn{
-        padding:16px 36px;border-radius:40px;font-size:1rem;font-weight:600;
-        text-decoration:none;cursor:pointer;border:none;transition:.3s;
-    }
-    .btn-main{
-        background:linear-gradient(120deg,var(--violet),var(--cyan));
-        color:#050510;box-shadow:0 0 40px rgba(124,58,237,0.5);
-    }
-    .btn-main:hover{transform:translateY(-3px);box-shadow:0 0 60px rgba(34,211,238,0.6);}
-    .btn-ghost{background:var(--glass);color:var(--white);border:1px solid var(--border);}
-    .btn-ghost:hover{background:rgba(255,255,255,0.12);}
+/* ТИКЕР */
+.ticker{
+    position:relative;z-index:5;height:30px;overflow:hidden;
+    border-bottom:1px solid var(--stroke);
+    background:rgba(8,10,26,0.7);
+    display:flex;align-items:center;font-size:.72rem;color:var(--dim);
+    font-family:'Consolas',monospace;
+}
+.ticker div{
+    white-space:nowrap;padding-left:100%;
+    animation:slide 38s linear infinite;
+}
+.ticker b{color:var(--amber);}
+@keyframes slide{to{transform:translateX(-100%);}}
 
-    /* Статистика */
-    .stats{
-        display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:80px;
-    }
-    .stat{padding:26px 14px;border-radius:20px;background:var(--glass);border:1px solid var(--border);}
-    .stat b{
-        display:block;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;
-        background:linear-gradient(120deg,var(--cyan),var(--violet));
-        -webkit-background-clip:text;background-clip:text;color:transparent;
-    }
-    .stat span{font-size:.82rem;color:var(--muted);}
+/* СЕТКА */
+.dashboard{
+    position:relative;z-index:5;
+    display:grid;
+    grid-template-columns:1fr 1.15fr 1fr;
+    gap:14px;
+    padding:14px;
+    height:calc(100vh - 104px);
+}
+.col{display:flex;flex-direction:column;gap:14px;min-height:0;}
 
-    /* Секции */
-    section{padding:90px 0;}
-    .sec-title{text-align:center;font-size:clamp(1.6rem,4vw,2.6rem);font-weight:800;margin-bottom:16px;letter-spacing:-.5px;}
-    .sec-sub{text-align:center;color:var(--muted);max-width:560px;margin:0 auto 60px;}
+.panel{
+    background:var(--panel);
+    border:1px solid var(--stroke);
+    border-radius:16px;
+    backdrop-filter:blur(12px);
+    display:flex;flex-direction:column;
+    overflow:hidden;
+    position:relative;
+    min-height:0;
+}
+.panel::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:1px;
+    background:linear-gradient(90deg,transparent,var(--cyan),transparent);
+    opacity:.6;
+}
+.phead{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 16px;border-bottom:1px solid var(--stroke);
+    font-size:.76rem;text-transform:uppercase;letter-spacing:1.6px;color:var(--dim);
+}
+.phead .dot{
+    width:7px;height:7px;border-radius:50%;background:var(--lime);
+    box-shadow:0 0 10px var(--lime);animation:pulse 1.6s infinite;
+}
+@keyframes pulse{50%{opacity:.3;}}
+.phead .tag{margin-left:auto;font-family:'Consolas',monospace;color:var(--cyan);font-size:.7rem;}
+.pbody{overflow-y:auto;flex:1;padding:12px 16px;min-height:0;}
+.pbody::-webkit-scrollbar{width:5px;}
+.pbody::-webkit-scrollbar-thumb{background:rgba(120,180,255,0.25);border-radius:5px;}
 
-    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
-    .card{
-        padding:34px 28px;border-radius:24px;background:var(--glass);
-        border:1px solid var(--border);transition:.4s;position:relative;overflow:hidden;
-    }
-    .card::before{
-        content:"";position:absolute;inset:0;border-radius:24px;padding:1px;
-        background:linear-gradient(135deg,var(--cyan),var(--violet),transparent);
-        -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
-        -webkit-mask-composite:xor;mask-composite:exclude;opacity:0;transition:.4s;
-    }
-    .card:hover{transform:translateY(-8px);background:rgba(255,255,255,0.08);}
-    .card:hover::before{opacity:1;}
-    .card .ico{
-        width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
-        font-size:1.6rem;margin-bottom:20px;
-        background:linear-gradient(135deg,rgba(124,58,237,0.3),rgba(34,211,238,0.3));
-        border:1px solid var(--border);
-    }
-    .card h3{font-size:1.25rem;margin-bottom:12px;}
-    .card p{color:var(--muted);font-size:.95rem;}
+/* АУКЦИОН */
+.bid{
+    display:flex;align-items:center;gap:10px;
+    padding:10px 12px;border-radius:11px;margin-bottom:8px;
+    background:rgba(255,255,255,0.03);
+    border-left:2px solid var(--violet);
+    animation:bidIn .5s cubic-bezier(.2,.8,.3,1) both;
+}
+@keyframes bidIn{from{opacity:0;transform:translateX(-18px);}}
+.bid.win{border-left-color:var(--lime);background:rgba(92,255,177,0.07);}
+.bid .who{font-size:.82rem;font-weight:600;}
+.bid .meta{font-size:.66rem;color:var(--dim);}
+.bid .val{margin-left:auto;font-family:'Consolas',monospace;color:var(--amber);font-size:.9rem;white-space:nowrap;}
 
-    /* Шаги */
-    .steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:s;}
-    .step{
-        padding:30px 22px;border-radius:20px;background:var(--glass);
-        border:1px solid var(--border);position:relative;
-    }
-    .step::before{
-        counter-increment:s;content:"0" counter(s);
-        font-size:2.4rem;font-weight:800;opacity:.25;display:block;margin-bottom:12px;
-        background:linear-gradient(120deg,var(--cyan),var(--violet));
-        -webkit-background-clip:text;background-clip:text;color:transparent;
-    }
-    .step h3{font-size:1.05rem;margin-bottom:10px;}
-    .step p{color:var(--muted);font-size:.9rem;}
+/* СЛОТЫ */
+.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.slot{
+    aspect-ratio:1/1;border-radius:12px;
+    border:1px solid var(--stroke);
+    background:rgba(255,255,255,0.02);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:3px;font-size:.62rem;color:var(--dim);text-align:center;padding:4px;
+    transition:.4s;position:relative;overflow:hidden;
+}
+.slot b{font-family:'Consolas',monospace;font-size:.8rem;color:var(--text);}
+.slot.busy{
+    border-color:rgba(139,92,246,0.6);
+    background:linear-gradient(160deg,rgba(139,92,246,0.2),rgba(77,226,255,0.08));
+    box-shadow:0 0 18px rgba(139,92,246,0.25) inset;
+}
+.slot.busy::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.14),transparent 60%);
+    transform:translateX(-100%);animation:shine 3.4s infinite;
+}
+@keyframes shine{60%,100%{transform:translateX(100%);}}
+.slot .rate{color:var(--lime);}
 
-    /* Тарифы */
-    .prices{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;align-items:stretch;}
-    .price{
-        padding:40px 30px;border-radius:26px;background:var(--glass);
-        border:1px solid var(--border);display:flex;flex-direction:column;transition:.3s;
-    }
-    .price.pop{
-        background:linear-gradient(160deg,rgba(124,58,237,0.18),rgba(34,211,238,0.12));
-        border-color:rgba(124,58,237,0.5);transform:scale(1.04);
-        box-shadow:0 0 60px rgba(124,58,237,0.35);
-    }
-    .price .badge{
-        align-self:flex-start;font-size:.72rem;padding:5px 12px;border-radius:20px;
-        background:linear-gradient(120deg,var(--violet),var(--cyan));color:#050510;
-        font-weight:700;margin-bottom:16px;letter-spacing:.5px;
-    }
-    .price h3{font-size:1.2rem;margin-bottom:6px;}
-    .price .cost{font-size:2.6rem;font-weight:800;margin:14px 0 4px;}
-    .price .cost small{font-size:.9rem;color:var(--muted);font-weight:400;}
-    .price ul{list-style:none;margin:24px 0;flex:1;}
-    .price li{padding:9px 0;color:var(--muted);font-size:.92rem;border-bottom:1px solid rgba(255,255,255,0.05);}
-    .price li::before{content:"◆";color:var(--cyan);margin-right:10px;font-size:.7rem;}
-    .price .btn{width:100%;text-align:center;padding:14px;}
+/* ГРАФИК */
+.chartwrap{position:relative;height:190px;padding:6px 0;}
+#revenue{width:100%;height:100%;display:block;}
+.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 16px 14px;}
+.metric{
+    background:rgba(255,255,255,0.03);border:1px solid var(--stroke);
+    border-radius:11px;padding:10px 8px;text-align:center;
+}
+.metric b{
+    display:block;font-family:'Consolas',monospace;font-size:1.02rem;
+    color:var(--cyan);
+}
+.metric span{font-size:.6rem;color:var(--dim);text-transform:uppercase;letter-spacing:.6px;}
 
-    /* Финальный призыв */
-    .final{
-        text-align:center;padding:80px 40px;border-radius:32px;margin:20px 0 60px;
-        background:linear-gradient(140deg,rgba(124,58,237,0.25),rgba(34,211,238,0.15),rgba(236,72,153,0.15));
-        border:1px solid var(--border);
-    }
-    .final h2{font-size:clamp(1.6rem,4vw,2.6rem);margin-bottom:18px;font-weight:800;}
-    .final p{color:var(--muted);max-width:520px;margin:0 auto 36px;}
+/* АГЕНТЫ */
+.agent{
+    display:flex;align-items:center;gap:10px;padding:9px 0;
+    border-bottom:1px solid rgba(255,255,255,0.05);font-size:.78rem;
+}
+.agent:last-child{border:none;}
+.agent .av{
+    width:28px;height:28px;border-radius:9px;flex:0 0 28px;
+    background:linear-gradient(135deg,var(--violet),var(--cyan));
+    display:grid;place-items:center;font-size:.66rem;font-weight:800;color:#05060f;
+}
+.agent .nm{font-weight:600;}
+.agent .rl{font-size:.64rem;color:var(--dim);}
+.agent .st{margin-left:auto;font-family:'Consolas',monospace;font-size:.68rem;color:var(--lime);}
 
-    footer{border-top:1px solid var(--border);padding:36px 0;text-align:center;color:var(--muted);font-size:.85rem;}
+/* ЧАТ */
+.chatlog{overflow-y:auto;flex:1;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:0;}
+.msg{max-width:88%;font-size:.8rem;line-height:1.45;}
+.msg .nm{font-size:.62rem;color:var(--dim);margin-bottom:3px;letter-spacing:.5px;}
+.msg .bub{
+    padding:9px 12px;border-radius:13px;
+    background:rgba(255,255,255,0.05);border:1px solid var(--stroke);
+    word-wrap:break-word;
+}
+.msg.me{align-self:flex-end;}
+.msg.me .bub{background:linear-gradient(135deg,rgba(139,92,246,0.4),rgba(77,226,255,0.22));border-color:rgba(139,92,246,0.5);}
+.msg.sys .bub{background:rgba(92,255,177,0.08);border-color:rgba(92,255,177,0.3);color:var(--lime);font-family:'Consolas',monospace;font-size:.72rem;}
+.msg .bub a{color:var(--amber);}
+.typing .bub{display:flex;gap:4px;align-items:center;height:34px;}
+.typing i{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:tp 1.2s infinite;}
+.typing i:nth-child(2){animation-delay:.2s;}
+.typing i:nth-child(3){animation-delay:.4s;}
+@keyframes tp{0%,60%,100%{opacity:.25;transform:translateY(0);}30%{opacity:1;transform:translateY(-4px);}}
+.chatinput{
+    display:flex;gap:8px;padding:12px;border-top:1px solid var(--stroke);
+}
+.chatinput input{
+    flex:1;padding:11px 14px;border-radius:11px;
+    background:rgba(255,255,255,0.05);border:1px solid var(--stroke);
+    color:var(--text);font-size:.82rem;outline:none;font-family:inherit;
+}
+.chatinput input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(77,226,255,0.12);}
+.chatinput button{
+    padding:0 18px;border-radius:11px;border:none;cursor:pointer;
+    background:linear-gradient(135deg,var(--violet),var(--cyan));
+    color:#05060f;font-weight:700;font-size:.8rem;transition:.25s;
+}
+.chatinput button:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(77,226,255,0.35);}
+.chatbar{
+    display:flex;gap:6px;padding:0 12px 10px;font-size:.6rem;color:var(--dim);
+    text-transform:uppercase;letter-spacing:.8px;
+}
+.chatbar span{background:rgba(255,255,255,0.04);padding:3px 8px;border-radius:6px;border:1px solid var(--stroke);}
 
-    /* Анимация появления */
-    .reveal{opacity:0;transform:translateY(40px);transition:.8s cubic-bezier(.2,.7,.3,1);}
-    .reveal.on{opacity:1;transform:none;}
-    @keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:none;}}
-
-    /* Мобильная версия */
-    @media(max-width:860px){
-        .nav-links{display:none;}
-        .stats{grid-template-columns:repeat(2,1fr);}
-        .cards,.steps,.prices{grid-template-columns:1fr;}
-        .price.pop{transform:none;}
-        .hero{padding:70px 0 50px;}
-    }
+/* МОБИЛЬНАЯ */
+@media(max-width:1000px){
+    body{overflow:auto;}
+    .dashboard{grid-template-columns:1fr;height:auto;}
+    .col{height:auto;}
+    .panel{max-height:460px;}
+    .head-stats .hstat:nth-child(-n+2){display:none;}
+    header{height:64px;}
+}
 </style>
 </head>
 <body>
-<canvas id="bg"></canvas>
-<div class="aurora"><span class="a1"></span><span class="a2"></span><span class="a3"></span></div>
+<canvas id="space"></canvas>
+<div class="scan"></div>
+<div class="glow" id="glow"></div>
 
 <header>
-    <div class="wrap">
-        <nav>
-            <div class="logo">АУРА</div>
-            <div class="nav-links">
-                <a href="#what">Возможности</a>
-                <a href="#how">Как это работает</a>
-                <a href="#price">Тарифы</a>
-            </div>
-            <a href="#price" class="nav-cta">Попробовать</a>
-        </nav>
+    <div class="brand">
+        <div class="core"></div>
+        <div>
+            <h1>NEXUS·2060</h1>
+            <p>квантовая рекламная сеть</p>
+        </div>
+    </div>
+    <div class="head-stats">
+        <div class="hstat"><b id="hBalance">8 412 900 ₳</b><span>баланс сети</span></div>
+        <div class="hstat"><b id="hNodes">12 480</b><span>узлов онлайн</span></div>
+        <div>
+            <div class="loadbar"><i id="loadFill"></i></div>
+            <div style="font-size:.62rem;color:var(--dim);margin-top:4px;">нагрузка <span id="loadVal">42%</span></div>
+        </div>
+        <div class="clock" id="clock">00:00:00</div>
     </div>
 </header>
 
-<main class="wrap">
+<div class="ticker">
+    <div>
+        <b>АУКЦИОН:</b> нейро-таргетинг включён · <b>ПОКАЗЫ:</b> 4 821 337 за последний час · <b>НОВОЕ:</b> голографические слоты 4К доступны с 1 октября · <b>АГЕНТЫ:</b> 96% сделок закрываются автоматически · <b>ВНИМАНИЕ:</b> обнаружен всплеск активности в секторе «Орбита-Тур» · <b>СЕТЬ:</b> задержка 0,8 мс · <b>ПРОГНОЗ:</b> доход за сутки +14,2% ·
+    </div>
+</div>
 
-    <section class="hero">
-        <div class="tag">◉ АВТОНОМНЫЕ ИИ-АГЕНТЫ · 2030</div>
-        <h1>Ваша команда из 2030 года.<br><span class="grad">Работает, пока вы спите.</span></h1>
-        <p>АУРА — это автономные ИИ-сотрудники, которые берут на себя продажи, поддержку и контент. Вы ставите цель — агенты её достигают. Без найма, без зарплат, без выходных.</p>
-        <div class="hero-btns">
-            <a href="#price" class="btn btn-main">Нанять команду</a>
-            <a href="#what" class="btn btn-ghost">Как это работает</a>
-        </div>
+<main class="dashboard">
 
-        <div class="stats reveal">
-            <div class="stat"><b>24/7</b><span>работают без сна</span></div>
-            <div class="stat"><b>×7</b><span>рост отдачи отдела</span></div>
-            <div class="stat"><b>40</b><span>языков общения</span></div>
-            <div class="stat"><b>0 ₽</b><span>за найм человека</span></div>
-        </div>
-    </section>
+    <!-- ЛЕВАЯ КОЛОНКА -->
+    <div class="col">
+        <section class="panel" style="flex:1.2;">
+            <div class="phead"><span class="dot"></span>живой аукцион <span class="tag" id="bidCount">0 ставок</span></div>
+            <div class="pbody" id="auction"></div>
+        </section>
+        <section class="panel" style="flex:1;">
+            <div class="phead"><span class="dot"></span>квантовые слоты <span class="tag" id="slotFill">0/9</span></div>
+            <div class="pbody">
+                <div class="slots" id="slots"></div>
+            </div>
+        </section>
+    </div>
 
-    <section id="what">
-        <h2 class="sec-title reveal">Три агента — целый отдел</h2>
-        <p class="sec-sub reveal">Каждый работает в своей зоне, но они обмениваются данными между собой. Как настоящая команда, только без перерывов на кофе.</p>
-        <div class="cards">
-            <div class="card reveal">
-                <div class="ico">◈</div>
-                <h3>Нейро-продавец</h3>
-                <p>Сам находит клиентов, прогревает их и доводит до сделки. Понимает возражения и подстраивает тон под каждого.</p>
+    <!-- ЦЕНТРАЛЬНАЯ КОЛОНКА -->
+    <div class="col">
+        <section class="panel">
+            <div class="phead"><span class="dot"></span>доход сети · реальное время <span class="tag" id="revNow">0 ₳/с</span></div>
+            <div class="chartwrap"><canvas id="revenue"></canvas></div>
+            <div class="metrics">
+                <div class="metric"><b id="mImp">0</b><span>показов</span></div>
+                <div class="metric"><b id="mFill">0%</b><span>заполняемость</span></div>
+                <div class="metric"><b id="mEcpm">0</b><span>eCPM ₳</span></div>
+                <div class="metric"><b id="mCtr">0%</b><span>CTR</span></div>
             </div>
-            <div class="card reveal">
-                <div class="ico">◉</div>
-                <h3>Нейро-поддержка</h3>
-                <p>Отвечает клиентам за секунды, днём и ночью, на 40 языках. Помнит всю историю переписки и не злится на грубость.</p>
-            </div>
-            <div class="card reveal">
-                <div class="ico">◇</div>
-                <h3>Нейро-контент</h3>
-                <p>Создаёт и публикует контент вашим голосом: посты, письма, видео-скрипты. Учится на том, что сработало лучше всего.</p>
-            </div>
-        </div>
-    </section>
+        </section>
+        <section class="panel" style="flex:1;">
+            <div class="phead"><span class="dot"></span>автономные агенты сети <span class="tag" id="agOnline">6 активны</span></div>
+            <div class="pbody" id="agents"></div>
+        </section>
+    </div>
 
-    <section id="how">
-        <h2 class="sec-title reveal">Запуск за один вечер</h2>
-        <p class="sec-sub reveal">Никакого кода и настройки серверов. Вы просто описываете бизнес — остальное АУРА делает сама.</p>
-        <div class="steps">
-            <div class="step reveal"><h3>Опишите бизнес</h3><p>Чем занимаетесь, кто клиенты, какая цель. Пары абзацев достаточно.</p></div>
-            <div class="step reveal"><h3>АУРА учится</h3><p>Агенты изучают ваши данные, стиль и прошлые переписки за пару минут.</p></div>
-            <div class="step reveal"><h3>Агенты выходят на смену</h3><p>Подключаются к вашим каналам: мессенджеры, сайт, соцсети, почта.</p></div>
-            <div class="step reveal"><h3>Вы получаете результат</h3><p>Живой отчёт каждое утро: сколько клиентов, сделок и денег принесли агенты.</p></div>
-        </div>
-    </section>
-
-    <section id="price">
-        <h2 class="sec-title reveal">Простые тарифы</h2>
-        <p class="sec-sub reveal">Первые 7 дней бесплатно. Отменить можно в один клик, без звонков и уговоров.</p>
-        <div class="prices">
-            <div class="price reveal">
-                <h3>Старт</h3>
-                <div class="cost">0 ₽<small>/ 7 дней</small></div>
-                <ul>
-                    <li>1 агент на выбор</li>
-                    <li>До 100 диалогов</li>
-                    <li>Базовые отчёты</li>
-                    <li>Подключение 1 канала</li>
-                </ul>
-                <a href="#" class="btn btn-ghost">Попробовать</a>
+    <!-- ПРАВАЯ КОЛОНКА: ЧАТ -->
+    <div class="col">
+        <section class="panel" style="flex:1;">
+            <div class="phead"><span class="dot"></span>связь с сетью · посетители <span class="tag" id="chatOnline">7 онлайн</span></div>
+            <div class="chatlog" id="chatlog"></div>
+            <div class="chatbar">
+                <span>шифрование: квантовое</span>
+                <span>модерация: активна</span>
+                <span id="riskBadge">рисков: 0</span>
             </div>
-            <div class="price pop reveal">
-                <div class="badge">ВЫБОР 87%</div>
-                <h3>Бизнес</h3>
-                <div class="cost">4 900 ₽<small>/ мес</small></div>
-                <ul>
-                    <li>Все 3 агента</li>
-                    <li>Без лимита диалогов</li>
-                    <li>Обучение на ваших данных</li>
-                    <li>5 каналов связи</li>
-                    <li>Личный менеджер</li>
-                </ul>
-                <a href="#" class="btn btn-main">Нанять</a>
+            <div class="chatinput">
+                <input id="chatField" placeholder="Напишите агенту сети…" autocomplete="off">
+                <button id="chatSend">Отправить</button>
             </div>
-            <div class="price reveal">
-                <h3>Про</h3>
-                <div class="cost">14 900 ₽<small>/ мес</small></div>
-                <ul>
-                    <li>Всё из «Бизнес»</li>
-                    <li>Команда из 10+ агентов</li>
-                    <li>Настройка под ключ</li>
-                    <li>Приоритетная поддержка</li>
-                    <li>API и интеграции</li>
-                </ul>
-                <a href="#" class="btn btn-ghost">Обсудить</a>
-            </div>
-        </div>
-    </section>
-
-    <div class="final reveal">
-        <h2>Будущее уже наняло вас.<br>Осталось нанять его в ответ.</h2>
-        <p>Пока конкуренты ищут сотрудников, вы запускаете агентов. Разница станет заметна уже через месяц.</p>
-        <a href="#price" class="btn btn-main">Запустить АУРУ бесплатно</a>
+        </section>
     </div>
 
 </main>
 
-<footer>
-    <div class="wrap">
-        © 2030 АУРА · Автономные ИИ-сотрудники для бизнеса · Сделано в будущем
-    </div>
-</footer>
-
 <script>
-// Фон: нейросеть из точек и линий
-const canvas = document.getElementById('bg');
-const ctx = canvas.getContext('2d');
-let W, H, particles = [];
-function resize(){
-    W = canvas.width = window.innerWidth;
-    H = canvas.height = window.innerHeight;
+/* ================= ФОН: НЕЙРОСЕТЬ ================= */
+const space = document.getElementById('space');
+const sx = space.getContext('2d');
+let SW, SH;
+const stars = [], nodes = [], packets = [];
+const NODE_N = 26;
+
+function sizeSpace(){
+    SW = space.width = window.innerWidth;
+    SH = space.height = window.innerHeight;
 }
-window.addEventListener('resize', resize);
-resize();
-const COUNT = Math.min(80, Math.floor(window.innerWidth / 18));
-for (let i = 0; i < COUNT; i++){
-    particles.push({
-        x: Math.random() * W, y: Math.random() * H,
-        vx: (Math.random() - 0.5) * 0.35,
-        vy: (Math.random() - 0.5) * 0.35
+window.addEventListener('resize', sizeSpace);
+sizeSpace();
+
+for (let i = 0; i < 150; i++){
+    stars.push({ x: Math.random()*SW, y: Math.random()*SH, r: Math.random()*1.5+0.3, a: Math.random()*0.6+0.2, t: Math.random()*6.28 });
+}
+for (let i = 0; i < NODE_N; i++){
+    nodes.push({
+        x: Math.random()*SW, y: Math.random()*SH,
+        vx: (Math.random()-0.5)*0.28, vy: (Math.random()-0.5)*0.28,
+        r: Math.random()*2.4+1.4
     });
 }
-function draw(){
-    ctx.clearRect(0, 0, W, H);
-    for (const p of particles){
-        p.x += p.vx; p.y += p.vy;
-        if (p.x < 0 || p.x > W) p.vx *= -1;
-        if (p.y < 0 || p.y > H) p.vy *= -1;
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.6, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(124,58,237,0.8)';
-        ctx.fill();
+
+function spawnPacket(){
+    if (nodes.length < 2) return;
+    const a = Math.floor(Math.random()*nodes.length);
+    let b = Math.floor(Math.random()*nodes.length);
+    if (b === a) b = (b+1) % nodes.length;
+    packets.push({ a, b, p: 0, sp: Math.random()*0.012+0.005 });
+}
+
+function drawSpace(){
+    sx.clearRect(0, 0, SW, SH);
+
+    // звёзды
+    for (const s of stars){
+        s.t += 0.02;
+        const al = s.a * (0.6 + 0.4*Math.sin(s.t));
+        sx.beginPath();
+        sx.arc(s.x, s.y, s.r, 0, 6.284);
+        sx.fillStyle = 'rgba(180,220,255,' + al + ')';
+        sx.fill();
     }
-    for (let i = 0; i < particles.length; i++){
-        for (let j = i + 1; j < particles.length; j++){
-            const dx = particles[i].x - particles[j].x;
-            const dy = particles[i].y - particles[j].y;
-            const d = Math.hypot(dx, dy);
-            if (d < 140){
-                ctx.beginPath();
-                ctx.moveTo(particles[i].x, particles[i].y);
-                ctx.lineTo(particles[j].x, particles[j].y);
-                ctx.strokeStyle = 'rgba(34,211,238,' + (0.14 * (1 - d / 140)) + ')';
-                ctx.stroke();
+
+    // узлы
+    for (const n of nodes){
+        n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > SW) n.vx *= -1;
+        if (n.y < 0 || n.y > SH) n.vy *= -1;
+    }
+
+    // связи
+    for (let i = 0; i < nodes.length; i++){
+        for (let j = i+1; j < nodes.length; j++){
+            const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
+            const d = Math.sqrt(dx*dx + dy*dy);
+            if (d < 190){
+                sx.beginPath();
+                sx.moveTo(nodes[i].x, nodes[i].y);
+                sx.lineTo(nodes[j].x, nodes[j].y);
+                sx.strokeStyle = 'rgba(139,92,246,' + (0.16*(1 - d/190)) + ')';
+                sx.lineWidth = 1;
+                sx.stroke();
             }
         }
     }
-    requestAnimationFrame(draw);
+
+    // пакеты данных
+    for (let k = packets.length-1; k >= 0; k--){
+        const pk = packets[k];
+        pk.p += pk.sp;
+        if (pk.p >= 1){ packets.splice(k,1); continue; }
+        const A = nodes[pk.a], B = nodes[pk.b];
+        const x = A.x + (B.x - A.x)*pk.p;
+        const y = A.y + (B.y - A.y)*pk.p;
+        const g = sx.createRadialGradient(x, y, 0, x, y, 9);
+        g.addColorStop(0, 'rgba(77,226,255,0.9)');
+        g.addColorStop(1, 'rgba(77,226,255,0)');
+        sx.beginPath();
+        sx.arc(x, y, 9, 0, 6.284);
+        sx.fillStyle = g;
+        sx.fill();
+    }
+
+    // узлы рисуем поверх
+    for (const n of nodes){
+        sx.beginPath();
+        sx.arc(n.x, n.y, n.r, 0, 6.284);
+        sx.fillStyle = 'rgba(77,226,255,0.75)';
+        sx.fill();
+    }
+
+    if (Math.random() > 0.94) spawnPacket();
+    requestAnimationFrame(drawSpace);
 }
-draw();
+drawSpace();
 
-// Плавное появление блоков при скролле
-const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-        if (e.isIntersecting){
-            e.target.classList.add('on');
-            io.unobserve(e.target);
-        }
-    });
-}, { threshold: 0.15 });
-document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+/* ================= КУРСОР-СВЕЧЕНИЕ ================= */
+const glow = document.getElementById('glow');
+window.addEventListener('pointermove', e => {
+    glow.style.left = e.clientX + 'px';
+    glow.style.top = e.clientY + 'px';
+});
 
-// Анимированные цифры в статистике
-const statEls = document.querySelectorAll('.stat b');
-const statIO = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-        if (!e.isIntersecting) return;
-        const el = e.target;
-        const raw = el.textContent;
-        const num = parseFloat(raw.replace(/[^\d.]/g, ''));
-        if (isNaN(num)) return;
-        let start = 0;
-        const step = num / 40;
-        const suffix = raw.replace(/[\d.,]/g, '');
-        const tick = () => {
-            start += step;
-            if (start >= num){ el.textContent = raw; return; }
-            el.textContent = Math.floor(start) + suffix;
-            requestAnimationFrame(tick);
-        };
-        tick();
-        statIO.unobserve(el);
+/* ================= ЧАСЫ ================= */
+setInterval(() => {
+    const d = new Date();
+    const p = n => String(n).padStart(2,'0');
+    document.getElementById('clock').textContent = p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
+}, 1000);
+
+/* ================= СЛОТЫ ================= */
+const slotNames = ['Сектор 01','Сектор 02','Сектор 03','Сектор 04','Сектор 05','Сектор 06','Сектор 07','Сектор 08','Сектор 09'];
+const slotBox = document.getElementById('slots');
+const slotEls = [];
+for (let i = 0; i < 9; i++){
+    const d = document.createElement('div');
+    d.className = 'slot';
+    d.innerHTML = '<b>' + slotNames[i].split(' ')[1] + '</b><span>' + slotNames[i].split(' ')[0] + '</span><span class="rate">0 ₳</span>';
+    slotBox.appendChild(d);
+    slotEls.push(d);
+}
+function updateSlots(){
+    let busy = 0;
+    slotEls.forEach((el, i) => {
+        const isBusy = Math.random() > 0.35;
+        el.classList.toggle('busy', isBusy);
+        if (isBusy) busy++;
+        const rate = (Math.random()*400+120).toFixed(0);
+        el.querySelector('.rate').textContent = isBusy ? rate + ' ₳' : 'свободен';
+        el.querySelector('.rate').style.color = isBusy ? '#5cffb1' : '#7f8bb5';
     });
-}, { threshold: 0.5 });
-statEls.forEach(el => statIO.observe(el));
+    document.getElementById('slotFill').textContent = busy + '/9';
+    document.getElementById('mFill').textContent = Math.round(busy/9*100) + '%';
+}
+updateSlots();
+setInterval(updateSlots, 4200);
+
+/* ================= АУКЦИОН ================= */
+const advertisers = ['НейроКофе','AuroraLabs','Квант-Маркет','Голо-Стрим','СинтезБанк','Орбита-Тур','Voidwear','Люмина','DataForge','Пси-Фарм','Сфера-Медиа','Крипто-Ковчег'];
+const targets = ['25–34 · нейро-профиль','Метавселенная · сектор А','Голосовой поиск','Иммерсив-баннеры','Био-реакция аудитории','Гиперлокальный таргет','ИИ-ассистенты','Квантовые экраны'];
+const auctionBox = document.getElementById('auction');
+let bidTotal = 0;
+
+function pushBid(){
+    const name = advertisers[Math.floor(Math.random()*advertisers.length)];
+    const tgt = targets[Math.floor(Math.random()*targets.length)];
+    const slot = slotNames[Math.floor(Math.random()*slotNames.length)];
+    const val = (Math.random()*900 + 180).toFixed(0);
+    const win = Math.random() > 0.5;
+
+    const el = document.createElement('div');
+    el.className = 'bid' + (win ? ' win' : '');
+    el.innerHTML =
+        '<div><div class="who">' + name + (win ? ' · победа' : '') + '</div>' +
+        '<div class="meta">' + slot + ' · ' + tgt + '</div></div>' +
+        '<div class="val">' + val + ' ₳</div>';
+
+    auctionBox.prepend(el);
+    while (auctionBox.children.length > 14) auctionBox.lastChild.remove();
+
+    bidTotal++;
+    document.getElementById('bidCount').textContent = bidTotal + ' ставок';
+}
+for (let i = 0; i < 5; i++) pushBid();
+setInterval(pushBid, 1900);
+
+/* ================= МЕТРИКИ ================= */
+let impressions = 4821337;
+let ecpm = 412;
+let ctr = 3.4;
+
+setInterval(() => {
+    impressions += Math.floor(Math.random()*900 + 200);
+    ecpm = Math.max(180, ecpm + (Math.random()-0.5)*24);
+    ctr = Math.max(1.2, Math.min(7.5, ctr + (Math.random()-0.5)*0.3));
+    document.getElementById('mImp').textContent = impressions.toLocaleString('ru-RU');
+    document.getElementById('mEcpm').textContent = ecpm.toFixed(0);
+    document.getElementById('mCtr').textContent = ctr.toFixed(2) + '%';
+
+    const bal = 8412900 + Math.floor(Math.random()*90000);
+    document.getElementById('hBalance').textContent = bal.toLocaleString('ru-RU') + ' ₳';
+    document.getElementById('hNodes').textContent = (12480 + Math.floor(Math.random()*260)).toLocaleString('ru-RU');
+
+    const load = Math.floor(Math.random()*40 + 35);
+    document.getElementById('loadFill').style.width = load + '%';
+    document.getElementById('loadVal').textContent = load + '%';
+}, 1500);
+
+/* ================= ГРАФИК ДОХОДА ================= */
+const rev = document.getElementById('revenue');
+const rx = rev.getContext('2d');
+let revData = [];
+for (let i = 0; i < 70; i++) revData.push(320 + Math.random()*160);
+
+function sizeChart(){
+    rev.width = rev.clientWidth * 2;
+    rev.height = rev.clientHeight * 2;
+    rx.setTransform(1,0,0,1,0,0);
+}
+window.addEventListener('resize', sizeChart);
+setTimeout(sizeChart, 60);
+
+function drawRev(){
+    if (!rev.width) sizeChart();
+    const W = rev.width, H = rev.height;
+    rx.clearRect(0, 0, W, H);
+
+    // сетка
+    rx.strokeStyle = 'rgba(120,180,255,0.09)';
+    rx.lineWidth = 1;
+    for (let i = 0; i <= 4; i++){
+        const y = (H/4)*i;
+        rx.beginPath(); rx.moveTo(0, y); rx.lineTo(W, y); rx.stroke();
+    }
+
+    const min = Math.min(...revData) - 30;
+    const max = Math.max(...revData) + 30;
+    const stepX = W / (revData.length - 1);
+    const toY = v => H - ((v - min)/(max - min)) * (H - 14) - 7;
+
+    // заливка
+    const grad = rx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, 'rgba(139,92,246,0.5)');
+    grad.addColorStop(0.5, 'rgba(77,226,255,0.22)');
+    grad.addColorStop(1, 'rgba(77,226,255,0)');
+    rx.beginPath();
+    rx.moveTo(0, H);
+    revData.forEach((v, i) => rx.lineTo(i*stepX, toY(v)));
+    rx.lineTo(W, H);
+    rx.closePath();
+    rx.fillStyle = grad;
+    rx.fill();
+
+    // линия
+    rx.beginPath();
+    revData.forEach((v, i) => {
+        const x = i*stepX, y = toY(v);
+        i ? rx.lineTo(x, y) : rx.moveTo(x, y);
+    });
+    rx.strokeStyle = '#4de2ff';
+    rx.lineWidth = 3;
+    rx.shadowColor = '#4de2ff';
+    rx.shadowBlur = 16;
+    rx.stroke();
+    rx.shadowBlur = 0;
+
+    // точка на конце
+    const lx = (revData.length-1)*stepX, ly = toY(revData[revData.length-1]);
+    rx.beginPath(); rx.arc(lx, ly, 7, 0, 6.284);
+    rx.fillStyle = '#5cffb1'; rx.fill();
+    rx.beginPath(); rx.arc(lx, ly, 14, 0, 6.284);
+    rx.fillStyle = 'rgba(92,255,177,0.2)'; rx.fill();
+}
+drawRev();
+
+setInterval(() => {
+    const last = revData[revData.length-1];
+    const next = Math.max(200, Math.min(560, last + (Math.random()-0.48)*70));
+    revData.push(next);
+    revData.shift();
+    document.getElementById('revNow').textContent = Math.round(next*3.1) + ' ₳/с';
+    drawRev();
+}, 700);
+
+/* ================= АГЕНТЫ ================= */
+const agentList = [
+    ['НЕЙРО-1','нейро-таргетинг','работает'],
+    ['АУК-7','квантовый аукцион','работает'],
+    ['КОНТ-3','генерация креативов','обучение'],
+    ['АНАЛ-9','прогноз дохода','работает'],
+    ['ЩИТ-2','антифрод и модерация','работает'],
+    ['СВЯЗ-5','поддержка клиентов','работает']
+];
+const agBox = document.getElementById('agents');
+agentList.forEach(a => {
+    const d = document.createElement('div');
+    d.className = 'agent';
+    d.innerHTML = '<div class="av">' + a[0].split('-')[0].slice(0,2) + '</div>' +
+                  '<div><div class="nm">' + a[0] + '</div><div class="rl">' + a[1] + '</div></div>' +
+                  '<div class="st">' + a[2] + '</div>';
+    agBox.appendChild(d);
+});
+
+/* ================= ЧАТ ================= */
+const chatlog = document.getElementById('chatlog');
+const field = document.getElementById('chatField');
+const sendBtn = document.getElementById('chatSend');
+let riskCount = 0;
+
+function addMsg(text, who, cls){
+    const wrap = document.createElement('div');
+    wrap.className = 'msg ' + (cls || '');
+    wrap.innerHTML = (who ? '<div class="nm">' + who + '</div>' : '') + '<div class="bub">' + text + '</div>';
+    chatlog.appendChild(wrap);
+    chatlog.scrollTop = chatlog.scrollHeight;
+    return wrap;
+}
+
+function typing(){
+    const w = document.createElement('div');
+    w.className = 'msg typing';
+    w.innerHTML = '<div class="bub"><i></i><i></i><i></i></div>';
+    chatlog.appendChild(w);
+    chatlog.scrollTop = chatlog.scrollHeight;
+    return w;
+}
+
+const brain = [
+    { k:['цена','тариф','стоимост','сколько стоит','прайс'],
+      r:'Размещение в NEXUS идёт через аукцион. Базовый вход — <b>от 180 ₳</b> за 1000 показов, премиум-секторы — от 900 ₳. Побеждает не самая высокая ставка, а лучший прогноз отклика. Хотите расчёт под ваш бюджет?' },
+    { k:['размест','реклам','баннер','показать','продвин'],
+      r:'Отлично. Выберите сектор: сейчас свободны 3 из 9 квантовых слотов. Могу зарезервировать один на 24 часа и настроить нейро-таргетинг автоматически. Нужен сектор под вашу нишу?' },
+    { k:['чат','бот','агент','связ','поддержк'],
+      r:'Все обращения обрабатывают автономные агенты сети. Среднее время ответа — <b>0,8 секунды</b>, поддержка 24/7 без выходных. Я как раз один из них.' },
+    { k:['доход','заработ','деньг','прибыл','выгод'],
+      r:'Средний доход рекламодателя в сети — <b>+14,2% к неделе</b>. Точную цифру даёт прогноз-модуль АНАЛ-9: он считает отдачу под ваш бюджет и нишу. Прислать пример расчёта?' },
+    { k:['привет','здравств','хай','добрый','салют'],
+      r:'Привет. Я нейро-агент сети NEXUS. Помогу с размещением, расчётом бюджета или подключением слота. С чего начнём?' },
+    { k:['помощь','как работает','объясн','что это','расскаж'],
+      r:'Всё просто: вы задаёте цель и бюджет — сеть сама находит аудиторию, тестирует креативы и покупает показы на аукционе. Вы видите только результат и отчёт. Что показать подробнее?' },
+    { k:['безопасн','защит','фрод','обман','мошенн'],
+      r:'Агент ЩИТ-2 фильтрует трафик в реальном времени: боты, накрутки и фрод отсекаются до оплаты. Модерация креативов — автоматическая, по 180 параметрам.' }
+];
+const fallbacks = [
+    'Принято. Уточните, пожалуйста, нишу и примерный бюджет — подберу сектор и прогноз отклика.',
+    'Записала в профиль сессии. Могу сразу показать свободные слоты или рассчитать eCPM под вашу аудиторию.',
+    'Поняла вас. В NEXUS такие задачи решает связка НЕЙРО-1 и АУК-7 — они подберут ставку автоматически.',
+    'Интересный запрос. Дайте пару деталей, и я соберу короткий план размещения с ценами.'
+];
+
+function reply(text){
+    const low = text.toLowerCase();
+    let answer = null;
+    for (const b of brain){
+        if (b.k.some(k => low.indexOf(k) !== -1)){ answer = b.r; break; }
+    }
+    if (!answer) answer = fallbacks[Math.floor(Math.random()*fallbacks.length)];
+    return answer;
+}
+
+function botRespond(userText){
+    const t = typing();
+    setTimeout(() => {
+        t.remove();
+        addMsg(reply(userText), 'АГЕНТ NEXUS · автоответ', 'sys');
+    }, 900 + Math.random()*900);
+}
+
+function send(){
+    const v = field.value.trim();
+    if (!v) return;
+    addMsg(v.replace(/</g,'&lt;'), 'вы', 'me');
+    field.value = '';
+    if (/(https?:|www\.|\.ru|\.com|заработок|вложи|крипт|схем)/i.test(v)){
+        riskCount++;
+        document.getElementById('riskBadge').textContent = 'рисков: ' + riskCount;
+        document.getElementById('riskBadge').style.color = '#ffc857';
+        setTimeout(() => addMsg('Сообщение проверено модерацией. Подозрительные ссылки и обещания быстрого дохода в сети блокируются автоматически.', 'ЩИТ-2 · модерация', 'sys'), 700);
+    }
+    botRespond(v);
+}
+sendBtn.addEventListener('click', send);
+field.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+
+/* стартовые сообщения */
+addMsg('Добро пожаловать в NEXUS·2060. Это демо-интерфейс квантовой рекламной сети. Задайте вопрос — агент ответит.', 'система', 'sys');
+setTimeout(() => addMsg('Кто-нибудь пробовал сектор 04? Хочу запустить кампанию под метавселенную.', 'Orbita_X', ''), 1600);
+setTimeout(() => addMsg('Да, сектор 04 живой. eCPM выше среднего на 18%.', 'Lumina_Ad', ''), 3200);
+
+/* живые посетители */
+const visitors = ['Kvant_M','NeoByte','Astra_77','Void_Walker','DataMind','SolarFox','Pixel_2060','NeuroNomad'];
+const visitorLines = [
+    'Кто-нибудь видел новый прогноз по CTR за сутки?',
+    'У меня кампания в секторе 07, отклик вырос вдвое.',
+    'Подскажите, голографические баннеры уже доступны всем?',
+    'Аукцион сегодня злой, ставки улетели вверх.',
+    'Сеть держит задержку меньше миллисекунды, это красиво.',
+    'Запустил нейро-таргетинг, аудитория нашлась сама.'
+];
+setInterval(() => {
+    if (chatlog.children.length > 40) return;
+    const n = visitors[Math.floor(Math.random()*visitors.length)];
+    const l = visitorLines[Math.floor(Math.random()*visitorLines.length)];
+    addMsg(l, n, '');
+    const on = 5 + Math.floor(Math.random()*7);
+    document.getElementById('chatOnline').textContent = on + ' онлайн';
+}, 9000);
+
+document.getElementById('chatOnline').textContent = (5 + Math.floor(Math.random()*7)) + ' онлайн';
 </script>
 </body>
 </html>
