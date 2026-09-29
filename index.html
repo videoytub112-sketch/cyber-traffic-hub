@@ -2,76 +2,93 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Matrix Trading Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Matrix Trading Mobile</title>
     <style>
         :root {
-            --bg-dark: #05060f;
-            --panel-dark: #0f111d;
-            --accent-cyan: #00f2fe;
-            --accent-orange: #ffb167;
-            --text-gray: #a1b0c4;
-            --border-glow: rgba(0, 242, 254, 0.15);
-            --red-candle: #ff3333;
-            --green-candle: #00ff88;
+            --bg: #05060f;
+            --panel: #0f111d;
+            --green: #00ff88;
+            --red: #ff3333;
+            --cyan: #00f2fe;
+            --text: #a1b0c4;
         }
 
         body {
-            background-color: var(--bg-dark);
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg);
             color: white;
             font-family: 'Courier New', monospace;
-            margin: 0;
-            overflow: hidden;
+            overflow: hidden; /* Чтобы не было скролла страницы */
             height: 100vh;
         }
 
-        /* Верхняя панель */
+        /* Верхняя шапка */
         header {
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 10px 20px;
-            border-bottom: 1px solid var(--border-glow);
-            background: rgba(15, 17, 29, 0.8);
-            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 242, 254, 0.1);
+            background: rgba(15, 17, 29, 0.9);
             position: relative;
             z-index: 10;
         }
 
-        .symbol-info h1 {
-            color: var(--accent-cyan);
-            text-transform: uppercase;
-            letter-spacing: 2px;
+        .symbol h1 {
+            color: var(--cyan);
             margin: 0;
-            font-size: 24px;
+            font-size: 1.2rem;
+            text-transform: uppercase;
         }
-        .symbol-info p {
-            color: var(--text-gray);
-            font-size: 12px;
+        .symbol p {
+            color: var(--text);
             margin: 2px 0 0;
+            font-size: 0.8rem;
         }
 
-        .stats-bar span {
-            margin-left: 20px;
-            font-size: 14px;
+        .stats {
+            text-align: right;
+            font-size: 0.9rem;
         }
-        .stats-bar .price { color: var(--accent-cyan); font-weight: bold; }
-        .stats-bar .change.up { color: var(--green-candle); }
-        .stats-bar .change.down { color: var(--red-candle); }
+        .price-val {
+            color: var(--cyan);
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+        .change-up { color: var(--green); }
+        .change-down { color: var(--red); }
 
-        /* Основной контейнер */
-        .container {
+        /* Основной экран */
+        .main-layout {
             display: grid;
-            grid-template-columns: 3fr 1fr; /* График 75%, Панель 25% */
+            grid-template-columns: 3fr 1fr; /* На ПК: 75% график, 25% панель */
             height: calc(100vh - 60px);
             position: relative;
+            z-index: 5;
         }
 
-        /* График */
+        /* Адаптив для телефона */
+        @media (max-width: 768px) {
+            .main-layout {
+                grid-template-columns: 1fr; /* На телефоне: 100% ширины */
+                grid-template-rows: 3fr 1fr; /* График сверху, панель снизу */
+            }
+            .chart-area {
+                border-bottom: 1px solid rgba(255,255,255,0.05);
+            }
+            .sidebar {
+                height: auto;
+                padding: 15px;
+                background: var(--panel);
+            }
+        }
+
+        /* Область графика */
         .chart-area {
             position: relative;
-            background-color: var(--bg-dark);
-            border-right: 1px solid var(--border-glow);
+            background-color: var(--bg);
             overflow: hidden;
         }
 
@@ -81,10 +98,10 @@
             display: block;
         }
 
-        /* Правая панель */
+        /* Правая/нижняя панель */
         .sidebar {
-            background: rgba(15, 17, 29, 0.9);
-            padding: 20px;
+            background: rgba(15, 17, 29, 0.85);
+            padding: 15px;
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -92,294 +109,296 @@
         }
 
         .panel-title {
-            color: var(--accent-cyan);
+            color: var(--cyan);
             text-transform: uppercase;
-            font-size: 12px;
-            border-bottom: 1px solid var(--border-glow);
+            font-size: 0.7rem;
+            border-bottom: 1px solid rgba(0, 242, 254, 0.2);
             padding-bottom: 5px;
         }
 
-        .order-form input, .order-form select {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid var(--border-glow);
-            color: white;
-            padding: 10px;
-            margin-bottom: 10px;
-            width: 100%;
-            box-sizing: border-box;
-            font-family: inherit;
+        .order-book {
+            font-size: 0.8rem;
+            color: var(--text);
+            line-height: 1.4;
+        }
+        .bid { color: var(--green); }
+        .ask { color: var(--red); }
+
+        .controls {
+            position: absolute;
+            bottom: 10px;
+            left: 10px;
+            right: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.6);
+            padding: 8px 15px;
+            border-radius: 20px;
+            z-index: 20;
+            pointer-events: none; /* Чтобы не перекрывало клики */
+        }
+        
+        .timeframe-btn {
+            background: transparent;
+            border: 1px solid var(--text);
+            color: var(--text);
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .timeframe-btn.active {
+            border-color: var(--cyan);
+            color: var(--cyan);
         }
 
-        .btn-trade {
-            width: 100%;
-            padding: 15px;
+        /* Кнопки BUY/SELL */
+        .trade-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .btn {
+            padding: 12px;
             border: none;
             color: black;
             font-weight: bold;
             text-transform: uppercase;
             cursor: pointer;
-            transition: 0.2s;
+            font-size: 0.9rem;
         }
-        .btn-buy { background: var(--green-candle); }
-        .btn-sell { background: var(--red-candle); }
-        .btn-trade:hover { transform: scale(1.02); }
+        .btn-buy { background: var(--green); }
+        .btn-sell { background: var(--red); }
 
-        /* Нижняя панель инструментов */
-        .controls {
-            position: absolute;
-            bottom: 10px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0,0,0,0.5);
-            padding: 10px;
-            border-radius: 8px;
-            z-index: 20;
-        }
-        
-        .timeframes button {
-            background: transparent;
-            border: 1px solid var(--text-gray);
-            color: var(--text-gray);
-            padding: 5px 10px;
-            cursor: pointer;
-            margin-right: 5px;
-        }
-        .timeframes button.active {
-            border-color: var(--accent-cyan);
-            color: var(--accent-cyan);
-        }
-
-        /* Декоративные элементы (матрица) */
-        .matrix-overlay {
+        /* Декоративная матрица (фон) */
+        .matrix-bg {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none;
-            z-index: 1;
+            z-index: 0;
             overflow: hidden;
         }
-        .symbol {
+        .char {
             position: absolute;
-            color: rgba(0, 242, 254, 0.4);
-            font-size: 14px;
-            text-shadow: 0 0 5px rgba(0, 242, 254, 0.2);
+            color: rgba(0, 242, 254, 0.3);
+            font-size: 1.2rem;
+            text-shadow: 0 0 5px rgba(0, 242, 254, 0.1);
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="symbol-info">
-            <h1 id="symbol-name">BTC/USDT</h1>
+        <div class="symbol">
+            <h1 id="sym-name">BTC/USDT</h1>
             <p>Bitcoin / TetherUS</p>
         </div>
-        <div class="stats-bar">
-            <span>Last Price: <span id="last-price" class="price">45,000.00</span></span>
-            <span>Change: <span id="change-val" class="change up">+2.5%</span></span>
-            <span>Volume: <span id="volume-val">12.5B</span></span>
+        <div class="stats">
+            <div>Last: <span id="last-price" class="price-val">45000.00</span></div>
+            <div>Change: <span id="change-val" class="change-up">+2.4%</span></div>
         </div>
     </header>
 
-    <div class="container">
+    <div class="main-layout">
         <!-- Фон матрицы -->
-        <div class="matrix-overlay" id="matrix-bg"></div>
+        <div class="matrix-bg" id="matrix"></div>
 
         <!-- График -->
         <div class="chart-area">
-            <canvas id="trading-chart"></canvas>
+            <canvas id="chart"></canvas>
         </div>
 
         <!-- Панель управления -->
         <aside class="sidebar">
             <div>
-                <div class="panel-title">Order Book</div>
-                <div style="font-size: 10px; color: var(--text-gray); margin-bottom: 5px;">Top 3 Bids</div>
-                <div style="font-size: 12px; margin-bottom: 10px;">44,990.00 (0.5 BTC)</div>
-                <div style="font-size: 12px; margin-bottom: 10px;">44,985.00 (1.2 BTC)</div>
-                <div style="font-size: 12px; margin-bottom: 10px;">44,980.00 (0.8 BTC)</div>
+                <div class="panel-title">Order Book (Top 3)</div>
+                <div class="order-book">
+                    <div><span class="ask">ASK</span> 45010.00 (0.5 BTC)</div>
+                    <div><span class="ask">ASK</span> 45005.00 (1.2 BTC)</div>
+                    <div><span class="bid">BID</span> 44990.00 (0.8 BTC)</div>
+                </div>
             </div>
 
             <div>
                 <div class="panel-title">New Order</div>
-                <div class="order-form">
-                    <input type="text" value="0.001" placeholder="Amount">
-                    <select>
-                        <option>Market</option>
-                        <option>Limit</option>
-                    </select>
-                    <button class="btn-trade btn-buy">BUY</button>
-                    <button class="btn-trade btn-sell">SELL</button>
+                <input type="number" value="0.001" style="width: 100%; padding: 8px; margin-bottom: 8px; background: #1a1c25; color: white; border: 1px solid #333; box-sizing: border-box;">
+                <div class="trade-buttons">
+                    <button class="btn btn-buy" onclick="alert('BUY order sent!')">BUY</button>
+                    <button class="btn btn-sell" onclick="alert('SELL order sent!')">SELL</button>
                 </div>
-            </div>
-
-            <div style="margin-top: auto;">
-                <div class="panel-title">Status</div>
-                <div style="font-size: 10px; color: #00ff88;">Connection: OK</div>
-                <div style="font-size: 10px; color: var(--text-gray);">Server: Matrix Node #7</div>
             </div>
         </aside>
     </div>
 
     <div class="controls">
-        <div class="timeframes">
-            <button onclick="setTimeframe('1m')" class="active">1M</button>
-            <button onclick="setTimeframe('5m')">5M</button>
-            <button onclick="setTimeframe('15m')">15M</button>
-            <button onclick="setTimeframe('1H')">1H</button>
-            <button onclick="setTimeframe('4H')">4H</button>
-            <button onclick="setTimeframe('1D')">1D</button>
+        <div>
+            <button class="timeframe-btn active">1M</button>
+            <button class="timeframe-btn">5M</button>
+            <button class="timeframe-btn">15M</button>
         </div>
-        <div style="font-size: 12px; color: var(--text-gray);">
-            Demo Mode - Data is simulated
-        </div>
+        <div style="font-size: 0.7rem; color: #555;">DEMO MODE</div>
     </div>
 
     <script>
-        // --- Логика генерации данных (упрощенная) ---
-        const ctx = document.getElementById('trading-chart').getContext('2d');
-        const width = ctx.canvas.width = window.innerWidth;
-        const height = ctx.canvas.height = window.innerHeight - 60; // минус хедер
+        const canvas = document.getElementById('chart');
+        const ctx = canvas.getContext('2d');
+        const matrix = document.getElementById('matrix');
         
         let candles = [];
         let currentPrice = 45000;
-        let volumeMultiplier = 1000;
+        const colors = { up: '#00ff88', down: '#ff3333', wick: '#fff' };
 
-        // Генерация начальных данных
-        function generateData() {
-            candles = [];
+        // 1. Настройка размеров (чтобы свечи точно влезли)
+        function resize() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            draw();
+        }
+        window.addEventListener('resize', resize);
+
+        // 2. Генерация начальных свечей (чтобы было что рисовать сразу)
+        function generateInitialData() {
             let price = 45000;
-            for (let i = 0; i < 50; i++) {
+            for (let i = 0; i < 40; i++) {
                 const open = price;
-                const change = (Math.random() - 0.5) * 200; // случайное движение
+                const change = (Math.random() - 0.5) * 150; // Амплитуда движения
                 const close = open + change;
-                const high = Math.max(open, close) + Math.random() * 50;
-                const low = Math.min(open, close) - Math.random() * 50;
-                const volume = Math.random() * volumeMultiplier;
+                const high = Math.max(open, close) + Math.random() * 40;
+                const low = Math.min(open, close) - Math.random() * 40;
                 
-                candles.push({ open, high, low, close, volume });
+                candles.push({ open, high, low, close });
                 price = close;
             }
-            currentPrice = close;
+            currentPrice = price;
             updateUI();
-            drawChart();
         }
 
-        // --- Отрисовка графика ---
-        function drawChart() {
-            const barWidth = width / candles.length * 0.8;
-            const padding = 40; // отступы
-            
-            ctx.clearRect(0, 0, width, height);
-            
-            // Рисуем сетку
+        // 3. Отрисовка (ГЛАВНОЕ: делаем свечи жирными и понятными)
+        function draw() {
+            const w = canvas.width;
+            const h = canvas.height;
+            const barWidth = (w / candles.length) * 0.8; // Ширина свечи (80% от шага)
+            const paddingX = w * 0.05; // Отступ слева и справа
+            const paddingY = h * 0.05; // Отступ сверху и снизу
+
+            // Очищаем
+            ctx.clearRect(0, 0, w, h);
+
+            // Рисуем сетку (тонкие линии)
             ctx.strokeStyle = 'rgba(255,255,255,0.1)';
             ctx.lineWidth = 1;
-            const gridLines = 10;
-            for(let i=0; i<=gridLines; i++) {
-                const y = padding + (height - padding * 2) * (i / gridLines);
+            const gridLines = 5;
+            for (let i = 0; i <= gridLines; i++) {
+                const y = paddingY + ((h - paddingY * 2) * (i / gridLines));
                 ctx.beginPath();
-                ctx.moveTo(padding, y);
-                ctx.lineTo(width - padding, y);
+                ctx.moveTo(paddingX, y);
+                ctx.lineTo(w - paddingX, y);
                 ctx.stroke();
             }
+
+            // Находим мин и макс цены для масштабирования
+            let minPrice = Infinity;
+            let maxPrice = -Infinity;
+            candles.forEach(c => {
+                minPrice = Math.min(minPrice, c.low);
+                maxPrice = Math.max(maxPrice, c.high);
+            });
+            // Добавляем запас 5%
+            const range = maxPrice - minPrice;
+            minPrice -= range * 0.05;
+            maxPrice += range * 0.05;
 
             // Рисуем свечи
             candles.forEach((c, index) => {
-                const x = padding + index * (width / candles.length);
-                const bodyHeight = Math.abs(c.close - c.open);
-                const bodyY = c.close > c.open 
-                    ? height - padding - c.close 
-                    : height - padding - c.open;
+                const x = paddingX + (index * (w / candles.length)) + ((w / candles.length - barWidth) / 2);
                 
+                // Координаты Y (переворачиваем, т.к. 0 сверху)
+                const yHigh = h - paddingY - ((c.high - minPrice) / (maxPrice - minPrice)) * (h - paddingY * 2);
+                const yLow = h - paddingY - ((c.low - minPrice) / (maxPrice - minPrice)) * (h - paddingY * 2);
+                const yOpen = h - paddingY - ((c.open - minPrice) / (maxPrice - minPrice)) * (h - paddingY * 2);
+                const yClose = h - paddingY - ((c.close - minPrice) / (maxPrice - minPrice)) * (h - paddingY * 2);
+
+                const isGreen = c.close >= c.open;
+                const color = isGreen ? colors.up : colors.down;
+
                 // Тень (wick)
-                ctx.strokeStyle = c.close > c.open ? '#00ff88' : '#ff3333';
+                ctx.strokeStyle = color;
                 ctx.beginPath();
-                ctx.moveTo(x + barWidth/2, height - padding - c.high);
-                ctx.lineTo(x + barWidth/2, height - padding - c.low);
+                ctx.moveTo(x + barWidth / 2, yHigh);
+                ctx.lineTo(x + barWidth / 2, yLow);
                 ctx.stroke();
 
-                // Тело свечи
-                ctx.fillStyle = c.close > c.open ? '#00ff88' : '#ff3333';
+                // Тело свечи (делаем его БОЛЬШИМ, чтобы видеть на телефоне)
+                const bodyHeight = Math.abs(yClose - yOpen);
+                const bodyY = Math.min(yOpen, yClose);
+                
+                ctx.fillStyle = color;
                 ctx.fillRect(x, bodyY, barWidth, bodyHeight);
+                
+                // Обводка для четкости
+                ctx.strokeStyle = 'rgba(0,0,0,0.3)';
+                ctx.lineWidth = 1;
+                ctx.strokeRect(x, bodyY, barWidth, bodyHeight);
             });
         }
 
-        // --- Обновление UI ---
+        // 4. Обновление цифр
         function updateUI() {
             document.getElementById('last-price').innerText = currentPrice.toLocaleString('en-US', {minimumFractionDigits: 2});
-            const change = ((currentPrice - (currentPrice - 100)) / (currentPrice - 100)) * 100; // заглушка
+            const change = ((currentPrice - (currentPrice - 100)) / (currentPrice - 100)) * 100; // Заглушка логики
             const changeEl = document.getElementById('change-val');
-            changeEl.innerText = '+' + (Math.random() * 5).toFixed(2) + '%';
-            changeEl.className = 'change up';
-            document.getElementById('volume-val').innerText = (Math.random() * 20).toFixed(1) + 'B';
+            const val = (Math.random() * 3 + 1).toFixed(2);
+            changeEl.innerText = (Math.random() > 0.5 ? '+' : '-') + val + '%';
+            changeEl.className = (Math.random() > 0.5) ? 'change-up' : 'change-down';
         }
 
-        // --- Анимация матрицы на фоне ---
+        // 5. Анимация матрицы (фон)
         function initMatrix() {
-            const bg = document.getElementById('matrix-bg');
             const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-            const count = 100;
-            
-            for(let i=0; i<count; i++) {
-                const span = document.createElement('span');
-                span.className = 'symbol';
+            for (let i = 0; i < 100; i++) {
+                const span = document.createElement('div');
+                span.className = 'char';
                 span.innerText = chars[Math.floor(Math.random() * chars.length)];
                 span.style.left = Math.random() * 100 + 'vw';
                 span.style.top = Math.random() * 100 + 'vh';
                 span.style.animation = `fall \${Math.random() * 5 + 5}s linear infinite`;
-                bg.appendChild(span);
+                matrix.appendChild(span);
             }
-            
-            // Добавляем CSS анимацию динамически
             const style = document.createElement('style');
-            style.innerHTML = `
-                @keyframes fall {
-                    from { transform: translateY(-10vh); opacity: 0; }
-                    to { transform: translateY(110vh); opacity: 1; }
-                }
-            `;
+            style.innerHTML = `@keyframes fall { from { transform: translateY(-10vh); } to { transform: translateY(110vh); } }`;
             document.head.appendChild(style);
         }
 
-        // --- Интерактив ---
-        function setTimeframe(tf) {
-            // Здесь можно добавить логику смены таймфрейма
-            alert('Смена таймфрейма: ' + tf + ' (в демо режиме данные не меняются)');
-        }
-
-        // Запуск
-        initMatrix();
-        generateData();
-
-        // Обновление цены каждые 2 секунды (имитация тиков)
+        // 6. Имитация рынка (тик каждые 2 сек)
         setInterval(() => {
-            const change = (Math.random() - 0.5) * 50;
+            const change = (Math.random() - 0.5) * 80;
             currentPrice += change;
-            // Добавляем новую свечу каждые N тиков (упрощено)
-            if(Math.random() > 0.9) {
+
+            // Добавляем новую свечу раз в 3 тика (примерно)
+            if (Math.random() > 0.7) {
                 const last = candles[candles.length - 1];
                 const newCandle = {
                     open: last.close,
                     high: Math.max(last.close, last.close + change + 20),
                     low: Math.min(last.close, last.close + change - 20),
-                    close: last.close + change,
-                    volume: Math.random() * volumeMultiplier
+                    close: last.close + change
                 };
                 candles.push(newCandle);
-                if(candles.length > 50) candles.shift(); // удаляем старые
-                drawChart();
+                if (candles.length > 40) candles.shift(); // Храним только последние 40
+                draw();
+                updateUI();
+            } else {
+                // Просто обновляем цену в шапке, если свеча не появилась
                 updateUI();
             }
         }, 2000);
 
-        // Ресайз окна
-        window.addEventListener('resize', () => {
-            ctx.canvas.width = window.innerWidth;
-            ctx.canvas.height = window.innerHeight - 60;
-            drawChart();
-        });
+        // Запуск
+        initMatrix();
+        generateInitialData();
+        resize();
     </script>
 </body>
 </html>
