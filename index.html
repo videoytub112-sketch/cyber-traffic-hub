@@ -3,724 +3,564 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS 2060 — квантовая рекламная сеть</title>
+<title>ADNEX — рекламные места</title>
 <style>
 :root{
-    --bg:#03030a;
-    --panel:rgba(11,14,32,0.62);
-    --stroke:rgba(120,180,255,0.16);
-    --cyan:#4de2ff;
+    --bg:#070810;
+    --card:#0e1020;
+    --stroke:rgba(120,150,255,0.14);
+    --cyan:#3fd6ff;
     --violet:#8b5cf6;
-    --magenta:#ff4d9d;
-    --lime:#5cffb1;
-    --amber:#ffc857;
-    --text:#dfe6ff;
-    --dim:#7f8bb5;
+    --lime:#4ade80;
+    --amber:#fbbf24;
+    --text:#e6ebff;
+    --dim:#8a93b8;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{height:100%;}
 body{
-    background:var(--bg);
+    background:radial-gradient(1200px 600px at 50% -10%,#131735 0%,#070810 55%);
     color:var(--text);
     font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-    overflow:hidden;
-    position:relative;
+    min-height:100vh;
+    line-height:1.5;
 }
-#space{position:fixed;inset:0;z-index:0;}
-.scan{
-    position:fixed;inset:0;z-index:1;pointer-events:none;
-    background:repeating-linear-gradient(180deg,rgba(255,255,255,0.025) 0 1px,transparent 1px 3px);
-    mix-blend-mode:screen;
-}
-.glow{
-    position:fixed;width:520px;height:520px;border-radius:50%;z-index:1;pointer-events:none;
-    background:radial-gradient(circle,rgba(139,92,246,0.16),transparent 65%);
-    transform:translate(-50%,-50%);transition:opacity .4s;left:-999px;top:-999px;
-}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px;}
 
 /* ШАПКА */
 header{
-    position:relative;z-index:5;height:74px;
-    display:flex;align-items:center;gap:22px;
-    padding:0 20px;
-    border-bottom:1px solid var(--stroke);
-    background:linear-gradient(180deg,rgba(8,10,26,0.9),rgba(8,10,26,0.4));
+    position:sticky;top:0;z-index:40;
     backdrop-filter:blur(14px);
+    background:rgba(7,8,16,0.75);
+    border-bottom:1px solid var(--stroke);
 }
-.brand{display:flex;align-items:center;gap:12px;}
-.core{
-    width:38px;height:38px;border-radius:12px;position:relative;
-    background:conic-gradient(from 0deg,var(--cyan),var(--violet),var(--magenta),var(--cyan));
-    animation:spin 6s linear infinite;
-    box-shadow:0 0 22px rgba(77,226,255,0.5);
-}
-.core::after{
-    content:"";position:absolute;inset:5px;border-radius:8px;background:#05060f;
-}
-@keyframes spin{to{transform:rotate(360deg);}}
-.brand h1{
-    font-size:1.15rem;letter-spacing:3px;font-weight:800;
-    background:linear-gradient(90deg,var(--cyan),var(--violet),var(--magenta));
+nav{display:flex;align-items:center;justify-content:space-between;padding:16px 0;}
+.logo{
+    font-size:1.3rem;font-weight:800;letter-spacing:2px;
+    background:linear-gradient(90deg,var(--cyan),var(--violet));
     -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-.brand p{font-size:.66rem;color:var(--dim);letter-spacing:1.6px;text-transform:uppercase;}
-.head-stats{margin-left:auto;display:flex;align-items:center;gap:20px;font-size:.78rem;}
-.hstat{text-align:right;line-height:1.25;}
-.hstat b{display:block;font-size:.98rem;font-family:'Consolas',monospace;color:var(--cyan);}
-.hstat span{color:var(--dim);font-size:.68rem;text-transform:uppercase;letter-spacing:1px;}
-.loadbar{width:110px;height:6px;border-radius:6px;background:rgba(255,255,255,0.08);overflow:hidden;}
-.loadbar i{display:block;height:100%;width:40%;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .8s;}
-.clock{font-family:'Consolas',monospace;font-size:1rem;color:var(--lime);letter-spacing:1px;}
+.logo small{display:block;font-size:.6rem;color:var(--dim);letter-spacing:1.5px;font-weight:400;}
+nav .links{display:flex;gap:24px;font-size:.9rem;}
+nav .links a{color:var(--dim);text-decoration:none;transition:.2s;}
+nav .links a:hover{color:var(--text);}
+.nav-cta{
+    padding:9px 20px;border-radius:24px;font-size:.85rem;text-decoration:none;
+    background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;font-weight:700;
+}
 
-/* ТИКЕР */
-.ticker{
-    position:relative;z-index:5;height:30px;overflow:hidden;
-    border-bottom:1px solid var(--stroke);
-    background:rgba(8,10,26,0.7);
-    display:flex;align-items:center;font-size:.72rem;color:var(--dim);
-    font-family:'Consolas',monospace;
+/* ГЕРОЙ */
+.hero{padding:80px 0 60px;text-align:center;}
+.hero h1{
+    font-size:clamp(1.9rem,5.5vw,3.4rem);font-weight:800;letter-spacing:-.5px;
+    line-height:1.12;margin-bottom:18px;
 }
-.ticker div{
-    white-space:nowrap;padding-left:100%;
-    animation:slide 38s linear infinite;
+.hero h1 span{
+    background:linear-gradient(120deg,var(--cyan),var(--violet));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-.ticker b{color:var(--amber);}
-@keyframes slide{to{transform:translateX(-100%);}}
+.hero p{color:var(--dim);max-width:560px;margin:0 auto 34px;font-size:1.05rem;}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
+.btn{
+    padding:15px 32px;border-radius:32px;border:none;cursor:pointer;
+    font-size:.98rem;font-weight:700;text-decoration:none;transition:.25s;
+}
+.btn-main{
+    background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;
+    box-shadow:0 0 34px rgba(139,92,246,.4);
+}
+.btn-main:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(63,214,255,.5);}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--stroke);}
+.btn-ghost:hover{background:rgba(255,255,255,.1);}
 
-/* СЕТКА */
-.dashboard{
-    position:relative;z-index:5;
-    display:grid;
-    grid-template-columns:1fr 1.15fr 1fr;
-    gap:14px;
-    padding:14px;
-    height:calc(100vh - 104px);
+/* ЦИФРЫ */
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px;}
+.stat{
+    padding:22px 14px;border-radius:16px;background:var(--card);
+    border:1px solid var(--stroke);text-align:center;
 }
-.col{display:flex;flex-direction:column;gap:14px;min-height:0;}
+.stat b{
+    display:block;font-size:1.8rem;font-weight:800;
+    background:linear-gradient(120deg,var(--cyan),var(--violet));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.stat span{font-size:.8rem;color:var(--dim);}
 
-.panel{
-    background:var(--panel);
-    border:1px solid var(--stroke);
-    border-radius:16px;
-    backdrop-filter:blur(12px);
-    display:flex;flex-direction:column;
-    overflow:hidden;
-    position:relative;
-    min-height:0;
-}
-.panel::before{
-    content:"";position:absolute;top:0;left:0;right:0;height:1px;
-    background:linear-gradient(90deg,transparent,var(--cyan),transparent);
-    opacity:.6;
-}
-.phead{
-    display:flex;align-items:center;gap:10px;
-    padding:12px 16px;border-bottom:1px solid var(--stroke);
-    font-size:.76rem;text-transform:uppercase;letter-spacing:1.6px;color:var(--dim);
-}
-.phead .dot{
-    width:7px;height:7px;border-radius:50%;background:var(--lime);
-    box-shadow:0 0 10px var(--lime);animation:pulse 1.6s infinite;
-}
-@keyframes pulse{50%{opacity:.3;}}
-.phead .tag{margin-left:auto;font-family:'Consolas',monospace;color:var(--cyan);font-size:.7rem;}
-.pbody{overflow-y:auto;flex:1;padding:12px 16px;min-height:0;}
-.pbody::-webkit-scrollbar{width:5px;}
-.pbody::-webkit-scrollbar-thumb{background:rgba(120,180,255,0.25);border-radius:5px;}
-
-/* АУКЦИОН */
-.bid{
-    display:flex;align-items:center;gap:10px;
-    padding:10px 12px;border-radius:11px;margin-bottom:8px;
-    background:rgba(255,255,255,0.03);
-    border-left:2px solid var(--violet);
-    animation:bidIn .5s cubic-bezier(.2,.8,.3,1) both;
-}
-@keyframes bidIn{from{opacity:0;transform:translateX(-18px);}}
-.bid.win{border-left-color:var(--lime);background:rgba(92,255,177,0.07);}
-.bid .who{font-size:.82rem;font-weight:600;}
-.bid .meta{font-size:.66rem;color:var(--dim);}
-.bid .val{margin-left:auto;font-family:'Consolas',monospace;color:var(--amber);font-size:.9rem;white-space:nowrap;}
+/* СЕКЦИИ */
+section{padding:56px 0;}
+.sec-head{text-align:center;margin-bottom:40px;}
+.sec-head h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:10px;}
+.sec-head p{color:var(--dim);max-width:520px;margin:0 auto;}
 
 /* СЛОТЫ */
-.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .slot{
-    aspect-ratio:1/1;border-radius:12px;
-    border:1px solid var(--stroke);
-    background:rgba(255,255,255,0.02);
-    display:flex;flex-direction:column;align-items:center;justify-content:center;
-    gap:3px;font-size:.62rem;color:var(--dim);text-align:center;padding:4px;
-    transition:.4s;position:relative;overflow:hidden;
+    background:var(--card);border:1px solid var(--stroke);border-radius:18px;
+    padding:22px;display:flex;flex-direction:column;transition:.3s;position:relative;overflow:hidden;
 }
-.slot b{font-family:'Consolas',monospace;font-size:.8rem;color:var(--text);}
-.slot.busy{
-    border-color:rgba(139,92,246,0.6);
-    background:linear-gradient(160deg,rgba(139,92,246,0.2),rgba(77,226,255,0.08));
-    box-shadow:0 0 18px rgba(139,92,246,0.25) inset;
+.slot:hover{transform:translateY(-5px);border-color:rgba(63,214,255,.4);}
+.slot .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;}
+.slot .name{font-weight:700;font-size:1.05rem;}
+.slot .badge{
+    font-size:.68rem;padding:4px 10px;border-radius:12px;font-weight:700;text-transform:uppercase;
 }
-.slot.busy::after{
-    content:"";position:absolute;inset:0;
-    background:linear-gradient(120deg,transparent 40%,rgba(255,255,255,0.14),transparent 60%);
-    transform:translateX(-100%);animation:shine 3.4s infinite;
+.badge.free{background:rgba(74,222,128,.15);color:var(--lime);border:1px solid rgba(74,222,128,.3);}
+.badge.busy{background:rgba(139,92,246,.15);color:var(--violet);border:1px solid rgba(139,92,246,.3);}
+.slot .pos{font-size:.85rem;color:var(--dim);margin-bottom:16px;min-height:38px;}
+.slot .price{
+    font-size:1.5rem;font-weight:800;color:var(--cyan);margin-bottom:16px;
 }
-@keyframes shine{60%,100%{transform:translateX(100%);}}
-.slot .rate{color:var(--lime);}
+.slot .price small{font-size:.8rem;color:var(--dim);font-weight:400;}
+.slot .btn{width:100%;padding:12px;text-align:center;font-size:.9rem;}
+.slot .btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
 
-/* ГРАФИК */
-.chartwrap{position:relative;height:190px;padding:6px 0;}
-#revenue{width:100%;height:100%;display:block;}
-.metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 16px 14px;}
-.metric{
-    background:rgba(255,255,255,0.03);border:1px solid var(--stroke);
-    border-radius:11px;padding:10px 8px;text-align:center;
+/* КАК ЭТО РАБОТАЕТ */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.step{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:26px 22px;}
+.step .num{
+    font-size:2rem;font-weight:800;margin-bottom:12px;
+    background:linear-gradient(120deg,var(--cyan),var(--violet));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
 }
-.metric b{
-    display:block;font-family:'Consolas',monospace;font-size:1.02rem;
-    color:var(--cyan);
-}
-.metric span{font-size:.6rem;color:var(--dim);text-transform:uppercase;letter-spacing:.6px;}
+.step h3{font-size:1.05rem;margin-bottom:8px;}
+.step p{color:var(--dim);font-size:.9rem;}
 
-/* АГЕНТЫ */
-.agent{
-    display:flex;align-items:center;gap:10px;padding:9px 0;
-    border-bottom:1px solid rgba(255,255,255,0.05);font-size:.78rem;
+/* МОДАЛКИ */
+.overlay{
+    position:fixed;inset:0;z-index:100;display:none;
+    background:rgba(3,4,10,.85);backdrop-filter:blur(8px);
+    align-items:center;justify-content:center;padding:20px;
 }
-.agent:last-child{border:none;}
-.agent .av{
-    width:28px;height:28px;border-radius:9px;flex:0 0 28px;
-    background:linear-gradient(135deg,var(--violet),var(--cyan));
-    display:grid;place-items:center;font-size:.66rem;font-weight:800;color:#05060f;
+.overlay.on{display:flex;}
+.modal{
+    background:var(--card);border:1px solid var(--stroke);border-radius:20px;
+    padding:30px;width:100%;max-width:440px;max-height:90vh;overflow-y:auto;
 }
-.agent .nm{font-weight:600;}
-.agent .rl{font-size:.64rem;color:var(--dim);}
-.agent .st{margin-left:auto;font-family:'Consolas',monospace;font-size:.68rem;color:var(--lime);}
+.modal h3{font-size:1.3rem;margin-bottom:6px;}
+.modal .sub{color:var(--dim);font-size:.88rem;margin-bottom:22px;}
+.field{margin-bottom:14px;}
+.field label{display:block;font-size:.8rem;color:var(--dim);margin-bottom:6px;}
+.field input,.field textarea,.field select{
+    width:100%;padding:12px 14px;border-radius:10px;
+    background:rgba(255,255,255,.04);border:1px solid var(--stroke);
+    color:var(--text);font-family:inherit;font-size:.92rem;outline:none;
+}
+.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--cyan);}
+.field textarea{resize:vertical;min-height:80px;}
+.modal .btn{width:100%;margin-top:8px;}
+.close-x{
+    position:absolute;top:18px;right:20px;background:none;border:none;
+    color:var(--dim);font-size:1.5rem;cursor:pointer;
+}
+.modal-rel{position:relative;}
 
 /* ЧАТ */
-.chatlog{overflow-y:auto;flex:1;padding:14px;display:flex;flex-direction:column;gap:10px;min-height:0;}
-.msg{max-width:88%;font-size:.8rem;line-height:1.45;}
-.msg .nm{font-size:.62rem;color:var(--dim);margin-bottom:3px;letter-spacing:.5px;}
-.msg .bub{
-    padding:9px 12px;border-radius:13px;
-    background:rgba(255,255,255,0.05);border:1px solid var(--stroke);
-    word-wrap:break-word;
-}
-.msg.me{align-self:flex-end;}
-.msg.me .bub{background:linear-gradient(135deg,rgba(139,92,246,0.4),rgba(77,226,255,0.22));border-color:rgba(139,92,246,0.5);}
-.msg.sys .bub{background:rgba(92,255,177,0.08);border-color:rgba(92,255,177,0.3);color:var(--lime);font-family:'Consolas',monospace;font-size:.72rem;}
-.msg .bub a{color:var(--amber);}
-.typing .bub{display:flex;gap:4px;align-items:center;height:34px;}
-.typing i{width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:tp 1.2s infinite;}
-.typing i:nth-child(2){animation-delay:.2s;}
-.typing i:nth-child(3){animation-delay:.4s;}
-@keyframes tp{0%,60%,100%{opacity:.25;transform:translateY(0);}30%{opacity:1;transform:translateY(-4px);}}
-.chatinput{
-    display:flex;gap:8px;padding:12px;border-top:1px solid var(--stroke);
-}
-.chatinput input{
-    flex:1;padding:11px 14px;border-radius:11px;
-    background:rgba(255,255,255,0.05);border:1px solid var(--stroke);
-    color:var(--text);font-size:.82rem;outline:none;font-family:inherit;
-}
-.chatinput input:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(77,226,255,0.12);}
-.chatinput button{
-    padding:0 18px;border-radius:11px;border:none;cursor:pointer;
+.chat-btn{
+    position:fixed;bottom:22px;right:22px;z-index:90;
+    width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;
     background:linear-gradient(135deg,var(--violet),var(--cyan));
-    color:#05060f;font-weight:700;font-size:.8rem;transition:.25s;
+    color:#070810;font-size:1.5rem;box-shadow:0 0 30px rgba(139,92,246,.5);
+    display:flex;align-items:center;justify-content:center;transition:.25s;
 }
-.chatinput button:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(77,226,255,0.35);}
-.chatbar{
-    display:flex;gap:6px;padding:0 12px 10px;font-size:.6rem;color:var(--dim);
-    text-transform:uppercase;letter-spacing:.8px;
+.chat-btn:hover{transform:scale(1.08);}
+.chat-panel{
+    position:fixed;bottom:92px;right:22px;z-index:91;
+    width:340px;max-width:calc(100vw - 44px);
+    background:var(--card);border:1px solid var(--stroke);border-radius:18px;
+    overflow:hidden;display:none;flex-direction:column;
+    box-shadow:0 20px 60px rgba(0,0,0,.6);
 }
-.chatbar span{background:rgba(255,255,255,0.04);padding:3px 8px;border-radius:6px;border:1px solid var(--stroke);}
+.chat-panel.on{display:flex;}
+.chat-head{
+    padding:16px 18px;border-bottom:1px solid var(--stroke);
+    display:flex;align-items:center;gap:10px;
+}
+.chat-head .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);}
+.chat-head b{font-size:.95rem;}
+.chat-head span{margin-left:auto;font-size:.72rem;color:var(--dim);}
+.chat-body{padding:16px;height:280px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
+.chat-body .cm{max-width:85%;font-size:.85rem;padding:10px 13px;border-radius:13px;line-height:1.4;}
+.cm.me{align-self:flex-end;background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(63,214,255,.25));}
+.cm.op{align-self:flex-start;background:rgba(255,255,255,.06);border:1px solid var(--stroke);}
+.cm.sys{align-self:center;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);color:var(--lime);font-size:.76rem;text-align:center;}
+.chat-foot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--stroke);}
+.chat-foot input{
+    flex:1;padding:11px 13px;border-radius:10px;background:rgba(255,255,255,.05);
+    border:1px solid var(--stroke);color:var(--text);font-size:.86rem;outline:none;font-family:inherit;
+}
+.chat-foot input:focus{border-color:var(--cyan);}
+.chat-foot button{
+    padding:0 16px;border-radius:10px;border:none;cursor:pointer;
+    background:var(--cyan);color:#070810;font-weight:700;
+}
+
+/* АДМИНКА */
+.admin-fab{
+    position:fixed;bottom:22px;left:22px;z-index:90;
+    width:44px;height:44px;border-radius:50%;border:1px solid var(--stroke);
+    background:rgba(255,255,255,.05);color:var(--dim);cursor:pointer;font-size:1.1rem;
+}
+.admin-list{margin-top:14px;max-height:260px;overflow-y:auto;}
+.admin-item{
+    display:flex;align-items:center;gap:10px;padding:10px;
+    border-bottom:1px solid var(--stroke);font-size:.85rem;
+}
+.admin-item .nm{font-weight:600;flex:1;}
+.admin-item .pr{color:var(--cyan);}
+.admin-item button{
+    padding:5px 10px;border-radius:7px;border:none;cursor:pointer;font-size:.75rem;
+}
+.edit-b{background:rgba(63,214,255,.2);color:var(--cyan);}
+.del-b{background:rgba(255,80,80,.2);color:#ff6b6b;}
+
+footer{
+    border-top:1px solid var(--stroke);padding:30px 0;text-align:center;
+    color:var(--dim);font-size:.82rem;margin-top:40px;
+}
 
 /* МОБИЛЬНАЯ */
-@media(max-width:1000px){
-    body{overflow:auto;}
-    .dashboard{grid-template-columns:1fr;height:auto;}
-    .col{height:auto;}
-    .panel{max-height:460px;}
-    .head-stats .hstat:nth-child(-n+2){display:none;}
-    header{height:64px;}
+@media(max-width:860px){
+    nav .links{display:none;}
+    .stats{grid-template-columns:1fr;}
+    .slot-grid{grid-template-columns:1fr;}
+    .steps{grid-template-columns:1fr;}
+    .chat-panel{width:calc(100vw - 44px);right:22px;}
 }
 </style>
 </head>
 <body>
-<canvas id="space"></canvas>
-<div class="scan"></div>
-<div class="glow" id="glow"></div>
 
 <header>
-    <div class="brand">
-        <div class="core"></div>
-        <div>
-            <h1>NEXUS·2060</h1>
-            <p>квантовая рекламная сеть</p>
-        </div>
-    </div>
-    <div class="head-stats">
-        <div class="hstat"><b id="hBalance">8 412 900 ₳</b><span>баланс сети</span></div>
-        <div class="hstat"><b id="hNodes">12 480</b><span>узлов онлайн</span></div>
-        <div>
-            <div class="loadbar"><i id="loadFill"></i></div>
-            <div style="font-size:.62rem;color:var(--dim);margin-top:4px;">нагрузка <span id="loadVal">42%</span></div>
-        </div>
-        <div class="clock" id="clock">00:00:00</div>
+    <div class="wrap">
+        <nav>
+            <div class="logo">ADNEX<small>рекламные места</small></div>
+            <div class="links">
+                <a href="#slots">Места</a>
+                <a href="#how">Как купить</a>
+            </div>
+            <a href="#slots" class="nav-cta">Забронировать</a>
+        </nav>
     </div>
 </header>
 
-<div class="ticker">
-    <div>
-        <b>АУКЦИОН:</b> нейро-таргетинг включён · <b>ПОКАЗЫ:</b> 4 821 337 за последний час · <b>НОВОЕ:</b> голографические слоты 4К доступны с 1 октября · <b>АГЕНТЫ:</b> 96% сделок закрываются автоматически · <b>ВНИМАНИЕ:</b> обнаружен всплеск активности в секторе «Орбита-Тур» · <b>СЕТЬ:</b> задержка 0,8 мс · <b>ПРОГНОЗ:</b> доход за сутки +14,2% ·
-    </div>
-</div>
+<main class="wrap">
 
-<main class="dashboard">
+    <section class="hero">
+        <h1>Реклама, которую <span>видно</span>.<br>Место, которое продаётся.</h1>
+        <p>Мы размещаем вашу рекламу на площадках с живой аудиторией. Выбирайте сектор, бронируйте — показы начинаются в тот же день.</p>
+        <div class="hero-btns">
+            <a href="#slots" class="btn btn-main">Свободные места</a>
+            <a href="#how" class="btn btn-ghost">Как это работает</a>
+        </div>
 
-    <!-- ЛЕВАЯ КОЛОНКА -->
-    <div class="col">
-        <section class="panel" style="flex:1.2;">
-            <div class="phead"><span class="dot"></span>живой аукцион <span class="tag" id="bidCount">0 ставок</span></div>
-            <div class="pbody" id="auction"></div>
-        </section>
-        <section class="panel" style="flex:1;">
-            <div class="phead"><span class="dot"></span>квантовые слоты <span class="tag" id="slotFill">0/9</span></div>
-            <div class="pbody">
-                <div class="slots" id="slots"></div>
-            </div>
-        </section>
-    </div>
+        <div class="stats">
+            <div class="stat"><b id="stFree">0</b><span>свободных секторов</span></div>
+            <div class="stat"><b id="stTotal">0</b><span>всего мест</span></div>
+            <div class="stat"><b>24/7</b><span>приём заявок</span></div>
+        </div>
+    </section>
 
-    <!-- ЦЕНТРАЛЬНАЯ КОЛОНКА -->
-    <div class="col">
-        <section class="panel">
-            <div class="phead"><span class="dot"></span>доход сети · реальное время <span class="tag" id="revNow">0 ₳/с</span></div>
-            <div class="chartwrap"><canvas id="revenue"></canvas></div>
-            <div class="metrics">
-                <div class="metric"><b id="mImp">0</b><span>показов</span></div>
-                <div class="metric"><b id="mFill">0%</b><span>заполняемость</span></div>
-                <div class="metric"><b id="mEcpm">0</b><span>eCPM ₳</span></div>
-                <div class="metric"><b id="mCtr">0%</b><span>CTR</span></div>
-            </div>
-        </section>
-        <section class="panel" style="flex:1;">
-            <div class="phead"><span class="dot"></span>автономные агенты сети <span class="tag" id="agOnline">6 активны</span></div>
-            <div class="pbody" id="agents"></div>
-        </section>
-    </div>
+    <section id="slots">
+        <div class="sec-head">
+            <h2>Рекламные секторы</h2>
+            <p>Цены за месяц показа. Свободные места можно забронировать прямо сейчас — заявка уйдёт нам моментально.</p>
+        </div>
+        <div class="slot-grid" id="slotGrid"></div>
+    </section>
 
-    <!-- ПРАВАЯ КОЛОНКА: ЧАТ -->
-    <div class="col">
-        <section class="panel" style="flex:1;">
-            <div class="phead"><span class="dot"></span>связь с сетью · посетители <span class="tag" id="chatOnline">7 онлайн</span></div>
-            <div class="chatlog" id="chatlog"></div>
-            <div class="chatbar">
-                <span>шифрование: квантовое</span>
-                <span>модерация: активна</span>
-                <span id="riskBadge">рисков: 0</span>
-            </div>
-            <div class="chatinput">
-                <input id="chatField" placeholder="Напишите агенту сети…" autocomplete="off">
-                <button id="chatSend">Отправить</button>
-            </div>
-        </section>
-    </div>
+    <section id="how">
+        <div class="sec-head">
+            <h2>Как купить место</h2>
+            <p>Три шага — и ваша реклама в работе.</p>
+        </div>
+        <div class="steps">
+            <div class="step"><div class="num">01</div><h3>Выберите сектор</h3><p>Смотрите, какие места свободны, и на какую аудиторию они работают.</p></div>
+            <div class="step"><div class="num">02</div><h3>Оставьте заявку</h3><p>Имя и контакт — всё. Мы свяжемся в течение часа и подтвердим бронь.</p></div>
+            <div class="step"><div class="num">03</div><h3>Оплатите и работайте</h3><p>После оплаты сектор закрепляется за вами, показы стартуют сразу.</p></div>
+        </div>
+    </section>
 
 </main>
 
+<footer>
+    <div class="wrap">© ADNEX · рекламная площадка · заявки принимаются круглосуточно</div>
+</footer>
+
+<!-- КНОПКА ЧАТА -->
+<button class="chat-btn" id="chatBtn">💬</button>
+<div class="chat-panel" id="chatPanel">
+    <div class="chat-head"><span class="dot"></span><b>Написать нам</b><span id="chatStatus">онлайн</span></div>
+    <div class="chat-body" id="chatBody"></div>
+    <div class="chat-foot">
+        <input id="chatField" placeholder="Ваше сообщение…" autocomplete="off">
+        <button id="chatSend">➤</button>
+    </div>
+</div>
+
+<!-- МОДАЛКА ЗАКАЗА -->
+<div class="overlay" id="orderOverlay">
+    <div class="modal modal-rel">
+        <button class="close-x" onclick="closeOrder()">×</button>
+        <h3>Бронь сектора</h3>
+        <div class="sub" id="orderSubtitle">Заполните форму — мы свяжемся с вами.</div>
+        <div class="field"><label>Ваше имя</label><input id="oName" placeholder="Иван"></div>
+        <div class="field"><label>Контакт (телефон или Telegram)</label><input id="oContact" placeholder="@username или +7…"></div>
+        <div class="field"><label>Бюджет в месяц, ₽</label><input id="oBudget" type="number" placeholder="3000"></div>
+        <div class="field"><label>Комментарий (необязательно)</label><textarea id="oNote" placeholder="Что рекламируете?"></textarea></div>
+        <button class="btn btn-main" id="orderSubmit">Отправить заявку</button>
+    </div>
+</div>
+
+<!-- МОДАЛКА АДМИНКИ -->
+<div class="overlay" id="adminOverlay">
+    <div class="modal modal-rel">
+        <button class="close-x" onclick="closeAdmin()">×</button>
+        <h3>Панель управления</h3>
+        <div class="sub">Добавляйте секторы, меняйте цены и статусы.</div>
+        <div id="adminLogin">
+            <div class="field"><label>Пароль</label><input id="adminPass" type="password" placeholder="••••••"></div>
+            <button class="btn btn-main" onclick="adminLogin()">Войти</button>
+        </div>
+        <div id="adminPanel" style="display:none;">
+            <div class="field"><label>Название сектора</label><input id="aName" placeholder="Сектор 10"></div>
+            <div class="field"><label>Описание / позиция</label><input id="aPos" placeholder="Баннер в шапке сайта"></div>
+            <div class="field"><label>Цена, ₽/мес</label><input id="aPrice" type="number" placeholder="3000"></div>
+            <button class="btn btn-main" onclick="adminAdd()">Добавить сектор</button>
+            <div class="admin-list" id="adminList"></div>
+        </div>
+    </div>
+</div>
+
 <script>
-/* ================= ФОН: НЕЙРОСЕТЬ ================= */
-const space = document.getElementById('space');
-const sx = space.getContext('2d');
-let SW, SH;
-const stars = [], nodes = [], packets = [];
-const NODE_N = 26;
+/* ============================================================
+   НАСТРОЙКА TELEGRAM — ЗАПОЛНИ ДВА ПОЛЯ НИЖЕ
+   1. Создай бота у @BotFather → получишь TOKEN
+   2. Напиши своему боту любое сообщение, затем узнай свой CHAT_ID
+      (например, у бота @userinfobot) и вставь сюда.
+   ============================================================ */
+const CONFIG = {
+    BOT_TOKEN: 'ВСТАВЬ_ТОКЕН_БОТА',
+    CHAT_ID:   'ВСТАВЬ_СВОЙ_CHAT_ID',
+    ADMIN_PASSWORD: 'admin2060'
+};
 
-function sizeSpace(){
-    SW = space.width = window.innerWidth;
-    SH = space.height = window.innerHeight;
+/* Отправка сообщения в Telegram */
+async function sendToTelegram(text){
+    if (CONFIG.BOT_TOKEN.startsWith('ВСТАВЬ')) {
+        console.warn('Telegram не настроен. Сообщение:', text);
+        return false;
+    }
+    try{
+        const res = await fetch(`https://api.telegram.org/bot${CONFIG.BOT_TOKEN}/sendMessage`, {
+            method:'POST',
+            headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({
+                chat_id: CONFIG.CHAT_ID,
+                text: text,
+                parse_mode:'HTML'
+            })
+        });
+        return res.ok;
+    }catch(e){
+        console.error(e);
+        return false;
+    }
 }
-window.addEventListener('resize', sizeSpace);
-sizeSpace();
 
-for (let i = 0; i < 150; i++){
-    stars.push({ x: Math.random()*SW, y: Math.random()*SH, r: Math.random()*1.5+0.3, a: Math.random()*0.6+0.2, t: Math.random()*6.28 });
+/* ================== СЛОТЫ ================== */
+const DEFAULT_SLOTS = [
+    {id:1, name:'Сектор 01', pos:'Баннер в шапке — виден всем сразу', price:5000, busy:false},
+    {id:2, name:'Сектор 02', pos:'Боковой баннер на главной', price:3000, busy:false},
+    {id:3, name:'Сектор 03', pos:'Блок внутри статьи', price:2000, busy:false},
+    {id:4, name:'Сектор 04', pos:'Всплывающее окно при входе', price:7000, busy:false},
+    {id:5, name:'Сектор 05', pos:'Реклама в мобильной версии', price:2500, busy:false},
+    {id:6, name:'Сектор 06', pos:'Подвал сайта — все страницы', price:1500, busy:false}
+];
+
+function loadSlots(){
+    const saved = localStorage.getItem('adnex_slots');
+    return saved ? JSON.parse(saved) : DEFAULT_SLOTS.slice();
 }
-for (let i = 0; i < NODE_N; i++){
-    nodes.push({
-        x: Math.random()*SW, y: Math.random()*SH,
-        vx: (Math.random()-0.5)*0.28, vy: (Math.random()-0.5)*0.28,
-        r: Math.random()*2.4+1.4
+function saveSlots(slots){
+    localStorage.setItem('adnex_slots', JSON.stringify(slots));
+}
+
+let slots = loadSlots();
+const slotGrid = document.getElementById('slotGrid');
+
+function renderSlots(){
+    slotGrid.innerHTML = '';
+    slots.forEach(s => {
+        const el = document.createElement('div');
+        el.className = 'slot';
+        el.innerHTML = `
+            <div class="top">
+                <div class="name">${s.name}</div>
+                <div class="badge ${s.busy ? 'busy' : 'free'}">${s.busy ? 'занято' : 'свободно'}</div>
+            </div>
+            <div class="pos">${s.pos}</div>
+            <div class="price">${s.price.toLocaleString('ru-RU')} ₽<small> / мес</small></div>
+            <button class="btn btn-main" ${s.busy ? 'disabled' : ''} onclick="openOrder(${s.id})">
+                ${s.busy ? 'Занято' : 'Забронировать'}
+            </button>
+        `;
+        slotGrid.appendChild(el);
     });
+    const free = slots.filter(s => !s.busy).length;
+    document.getElementById('stFree').textContent = free;
+    document.getElementById('stTotal').textContent = slots.length;
+}
+renderSlots();
+
+/* ================== ЗАКАЗ ================== */
+let currentSlot = null;
+
+function openOrder(id){
+    const s = slots.find(x => x.id === id);
+    if (!s || s.busy) return;
+    currentSlot = s;
+    document.getElementById('orderSubtitle').textContent =
+        s.name + ' · ' + s.price.toLocaleString('ru-RU') + ' ₽/мес';
+    document.getElementById('orderOverlay').classList.add('on');
+}
+function closeOrder(){
+    document.getElementById('orderOverlay').classList.remove('on');
 }
 
-function spawnPacket(){
-    if (nodes.length < 2) return;
-    const a = Math.floor(Math.random()*nodes.length);
-    let b = Math.floor(Math.random()*nodes.length);
-    if (b === a) b = (b+1) % nodes.length;
-    packets.push({ a, b, p: 0, sp: Math.random()*0.012+0.005 });
-}
+document.getElementById('orderSubmit').addEventListener('click', async () => {
+    const name = document.getElementById('oName').value.trim();
+    const contact = document.getElementById('oContact').value.trim();
+    const budget = document.getElementById('oBudget').value.trim();
+    const note = document.getElementById('oNote').value.trim();
 
-function drawSpace(){
-    sx.clearRect(0, 0, SW, SH);
-
-    // звёзды
-    for (const s of stars){
-        s.t += 0.02;
-        const al = s.a * (0.6 + 0.4*Math.sin(s.t));
-        sx.beginPath();
-        sx.arc(s.x, s.y, s.r, 0, 6.284);
-        sx.fillStyle = 'rgba(180,220,255,' + al + ')';
-        sx.fill();
+    if (!name || !contact){
+        alert('Заполните имя и контакт — иначе мы не сможем связаться.');
+        return;
     }
 
-    // узлы
-    for (const n of nodes){
-        n.x += n.vx; n.y += n.vy;
-        if (n.x < 0 || n.x > SW) n.vx *= -1;
-        if (n.y < 0 || n.y > SH) n.vy *= -1;
-    }
+    const btn = document.getElementById('orderSubmit');
+    btn.textContent = 'Отправляем…';
+    btn.disabled = true;
 
-    // связи
-    for (let i = 0; i < nodes.length; i++){
-        for (let j = i+1; j < nodes.length; j++){
-            const dx = nodes[i].x - nodes[j].x, dy = nodes[i].y - nodes[j].y;
-            const d = Math.sqrt(dx*dx + dy*dy);
-            if (d < 190){
-                sx.beginPath();
-                sx.moveTo(nodes[i].x, nodes[i].y);
-                sx.lineTo(nodes[j].x, nodes[j].y);
-                sx.strokeStyle = 'rgba(139,92,246,' + (0.16*(1 - d/190)) + ')';
-                sx.lineWidth = 1;
-                sx.stroke();
-            }
-        }
-    }
+    const text =
+        '🔔 <b>Новая заявка на рекламу</b>\n\n' +
+        '<b>Сектор:</b> ' + currentSlot.name + '\n' +
+        '<b>Цена:</b> ' + currentSlot.price.toLocaleString('ru-RU') + ' ₽/мес\n' +
+        '<b>Имя:</b> ' + name + '\n' +
+        '<b>Контакт:</b> ' + contact + '\n' +
+        (budget ? '<b>Бюджет:</b> ' + budget + ' ₽\n' : '') +
+        (note ? '<b>Комментарий:</b> ' + note + '\n' : '') +
+        '\n🕐 ' + new Date().toLocaleString('ru-RU');
 
-    // пакеты данных
-    for (let k = packets.length-1; k >= 0; k--){
-        const pk = packets[k];
-        pk.p += pk.sp;
-        if (pk.p >= 1){ packets.splice(k,1); continue; }
-        const A = nodes[pk.a], B = nodes[pk.b];
-        const x = A.x + (B.x - A.x)*pk.p;
-        const y = A.y + (B.y - A.y)*pk.p;
-        const g = sx.createRadialGradient(x, y, 0, x, y, 9);
-        g.addColorStop(0, 'rgba(77,226,255,0.9)');
-        g.addColorStop(1, 'rgba(77,226,255,0)');
-        sx.beginPath();
-        sx.arc(x, y, 9, 0, 6.284);
-        sx.fillStyle = g;
-        sx.fill();
-    }
+    await sendToTelegram(text);
 
-    // узлы рисуем поверх
-    for (const n of nodes){
-        sx.beginPath();
-        sx.arc(n.x, n.y, n.r, 0, 6.284);
-        sx.fillStyle = 'rgba(77,226,255,0.75)';
-        sx.fill();
-    }
-
-    if (Math.random() > 0.94) spawnPacket();
-    requestAnimationFrame(drawSpace);
-}
-drawSpace();
-
-/* ================= КУРСОР-СВЕЧЕНИЕ ================= */
-const glow = document.getElementById('glow');
-window.addEventListener('pointermove', e => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top = e.clientY + 'px';
+    btn.textContent = 'Отправить заявку';
+    btn.disabled = false;
+    closeOrder();
+    alert('Заявка отправлена! Мы свяжемся с вами в течение часа.');
+    document.getElementById('oName').value = '';
+    document.getElementById('oContact').value = '';
+    document.getElementById('oBudget').value = '';
+    document.getElementById('oNote').value = '';
 });
 
-/* ================= ЧАСЫ ================= */
-setInterval(() => {
-    const d = new Date();
-    const p = n => String(n).padStart(2,'0');
-    document.getElementById('clock').textContent = p(d.getHours()) + ':' + p(d.getMinutes()) + ':' + p(d.getSeconds());
-}, 1000);
+/* ================== ЧАТ ================== */
+const chatPanel = document.getElementById('chatPanel');
+const chatBody = document.getElementById('chatBody');
+let chatStarted = false;
 
-/* ================= СЛОТЫ ================= */
-const slotNames = ['Сектор 01','Сектор 02','Сектор 03','Сектор 04','Сектор 05','Сектор 06','Сектор 07','Сектор 08','Сектор 09'];
-const slotBox = document.getElementById('slots');
-const slotEls = [];
-for (let i = 0; i < 9; i++){
-    const d = document.createElement('div');
-    d.className = 'slot';
-    d.innerHTML = '<b>' + slotNames[i].split(' ')[1] + '</b><span>' + slotNames[i].split(' ')[0] + '</span><span class="rate">0 ₳</span>';
-    slotBox.appendChild(d);
-    slotEls.push(d);
-}
-function updateSlots(){
-    let busy = 0;
-    slotEls.forEach((el, i) => {
-        const isBusy = Math.random() > 0.35;
-        el.classList.toggle('busy', isBusy);
-        if (isBusy) busy++;
-        const rate = (Math.random()*400+120).toFixed(0);
-        el.querySelector('.rate').textContent = isBusy ? rate + ' ₳' : 'свободен';
-        el.querySelector('.rate').style.color = isBusy ? '#5cffb1' : '#7f8bb5';
-    });
-    document.getElementById('slotFill').textContent = busy + '/9';
-    document.getElementById('mFill').textContent = Math.round(busy/9*100) + '%';
-}
-updateSlots();
-setInterval(updateSlots, 4200);
-
-/* ================= АУКЦИОН ================= */
-const advertisers = ['НейроКофе','AuroraLabs','Квант-Маркет','Голо-Стрим','СинтезБанк','Орбита-Тур','Voidwear','Люмина','DataForge','Пси-Фарм','Сфера-Медиа','Крипто-Ковчег'];
-const targets = ['25–34 · нейро-профиль','Метавселенная · сектор А','Голосовой поиск','Иммерсив-баннеры','Био-реакция аудитории','Гиперлокальный таргет','ИИ-ассистенты','Квантовые экраны'];
-const auctionBox = document.getElementById('auction');
-let bidTotal = 0;
-
-function pushBid(){
-    const name = advertisers[Math.floor(Math.random()*advertisers.length)];
-    const tgt = targets[Math.floor(Math.random()*targets.length)];
-    const slot = slotNames[Math.floor(Math.random()*slotNames.length)];
-    const val = (Math.random()*900 + 180).toFixed(0);
-    const win = Math.random() > 0.5;
-
-    const el = document.createElement('div');
-    el.className = 'bid' + (win ? ' win' : '');
-    el.innerHTML =
-        '<div><div class="who">' + name + (win ? ' · победа' : '') + '</div>' +
-        '<div class="meta">' + slot + ' · ' + tgt + '</div></div>' +
-        '<div class="val">' + val + ' ₳</div>';
-
-    auctionBox.prepend(el);
-    while (auctionBox.children.length > 14) auctionBox.lastChild.remove();
-
-    bidTotal++;
-    document.getElementById('bidCount').textContent = bidTotal + ' ставок';
-}
-for (let i = 0; i < 5; i++) pushBid();
-setInterval(pushBid, 1900);
-
-/* ================= МЕТРИКИ ================= */
-let impressions = 4821337;
-let ecpm = 412;
-let ctr = 3.4;
-
-setInterval(() => {
-    impressions += Math.floor(Math.random()*900 + 200);
-    ecpm = Math.max(180, ecpm + (Math.random()-0.5)*24);
-    ctr = Math.max(1.2, Math.min(7.5, ctr + (Math.random()-0.5)*0.3));
-    document.getElementById('mImp').textContent = impressions.toLocaleString('ru-RU');
-    document.getElementById('mEcpm').textContent = ecpm.toFixed(0);
-    document.getElementById('mCtr').textContent = ctr.toFixed(2) + '%';
-
-    const bal = 8412900 + Math.floor(Math.random()*90000);
-    document.getElementById('hBalance').textContent = bal.toLocaleString('ru-RU') + ' ₳';
-    document.getElementById('hNodes').textContent = (12480 + Math.floor(Math.random()*260)).toLocaleString('ru-RU');
-
-    const load = Math.floor(Math.random()*40 + 35);
-    document.getElementById('loadFill').style.width = load + '%';
-    document.getElementById('loadVal').textContent = load + '%';
-}, 1500);
-
-/* ================= ГРАФИК ДОХОДА ================= */
-const rev = document.getElementById('revenue');
-const rx = rev.getContext('2d');
-let revData = [];
-for (let i = 0; i < 70; i++) revData.push(320 + Math.random()*160);
-
-function sizeChart(){
-    rev.width = rev.clientWidth * 2;
-    rev.height = rev.clientHeight * 2;
-    rx.setTransform(1,0,0,1,0,0);
-}
-window.addEventListener('resize', sizeChart);
-setTimeout(sizeChart, 60);
-
-function drawRev(){
-    if (!rev.width) sizeChart();
-    const W = rev.width, H = rev.height;
-    rx.clearRect(0, 0, W, H);
-
-    // сетка
-    rx.strokeStyle = 'rgba(120,180,255,0.09)';
-    rx.lineWidth = 1;
-    for (let i = 0; i <= 4; i++){
-        const y = (H/4)*i;
-        rx.beginPath(); rx.moveTo(0, y); rx.lineTo(W, y); rx.stroke();
+document.getElementById('chatBtn').addEventListener('click', () => {
+    chatPanel.classList.toggle('on');
+    if (!chatStarted){
+        chatStarted = true;
+        addChat('Здравствуйте! Напишите вопрос — сообщение сразу уйдёт оператору, ответим в течение нескольких минут.', 'sys');
     }
-
-    const min = Math.min(...revData) - 30;
-    const max = Math.max(...revData) + 30;
-    const stepX = W / (revData.length - 1);
-    const toY = v => H - ((v - min)/(max - min)) * (H - 14) - 7;
-
-    // заливка
-    const grad = rx.createLinearGradient(0, 0, 0, H);
-    grad.addColorStop(0, 'rgba(139,92,246,0.5)');
-    grad.addColorStop(0.5, 'rgba(77,226,255,0.22)');
-    grad.addColorStop(1, 'rgba(77,226,255,0)');
-    rx.beginPath();
-    rx.moveTo(0, H);
-    revData.forEach((v, i) => rx.lineTo(i*stepX, toY(v)));
-    rx.lineTo(W, H);
-    rx.closePath();
-    rx.fillStyle = grad;
-    rx.fill();
-
-    // линия
-    rx.beginPath();
-    revData.forEach((v, i) => {
-        const x = i*stepX, y = toY(v);
-        i ? rx.lineTo(x, y) : rx.moveTo(x, y);
-    });
-    rx.strokeStyle = '#4de2ff';
-    rx.lineWidth = 3;
-    rx.shadowColor = '#4de2ff';
-    rx.shadowBlur = 16;
-    rx.stroke();
-    rx.shadowBlur = 0;
-
-    // точка на конце
-    const lx = (revData.length-1)*stepX, ly = toY(revData[revData.length-1]);
-    rx.beginPath(); rx.arc(lx, ly, 7, 0, 6.284);
-    rx.fillStyle = '#5cffb1'; rx.fill();
-    rx.beginPath(); rx.arc(lx, ly, 14, 0, 6.284);
-    rx.fillStyle = 'rgba(92,255,177,0.2)'; rx.fill();
-}
-drawRev();
-
-setInterval(() => {
-    const last = revData[revData.length-1];
-    const next = Math.max(200, Math.min(560, last + (Math.random()-0.48)*70));
-    revData.push(next);
-    revData.shift();
-    document.getElementById('revNow').textContent = Math.round(next*3.1) + ' ₳/с';
-    drawRev();
-}, 700);
-
-/* ================= АГЕНТЫ ================= */
-const agentList = [
-    ['НЕЙРО-1','нейро-таргетинг','работает'],
-    ['АУК-7','квантовый аукцион','работает'],
-    ['КОНТ-3','генерация креативов','обучение'],
-    ['АНАЛ-9','прогноз дохода','работает'],
-    ['ЩИТ-2','антифрод и модерация','работает'],
-    ['СВЯЗ-5','поддержка клиентов','работает']
-];
-const agBox = document.getElementById('agents');
-agentList.forEach(a => {
-    const d = document.createElement('div');
-    d.className = 'agent';
-    d.innerHTML = '<div class="av">' + a[0].split('-')[0].slice(0,2) + '</div>' +
-                  '<div><div class="nm">' + a[0] + '</div><div class="rl">' + a[1] + '</div></div>' +
-                  '<div class="st">' + a[2] + '</div>';
-    agBox.appendChild(d);
 });
 
-/* ================= ЧАТ ================= */
-const chatlog = document.getElementById('chatlog');
-const field = document.getElementById('chatField');
-const sendBtn = document.getElementById('chatSend');
-let riskCount = 0;
-
-function addMsg(text, who, cls){
-    const wrap = document.createElement('div');
-    wrap.className = 'msg ' + (cls || '');
-    wrap.innerHTML = (who ? '<div class="nm">' + who + '</div>' : '') + '<div class="bub">' + text + '</div>';
-    chatlog.appendChild(wrap);
-    chatlog.scrollTop = chatlog.scrollHeight;
-    return wrap;
+function addChat(text, cls){
+    const d = document.createElement('div');
+    d.className = 'cm ' + cls;
+    d.textContent = text;
+    chatBody.appendChild(d);
+    chatBody.scrollTop = chatBody.scrollHeight;
 }
 
-function typing(){
-    const w = document.createElement('div');
-    w.className = 'msg typing';
-    w.innerHTML = '<div class="bub"><i></i><i></i><i></i></div>';
-    chatlog.appendChild(w);
-    chatlog.scrollTop = chatlog.scrollHeight;
-    return w;
-}
-
-const brain = [
-    { k:['цена','тариф','стоимост','сколько стоит','прайс'],
-      r:'Размещение в NEXUS идёт через аукцион. Базовый вход — <b>от 180 ₳</b> за 1000 показов, премиум-секторы — от 900 ₳. Побеждает не самая высокая ставка, а лучший прогноз отклика. Хотите расчёт под ваш бюджет?' },
-    { k:['размест','реклам','баннер','показать','продвин'],
-      r:'Отлично. Выберите сектор: сейчас свободны 3 из 9 квантовых слотов. Могу зарезервировать один на 24 часа и настроить нейро-таргетинг автоматически. Нужен сектор под вашу нишу?' },
-    { k:['чат','бот','агент','связ','поддержк'],
-      r:'Все обращения обрабатывают автономные агенты сети. Среднее время ответа — <b>0,8 секунды</b>, поддержка 24/7 без выходных. Я как раз один из них.' },
-    { k:['доход','заработ','деньг','прибыл','выгод'],
-      r:'Средний доход рекламодателя в сети — <b>+14,2% к неделе</b>. Точную цифру даёт прогноз-модуль АНАЛ-9: он считает отдачу под ваш бюджет и нишу. Прислать пример расчёта?' },
-    { k:['привет','здравств','хай','добрый','салют'],
-      r:'Привет. Я нейро-агент сети NEXUS. Помогу с размещением, расчётом бюджета или подключением слота. С чего начнём?' },
-    { k:['помощь','как работает','объясн','что это','расскаж'],
-      r:'Всё просто: вы задаёте цель и бюджет — сеть сама находит аудиторию, тестирует креативы и покупает показы на аукционе. Вы видите только результат и отчёт. Что показать подробнее?' },
-    { k:['безопасн','защит','фрод','обман','мошенн'],
-      r:'Агент ЩИТ-2 фильтрует трафик в реальном времени: боты, накрутки и фрод отсекаются до оплаты. Модерация креативов — автоматическая, по 180 параметрам.' }
-];
-const fallbacks = [
-    'Принято. Уточните, пожалуйста, нишу и примерный бюджет — подберу сектор и прогноз отклика.',
-    'Записала в профиль сессии. Могу сразу показать свободные слоты или рассчитать eCPM под вашу аудиторию.',
-    'Поняла вас. В NEXUS такие задачи решает связка НЕЙРО-1 и АУК-7 — они подберут ставку автоматически.',
-    'Интересный запрос. Дайте пару деталей, и я соберу короткий план размещения с ценами.'
-];
-
-function reply(text){
-    const low = text.toLowerCase();
-    let answer = null;
-    for (const b of brain){
-        if (b.k.some(k => low.indexOf(k) !== -1)){ answer = b.r; break; }
-    }
-    if (!answer) answer = fallbacks[Math.floor(Math.random()*fallbacks.length)];
-    return answer;
-}
-
-function botRespond(userText){
-    const t = typing();
-    setTimeout(() => {
-        t.remove();
-        addMsg(reply(userText), 'АГЕНТ NEXUS · автоответ', 'sys');
-    }, 900 + Math.random()*900);
-}
-
-function send(){
-    const v = field.value.trim();
+async function sendChat(){
+    const f = document.getElementById('chatField');
+    const v = f.value.trim();
     if (!v) return;
-    addMsg(v.replace(/</g,'&lt;'), 'вы', 'me');
-    field.value = '';
-    if (/(https?:|www\.|\.ru|\.com|заработок|вложи|крипт|схем)/i.test(v)){
-        riskCount++;
-        document.getElementById('riskBadge').textContent = 'рисков: ' + riskCount;
-        document.getElementById('riskBadge').style.color = '#ffc857';
-        setTimeout(() => addMsg('Сообщение проверено модерацией. Подозрительные ссылки и обещания быстрого дохода в сети блокируются автоматически.', 'ЩИТ-2 · модерация', 'sys'), 700);
+    addChat(v, 'me');
+    f.value = '';
+
+    const text = '💬 <b>Сообщение из чата на сайте</b>\n\n' + v + '\n\n🕐 ' + new Date().toLocaleString('ru-RU');
+    const ok = await sendToTelegram(text);
+
+    if (ok){
+        addChat('Сообщение доставлено оператору. Ответим сюда или на ваш контакт.', 'sys');
+    } else {
+        addChat('Чат ещё не подключён. Оставьте заявку через кнопку «Забронировать» — так мы точно вас увидим.', 'sys');
     }
-    botRespond(v);
 }
-sendBtn.addEventListener('click', send);
-field.addEventListener('keydown', e => { if (e.key === 'Enter') send(); });
+document.getElementById('chatSend').addEventListener('click', sendChat);
+document.getElementById('chatField').addEventListener('keydown', e => {
+    if (e.key === 'Enter') sendChat();
+});
 
-/* стартовые сообщения */
-addMsg('Добро пожаловать в NEXUS·2060. Это демо-интерфейс квантовой рекламной сети. Задайте вопрос — агент ответит.', 'система', 'sys');
-setTimeout(() => addMsg('Кто-нибудь пробовал сектор 04? Хочу запустить кампанию под метавселенную.', 'Orbita_X', ''), 1600);
-setTimeout(() => addMsg('Да, сектор 04 живой. eCPM выше среднего на 18%.', 'Lumina_Ad', ''), 3200);
-
-/* живые посетители */
-const visitors = ['Kvant_M','NeoByte','Astra_77','Void_Walker','DataMind','SolarFox','Pixel_2060','NeuroNomad'];
-const visitorLines = [
-    'Кто-нибудь видел новый прогноз по CTR за сутки?',
-    'У меня кампания в секторе 07, отклик вырос вдвое.',
-    'Подскажите, голографические баннеры уже доступны всем?',
-    'Аукцион сегодня злой, ставки улетели вверх.',
-    'Сеть держит задержку меньше миллисекунды, это красиво.',
-    'Запустил нейро-таргетинг, аудитория нашлась сама.'
-];
-setInterval(() => {
-    if (chatlog.children.length > 40) return;
-    const n = visitors[Math.floor(Math.random()*visitors.length)];
-    const l = visitorLines[Math.floor(Math.random()*visitorLines.length)];
-    addMsg(l, n, '');
-    const on = 5 + Math.floor(Math.random()*7);
-    document.getElementById('chatOnline').textContent = on + ' онлайн';
-}, 9000);
-
-document.getElementById('chatOnline').textContent = (5 + Math.floor(Math.random()*7)) + ' онлайн';
+/* ================== АДМИНКА ================== */
+document.querySelector('.admin-fab').addEventListener('click', () => {
+    document.getElementById('adminOverlay').classList.add('on');
+});
+function closeAdmin(){
+    document.getElementById('adminOverlay').classList.remove('on');
+}
+function adminLogin(){
+    const pass = document.getElementById('adminPass').value;
+    if (pass === CONFIG.ADMIN_PASSWORD){
+        document.getElementById('adminLogin').style.display = 'none';
+        document.getElementById('adminPanel').style.display = 'block';
+        renderAdmin();
+    } else {
+        alert('Неверный пароль');
+    }
+}
+function renderAdmin(){
+    const list = document.getElementById('adminList');
+    list.innerHTML = '';
+    slots.forEach(s => {
+        const d = document.createElement('div');
+        d.className = 'admin-item';
+        d.innerHTML = `
+            <span class="nm">${s.name}</span>
+            <span class="pr">${s.price.toLocaleString('ru-RU')} ₽</span>
+            <button class="edit-b" onclick="toggleBusy(${s.id})">${s.busy ? 'осв.' : 'занять'}</button>
+            <button class="del-b" onclick="delSlot(${s.id})">✕</button>
+        `;
+        list.appendChild(d);
+    });
+}
+function adminAdd(){
+    const name = document.getElementById('aName').value.trim();
+    const pos = document.getElementById('aPos').value.trim();
+    const price = parseInt(document.getElementById('aPrice').value, 10);
+    if (!name || !price) { alert('Заполните название и цену'); return; }
+    slots.push({ id: Date.now(), name, pos: pos || 'Рекламное место', price, busy:false });
+    saveSlots(slots);
+    renderSlots();
+    renderAdmin();
+    document.getElementById('aName').value = '';
+    document.getElementById('aPos').value = '';
+    document.getElementById('aPrice').value = '';
+}
+function toggleBusy(id){
+    const s = slots.find(x => x.id === id);
+    if (s) { s.busy = !s.busy; saveSlots(slots); renderSlots(); renderAdmin(); }
+}
+function delSlot(id){
+    if (!confirm('Удалить сектор?')) return;
+    slots = slots.filter(x => x.id !== id);
+    saveSlots(slots);
+    renderSlots();
+    renderAdmin();
+}
 </script>
 </body>
 </html>
