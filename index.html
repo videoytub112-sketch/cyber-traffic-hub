@@ -26,7 +26,6 @@ body{
 }
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px;}
 
-/* ШАПКА */
 header{
     position:sticky;top:0;z-index:40;
     backdrop-filter:blur(14px);
@@ -48,7 +47,6 @@ nav .links a:hover{color:var(--text);}
     background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;font-weight:700;
 }
 
-/* ГЕРОЙ */
 .hero{padding:80px 0 60px;text-align:center;}
 .hero h1{
     font-size:clamp(1.9rem,5.5vw,3.4rem);font-weight:800;letter-spacing:-.5px;
@@ -72,7 +70,6 @@ nav .links a:hover{color:var(--text);}
 .btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--stroke);}
 .btn-ghost:hover{background:rgba(255,255,255,.1);}
 
-/* ЦИФРЫ */
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px;}
 .stat{
     padding:22px 14px;border-radius:16px;background:var(--card);
@@ -85,13 +82,11 @@ nav .links a:hover{color:var(--text);}
 }
 .stat span{font-size:.8rem;color:var(--dim);}
 
-/* СЕКЦИИ */
 section{padding:56px 0;}
 .sec-head{text-align:center;margin-bottom:40px;}
 .sec-head h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:10px;}
 .sec-head p{color:var(--dim);max-width:520px;margin:0 auto;}
 
-/* СЛОТЫ */
 .slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .slot{
     background:var(--card);border:1px solid var(--stroke);border-radius:18px;
@@ -113,7 +108,6 @@ section{padding:56px 0;}
 .slot .btn{width:100%;padding:12px;text-align:center;font-size:.9rem;}
 .slot .btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
 
-/* КАК ЭТО РАБОТАЕТ */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .step{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:26px 22px;}
 .step .num{
@@ -124,7 +118,6 @@ section{padding:56px 0;}
 .step h3{font-size:1.05rem;margin-bottom:8px;}
 .step p{color:var(--dim);font-size:.9rem;}
 
-/* МОДАЛКИ */
 .overlay{
     position:fixed;inset:0;z-index:100;display:none;
     background:rgba(3,4,10,.85);backdrop-filter:blur(8px);
@@ -153,7 +146,6 @@ section{padding:56px 0;}
 }
 .modal-rel{position:relative;}
 
-/* ЧАТ */
 .chat-btn{
     position:fixed;bottom:22px;right:22px;z-index:90;
     width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;
@@ -193,12 +185,13 @@ section{padding:56px 0;}
     background:var(--cyan);color:#070810;font-weight:700;
 }
 
-/* АДМИНКА */
 .admin-fab{
     position:fixed;bottom:22px;left:22px;z-index:90;
     width:44px;height:44px;border-radius:50%;border:1px solid var(--stroke);
     background:rgba(255,255,255,.05);color:var(--dim);cursor:pointer;font-size:1.1rem;
+    transition:.25s;
 }
+.admin-fab:hover{background:rgba(255,255,255,.12);color:var(--text);}
 .admin-list{margin-top:14px;max-height:260px;overflow-y:auto;}
 .admin-item{
     display:flex;align-items:center;gap:10px;padding:10px;
@@ -217,7 +210,6 @@ footer{
     color:var(--dim);font-size:.82rem;margin-top:40px;
 }
 
-/* МОБИЛЬНАЯ */
 @media(max-width:860px){
     nav .links{display:none;}
     .stats{grid-template-columns:1fr;}
@@ -285,6 +277,9 @@ footer{
     <div class="wrap">© ADNEX · рекламная площадка · заявки принимаются круглосуточно</div>
 </footer>
 
+<!-- КНОПКА АДМИНКИ -->
+<button class="admin-fab" title="Панель управления">⚙</button>
+
 <!-- КНОПКА ЧАТА -->
 <button class="chat-btn" id="chatBtn">💬</button>
 <div class="chat-panel" id="chatPanel">
@@ -331,19 +326,12 @@ footer{
 </div>
 
 <script>
-/* ============================================================
-   НАСТРОЙКА TELEGRAM — ЗАПОЛНИ ДВА ПОЛЯ НИЖЕ
-   1. Создай бота у @BotFather → получишь TOKEN
-   2. Напиши своему боту любое сообщение, затем узнай свой CHAT_ID
-      (например, у бота @userinfobot) и вставь сюда.
-   ============================================================ */
 const CONFIG = {
     BOT_TOKEN: 'ВСТАВЬ_ТОКЕН_БОТА',
     CHAT_ID:   'ВСТАВЬ_СВОЙ_CHAT_ID',
     ADMIN_PASSWORD: 'admin2060'
 };
 
-/* Отправка сообщения в Telegram */
 async function sendToTelegram(text){
     if (CONFIG.BOT_TOKEN.startsWith('ВСТАВЬ')) {
         console.warn('Telegram не настроен. Сообщение:', text);
@@ -366,7 +354,6 @@ async function sendToTelegram(text){
     }
 }
 
-/* ================== СЛОТЫ ================== */
 const DEFAULT_SLOTS = [
     {id:1, name:'Сектор 01', pos:'Баннер в шапке — виден всем сразу', price:5000, busy:false},
     {id:2, name:'Сектор 02', pos:'Боковой баннер на главной', price:3000, busy:false},
@@ -411,7 +398,6 @@ function renderSlots(){
 }
 renderSlots();
 
-/* ================== ЗАКАЗ ================== */
 let currentSlot = null;
 
 function openOrder(id){
@@ -463,7 +449,6 @@ document.getElementById('orderSubmit').addEventListener('click', async () => {
     document.getElementById('oNote').value = '';
 });
 
-/* ================== ЧАТ ================== */
 const chatPanel = document.getElementById('chatPanel');
 const chatBody = document.getElementById('chatBody');
 let chatStarted = false;
@@ -505,7 +490,6 @@ document.getElementById('chatField').addEventListener('keydown', e => {
     if (e.key === 'Enter') sendChat();
 });
 
-/* ================== АДМИНКА ================== */
 document.querySelector('.admin-fab').addEventListener('click', () => {
     document.getElementById('adminOverlay').classList.add('on');
 });
