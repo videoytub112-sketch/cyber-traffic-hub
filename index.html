@@ -3,134 +3,395 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NEXUS HASH — Институциональная экосистема облачного майнинга</title>
+<title>ГАРАЖ ЮГ — шиномонтаж и автосервис</title>
 <style>
-:root {
-    --bg-main: #02040a;
-    --bg-surface: rgba(13, 20, 38, 0.6);
-    --bg-surface-glow: rgba(23, 37, 75, 0.8);
-    --stroke: rgba(99, 102, 241, 0.2);
-    --stroke-active: rgba(6, 182, 212, 0.6);
-    --neon-blue: #00f0ff;
-    --neon-indigo: #6366f1;
-    --neon-green: #39ff14;
-    --neon-amber: #ffaa00;
-    --text-primary: #ffffff;
-    --text-muted: #8ea1c4;
+:root{
+--bg:#0d0f14;--card:#151922;--card2:#1b2130;--stroke:rgba(255,255,255,.08);
+--orange:#ff7a18;--amber:#ffb020;--lime:#4ade80;--text:#eef1f6;--dim:#8b94a7;
 }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.55;min-height:100vh;}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px;}
+a{color:var(--orange);text-decoration:none;}
+h1,h2,h3{line-height:1.15;}
 
-* { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
-body {
-    background: radial-gradient(circle at 50% -20%, #111b36 0%, #040712 50%, var(--bg-main) 100%);
-    color: var(--text-primary);
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    min-height: 100vh;
-    overflow-x: hidden;
+/* ШАПКА */
+header{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(13,15,20,.9);border-bottom:1px solid var(--stroke);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:14px;}
+.logo{font-weight:900;font-size:1.2rem;letter-spacing:1px;}
+.logo b{color:var(--orange);}
+.logo small{display:block;font-size:.6rem;color:var(--dim);letter-spacing:2px;font-weight:500;}
+nav .links{display:flex;gap:22px;font-size:.88rem;}
+nav .links a{color:var(--dim);transition:.2s;}
+nav .links a:hover{color:var(--text);}
+.nav-phone{display:flex;align-items:center;gap:10px;}
+.nav-phone span{font-size:.9rem;font-weight:700;white-space:nowrap;}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:12px;border:none;cursor:pointer;font-weight:700;font-family:inherit;font-size:.9rem;transition:.25s;}
+.btn-main{background:linear-gradient(135deg,var(--orange),var(--amber));color:#1a0e00;box-shadow:0 6px 22px rgba(255,122,24,.32);}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,122,24,.45);}
+.btn-ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--stroke);}
+.btn-ghost:hover{background:rgba(255,255,255,.12);}
+.btn-sm{padding:9px 18px;font-size:.82rem;border-radius:10px;}
+
+section{padding:64px 0;}
+.sec-head{text-align:center;margin-bottom:38px;}
+.sec-head h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:10px;}
+.sec-head p{color:var(--dim);max-width:620px;margin:0 auto;}
+
+/* ГЕРОЙ */
+.hero{padding:70px 0 50px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
+.hero h1{font-size:clamp(1.9rem,5vw,3.1rem);font-weight:900;margin-bottom:18px;}
+.hero h1 span{background:linear-gradient(135deg,var(--orange),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero p{color:var(--dim);font-size:1.05rem;margin-bottom:26px;max-width:520px;}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+.hero-facts{display:flex;gap:28px;margin-top:30px;flex-wrap:wrap;}
+.fact b{display:block;font-size:1.5rem;font-weight:800;color:var(--orange);}
+.fact span{font-size:.76rem;color:var(--dim);}
+.hero-art{background:linear-gradient(135deg,var(--card2),var(--card));border:1px solid var(--stroke);border-radius:24px;padding:34px;position:relative;overflow:hidden;}
+.hero-art .circle{position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,24,.28),transparent 70%);top:-60px;right:-60px;}
+.hero-art h3{font-size:1.1rem;margin-bottom:14px;position:relative;}
+.hero-art ul{list-style:none;display:flex;flex-direction:column;gap:12px;position:relative;}
+.hero-art li{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:var(--dim);}
+.hero-art li b{color:var(--text);}
+.hero-art li i{font-style:normal;color:var(--lime);flex:none;}
+
+/* УСЛУГИ */
+.services{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.srv{background:var(--card);border:1px solid var(--stroke);border-radius:18px;padding:24px;transition:.25s;}
+.srv:hover{border-color:rgba(255,122,24,.4);transform:translateY(-4px);}
+.srv .ico{font-size:1.7rem;margin-bottom:12px;}
+.srv h3{font-size:1.02rem;margin-bottom:8px;}
+.srv p{font-size:.84rem;color:var(--dim);margin-bottom:14px;}
+.srv .p{font-size:1.1rem;font-weight:800;color:var(--amber);}
+.srv .p small{font-size:.72rem;color:var(--dim);font-weight:400;}
+
+/* КАЛЬКУЛЯТОР */
+.calc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
+.calc{background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:28px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:.8rem;color:var(--dim);margin-bottom:7px;}
+.field select,.field input{width:100%;padding:12px 14px;border-radius:11px;background:var(--card2);border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.92rem;outline:none;}
+.field select:focus,.field input:focus{border-color:var(--orange);}
+.chips{display:flex;gap:8px;flex-wrap:wrap;}
+.chip{padding:9px 15px;border-radius:10px;background:var(--card2);border:1px solid var(--stroke);cursor:pointer;font-size:.82rem;transition:.2s;}
+.chip.on{border-color:var(--orange);background:rgba(255,122,24,.12);color:var(--orange);font-weight:700;}
+.calc-total{background:rgba(255,122,24,.08);border:1px solid rgba(255,122,24,.3);border-radius:14px;padding:18px;text-align:center;margin:18px 0 14px;}
+.calc-total span{font-size:.78rem;color:var(--dim);display:block;}
+.calc-total b{font-size:2rem;font-weight:900;color:var(--orange);}
+.calc-note{font-size:.76rem;color:var(--dim);}
+.calc-side{display:flex;flex-direction:column;gap:14px;}
+.calc-side .card{background:var(--card);border:1px solid var(--stroke);border-radius:18px;padding:22px;}
+.calc-side h3{font-size:1rem;margin-bottom:12px;}
+.calc-side ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.calc-side li{font-size:.86rem;color:var(--dim);display:flex;gap:9px;}
+.calc-side li i{font-style:normal;color:var(--amber);}
+
+/* ПРЕИМУЩЕСТВА */
+.adv{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+.adv .it{background:var(--card);border:1px solid var(--stroke);border-radius:18px;padding:24px;}
+.adv .it b{display:block;font-size:1.6rem;margin-bottom:10px;}
+.adv .it h3{font-size:.98rem;margin-bottom:6px;}
+.adv .it p{font-size:.82rem;color:var(--dim);}
+
+/* ОТЗЫВЫ */
+.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.rev{background:var(--card);border:1px solid var(--stroke);border-radius:18px;padding:24px;}
+.rev .stars{color:var(--amber);margin-bottom:12px;font-size:.9rem;}
+.rev p{font-size:.88rem;color:var(--dim);margin-bottom:16px;}
+.rev .who{display:flex;align-items:center;gap:10px;}
+.rev .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--amber));display:flex;align-items:center;justify-content:center;font-weight:800;color:#1a0e00;font-size:.85rem;}
+.rev .who b{font-size:.88rem;display:block;}
+.rev .who span{font-size:.72rem;color:var(--dim);}
+
+/* ФОРМА */
+.booking{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;background:linear-gradient(135deg,rgba(255,122,24,.09),rgba(255,176,32,.03));border:1px solid var(--stroke);border-radius:24px;padding:40px;}
+.booking h2{font-size:clamp(1.5rem,3.5vw,2rem);font-weight:800;margin-bottom:12px;}
+.booking p{color:var(--dim);margin-bottom:20px;}
+.booking ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
+.booking li{font-size:.88rem;color:var(--dim);display:flex;gap:9px;}
+.booking li i{font-style:normal;color:var(--lime);}
+.form-card{background:var(--card);border:1px solid var(--stroke);border-radius:18px;padding:28px;}
+
+/* КОНТАКТЫ */
+.contacts{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.map{background:var(--card2);border:1px solid var(--stroke);border-radius:20px;min-height:300px;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:.88rem;text-align:center;padding:20px;}
+.cont-list{display:flex;flex-direction:column;gap:14px;}
+.cont{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start;}
+.cont i{font-style:normal;font-size:1.3rem;}
+.cont b{display:block;font-size:.95rem;margin-bottom:2px;}
+.cont span{font-size:.84rem;color:var(--dim);}
+
+/* ПОДВАЛ */
+footer{border-top:1px solid var(--stroke);padding:34px 0;margin-top:50px;}
+.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center;font-size:.82rem;color:var(--dim);}
+
+@media(max-width:900px){
+nav .links{display:none;}
+.hero{grid-template-columns:1fr;padding:44px 0 30px;}
+.services,.adv,.reviews{grid-template-columns:1fr 1fr;}
+.calc-wrap,.booking,.contacts{grid-template-columns:1fr;}
 }
-
-::-webkit-scrollbar { width: 8px; }
-::-webkit-scrollbar-track { background: var(--bg-main); }
-::-webkit-scrollbar-thumb { background: var(--stroke); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: var(--neon-blue); }
-
-.container { max-width: 1400px; margin: 0 auto; padding: 0 30px; }
-
-header {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(20px);
-    background: rgba(2, 4, 10, 0.85);
-    border-bottom: 1px solid var(--stroke);
-    padding: 20px 0;
+@media(max-width:560px){
+.services,.adv,.reviews{grid-template-columns:1fr;}
+.nav-phone span{display:none;}
+.booking{padding:26px;}
 }
-nav { display: flex; align-items: center; justify-content: space-between; }
-.logo-area { display: flex; align-items: center; gap: 12px; }
-.logo-icon { width: 32px; height: 32px; background: linear-gradient(135deg, var(--neon-blue), var(--neon-indigo)); border-radius: 8px; box-shadow: 0 0 15px var(--neon-blue); }
-.logo-text { font-size: 1.4rem; font-weight: 900; letter-spacing: 2px; background: linear-gradient(90deg, #fff, var(--text-muted)); -webkit-background-clip: text; color: transparent; }
-.nav-links { display: flex; gap: 35px; }
-.nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: 0.3s; }
-.nav-links a:hover, .nav-links a.active { color: var(--neon-blue); text-shadow: 0 0 10px rgba(0,240,255,0.5); }
-.premium-bal {
-    background: linear-gradient(135deg, rgba(6,182,212,0.1), rgba(99,102,241,0.05));
-    border: 1px solid var(--stroke);
-    padding: 10px 20px;
-    border-radius: 30px;
-    font-size: 0.9rem;
-    display: flex;
-    align-items: center;
-    gap: 12px;
+</style>
+</head>
+<body>
+
+<header>
+<div class="wrap">
+<nav>
+<div class="logo">ГАРАЖ<b>ЮГ</b><small>ШИНОМОНТАЖ · АВТОСЕРВИС</small></div>
+<div class="links">
+<a href="#services">Услуги</a>
+<a href="#calc">Калькулятор</a>
+<a href="#reviews">Отзывы</a>
+<a href="#contacts">Контакты</a>
+</div>
+<div class="nav-phone">
+<span>+7 (900) 000-00-00</span>
+<button class="btn btn-main btn-sm" onclick="scrollTo2('booking')">Записаться</button>
+</div>
+</nav>
+</div>
+</header>
+
+<div class="wrap">
+
+<!-- ГЕРОЙ -->
+<section class="hero">
+<div>
+<h1>Шиномонтаж и ремонт <span>без переплат и очередей</span></h1>
+<p>Работаем с 8 утра до 10 вечера, без выходных. Своё оборудование, честные цены, записи по времени — приезжаете и сразу в работу.</p>
+<div class="hero-btns">
+<button class="btn btn-main" onclick="scrollTo2('calc')">Рассчитать стоимость</button>
+<button class="btn btn-ghost" onclick="scrollTo2('booking')">Записаться онлайн</button>
+</div>
+<div class="hero-facts">
+<div class="fact"><b>15 мин</b><span>средний визит</span></div>
+<div class="fact"><b>7 дней</b><span>работаем в неделю</span></div>
+<div class="fact"><b>14–22"</b><span>любые диски</span></div>
+</div>
+</div>
+<div class="hero-art">
+<div class="circle"></div>
+<h3>Почему к нам возвращаются</h3>
+<ul>
+<li><i>✓</i><span><b>Без накруток.</b> Цена называется до начала работ, а не после.</span></li>
+<li><i>✓</i><span><b>Запись по времени.</b> Не ждёте в очереди на улице.</span></li>
+<li><i>✓</i><span><b>Ремонт проколов.</b> Жгут, грибок, вулканизация — сделаем.</span></li>
+<li><i>✓</i><span><b>Рядом с домом.</b> Заезжайте по пути, без записи — если свободно.</span></li>
+</ul>
+</div>
+</section>
+
+<!-- УСЛУГИ -->
+<section id="services">
+<div class="sec-head">
+<h2>Услуги и цены</h2>
+<p>Актуальные цены за одно колесо. Комплект из четырёх — считайте сами или через калькулятор.</p>
+</div>
+<div class="services">
+<div class="srv"><div class="ico">🛞</div><h3>Снятие и установка</h3><p>Аккуратно, без царапин на дисках. Своё оборудование.</p><div class="p">от 100 ₽ <small>/ колесо</small></div></div>
+<div class="srv"><div class="ico">⚖️</div><h3>Балансировка</h3><p>Точная балансировка на станке, без вибрации на скорости.</p><div class="p">от 150 ₽ <small>/ колесо</small></div></div>
+<div class="srv"><div class="ico">🔧</div><h3>Ремонт прокола</h3><p>Жгут, грибок или вулканизация — по ситуации и типу повреждения.</p><div class="p">от 250 ₽ <small>/ прокол</small></div></div>
+<div class="srv"><div class="ico">📐</div><h3>Развал-схождение</h3><p>3D-стенд. Убираем увод в сторону и неравномерный износ.</p><div class="p">от 1 500 ₽ <small>/ авто</small></div></div>
+<div class="srv"><div class="ico">🛢️</div><h3>Замена масла</h3><p>С фильтром, сливом отработки и проверкой уровней.</p><div class="p">от 500 ₽ <small>/ замена</small></div></div>
+<div class="srv"><div class="ico">🩺</div><h3>Диагностика</h3><p>Компьютерная и ходовая. Скажем честно, что чинить, а что — нет.</p><div class="p">от 700 ₽ <small>/ авто</small></div></div>
+</div>
+</section>
+
+<!-- КАЛЬКУЛЯТОР -->
+<section id="calc">
+<div class="sec-head">
+<h2>Калькулятор шиномонтажа</h2>
+<p>Выберите радиус и работы — посчитаем сразу, без звонков и уточнений.</p>
+</div>
+<div class="calc-wrap">
+<div class="calc">
+<div class="field">
+<label>Радиус колеса</label>
+<select id="cRadius">
+<option value="1">R13 – R14</option>
+<option value="1.15">R15 – R16</option>
+<option value="1.35" selected>R17 – R18</option>
+<option value="1.6">R19 – R20</option>
+<option value="1.9">R21 – R22</option>
+</select>
+</div>
+<div class="field">
+<label>Количество колёс</label>
+<div class="chips" id="cCount">
+<div class="chip" data-v="1">1</div>
+<div class="chip" data-v="2">2</div>
+<div class="chip" data-v="3">3</div>
+<div class="chip on" data-v="4">4</div>
+</div>
+</div>
+<div class="field">
+<label>Работы</label>
+<div class="chips" id="cWorks">
+<div class="chip on" data-w="mount" data-b="100">Снятие / установка</div>
+<div class="chip on" data-w="balance" data-b="150">Балансировка</div>
+<div class="chip" data-w="repair" data-b="250">Ремонт прокола</div>
+</div>
+</div>
+<div class="calc-total"><span>Примерная стоимость</span><b id="cTotal">0 ₽</b></div>
+<div class="calc-note">Расчёт ориентировочный. Точную цену мастер назовёт до начала работ.</div>
+</div>
+<div class="calc-side">
+<div class="card">
+<h3>Что входит в стоимость</h3>
+<ul>
+<li><i>•</i><span>Снятие и установка колеса</span></li>
+<li><i>•</i><span>Проверка давления и подкачка</span></li>
+<li><i>•</i><span>Осмотр протектора на износ</span></li>
+<li><i>•</i><span>Подсказка по сезонности шин</span></li>
+</ul>
+</div>
+<div class="card">
+<h3>Когда лучше приехать</h3>
+<ul>
+<li><i>☀</i><span>Утром и днём — свободнее всего</span></li>
+<li><i>🌙</i><span>Вечером в сезон — записывайтесь заранее</span></li>
+<li><i>❄</i><span>В «день переобувки» лучше звонить утром</span></li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ПРЕИМУЩЕСТВА -->
+<section>
+<div class="sec-head"><h2>Почему выбирают нас</h2><p>Просто, честно и по делу.</p></div>
+<div class="adv">
+<div class="it"><b>⏱</b><h3>Быстро</h3><p>Комплект шин — за 15–20 минут, без долгих ожиданий.</p></div>
+<div class="it"><b>💬</b><h3>Честно</h3><p>Не навязываем лишнего. Скажем, если ремонт не нужен.</p></div>
+<div class="it"><b>🛠</b><h3>Своё оборудование</h3><p>Станок, балансир, 3D-стенд. Всё в одном месте.</p></div>
+<div class="it"><b>📍</b><h3>Рядом</h3><p>Заезжайте по пути. Если свободно — сделаем сразу.</p></div>
+</div>
+</section>
+
+<!-- ОТЗЫВЫ -->
+<section id="reviews">
+<div class="sec-head"><h2>Отзывы клиентов</h2><p>Собраны из карт и сообщений.</p></div>
+<div class="reviews">
+<div class="rev">
+<div class="stars">★★★★★</div>
+<p>Переобулся за 15 минут, очереди не было. Цену сказали сразу, без сюрпризов. Буду заезжать сюда.</p>
+<div class="who"><div class="av">А</div><div><b>Алексей</b><span>местный житель</span></div></div>
+</div>
+<div class="rev">
+<div class="stars">★★★★★</div>
+<p>Поймал саморез по дороге. Заехал без записи — прокол починили за 10 минут. Спасибо, выручили.</p>
+<div class="who"><div class="av">М</div><div><b>Марина</b><span>постоянный клиент</span></div></div>
+</div>
+<div class="rev">
+<div class="stars">★★★★★</div>
+<p>Сделали развал-схождение, машину перестало тянуть в сторону. Работой доволен, цены адекватные.</p>
+<div class="who"><div class="av">Д</div><div><b>Дмитрий</b><span>водитель такси</span></div></div>
+</div>
+</div>
+</section>
+
+<!-- ЗАПИСЬ -->
+<section id="booking">
+<div class="booking">
+<div>
+<h2>Запишитесь онлайн — приезжайте ко времени</h2>
+<p>Оставьте номер и удобное время. Перезвоним и подтвердим запись, чтобы вы не ждали в очереди.</p>
+<ul>
+<li><i>✓</i><span>Запись на удобное время</span></li>
+<li><i>✓</i><span>Цена известна заранее</span></li>
+<li><i>✓</i><span>Работаем без выходных, с 8:00 до 22:00</span></li>
+</ul>
+</div>
+<div class="form-card">
+<div class="field"><label>Как вас зовут</label><input id="fName" placeholder="Иван"></div>
+<div class="field"><label>Телефон</label><input id="fPhone" type="tel" placeholder="+7 (___) ___-__-__"></div>
+<div class="field"><label>Услуга</label>
+<select id="fService">
+<option>Шиномонтаж</option>
+<option>Балансировка</option>
+<option>Ремонт прокола</option>
+<option>Развал-схождение</option>
+<option>Замена масла</option>
+<option>Диагностика</option>
+</select></div>
+<div class="field"><label>Удобное время</label><input id="fTime" placeholder="например, сегодня после 18:00"></div>
+<button class="btn btn-main" style="width:100%" onclick="sendBooking()">Записаться</button>
+</div>
+</div>
+</section>
+
+<!-- КОНТАКТЫ -->
+<section id="contacts">
+<div class="sec-head"><h2>Контакты и адрес</h2><p>Приезжайте или звоните — всегда на связи.</p></div>
+<div class="contacts">
+<div class="cont-list">
+<div class="cont"><i>📞</i><div><b>+7 (900) 000-00-00</b><span>Звонки и запись, с 8:00 до 22:00</span></div></div>
+<div class="cont"><i>📍</i><div><b>Краснодарский край, ст. Великовечное</b><span>улица Ленина, 1 (заезд со стороны трассы)</span></div></div>
+<div class="cont"><i>🕗</i><div><b>Без выходных</b><span>Пн–Вс, с 8:00 до 22:00</span></div></div>
+<div class="cont"><i>💬</i><div><b>WhatsApp / Telegram</b><span>Пишите — ответим быстро</span></div></div>
+</div>
+<div class="map">
+<div>
+<div style="font-size:2rem;margin-bottom:10px">🗺️</div>
+Здесь будет карта<br>
+<span style="font-size:.78rem">Вставлю настоящую карту с меткой, когда вы дадите точный адрес</span>
+</div>
+</div>
+</div>
+</section>
+
+</div>
+
+<footer>
+<div class="wrap foot">
+<span>© ГАРАЖ ЮГ — шиномонтаж и автосервис</span>
+<span>Пн–Вс, 8:00–22:00 · +7 (900) 000-00-00</span>
+</div>
+</footer>
+
+<script>
+/* Прокрутка */
+function scrollTo2(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  e.preventDefault(); const el=document.querySelector(a.getAttribute('href'));
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}));
+
+/* Калькулятор */
+let cCount=4;
+document.querySelectorAll('#cCount .chip').forEach(ch=>ch.addEventListener('click',()=>{
+  document.querySelectorAll('#cCount .chip').forEach(x=>x.classList.remove('on'));
+  ch.classList.add('on'); cCount=parseInt(ch.dataset.v,10); calc();
+}));
+document.querySelectorAll('#cWorks .chip').forEach(ch=>ch.addEventListener('click',()=>{
+  ch.classList.toggle('on'); calc();
+}));
+document.getElementById('cRadius').addEventListener('change',calc);
+function calc(){
+  const k=parseFloat(document.getElementById('cRadius').value);
+  let per=0;
+  document.querySelectorAll('#cWorks .chip.on').forEach(ch=>{ per+=parseFloat(ch.dataset.b); });
+  const total=Math.round(per*k*cCount);
+  document.getElementById('cTotal').textContent=total.toLocaleString('ru-RU')+' ₽';
 }
-.premium-bal b { color: var(--neon-green); font-family: monospace; font-size: 1.1rem; }
+calc();
 
-.hero-sec { padding: 100px 0 60px; text-align: center; position: relative; }
-.hero-glow { position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 800px; height: 400px; background: rgba(99,102,241,0.12); filter: blur(140px); pointer-events: none; }
-.hero-sec h1 { font-size: clamp(2.2rem, 5.5vw, 4.2rem); font-weight: 900; line-height: 1.1; margin-bottom: 25px; letter-spacing: -1px; }
-.hero-sec h1 span { background: linear-gradient(90deg, #fff, var(--neon-blue), var(--neon-indigo)); -webkit-background-clip: text; color: transparent; }
-.hero-sec p { color: var(--text-muted); max-width: 850px; margin: 0 auto 40px; font-size: 1.2rem; line-height: 1.6; }
-
-.btn-cyber {
-    padding: 16px 40px; border-radius: 4px; border: none; cursor: pointer; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; font-size: 0.85rem; transition: 0.4s; background: linear-gradient(135deg, var(--neon-indigo), var(--neon-blue)); color: #000; box-shadow: 0 0 25px rgba(0, 240, 255, 0.4); display: inline-block; text-decoration: none;
+/* Форма записи */
+function sendBooking(){
+  const name=document.getElementById('fName').value.trim();
+  const phone=document.getElementById('fPhone').value.trim();
+  const service=document.getElementById('fService').value;
+  const time=document.getElementById('fTime').value.trim();
+  if(!name||!phone){ alert('Заполните имя и телефон — мы перезвоним для подтверждения.'); return; }
+  alert('Спасибо, '+name+'! Заявка на «'+service+'» принята'+(time?' на '+time:'')+'. Мастер свяжется по номеру '+phone+'.');
+  ['fName','fPhone','fTime'].forEach(id=>document.getElementById(id).value='');
 }
-.btn-cyber:hover { transform: translateY(-2px); box-shadow: 0 0 35px var(--neon-blue); }
-.btn-outline {
-    background: transparent; border: 1px solid var(--stroke); color: var(--text-primary); padding: 14px 35px; border-radius: 4px; text-transform: uppercase; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.3s;
-}
-.btn-outline:hover { border-color: var(--neon-blue); color: var(--neon-blue); background: rgba(0, 240, 255, 0.02); }
-
-.market-ticker-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 60px; }
-.ticker-card { background: rgba(255,255,255,0.02); border: 1px solid var(--stroke); border-radius: 12px; padding: 20px; display: flex; justify-content: space-between; align-items: center; }
-.ticker-info h4 { font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; }
-.ticker-info div { font-size: 1.4rem; font-weight: 800; margin-top: 4px; font-family: monospace; }
-.ticker-trend { font-size: 0.85rem; font-weight: 700; padding: 4px 8px; border-radius: 6px; background: rgba(57,255,20,0.1); color: var(--neon-green); }
-
-.dashboard-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 30px; margin-top: 40px; margin-bottom: 60px; }
-.glass-card { background: var(--bg-surface); border: 1px solid var(--stroke); border-radius: 16px; padding: 35px; backdrop-filter: blur(16px); box-shadow: 0 20px 50px rgba(0,0,0,0.3); }
-.card-title { font-size: 1.3rem; font-weight: 800; margin-bottom: 25px; display: flex; align-items: center; gap: 10px; }
-.card-title::before { content: ''; display: inline-block; width: 4px; height: 18px; background: var(--neon-blue); border-radius: 2px; }
-
-.slider-group { margin-bottom: 25px; }
-.slider-header { display: flex; justify-content: space-between; font-size: 0.9rem; margin-bottom: 10px; color: var(--text-muted); }
-.slider-header b { color: var(--neon-blue); font-size: 1.1rem; }
-.custom-range { -webkit-appearance: none; width: 100%; height: 5px; background: #0c1020; border-radius: 10px; outline: none; }
-.custom-range::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; background: #fff; border: 4px solid var(--neon-indigo); border-radius: 50%; cursor: pointer; box-shadow: 0 0 15px var(--neon-indigo); }
-
-.stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 30px; }
-.stat-item { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.02); padding: 20px; border-radius: 12px; text-align: center; }
-.stat-item span { font-size: 0.75rem; text-transform: uppercase; color: var(--text-muted); }
-.stat-item div { font-size: 1.3rem; font-weight: 800; margin-top: 6px; font-family: monospace; }
-
-.tariff-sec { padding: 40px 0 60px; }
-.sec-head { text-align: center; margin-bottom: 50px; }
-.sec-head h2 { font-size: 2.5rem; font-weight: 900; margin-bottom: 15px; }
-.sec-head p { color: var(--text-muted); max-width: 700px; margin: 0 auto; font-size: 1.05rem; }
-.tariff-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-.tariff-card { background: linear-gradient(180deg, rgba(15, 23, 42, 0.8) 0%, rgba(4, 7, 20, 0.9) 100%); border: 1px solid var(--stroke); border-radius: 20px; padding: 45px 35px; position: relative; display: flex; flex-direction: column; transition: 0.3s; }
-.tariff-card:hover { transform: translateY(-5px); border-color: var(--stroke-active); box-shadow: 0 20px 40px rgba(0, 240, 255, 0.1); }
-.tariff-badge { position: absolute; top: 25px; right: 25px; background: rgba(6, 182, 212, 0.15); border: 1px solid rgba(6, 182, 212, 0.3); color: var(--neon-blue); padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
-.tariff-card h3 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; }
-.tariff-card .price-range { font-size: 1.05rem; color: var(--text-muted); margin-bottom: 25px; font-family: monospace; }
-.tariff-card .yield-value { font-size: 2.8rem; font-weight: 900; color: #fff; line-height: 1; }
-.tariff-card .yield-value span { font-size: 1rem; color: var(--neon-green); font-weight: 700; }
-.tariff-features { list-style: none; display: flex; flex-direction: column; gap: 14px; margin: 30px 0; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 25px; }
-.tariff-features li { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; color: var(--text-muted); }
-.tariff-features li::before { content: '✓'; color: var(--neon-blue); font-weight: bold; }
-
-.infra-sec { padding: 60px 0; }
-.infra-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-.map-placeholder { background: radial-gradient(circle, #16224f 0%, #070b1e 100%); border: 1px solid var(--stroke); border-radius: 20px; height: 400px; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-.map-dot { position: absolute; width: 14px; height: 14px; background: var(--neon-blue); border-radius: 50%; box-shadow: 0 0 20px var(--neon-blue); animation: pulse 2s infinite; }
-@keyframes pulse { 0% { transform: scale(0.9); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
-.infra-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-.metric-box { background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.03); padding: 25px; border-radius: 14px; }
-.metric-box h5 { font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 8px; }
-.metric-box p { font-size: 1.6rem; font-weight: 800; font-family: monospace; color: var(--neon-indigo); }
-
-.active-pool-item { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 24px; margin-bottom: 20px; }
-.pool-meta-flex { display: flex; justify-content: space-between; align-items: center; }
-.pool-progress-bg { width: 100%; height: 4px; background: rgba(255,255,255,0.05); border-radius: 2px; margin: 15px 0; }
-.pool-progress-fill { height: 100%; background: linear-gradient(90deg, var(--neon-indigo), var(--neon-blue)); width: 0%; box-shadow: 0 0 10px var(--neon-blue); }
-.pool-live-counter { font-size: 1.4rem; font-weight: 900; font-family: monospace; text-shadow: 0 0 10px rgba(255,255,255,0.1); }
-
-.faq-sec { padding: 60px 0 120px; }
-.faq-grid { max-width: 900px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+</script>
+</body>
+</html>
