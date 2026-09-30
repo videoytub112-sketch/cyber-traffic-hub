@@ -17,7 +17,6 @@ body{
     min-height:100vh;line-height:1.5;
 }
 .wrap{max-width:1120px;margin:0 auto;padding:0 20px;}
-
 header{
     position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);
     background:rgba(7,8,16,0.85);border-bottom:1px solid var(--stroke);
@@ -60,30 +59,65 @@ nav .links a:hover{color:var(--text);}
 .btn-main:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(63,214,255,.5);}
 .btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--stroke);}
 .btn-ghost:hover{background:rgba(255,255,255,.1);}
-
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:50px;}
 .stat{padding:22px 14px;border-radius:16px;background:var(--card);border:1px solid var(--stroke);text-align:center;}
 .stat b{display:block;font-size:1.8rem;font-weight:800;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .stat span{font-size:.8rem;color:var(--dim);}
-
 section{padding:50px 0;}
 .sec-head{text-align:center;margin-bottom:36px;}
 .sec-head h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:10px;}
-.sec-head p{color:var(--dim);max-width:520px;margin:0 auto;}
+.sec-head p{color:var(--dim);max-width:540px;margin:0 auto;}
 
-/* СЛОТЫ */
+/* КАРТА ПЛОЩАДКИ */
+.map-wrap{display:grid;grid-template-columns:1fr 130px;gap:18px;align-items:start;margin-bottom:22px;}
+.map-browser{background:#05060f;border:1px solid var(--stroke);border-radius:16px;overflow:hidden;}
+.map-top{display:flex;align-items:center;gap:6px;padding:10px 13px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--stroke);}
+.map-top i{width:10px;height:10px;border-radius:50%;display:block;}
+.map-url{margin-left:8px;font-size:.7rem;color:var(--dim);background:rgba(255,255,255,.05);padding:3px 12px;border-radius:8px;}
+.map-page{display:flex;flex-direction:column;gap:8px;padding:12px;min-height:300px;}
+.map-zone{
+    border:1px dashed rgba(120,150,255,.3);border-radius:12px;padding:9px 12px;
+    transition:.25s;background:rgba(255,255,255,.015);
+}
+.map-zone:hover{border-color:var(--cyan);background:rgba(63,214,255,.05);}
+.mz-tag{font-size:.66rem;color:var(--dim);text-transform:uppercase;letter-spacing:.6px;display:block;}
+.mz-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;min-height:26px;align-items:center;}
+.map-mid{display:grid;grid-template-columns:1fr 96px;gap:8px;}
+.zchip{
+    width:28px;height:28px;border-radius:9px;border:none;cursor:pointer;
+    font-weight:800;font-size:.78rem;font-family:inherit;transition:.2s;
+}
+.zchip.free{background:rgba(74,222,128,.2);color:var(--lime);border:1px solid rgba(74,222,128,.35);}
+.zchip.busy{background:rgba(139,92,246,.25);color:#c4b5fd;border:1px solid rgba(139,92,246,.4);}
+.zchip:hover{transform:scale(1.14);}
+.map-side-col{display:flex;flex-direction:column;gap:12px;}
+.map-phone{min-height:150px;}
+.map-legend{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:.8rem;color:var(--dim);margin-bottom:34px;}
+.map-legend span{display:inline-flex;align-items:center;gap:7px;}
+.leg-dot{width:11px;height:11px;border-radius:4px;display:inline-block;}
+
+/* СЕКТОРЫ */
 .slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .slot{
     background:var(--card);border:1px solid var(--stroke);border-radius:18px;
     padding:20px;display:flex;flex-direction:column;transition:.3s;
 }
 .slot:hover{transform:translateY(-5px);border-color:rgba(63,214,255,.4);}
-.slot .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
-.slot .name{font-weight:700;font-size:1.05rem;}
-.slot .badge{font-size:.68rem;padding:4px 10px;border-radius:12px;font-weight:700;text-transform:uppercase;}
+.slot.flash{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(63,214,255,.45),0 16px 40px rgba(0,0,0,.5);}
+.slot-head{display:flex;align-items:center;gap:11px;margin-bottom:12px;}
+.slot-num{
+    width:34px;height:34px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:1rem;background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;
+}
+.slot-title{flex:1;min-width:0;}
+.slot-title b{display:block;font-size:1rem;line-height:1.2;}
+.slot-zone{font-size:.7rem;color:var(--cyan);}
+.badge{font-size:.66rem;padding:4px 10px;border-radius:12px;font-weight:700;text-transform:uppercase;white-space:nowrap;}
 .badge.free{background:rgba(74,222,128,.15);color:var(--lime);border:1px solid rgba(74,222,128,.3);}
-.badge.busy{background:rgba(139,92,246,.15);color:var(--violet);border:1px solid rgba(139,92,246,.3);}
-.slot .pos{font-size:.82rem;color:var(--dim);margin-bottom:14px;min-height:34px;}
+.badge.busy{background:rgba(139,92,246,.15);color:#c4b5fd;border:1px solid rgba(139,92,246,.3);}
+.slot-desc{font-size:.84rem;color:var(--dim);margin-bottom:14px;min-height:36px;}
+.slot-meta{display:flex;flex-direction:column;gap:5px;font-size:.74rem;color:var(--dim);margin-bottom:14px;}
+.slot-meta span{display:flex;align-items:center;gap:6px;}
 .slot .price{font-size:1.5rem;font-weight:800;color:var(--cyan);margin-bottom:14px;}
 .slot .price small{font-size:.8rem;color:var(--dim);font-weight:400;}
 .slot .btn{width:100%;padding:12px;text-align:center;font-size:.9rem;}
@@ -92,10 +126,7 @@ section{padding:50px 0;}
 /* РЕКЛАМА В СЛОТЕ */
 .ad-box{border-radius:12px;overflow:hidden;margin-bottom:12px;background:#05060f;border:1px solid rgba(63,214,255,.2);}
 .ad-box img{width:100%;display:block;}
-.ad-text{
-    display:block;padding:16px;text-align:center;font-weight:700;color:var(--cyan);
-    text-decoration:none;font-size:.95rem;transition:.2s;
-}
+.ad-text{display:block;padding:16px;text-align:center;font-weight:700;color:var(--cyan);text-decoration:none;font-size:.95rem;transition:.2s;}
 .ad-text:hover{background:rgba(63,214,255,.08);}
 .ad-html{padding:10px;overflow:hidden;max-height:220px;}
 .ad-html img{max-width:100%;height:auto;}
@@ -119,15 +150,9 @@ section{padding:50px 0;}
 .ticker-buy .cost small{font-size:.8rem;color:var(--dim);font-weight:400;}
 
 /* МОДАЛКИ */
-.overlay{
-    position:fixed;inset:0;z-index:100;display:none;background:rgba(3,4,10,.88);
-    backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;
-}
+.overlay{position:fixed;inset:0;z-index:100;display:none;background:rgba(3,4,10,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;}
 .overlay.on{display:flex;}
-.modal{
-    background:var(--card);border:1px solid var(--stroke);border-radius:20px;
-    padding:28px;width:100%;max-width:440px;max-height:92vh;overflow-y:auto;
-}
+.modal{background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:28px;width:100%;max-width:440px;max-height:92vh;overflow-y:auto;}
 .modal h3{font-size:1.25rem;margin-bottom:6px;}
 .modal .sub{color:var(--dim);font-size:.86rem;margin-bottom:20px;}
 .field{margin-bottom:13px;}
@@ -144,18 +169,11 @@ section{padding:50px 0;}
 
 /* СЕГМЕНТЫ */
 .seg{display:flex;gap:6px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;}
-.seg-btn{
-    flex:1;padding:9px 6px;border-radius:9px;border:none;cursor:pointer;font-size:.78rem;
-    background:transparent;color:var(--dim);font-weight:600;font-family:inherit;transition:.2s;
-}
+.seg-btn{flex:1;padding:9px 6px;border-radius:9px;border:none;cursor:pointer;font-size:.78rem;background:transparent;color:var(--dim);font-weight:600;font-family:inherit;transition:.2s;}
 .seg-btn.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
 .preview{margin-top:10px;border-radius:10px;overflow:hidden;display:none;}
 .preview img{width:100%;display:block;}
-.total{
-    padding:14px;border-radius:12px;background:rgba(63,214,255,.08);
-    border:1px solid rgba(63,214,255,.25);text-align:center;font-weight:800;
-    font-size:1.2rem;color:var(--cyan);margin:14px 0 6px;
-}
+.total{padding:14px;border-radius:12px;background:rgba(63,214,255,.08);border:1px solid rgba(63,214,255,.25);text-align:center;font-weight:800;font-size:1.2rem;color:var(--cyan);margin:14px 0 6px;}
 
 /* ЧАТ */
 .chat-btn{
@@ -165,11 +183,7 @@ section{padding:50px 0;}
     display:flex;align-items:center;justify-content:center;transition:.25s;
 }
 .chat-btn:hover{transform:scale(1.08);}
-.chat-panel{
-    position:fixed;bottom:92px;right:22px;z-index:91;width:340px;max-width:calc(100vw - 44px);
-    background:var(--card);border:1px solid var(--stroke);border-radius:18px;overflow:hidden;
-    display:none;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.6);
-}
+.chat-panel{position:fixed;bottom:92px;right:22px;z-index:91;width:340px;max-width:calc(100vw - 44px);background:var(--card);border:1px solid var(--stroke);border-radius:18px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.6);}
 .chat-panel.on{display:flex;}
 .chat-head{padding:15px 18px;border-bottom:1px solid var(--stroke);display:flex;align-items:center;gap:10px;}
 .chat-head .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);}
@@ -185,21 +199,14 @@ section{padding:50px 0;}
 .chat-foot button{padding:0 16px;border-radius:10px;border:none;cursor:pointer;background:var(--cyan);color:#070810;font-weight:700;}
 
 /* АДМИНКА */
-.admin-fab{
-    position:fixed;bottom:22px;left:22px;z-index:90;width:46px;height:46px;border-radius:50%;
-    border:1px solid var(--stroke);background:rgba(255,255,255,.05);color:var(--dim);
-    cursor:pointer;font-size:1.15rem;transition:.25s;
-}
+.admin-fab{position:fixed;bottom:22px;left:22px;z-index:90;width:46px;height:46px;border-radius:50%;border:1px solid var(--stroke);background:rgba(255,255,255,.05);color:var(--dim);cursor:pointer;font-size:1.15rem;transition:.25s;}
 .admin-fab:hover{background:rgba(255,255,255,.12);color:var(--text);}
-
 .tabbar{display:flex;gap:6px;margin-bottom:18px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;}
 .tab{flex:1;padding:9px 4px;border-radius:9px;border:none;background:transparent;color:var(--dim);cursor:pointer;font-size:.78rem;font-weight:600;font-family:inherit;transition:.2s;}
 .tab.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
-
 .adm-add{display:grid;gap:8px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--stroke);}
-.adm-add input{padding:10px 12px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.85rem;outline:none;}
-.adm-add input:focus{border-color:var(--cyan);}
-
+.adm-add input,.adm-add select{padding:10px 12px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.85rem;outline:none;}
+.adm-add input:focus,.adm-add select:focus{border-color:var(--cyan);}
 .adm-card{background:rgba(255,255,255,.03);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px;}
 .adm-row{display:flex;gap:8px;}
 .a-in{width:100%;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.82rem;outline:none;}
@@ -216,7 +223,6 @@ section{padding:50px 0;}
 .order-card .oc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
 .order-card .oc-top b{color:var(--cyan);}
 .order-card .oc-line{color:var(--dim);font-size:.76rem;}
-
 footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color:var(--dim);font-size:.82rem;margin-top:40px;}
 
 @media(max-width:860px){
@@ -224,6 +230,8 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     .stats{grid-template-columns:1fr;}
     .slot-grid{grid-template-columns:1fr;}
     .steps{grid-template-columns:1fr;}
+    .map-wrap{grid-template-columns:1fr;}
+    .map-side-col{flex-direction:row;}
     .chat-panel{width:calc(100vw - 44px);right:22px;}
     .ticker-buy{flex-direction:column;text-align:center;}
 }
@@ -247,10 +255,9 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
 </header>
 
 <main class="wrap">
-
     <section class="hero">
         <h1>Реклама, которую <span>видно</span>.<br>Место, которое продаётся.</h1>
-        <p>Выбирайте сектор, загружайте баннер или вставляйте свой код — размещение стартует сразу после оплаты.</p>
+        <p>Выбирайте сектор на карте площадки, загружайте баннер или вставляйте свой код — размещение стартует сразу после оплаты.</p>
         <div class="hero-btns">
             <a href="#slots" class="btn btn-main">Свободные места</a>
             <a href="#ticker" class="btn btn-ghost">Купить бегущую строку</a>
@@ -265,8 +272,53 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     <section id="slots">
         <div class="sec-head">
             <h2>Рекламные секторы</h2>
-            <p>Цены за месяц показа. Занятые места показывают реальную рекламу заказчика.</p>
+            <p>Посмотрите на карту: цифры — это места, где может стоять ваш баннер. Нажмите на цифру, чтобы перейти к сектору.</p>
         </div>
+
+        <div class="map-wrap">
+            <div class="map-browser">
+                <div class="map-top">
+                    <i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
+                    <span class="map-url">adnex.ru</span>
+                </div>
+                <div class="map-page">
+                    <div class="map-zone">
+                        <span class="mz-tag">Шапка сайта</span>
+                        <div class="mz-chips" id="mzchips-header"></div>
+                    </div>
+                    <div class="map-mid">
+                        <div class="map-zone">
+                            <span class="mz-tag">Контент</span>
+                            <div class="mz-chips" id="mzchips-content"></div>
+                        </div>
+                        <div class="map-zone">
+                            <span class="mz-tag">Боковая колонка</span>
+                            <div class="mz-chips" id="mzchips-sidebar"></div>
+                        </div>
+                    </div>
+                    <div class="map-zone">
+                        <span class="mz-tag">Подвал</span>
+                        <div class="mz-chips" id="mzchips-footer"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="map-side-col">
+                <div class="map-zone">
+                    <span class="mz-tag">Всплывающее окно</span>
+                    <div class="mz-chips" id="mzchips-popup"></div>
+                </div>
+                <div class="map-zone map-phone">
+                    <span class="mz-tag">Мобильная версия</span>
+                    <div class="mz-chips" id="mzchips-mobile"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="map-legend">
+            <span><i class="leg-dot" style="background:rgba(74,222,128,.6)"></i> свободно</span>
+            <span><i class="leg-dot" style="background:rgba(139,92,246,.7)"></i> занято</span>
+        </div>
+
         <div class="slot-grid" id="slotGrid"></div>
     </section>
 
@@ -293,12 +345,11 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
             <p>Три шага — и ваша реклама в работе.</p>
         </div>
         <div class="steps">
-            <div class="step"><div class="num">01</div><h3>Выберите сектор</h3><p>Смотрите свободные места и цены, выбирайте подходящее.</p></div>
+            <div class="step"><div class="num">01</div><h3>Выберите сектор</h3><p>Смотрите карту и свободные места, выбирайте подходящее.</p></div>
             <div class="step"><div class="num">02</div><h3>Загрузите рекламу</h3><p>Картинка, текст со ссылкой или готовый HTML-код — на выбор.</p></div>
             <div class="step"><div class="num">03</div><h3>Оплатите</h3><p>После оплаты место закрепляется за вами, баннер сразу появляется.</p></div>
         </div>
     </section>
-
 </main>
 
 <footer>
@@ -306,8 +357,8 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
 </footer>
 
 <button class="admin-fab" title="Панель управления">⚙</button>
-
 <button class="chat-btn" id="chatBtn">💬</button>
+
 <div class="chat-panel" id="chatPanel">
     <div class="chat-head"><span class="dot"></span><b>Написать нам</b><span>онлайн</span></div>
     <div class="chat-body" id="chatBody"></div>
@@ -338,12 +389,10 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
             <input type="file" id="oFile" accept="image/*">
             <div class="preview" id="oPreview"><img id="oPreviewImg" alt=""></div>
         </div>
-
         <div class="field t-text" style="display:none">
             <label>Текст объявления</label>
             <input id="oText" placeholder="Ваше предложение" maxlength="120">
         </div>
-
         <div class="field t-html" style="display:none">
             <label>HTML-код баннера</label>
             <textarea id="oHtml" placeholder="<a href='https://...'><img src='https://...'></a>"></textarea>
@@ -353,10 +402,8 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
             <label>Ссылка при клике</label>
             <input id="oUrl" placeholder="https://ваш-сайт.ru">
         </div>
-
         <div class="field"><label>Ваше имя</label><input id="oName" placeholder="Иван"></div>
         <div class="field"><label>Контакт (телефон или Telegram)</label><input id="oContact" placeholder="@username или +7…"></div>
-
         <div class="field">
             <label>Срок размещения</label>
             <select id="oTerm">
@@ -366,7 +413,6 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
                 <option value="12">12 месяцев (−20%)</option>
             </select>
         </div>
-
         <div class="total" id="oTotal">Итого: 0 ₽</div>
         <button class="btn btn-main" id="orderSubmit">Разместить</button>
     </div>
@@ -397,6 +443,14 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
                     <input id="aName" placeholder="Название (Сектор 10)">
                     <input id="aPos" placeholder="Позиция / описание">
                     <input id="aPrice" type="number" placeholder="Цена, ₽/мес">
+                    <select id="aZone">
+                        <option value="header">Шапка сайта</option>
+                        <option value="content">Внутри контента</option>
+                        <option value="sidebar">Боковая колонка</option>
+                        <option value="popup">Всплывающее окно</option>
+                        <option value="mobile">Мобильная версия</option>
+                        <option value="footer">Подвал сайта</option>
+                    </select>
                     <button class="btn btn-main" onclick="adminAdd()">+ Добавить сектор</button>
                 </div>
                 <div id="adminSlots"></div>
@@ -434,25 +488,35 @@ const CONFIG = {
     CHAT_ID:   'ВСТАВЬ_СВОЙ_CHAT_ID'
 };
 
+/* ================== ЗОНЫ ПЛОЩАДКИ ================== */
+const ZONES = {
+    header:  { label: 'Шапка сайта',       icon: '⬒' },
+    sidebar: { label: 'Боковая колонка',   icon: '▤' },
+    content: { label: 'Внутри контента',   icon: '▦' },
+    popup:   { label: 'Всплывающее окно',  icon: '◱' },
+    mobile:  { label: 'Мобильная версия',  icon: '▯' },
+    footer:  { label: 'Подвал сайта',      icon: '⬓' }
+};
+
 /* ================== ХРАНИЛИЩЕ ================== */
 const LS_STATE = 'adnex_state_v2';
 const LS_ORDERS = 'adnex_orders_v2';
 
 const DEFAULT_STATE = {
     slots: [
-        {id:1,name:'Сектор 01',pos:'Баннер в шапке — виден всем сразу',price:5000,status:'free',ad:null},
-        {id:2,name:'Сектор 02',pos:'Боковой баннер на главной',price:3000,status:'free',ad:null},
-        {id:3,name:'Сектор 03',pos:'Блок внутри статьи',price:2000,status:'free',ad:null},
-        {id:4,name:'Сектор 04',pos:'Всплывающее окно при входе',price:7000,status:'free',ad:null},
-        {id:5,name:'Сектор 05',pos:'Реклама в мобильной версии',price:2500,status:'free',ad:null},
-        {id:6,name:'Сектор 06',pos:'Подвал сайта — все страницы',price:1500,status:'free',ad:null}
+        { id:1, name:'Сектор 01', pos:'Баннер в шапке — виден всем сразу', price:5000, status:'free', ad:null, zone:'header' },
+        { id:2, name:'Сектор 02', pos:'Боковой баннер на главной', price:3000, status:'free', ad:null, zone:'sidebar' },
+        { id:3, name:'Сектор 03', pos:'Блок внутри статьи', price:2000, status:'free', ad:null, zone:'content' },
+        { id:4, name:'Сектор 04', pos:'Всплывающее окно при входе', price:7000, status:'free', ad:null, zone:'popup' },
+        { id:5, name:'Сектор 05', pos:'Реклама в мобильной версии', price:2500, status:'free', ad:null, zone:'mobile' },
+        { id:6, name:'Сектор 06', pos:'Подвал сайта — все страницы', price:1500, status:'free', ad:null, zone:'footer' }
     ],
     ticker: [
         'Реклама на площадке — от 1 500 ₽/мес',
         'Свободные секторы обновляются каждый день',
         'Разместите баннер и получайте клиентов'
     ],
-    settings: { password:'admin2060', tickerPrice:800 }
+    settings: { password: 'admin2060', tickerPrice: 800 }
 };
 
 function clone(o){ return JSON.parse(JSON.stringify(o)); }
@@ -468,22 +532,21 @@ let state = loadState();
 let orders = loadOrders();
 function saveState(){ localStorage.setItem(LS_STATE, JSON.stringify(state)); }
 function saveOrders(){ localStorage.setItem(LS_ORDERS, JSON.stringify(orders)); }
-
 function escapeHtml(s){
-    return String(s==null?'':s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 
 /* ================== TELEGRAM ================== */
 async function sendToTelegram(text){
-    if (!CONFIG.BOT_TOKEN || CONFIG.BOT_TOKEN.indexOf('ВСТАВЬ') === 0){
+    if(!CONFIG.BOT_TOKEN || CONFIG.BOT_TOKEN.indexOf('ВСТАВЬ') === 0){
         console.warn('Telegram не настроен. Сообщение:', text);
         return false;
     }
     try{
         const res = await fetch('https://api.telegram.org/bot' + CONFIG.BOT_TOKEN + '/sendMessage', {
-            method:'POST',
-            headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ chat_id: CONFIG.CHAT_ID, text: text, parse_mode:'HTML' })
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ chat_id: CONFIG.CHAT_ID, text: text, parse_mode: 'HTML' })
         });
         return res.ok;
     }catch(e){ console.error(e); return false; }
@@ -500,12 +563,12 @@ function renderTicker(){
 
 function renderAd(ad){
     let inner = '<div class="ad-box">';
-    if (ad.type === 'image' && ad.img){
+    if(ad.type === 'image' && ad.img){
         inner += '<a href="' + escapeHtml(ad.url || '#') + '" target="_blank" rel="noopener">' +
                  '<img src="' + ad.img + '" alt="Реклама"></a>';
-    } else if (ad.type === 'html' && ad.html){
+    }else if(ad.type === 'html' && ad.html){
         inner += '<div class="ad-html">' + ad.html + '</div>';
-    } else {
+    }else{
         inner += '<a class="ad-text" href="' + escapeHtml(ad.url || '#') + '" target="_blank" rel="noopener">' +
                  escapeHtml(ad.text || 'Реклама') + '</a>';
     }
@@ -513,31 +576,73 @@ function renderAd(ad){
     return inner;
 }
 
+/* КАРТА */
+function renderMap(){
+    Object.keys(ZONES).forEach(z => {
+        const box = document.getElementById('mzchips-' + z);
+        if(box) box.innerHTML = '';
+    });
+    state.slots.forEach((s, i) => {
+        const z = ZONES[s.zone] ? s.zone : 'content';
+        const box = document.getElementById('mzchips-' + z);
+        if(!box) return;
+        const chip = document.createElement('button');
+        chip.className = 'zchip ' + (s.status === 'busy' ? 'busy' : 'free');
+        chip.textContent = i + 1;
+        chip.title = s.name + ' — ' + (s.status === 'busy' ? 'занято' : 'свободно');
+        chip.addEventListener('click', () => {
+            const card = document.getElementById('slot-' + s.id);
+            if(card){
+                card.scrollIntoView({ behavior:'smooth', block:'center' });
+                card.classList.add('flash');
+                setTimeout(() => card.classList.remove('flash'), 1200);
+            }
+        });
+        box.appendChild(chip);
+    });
+}
+
 function renderSlots(){
     const grid = document.getElementById('slotGrid');
     grid.innerHTML = '';
-    state.slots.forEach(s => {
-        if (s.status === 'busy' && s.ad && !viewedThisSession.has(s.id)){
+    state.slots.forEach((s, i) => {
+        if(s.status === 'busy' && s.ad && !viewedThisSession.has(s.id)){
             viewedThisSession.add(s.id);
             s.ad.views = (s.ad.views || 0) + 1;
             saveState();
         }
         const card = document.createElement('div');
         card.className = 'slot';
-        let inner = '<div class="top"><div class="name">' + escapeHtml(s.name) + '</div>' +
-            '<div class="badge ' + (s.status === 'busy' ? 'busy' : 'free') + '">' +
-            (s.status === 'busy' ? 'занято' : 'свободно') + '</div></div>';
-        inner += '<div class="pos">' + escapeHtml(s.pos) + '</div>';
+        card.id = 'slot-' + s.id;
+        const zone = ZONES[s.zone] || ZONES.content;
 
-        if (s.status === 'busy' && s.ad){
+        let inner =
+            '<div class="slot-head">' +
+                '<span class="slot-num">' + (i + 1) + '</span>' +
+                '<div class="slot-title">' +
+                    '<b>' + escapeHtml(s.name) + '</b>' +
+                    '<span class="slot-zone">' + zone.icon + ' ' + zone.label + '</span>' +
+                '</div>' +
+                '<span class="badge ' + (s.status === 'busy' ? 'busy' : 'free') + '">' +
+                    (s.status === 'busy' ? 'занято' : 'свободно') + '</span>' +
+            '</div>' +
+            '<div class="slot-desc">' + escapeHtml(s.pos) + '</div>';
+
+        if(s.status === 'busy' && s.ad){
             inner += renderAd(s.ad);
             const until = s.ad.until ? ' · до ' + s.ad.until : '';
             inner += '<div class="ad-meta">Реклама: ' + escapeHtml(s.ad.buyer || 'заказчик') + until + '</div>';
             inner += '<button class="btn btn-ghost" disabled>Место занято</button>';
-        } else {
+        }else{
+            inner += '<div class="slot-meta">' +
+                        '<span>📅 от 1 месяца</span>' +
+                        '<span>🖼 баннер до 900 px</span>' +
+                        '<span>📈 отчёт по показам</span>' +
+                     '</div>';
             inner += '<div class="price">' + s.price.toLocaleString('ru-RU') + ' ₽<small> / мес</small></div>';
             inner += '<button class="btn btn-main" onclick="openOrder(' + s.id + ')">Забронировать</button>';
         }
+
         card.innerHTML = inner;
         grid.appendChild(card);
     });
@@ -550,6 +655,7 @@ function renderSlots(){
 function renderAll(){
     renderTicker();
     renderSlots();
+    renderMap();
     document.getElementById('tickerPriceView').textContent =
         Number(state.settings.tickerPrice).toLocaleString('ru-RU');
 }
@@ -563,11 +669,10 @@ let orderImage = '';
 function openOrder(id){
     orderCtx.mode = (id === 'ticker') ? 'ticker' : 'slot';
     orderCtx.isAdmin = false;
-
     const title = document.getElementById('orderTitle');
     const sub = document.getElementById('orderSubtitle');
 
-    if (orderCtx.mode === 'ticker'){
+    if(orderCtx.mode === 'ticker'){
         orderCtx.price = Number(state.settings.tickerPrice);
         title.textContent = 'Бегущая строка';
         sub.textContent = 'Строка вверху сайта · ' + orderCtx.price.toLocaleString('ru-RU') + ' ₽/мес';
@@ -575,9 +680,9 @@ function openOrder(id){
         setType('text');
         document.getElementById('oText').value = '';
         document.getElementById('oText').placeholder = 'Текст бегущей строки';
-    } else {
+    }else{
         const s = state.slots.find(x => x.id === id);
-        if (!s || s.status === 'busy') return;
+        if(!s || s.status === 'busy') return;
         orderCtx.slotId = id;
         orderCtx.price = s.price;
         title.textContent = 'Бронь: ' + s.name;
@@ -605,8 +710,8 @@ function setType(t){
     document.querySelectorAll('#typeSeg .seg-btn').forEach(b =>
         b.classList.toggle('active', b.dataset.type === t));
     document.querySelector('.t-image').style.display = (t === 'image') ? 'block' : 'none';
-    document.querySelector('.t-text').style.display  = (t === 'text')  ? 'block' : 'none';
-    document.querySelector('.t-html').style.display  = (t === 'html')  ? 'block' : 'none';
+    document.querySelector('.t-text').style.display = (t === 'text') ? 'block' : 'none';
+    document.querySelector('.t-html').style.display = (t === 'html') ? 'block' : 'none';
 }
 document.querySelectorAll('#typeSeg .seg-btn').forEach(b => {
     b.addEventListener('click', () => setType(b.dataset.type));
@@ -615,7 +720,7 @@ document.querySelectorAll('#typeSeg .seg-btn').forEach(b => {
 /* Загрузка картинки со сжатием */
 document.getElementById('oFile').addEventListener('change', function(){
     const file = this.files[0];
-    if (!file) return;
+    if(!file) return;
     const reader = new FileReader();
     reader.onload = e => {
         const img = new Image();
@@ -636,9 +741,9 @@ document.getElementById('oFile').addEventListener('change', function(){
 });
 
 function termDiscount(m){
-    if (m >= 12) return 0.20;
-    if (m >= 6)  return 0.15;
-    if (m >= 3)  return 0.10;
+    if(m >= 12) return 0.20;
+    if(m >= 6) return 0.15;
+    if(m >= 3) return 0.10;
     return 0;
 }
 function calcTotal(){
@@ -659,15 +764,14 @@ document.getElementById('orderSubmit').addEventListener('click', async () => {
     const html = document.getElementById('oHtml').value.trim();
     const months = parseInt(document.getElementById('oTerm').value, 10) || 1;
 
-    if (!name || !contact){ alert('Заполните имя и контакт.'); return; }
-
-    if (orderCtx.mode === 'ticker'){
-        if (!text){ alert('Введите текст строки.'); return; }
-    } else if (orderType === 'image' && !orderImage){
+    if(!name || !contact){ alert('Заполните имя и контакт.'); return; }
+    if(orderCtx.mode === 'ticker'){
+        if(!text){ alert('Введите текст строки.'); return; }
+    }else if(orderType === 'image' && !orderImage){
         alert('Загрузите картинку баннера.'); return;
-    } else if (orderType === 'html' && !html){
+    }else if(orderType === 'html' && !html){
         alert('Вставьте HTML-код баннера.'); return;
-    } else if (orderType === 'text' && !text){
+    }else if(orderType === 'text' && !text){
         alert('Введите текст объявления.'); return;
     }
 
@@ -678,14 +782,13 @@ document.getElementById('orderSubmit').addEventListener('click', async () => {
     const until = new Date();
     until.setMonth(until.getMonth() + months);
     const untilStr = until.toLocaleDateString('ru-RU');
-
     const total = calcTotal();
 
-    if (orderCtx.mode === 'ticker'){
+    if(orderCtx.mode === 'ticker'){
         state.ticker.push(text + (url ? ' — ' + url : ''));
-    } else {
+    }else{
         const s = state.slots.find(x => x.id === orderCtx.slotId);
-        if (s){
+        if(s){
             s.status = 'busy';
             s.ad = {
                 type: orderType,
@@ -723,7 +826,7 @@ document.getElementById('orderSubmit').addEventListener('click', async () => {
     saveState();
 
     const tgText =
-        '🔔 <b>Новая покупка на площадке</b>\n\n' +
+        '🚀 <b>Новая покупка на площадке</b>\n\n' +
         '<b>Что:</b> ' + orderRecord.slot + '\n' +
         '<b>Тип:</b> ' + orderRecord.type + '\n' +
         '<b>Имя:</b> ' + name + '\n' +
@@ -732,7 +835,7 @@ document.getElementById('orderSubmit').addEventListener('click', async () => {
         (text ? '<b>Текст:</b> ' + text + '\n' : '') +
         '<b>Срок:</b> ' + months + ' мес.\n' +
         '<b>Сумма:</b> ' + total.toLocaleString('ru-RU') + ' ₽\n' +
-        '\n🕐 ' + new Date().toLocaleString('ru-RU');
+        '\n🕒 ' + new Date().toLocaleString('ru-RU');
 
     await sendToTelegram(tgText);
 
@@ -750,7 +853,7 @@ let chatStarted = false;
 
 document.getElementById('chatBtn').addEventListener('click', () => {
     chatPanel.classList.toggle('on');
-    if (!chatStarted){
+    if(!chatStarted){
         chatStarted = true;
         addChat('Здравствуйте! Напишите вопрос — сообщение сразу уйдёт оператору.', 'sys');
     }
@@ -765,14 +868,14 @@ function addChat(text, cls){
 async function sendChat(){
     const f = document.getElementById('chatField');
     const v = f.value.trim();
-    if (!v) return;
+    if(!v) return;
     addChat(v, 'me');
     f.value = '';
-    const ok = await sendToTelegram('💬 <b>Сообщение из чата</b>\n\n' + v + '\n\n🕐 ' + new Date().toLocaleString('ru-RU'));
+    const ok = await sendToTelegram('💬 <b>Сообщение из чата</b>\n\n' + v + '\n\n🕒 ' + new Date().toLocaleString('ru-RU'));
     addChat(ok ? 'Доставлено оператору.' : 'Чат не подключён — оставьте заявку через кнопку «Забронировать».', 'sys');
 }
 document.getElementById('chatSend').addEventListener('click', sendChat);
-document.getElementById('chatField').addEventListener('keydown', e => { if (e.key === 'Enter') sendChat(); });
+document.getElementById('chatField').addEventListener('keydown', e => { if(e.key === 'Enter') sendChat(); });
 
 /* ================== АДМИНКА ================== */
 document.querySelector('.admin-fab').addEventListener('click', () =>
@@ -781,11 +884,11 @@ function closeAdmin(){ document.getElementById('adminOverlay').classList.remove(
 
 function adminLogin(){
     const pass = document.getElementById('adminPass').value;
-    if (pass === state.settings.password){
+    if(pass === state.settings.password){
         document.getElementById('adminLogin').style.display = 'none';
         document.getElementById('adminPanel').style.display = 'block';
         renderAdmin();
-    } else alert('Неверный пароль');
+    }else alert('Неверный пароль');
 }
 
 document.querySelectorAll('.tab').forEach(t => {
@@ -796,6 +899,12 @@ document.querySelectorAll('.tab').forEach(t => {
         document.getElementById('tab-' + t.dataset.tab).style.display = 'block';
     });
 });
+
+function zoneOptions(sel){
+    return Object.keys(ZONES).map(z =>
+        '<option value="' + z + '"' + (sel === z ? ' selected' : '') + '>' + ZONES[z].label + '</option>'
+    ).join('');
+}
 
 function renderAdmin(){
     renderAdminSlots();
@@ -816,9 +925,10 @@ function renderAdminSlots(){
                 '<input class="a-in sm" type="number" value="' + s.price + '" data-id="' + s.id + '" data-f="price">' +
             '</div>' +
             '<input class="a-in" style="margin-top:8px" value="' + escapeHtml(s.pos) + '" data-id="' + s.id + '" data-f="pos">' +
+            '<select class="a-in" style="margin-top:8px" data-id="' + s.id + '" data-f="zone">' + zoneOptions(s.zone) + '</select>' +
             '<div class="adm-btns">' +
                 '<button class="mini" onclick="adminSave(' + s.id + ')">💾 Сохранить</button>' +
-                '<button class="mini act" onclick="adminAd(' + s.id + ')">🖼 Реклама</button>' +
+                '<button class="mini act" onclick="adminAd(' + s.id + ')">🎨 Реклама</button>' +
                 '<button class="mini" onclick="adminToggle(' + s.id + ')">' + (s.status === 'busy' ? 'Освободить' : 'Занять') + '</button>' +
                 '<button class="mini del" onclick="adminDel(' + s.id + ')">✕</button>' +
             '</div>' +
@@ -832,23 +942,22 @@ function renderAdminSlots(){
 
 function adminSave(id){
     const s = state.slots.find(x => x.id === id);
-    if (!s) return;
+    if(!s) return;
     document.querySelectorAll('[data-id="' + id + '"]').forEach(inp => {
         const f = inp.dataset.f;
-        if (f === 'price') s.price = parseInt(inp.value, 10) || 0;
+        if(f === 'price') s.price = parseInt(inp.value, 10) || 0;
         else s[f] = inp.value;
     });
-    saveState();
-    renderAll();
-    renderAdmin();
+    saveState(); renderAll(); renderAdmin();
 }
 
 function adminAdd(){
     const name = document.getElementById('aName').value.trim();
     const pos = document.getElementById('aPos').value.trim();
     const price = parseInt(document.getElementById('aPrice').value, 10);
-    if (!name || !price){ alert('Заполните название и цену.'); return; }
-    state.slots.push({ id: Date.now(), name, pos: pos || 'Рекламное место', price, status:'free', ad:null });
+    const zone = document.getElementById('aZone').value;
+    if(!name || !price){ alert('Заполните название и цену.'); return; }
+    state.slots.push({ id: Date.now(), name, pos: pos || 'Рекламное место', price, status:'free', ad:null, zone });
     saveState(); renderAll(); renderAdmin();
     document.getElementById('aName').value = '';
     document.getElementById('aPos').value = '';
@@ -857,14 +966,14 @@ function adminAdd(){
 
 function adminToggle(id){
     const s = state.slots.find(x => x.id === id);
-    if (!s) return;
-    if (s.status === 'busy'){ s.status = 'free'; s.ad = null; }
-    else { s.status = 'busy'; s.ad = s.ad || { type:'text', text:'Рекламное место', url:'', buyer:'—', views:0, clicks:0 }; }
+    if(!s) return;
+    if(s.status === 'busy'){ s.status = 'free'; s.ad = null; }
+    else{ s.status = 'busy'; s.ad = s.ad || { type:'text', text:'Рекламное место', url:'', buyer:'—', views:0, clicks:0 }; }
     saveState(); renderAll(); renderAdmin();
 }
 
 function adminDel(id){
-    if (!confirm('Удалить сектор?')) return;
+    if(!confirm('Удалить сектор?')) return;
     state.slots = state.slots.filter(x => x.id !== id);
     saveState(); renderAll(); renderAdmin();
 }
@@ -872,7 +981,7 @@ function adminDel(id){
 /* Реклама через админку — открываем ту же модалку, но без Telegram */
 function adminAd(id){
     const s = state.slots.find(x => x.id === id);
-    if (!s) return;
+    if(!s) return;
     orderCtx.mode = 'slot';
     orderCtx.slotId = id;
     orderCtx.price = s.price;
@@ -881,19 +990,18 @@ function adminAd(id){
     document.getElementById('orderSubtitle').textContent = 'Заполните вручную или оставьте как есть.';
     document.getElementById('typeField').style.display = 'block';
     setType(s.ad && s.ad.type ? s.ad.type : 'image');
-
-    if (s.ad){
+    if(s.ad){
         document.getElementById('oText').value = s.ad.text || '';
         document.getElementById('oHtml').value = s.ad.html || '';
         document.getElementById('oUrl').value = s.ad.url || '';
         document.getElementById('oName').value = s.ad.buyer || '';
         document.getElementById('oContact').value = s.ad.contact || '';
-        if (s.ad.img){
+        if(s.ad.img){
             orderImage = s.ad.img;
             document.getElementById('oPreviewImg').src = s.ad.img;
             document.getElementById('oPreview').style.display = 'block';
         }
-    } else {
+    }else{
         document.getElementById('oText').value = '';
         document.getElementById('oHtml').value = '';
         document.getElementById('oUrl').value = '';
@@ -914,13 +1022,13 @@ function renderAdminTicker(){
         const d = document.createElement('div');
         d.className = 'tick-row';
         d.innerHTML = '<span>' + escapeHtml(t) + '</span>' +
-            '<button class="mini del" onclick="tickerDel(' + i + ')">✕</button>';
+                      '<button class="mini del" onclick="tickerDel(' + i + ')">✕</button>';
         box.appendChild(d);
     });
 }
 function tickerAdd(){
     const v = document.getElementById('tLine').value.trim();
-    if (!v) return;
+    if(!v) return;
     state.ticker.push(v);
     saveState(); renderAll(); renderAdminTicker();
     document.getElementById('tLine').value = '';
@@ -931,7 +1039,7 @@ function tickerDel(i){
 }
 function tickerSavePrice(){
     const p = parseInt(document.getElementById('tPrice').value, 10);
-    if (!p){ alert('Введите цену.'); return; }
+    if(!p){ alert('Введите цену.'); return; }
     state.settings.tickerPrice = p;
     saveState(); renderAll();
     alert('Цена сохранена.');
@@ -941,7 +1049,7 @@ function tickerSavePrice(){
 function renderAdminOrders(){
     const box = document.getElementById('adminOrders');
     box.innerHTML = '';
-    if (!orders.length){
+    if(!orders.length){
         box.innerHTML = '<div class="adm-stat">Пока заявок нет.</div>';
         return;
     }
@@ -963,7 +1071,7 @@ function orderDel(id){
     saveOrders(); renderAdminOrders();
 }
 function ordersClear(){
-    if (!confirm('Очистить все заявки?')) return;
+    if(!confirm('Очистить все заявки?')) return;
     orders = [];
     saveOrders(); renderAdminOrders();
 }
@@ -971,7 +1079,7 @@ function ordersClear(){
 /* ================== НАСТРОЙКИ ================== */
 function settingsSave(){
     const p = document.getElementById('sPass').value.trim();
-    if (!p){ alert('Введите пароль.'); return; }
+    if(!p){ alert('Введите пароль.'); return; }
     state.settings.password = p;
     saveState();
     document.getElementById('sPass').value = '';
