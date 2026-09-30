@@ -82,8 +82,6 @@ section{padding:40px 0;}
 .lc-foot{display:flex;gap:8px;padding:10px;border-top:1px solid var(--stroke);flex:none;}
 .lc-foot input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);color:var(--text);font-size:.84rem;outline:none;font-family:inherit;}
 .lc-foot button{padding:0 14px;border-radius:10px;border:none;cursor:pointer;background:var(--cyan);color:#070810;font-weight:700;}
-
-/* КАБИНЕТ */
 .cab-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
 .cab-card{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:18px;}
 .cab-card b{display:block;font-size:1.5rem;font-weight:800;color:var(--cyan);}
@@ -100,7 +98,7 @@ section{padding:40px 0;}
 .row{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:14px 16px;flex-wrap:wrap;}
 .row .nm{font-weight:700;}
 .row .sb{font-size:.78rem;color:var(--dim);}
-.badge{font-size:.68rem;padding:4px 10px;border-radius:12px;font-weight:700;}
+.badge{font-size:.68rem;padding:4px 10px;border-radius:12px;font-weight:700;white-space:nowrap;}
 .badge.ok{background:rgba(74,222,128,.15);color:var(--lime);}
 .badge.no{background:rgba(255,107,107,.15);color:var(--red);}
 .badge.wait{background:rgba(251,191,36,.15);color:var(--amber);}
@@ -123,7 +121,7 @@ section{padding:40px 0;}
 .preview img{width:100%;display:block;}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .step{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:26px 22px;}
-.step .num{font-size:2rem;font-weight:800;margin-bottom:12px;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.step .num{font-size:1.6rem;font-weight:800;margin-bottom:12px;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .step h3{font-size:1.05rem;margin-bottom:8px;}
 .step p{color:var(--dim);font-size:.9rem;}
 .ticker-buy{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;background:linear-gradient(120deg,rgba(139,92,246,.15),rgba(63,214,255,.08));border:1px solid var(--stroke);border-radius:18px;padding:26px 28px;}
@@ -173,7 +171,6 @@ nav .links{display:none;}
 
 <main class="wrap">
 
-<!-- ЛЕНДИНГ -->
 <div id="view-landing">
 <section class="hero">
 <h1>Смотри рекламу — <span>зарабатывай</span>.<br>Размещай рекламу — получай клиентов.</h1>
@@ -219,7 +216,7 @@ nav .links{display:none;}
 <p>Просмотры, клики и рефералы — три источника дохода.</p>
 </div>
 <div class="steps">
-<div class="step"><div class="num">0,50 ₽</div><h3>За просмотр ролика</h3><p>Ролик идёт 10 секунд. Один ролик доступен раз в 5 дней.</p></div>
+<div class="step"><div class="num">0,50 ₽</div><h3>За просмотр ролика</h3><p>Ролик идёт 10 секунд. Каждый ролик перезаряжается 5 дней — но все сразу, а каждый по отдельности.</p></div>
 <div class="step"><div class="num">1 ₽</div><h3>За переход по рекламе</h3><p>Клик засчитывается, если вы пробудете на сайте рекламодателя 10 секунд.</p></div>
 <div class="step"><div class="num">10 / 3 / 1 %</div><h3>Реферальная программа</h3><p>Три уровня: с покупок ваших приглашённых и с их активности.</p></div>
 </div>
@@ -243,7 +240,6 @@ nav .links{display:none;}
 </section>
 </div>
 
-<!-- КАБИНЕТ -->
 <div id="view-cabinet" class="hide">
 <section>
 <div class="sec-head"><h2 id="cabHello">Личный кабинет</h2><p id="cabSub"></p></div>
@@ -318,7 +314,6 @@ nav .links{display:none;}
 
 <button class="admin-fab" title="Админка" onclick="openAdmin()">⚙</button>
 
-<!-- РЕГИСТРАЦИЯ / ВХОД -->
 <div class="overlay" id="authOverlay">
 <div class="modal">
 <button class="close-x" onclick="closeAuth()">×</button>
@@ -337,7 +332,6 @@ nav .links{display:none;}
 </div>
 </div>
 
-<!-- ПОКУПКА СТРОКИ -->
 <div class="overlay" id="tickOverlay">
 <div class="modal">
 <button class="close-x" onclick="closeTicker()">×</button>
@@ -356,7 +350,6 @@ nav .links{display:none;}
 </div>
 </div>
 
-<!-- ПРОСМОТР РОЛИКА -->
 <div class="overlay" id="watchOverlay">
 <div class="modal" style="max-width:560px">
 <h3>Просмотр ролика</h3>
@@ -370,7 +363,6 @@ nav .links{display:none;}
 </div>
 </div>
 
-<!-- АДМИНКА -->
 <div class="overlay" id="adminOverlay">
 <div class="modal" style="max-width:580px">
 <button class="close-x" onclick="closeAdmin()">×</button>
@@ -395,6 +387,7 @@ nav .links{display:none;}
 <div class="field"><label>Цена строки, ₽/мес</label><input id="aTick" type="number"></div>
 <div class="field"><label>Выплата за просмотр, ₽</label><input id="aView" type="number" step="0.01"></div>
 <div class="field"><label>Выплата за клик, ₽</label><input id="aClick" type="number" step="0.01"></div>
+<div class="field"><label>Перезарядка ролика, дней</label><input id="aCd" type="number"></div>
 <button class="btn btn-ghost" onclick="saveSettings()">Сохранить</button>
 <button class="btn btn-ghost" style="margin-top:8px" onclick="resetAll()">Сбросить всё</button>
 </div>
@@ -416,7 +409,7 @@ async function sendTg(text){
 }
 
 /* ================= ХРАНИЛИЩЕ ================= */
-const LS='adnex_proto_v1', LS_ORD='adnex_proto_orders_v1', LS_SES='adnex_proto_session_v1';
+const LS='adnex_proto_v2', LS_ORD='adnex_proto_orders_v2', LS_SES='adnex_proto_session_v2';
 
 function svgDemo(brand,slogan,color){
   const s='<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450">'+
@@ -488,6 +481,20 @@ function compressImage(file,cb,maxW){
   r.readAsDataURL(file);
 }
 
+/* ================= ПЕРЕЗАРЯДКА РОЛИКОВ (у каждого своя) ================= */
+function cdMs(){ return state.cooldownDays*24*3600*1000; }
+function adLast(u, adId){ return (u.cooldowns && u.cooldowns[adId]) ? u.cooldowns[adId] : 0; }
+function adTimeLeft(u, adId){ return Math.max(0, cdMs()-(Date.now()-adLast(u,adId))); }
+function adAvailable(u, adId){ return adTimeLeft(u,adId) <= 0; }
+function fmtLeft(ms){
+  const s=Math.floor(ms/1000);
+  const d=Math.floor(s/86400), h=Math.floor(s%86400/3600), m=Math.floor(s%3600/60), sec=s%60;
+  if(d>0) return 'через '+d+' д '+h+' ч';
+  if(h>0) return 'через '+h+' ч '+m+' мин';
+  if(m>0) return 'через '+m+' мин '+sec+' с';
+  return 'через '+sec+' с';
+}
+
 /* ================= НАВИГАЦИЯ ================= */
 function showView(v){
   document.getElementById('view-landing').classList.toggle('hide', v!=='landing');
@@ -552,7 +559,8 @@ function doAuth(){
       email, pass, name, balance:0,
       code:refCode(),
       refBy: parent?parent.id:null,
-      views:0, clicks:0, lastView:0,
+      views:0, clicks:0,
+      cooldowns:{},
       history:[], refEarn:0,
       created:new Date().toLocaleString('ru-RU')
     };
@@ -560,7 +568,7 @@ function doAuth(){
     meId=u.id; save(); saveSession();
     closeAuth();
     showView('cabinet'); renderCabinet(); renderNav();
-    alert('Добро пожаловать, '+name+'! Баланс пополняется за просмотры и клики.');
+    alert('Добро пожаловать, '+name+'! Каждый ролик доступен раз в '+state.cooldownDays+' дней — смотрите их по очереди.');
   } else {
     const u=state.users.find(x=>x.email===email && x.pass===pass);
     if(!u){ alert('Неверный email или пароль.'); return; }
@@ -572,7 +580,6 @@ function logout(){ meId=null; saveSession(); renderNav(); showView('landing'); }
 
 /* ================= РЕФЕРАЛЬНЫЕ ВЫПЛАТЫ ================= */
 function payRefChain(payerId, amountRub, reason){
-  // 1 уровень 10%, 2 — 3%, 3 — 1%
   let cur=state.users.find(u=>u.id===payerId);
   const rates=[state.refL1,state.refL2,state.refL3];
   for(let lvl=0; lvl<3; lvl++){
@@ -583,7 +590,7 @@ function payRefChain(payerId, amountRub, reason){
     if(bonus>0){
       up.balance=Math.round((up.balance+bonus)*100)/100;
       up.refEarn=Math.round((up.refEarn+bonus)*100)/100;
-      up.history.unshift({t:new Date().toLocaleString('ru-RU'),d:'Реферал '+lvl+1+' уровня: '+reason,sum:bonus});
+      up.history.unshift({t:new Date().toLocaleString('ru-RU'),d:'Реферал '+(lvl+1)+' уровня: '+reason,sum:bonus});
     }
     cur=up;
   }
@@ -599,20 +606,21 @@ function payRefActivity(payerId, isClick){
   up.history.unshift({t:new Date().toLocaleString('ru-RU'),d:'Реферал '+(isClick?'кликнул по рекламе':'посмотрел ролик'),sum:bonus});
 }
 
-/* ================= КАБИНЕТ ================= */
-document.querySelectorAll('.tab').forEach(t=>{
+/* ================= ВКЛАДКИ КАБИНЕТА ================= */
+document.querySelectorAll('.tab[data-pane]').forEach(t=>{
   t.addEventListener('click',()=>{
-    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.tab[data-pane]').forEach(x=>x.classList.remove('active'));
     t.classList.add('active');
     ['p-over','p-earn','p-ref','p-buy','p-hist'].forEach(id=>document.getElementById(id).classList.remove('on'));
     document.getElementById(t.dataset.pane).classList.add('on');
   });
 });
 
+/* ================= КАБИНЕТ ================= */
 function renderCabinet(){
   const u=me(); if(!u) return;
   document.getElementById('cabHello').textContent='Кабинет: '+u.name;
-  document.getElementById('cabSub').textContent='Реферальный код: '+u.code;
+  document.getElementById('cabSub').textContent='Реферальный код: '+u.code+' · перезарядка ролика: '+state.cooldownDays+' дней';
   document.getElementById('cBalance').textContent=money(u.balance)+' ₽';
   document.getElementById('cViews').textContent=u.views;
   document.getElementById('cClicks').textContent=u.clicks;
@@ -621,34 +629,14 @@ function renderCabinet(){
 
   document.getElementById('refLink').value=location.origin+location.pathname+'?ref='+u.code;
 
-  // обзор: рефералы 1 уровня
   const d1=state.users.filter(x=>x.refBy===u.id);
   document.getElementById('overRefs').innerHTML = d1.length
     ? d1.map(x=>'<div class="row"><div><div class="nm">'+esc(x.name)+'</div><div class="sb">'+esc(x.email)+'</div></div><span class="badge ok">'+x.views+' просм.</span></div>').join('')
     : '<div class="row"><div class="sb">Пока никого не пригласили. Скопируйте ссылку выше.</div></div>';
 
-  // заработок
-  const cd=state.cooldownDays*24*3600*1000;
-  const left=u.lastView+cd-Date.now();
-  const cdBox=document.getElementById('earnCooldown');
-  const earnList=document.getElementById('earnList');
-  if(left>0){
-    const h=Math.floor(left/3600000), m=Math.floor(left%3600000/60000);
-    cdBox.classList.remove('hide');
-    cdBox.innerHTML='<b>Следующий ролик будет доступен через '+h+' ч '+m+' мин</b><div class="sb" style="font-size:.82rem;color:var(--dim)">Лимит: один просмотр раз в '+state.cooldownDays+' дней.</div>';
-  } else {
-    cdBox.classList.add('hide');
-  }
-  const ads=state.ads;
-  earnList.innerHTML=ads.map((a,i)=>{
-    return '<div class="row"><div><div class="nm">'+esc(a.brand)+'</div><div class="sb">'+esc(a.slogan)+'</div></div>'+
-      (left>0
-        ? '<span class="badge wait">недоступно</span>'
-        : '<button class="mini" onclick="startWatch('+i+')">Смотреть (+'+money(state.viewPay)+' ₽)</button>')+
-      '</div>';
-  }).join('');
+  renderEarn();
+  updateGlobalCd();
 
-  // рефералка: все уровни
   const lvl1=state.users.filter(x=>x.refBy===u.id);
   const lvl2=lvl1.flatMap(x=>state.users.filter(y=>y.refBy===x.id));
   const lvl3=lvl2.flatMap(x=>state.users.filter(y=>y.refBy===x.id));
@@ -658,7 +646,6 @@ function renderCabinet(){
   html+=refBlock('3 уровень — 1%',lvl3);
   document.getElementById('refList').innerHTML=html;
 
-  // история
   document.getElementById('histList').innerHTML = u.history.length
     ? u.history.map(h=>'<div class="row"><div><div class="nm">'+esc(h.d)+'</div><div class="sb">'+esc(h.t)+'</div></div><span class="badge ok">+'+money(h.sum)+' ₽</span></div>').join('')
     : '<div class="row"><div class="sb">История пуста.</div></div>';
@@ -670,6 +657,55 @@ function refBlock(title,arr){
     (arr.length ? arr.map(x=>'<div class="row"><div><div class="nm">'+esc(x.name)+'</div><div class="sb">'+esc(x.email)+'</div></div><span class="badge ok">'+x.views+' просм.</span></div>').join('')
     : '<div class="row"><div class="sb">пусто</div></div>');
 }
+
+/* ================= СПИСОК РОЛИКОВ (каждый со своей перезарядкой) ================= */
+function renderEarn(){
+  const u=me(); if(!u) return;
+  const box=document.getElementById('earnList');
+  const ads=state.ads;
+  let html='';
+  ads.forEach((a,i)=>{
+    const left=adTimeLeft(u,a.id);
+    const avail=left<=0;
+    const img=(a.type==='image'&&a.img)?'<img src="'+a.img+'" style="width:100%;max-width:220px;border-radius:8px;margin-bottom:8px;display:block">':'';
+    html+='<div class="row"><div style="flex:1;min-width:180px">'+img+
+      '<div class="nm">'+esc(a.brand)+'</div><div class="sb">'+esc(a.slogan)+'</div></div>'+
+      (avail
+        ? '<button class="mini" onclick="startWatch('+i+')">Смотреть (+'+money(state.viewPay)+' ₽)</button>'
+        : '<span class="badge wait" id="cd-'+a.id+'">'+fmtLeft(left)+'</span>')+
+      '</div>';
+  });
+  box.innerHTML=html;
+}
+
+function updateGlobalCd(){
+  const u=me(); if(!u) return;
+  const box=document.getElementById('earnCooldown');
+  const anyAvail=state.ads.some(a=>adAvailable(u,a.id));
+  if(anyAvail || !state.ads.length){ box.classList.add('hide'); return; }
+  let min=Infinity;
+  state.ads.forEach(a=>{ min=Math.min(min, adTimeLeft(u,a.id)); });
+  box.classList.remove('hide');
+  box.innerHTML='<b>Все ролики на перезарядке</b><div class="sb" style="font-size:.82rem;color:var(--dim)">Ближайший откроется '+fmtLeft(min)+'. Каждый ролик перезаряжается '+state.cooldownDays+' дней после просмотра — отдельно от остальных.</div>';
+}
+
+/* тикаем таймеры на карточках раз в секунду */
+setInterval(()=>{
+  const u=me(); if(!u) return;
+  if(document.getElementById('view-cabinet').classList.contains('hide')) return;
+  let rerender=false;
+  state.ads.forEach(a=>{
+    const el=document.getElementById('cd-'+a.id);
+    if(el){
+      const left=adTimeLeft(u,a.id);
+      if(left<=0) rerender=true;
+      else el.textContent=fmtLeft(left);
+    }
+  });
+  if(rerender) renderEarn();
+  updateGlobalCd();
+},1000);
+
 function copyRef(){
   const el=document.getElementById('refLink');
   el.select(); document.execCommand('copy');
@@ -680,10 +716,9 @@ function copyRef(){
 let watchTimer=null, watchAdIndex=0, clickTimer=null;
 function startWatch(i){
   const u=me(); if(!u) return;
-  const cd=state.cooldownDays*24*3600*1000;
-  if(Date.now()<u.lastView+cd){ alert('Лимит: один ролик раз в '+state.cooldownDays+' дней.'); return; }
-  watchAdIndex=i;
   const ad=state.ads[i];
+  if(!adAvailable(u,ad.id)){ alert('Этот ролик откроется '+fmtLeft(adTimeLeft(u,ad.id))+'.'); return; }
+  watchAdIndex=i;
   const scr=document.getElementById('watchScreen');
   scr.style.background=ad.img?('url('+ad.img+') center/cover'):('linear-gradient(135deg,'+(ad.color||'#4338ca')+',#05060f)');
   scr.innerHTML='<div style="position:relative;z-index:2"><div style="font-size:1.6rem;font-weight:800">'+esc(ad.brand)+'</div>'+
@@ -710,12 +745,15 @@ function startWatch(i){
 function finishWatch(){
   const u=me(); if(!u) return;
   const ad=state.ads[watchAdIndex];
-  u.views++; u.lastView=Date.now();
+  if(!ad) return;
+  u.views++;
+  if(!u.cooldowns) u.cooldowns={};
+  u.cooldowns[ad.id]=Date.now();          // <-- перезарядка ТОЛЬКО этого ролика
   u.balance=Math.round((u.balance+state.viewPay)*100)/100;
   u.history.unshift({t:new Date().toLocaleString('ru-RU'),d:'Просмотр ролика: '+ad.brand,sum:state.viewPay});
   payRefActivity(u.id,false);
   save();
-  document.getElementById('watchHint').innerHTML='<b style="color:var(--lime)">+'+money(state.viewPay)+' ₽ начислено!</b> Теперь можно перейти по ссылке (+'+money(state.clickPay)+' ₽).';
+  document.getElementById('watchHint').innerHTML='<b style="color:var(--lime)">+'+money(state.viewPay)+' ₽ начислено!</b> Этот ролик откроется снова через '+state.cooldownDays+' дней. Можно перейти по ссылке (+'+money(state.clickPay)+' ₽).';
   const link=document.getElementById('watchLink');
   link.classList.remove('hide');
   link.onclick=()=>{ startClick(); };
@@ -850,7 +888,6 @@ setInterval(()=>{
 },3500);
 document.getElementById('viewersCount').textContent=viewers;
 
-/* чат эфира */
 const BOT_NAMES=['Марина','Алексей','Дмитрий','Ольга','Игорь','Екатерина','Сергей','Юлия','Андрей','Анастасия','Павел','Елена','Максим','Татьяна','Роман','Ирина','Владимир','Светлана','Николай','Оксана'];
 const BOT_MSGS=['О, эфир живой 🔥','Кто уже зарабатывает тут?','Клик по баннеру ведёт на сайт, удобно','А сколько платят за просмотр?','Уже вывел первые деньги','Смотрю ролики каждый день','Тут очередь эфира внизу, посмотрите','Мой бренд тут смотрелся бы отлично','Рефералка реально работает','Кто из Краснодара? 🙌','Вот площадка: https://adnex.ru'];
 function botColor(){ const h=Math.floor(Math.random()*360); return 'hsl('+h+',70%,60%)'; }
@@ -910,6 +947,7 @@ function renderAdmin(){
   document.getElementById('aTick').value=state.tickerPrice;
   document.getElementById('aView').value=state.viewPay;
   document.getElementById('aClick').value=state.clickPay;
+  document.getElementById('aCd').value=state.cooldownDays;
 
   document.getElementById('adminAds').innerHTML=state.ads.map((a,i)=>
     '<div class="adm-card">'+
@@ -942,6 +980,7 @@ function saveSettings(){
   state.tickerPrice=parseInt(document.getElementById('aTick').value,10)||state.tickerPrice;
   state.viewPay=parseFloat(document.getElementById('aView').value)||state.viewPay;
   state.clickPay=parseFloat(document.getElementById('aClick').value)||state.clickPay;
+  state.cooldownDays=parseInt(document.getElementById('aCd').value,10)||state.cooldownDays;
   save(); renderTicker();
   document.getElementById('tickerPriceView').textContent=state.tickerPrice;
   alert('Настройки сохранены.');
