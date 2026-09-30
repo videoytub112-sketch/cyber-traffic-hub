@@ -6,7 +6,7 @@
 <title>ADNEX — рекламная площадка</title>
 <style>
 :root{
-    --bg:#070810;--card:#0e1020;--stroke:rgba(120,150,255,0.14);
+    --bg:#070810;--card:#0e1020;--card2:#12152a;--stroke:rgba(120,150,255,0.14);
     --cyan:#3fd6ff;--violet:#8b5cf6;--lime:#4ade80;--amber:#fbbf24;
     --text:#e6ebff;--dim:#8a93b8;--red:#ff6b6b;
 }
@@ -16,121 +16,107 @@ body{
     color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
     min-height:100vh;line-height:1.5;
 }
-.wrap{max-width:1120px;margin:0 auto;padding:0 20px;}
-header{
-    position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);
-    background:rgba(7,8,16,0.85);border-bottom:1px solid var(--stroke);
-}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px;}
+header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);
+    background:rgba(7,8,16,0.85);border-bottom:1px solid var(--stroke);}
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
-.logo{
-    font-size:1.3rem;font-weight:800;letter-spacing:2px;
+.logo{font-size:1.3rem;font-weight:800;letter-spacing:2px;
     background:linear-gradient(90deg,var(--cyan),var(--violet));
-    -webkit-background-clip:text;background-clip:text;color:transparent;
-}
+    -webkit-background-clip:text;background-clip:text;color:transparent;}
 .logo small{display:block;font-size:.6rem;color:var(--dim);letter-spacing:1.5px;font-weight:400;}
 nav .links{display:flex;gap:24px;font-size:.9rem;}
 nav .links a{color:var(--dim);text-decoration:none;transition:.2s;}
 nav .links a:hover{color:var(--text);}
-.nav-cta{
-    padding:9px 20px;border-radius:24px;font-size:.85rem;text-decoration:none;
-    background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;font-weight:700;
-}
+.nav-cta{padding:9px 20px;border-radius:24px;font-size:.85rem;text-decoration:none;
+    background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;font-weight:700;}
 
 /* БЕГУЩАЯ СТРОКА */
-.ticker-bar{
-    overflow:hidden;white-space:nowrap;background:rgba(8,10,26,.85);
-    border-bottom:1px solid var(--stroke);height:36px;display:flex;align-items:center;
-}
-.ticker-track{display:inline-flex;white-space:nowrap;animation:tick 50s linear infinite;}
+.ticker-bar{overflow:hidden;white-space:nowrap;background:rgba(8,10,26,.85);
+    border-bottom:1px solid var(--stroke);height:36px;display:flex;align-items:center;}
+.ticker-track{display:inline-flex;white-space:nowrap;animation:tick 60s linear infinite;}
 .ticker-track span{padding-right:70px;font-size:.8rem;color:var(--amber);font-weight:600;}
 .ticker-track b{color:var(--cyan);}
 @keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
 
-.hero{padding:70px 0 50px;text-align:center;}
+.hero{padding:60px 0 40px;text-align:center;}
 .hero h1{font-size:clamp(1.9rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.5px;line-height:1.12;margin-bottom:18px;}
 .hero h1 span{background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
-.hero p{color:var(--dim);max-width:560px;margin:0 auto 34px;font-size:1.05rem;}
+.hero p{color:var(--dim);max-width:600px;margin:0 auto 30px;font-size:1.05rem;}
 .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
-.btn{
-    padding:15px 32px;border-radius:32px;border:none;cursor:pointer;
-    font-size:.98rem;font-weight:700;text-decoration:none;transition:.25s;font-family:inherit;
-}
+.btn{padding:15px 32px;border-radius:32px;border:none;cursor:pointer;
+    font-size:.98rem;font-weight:700;text-decoration:none;transition:.25s;font-family:inherit;}
 .btn-main{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;box-shadow:0 0 34px rgba(139,92,246,.4);}
 .btn-main:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(63,214,255,.5);}
 .btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--stroke);}
 .btn-ghost:hover{background:rgba(255,255,255,.1);}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:50px;}
-.stat{padding:22px 14px;border-radius:16px;background:var(--card);border:1px solid var(--stroke);text-align:center;}
-.stat b{display:block;font-size:1.8rem;font-weight:800;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
-.stat span{font-size:.8rem;color:var(--dim);}
-section{padding:50px 0;}
-.sec-head{text-align:center;margin-bottom:36px;}
+.btn-sm{padding:10px 20px;font-size:.85rem;border-radius:22px;}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px;}
+.stat{padding:20px 14px;border-radius:16px;background:var(--card);border:1px solid var(--stroke);text-align:center;}
+.stat b{display:block;font-size:1.7rem;font-weight:800;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.stat span{font-size:.78rem;color:var(--dim);}
+section{padding:44px 0;}
+.sec-head{text-align:center;margin-bottom:30px;}
 .sec-head h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:10px;}
-.sec-head p{color:var(--dim);max-width:540px;margin:0 auto;}
+.sec-head p{color:var(--dim);max-width:620px;margin:0 auto;}
 
-/* КАРТА ПЛОЩАДКИ */
-.map-wrap{display:grid;grid-template-columns:1fr 130px;gap:18px;align-items:start;margin-bottom:22px;}
-.map-browser{background:#05060f;border:1px solid var(--stroke);border-radius:16px;overflow:hidden;}
-.map-top{display:flex;align-items:center;gap:6px;padding:10px 13px;background:rgba(255,255,255,.03);border-bottom:1px solid var(--stroke);}
-.map-top i{width:10px;height:10px;border-radius:50%;display:block;}
-.map-url{margin-left:8px;font-size:.7rem;color:var(--dim);background:rgba(255,255,255,.05);padding:3px 12px;border-radius:8px;}
-.map-page{display:flex;flex-direction:column;gap:8px;padding:12px;min-height:300px;}
-.map-zone{
-    border:1px dashed rgba(120,150,255,.3);border-radius:12px;padding:9px 12px;
-    transition:.25s;background:rgba(255,255,255,.015);
-}
-.map-zone:hover{border-color:var(--cyan);background:rgba(63,214,255,.05);}
-.mz-tag{font-size:.66rem;color:var(--dim);text-transform:uppercase;letter-spacing:.6px;display:block;}
-.mz-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:7px;min-height:26px;align-items:center;}
-.map-mid{display:grid;grid-template-columns:1fr 96px;gap:8px;}
-.zchip{
-    width:28px;height:28px;border-radius:9px;border:none;cursor:pointer;
-    font-weight:800;font-size:.78rem;font-family:inherit;transition:.2s;
-}
-.zchip.free{background:rgba(74,222,128,.2);color:var(--lime);border:1px solid rgba(74,222,128,.35);}
-.zchip.busy{background:rgba(139,92,246,.25);color:#c4b5fd;border:1px solid rgba(139,92,246,.4);}
-.zchip:hover{transform:scale(1.14);}
-.map-side-col{display:flex;flex-direction:column;gap:12px;}
-.map-phone{min-height:150px;}
-.map-legend{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;font-size:.8rem;color:var(--dim);margin-bottom:34px;}
-.map-legend span{display:inline-flex;align-items:center;gap:7px;}
-.leg-dot{width:11px;height:11px;border-radius:4px;display:inline-block;}
+/* ФИЛЬТРЫ */
+.filterbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;
+    background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:14px;margin-bottom:26px;}
+.filterbar select,.filterbar input{padding:10px 14px;border-radius:10px;background:rgba(255,255,255,.04);
+    border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.85rem;outline:none;}
+.filterbar select:focus,.filterbar input:focus{border-color:var(--cyan);}
+.filterbar input{flex:1;min-width:180px;}
 
-/* СЕКТОРЫ */
-.slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-.slot{
-    background:var(--card);border:1px solid var(--stroke);border-radius:18px;
-    padding:20px;display:flex;flex-direction:column;transition:.3s;
-}
-.slot:hover{transform:translateY(-5px);border-color:rgba(63,214,255,.4);}
+/* ГРУППЫ ЗОН */
+.zone-group{margin-bottom:34px;}
+.zone-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:10px;
+    border-bottom:1px solid var(--stroke);}
+.zone-head .zi{font-size:1.3rem;color:var(--cyan);}
+.zone-head .zt{font-size:1.15rem;font-weight:800;}
+.zone-head .zd{font-size:.8rem;color:var(--dim);flex:1;}
+.zone-head .zc{font-size:.78rem;color:var(--lime);background:rgba(74,222,128,.12);
+    border:1px solid rgba(74,222,128,.3);padding:4px 12px;border-radius:12px;white-space:nowrap;}
+
+.slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.slot{background:var(--card);border:1px solid var(--stroke);border-radius:16px;
+    padding:18px;display:flex;flex-direction:column;transition:.3s;}
+.slot:hover{transform:translateY(-4px);border-color:rgba(63,214,255,.4);}
 .slot.flash{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(63,214,255,.45),0 16px 40px rgba(0,0,0,.5);}
-.slot-head{display:flex;align-items:center;gap:11px;margin-bottom:12px;}
-.slot-num{
-    width:34px;height:34px;flex:none;border-radius:10px;display:flex;align-items:center;justify-content:center;
-    font-weight:800;font-size:1rem;background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;
-}
+.slot-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
+.slot-num{width:32px;height:32px;flex:none;border-radius:9px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:.9rem;background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
 .slot-title{flex:1;min-width:0;}
-.slot-title b{display:block;font-size:1rem;line-height:1.2;}
+.slot-title b{display:block;font-size:.98rem;line-height:1.25;}
 .slot-zone{font-size:.7rem;color:var(--cyan);}
-.badge{font-size:.66rem;padding:4px 10px;border-radius:12px;font-weight:700;text-transform:uppercase;white-space:nowrap;}
+.badge{font-size:.64rem;padding:3px 9px;border-radius:10px;font-weight:700;text-transform:uppercase;white-space:nowrap;}
 .badge.free{background:rgba(74,222,128,.15);color:var(--lime);border:1px solid rgba(74,222,128,.3);}
 .badge.busy{background:rgba(139,92,246,.15);color:#c4b5fd;border:1px solid rgba(139,92,246,.3);}
-.slot-desc{font-size:.84rem;color:var(--dim);margin-bottom:14px;min-height:36px;}
-.slot-meta{display:flex;flex-direction:column;gap:5px;font-size:.74rem;color:var(--dim);margin-bottom:14px;}
-.slot-meta span{display:flex;align-items:center;gap:6px;}
-.slot .price{font-size:1.5rem;font-weight:800;color:var(--cyan);margin-bottom:14px;}
-.slot .price small{font-size:.8rem;color:var(--dim);font-weight:400;}
-.slot .btn{width:100%;padding:12px;text-align:center;font-size:.9rem;}
+.slot-desc{font-size:.82rem;color:var(--dim);margin-bottom:12px;min-height:34px;}
+.slot-specs{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:.72rem;color:var(--dim);margin-bottom:12px;}
+.slot-specs span{display:flex;align-items:center;gap:5px;}
+.slot .price{font-size:1.35rem;font-weight:800;color:var(--cyan);margin-bottom:12px;margin-top:auto;}
+.slot .price small{font-size:.75rem;color:var(--dim);font-weight:400;}
+.slot .btn{width:100%;padding:11px;text-align:center;font-size:.88rem;}
 .slot .btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
 
-/* РЕКЛАМА В СЛОТЕ */
-.ad-box{border-radius:12px;overflow:hidden;margin-bottom:12px;background:#05060f;border:1px solid rgba(63,214,255,.2);}
+.ad-box{border-radius:10px;overflow:hidden;margin-bottom:12px;background:#05060f;border:1px solid rgba(63,214,255,.2);}
 .ad-box img{width:100%;display:block;}
-.ad-text{display:block;padding:16px;text-align:center;font-weight:700;color:var(--cyan);text-decoration:none;font-size:.95rem;transition:.2s;}
+.ad-text{display:block;padding:14px;text-align:center;font-weight:700;color:var(--cyan);text-decoration:none;font-size:.9rem;transition:.2s;}
 .ad-text:hover{background:rgba(63,214,255,.08);}
-.ad-html{padding:10px;overflow:hidden;max-height:220px;}
-.ad-html img{max-width:100%;height:auto;}
-.ad-meta{font-size:.7rem;color:var(--dim);margin-bottom:10px;}
+.ad-meta{font-size:.68rem;color:var(--dim);margin-bottom:10px;}
+
+/* ТИКЕР-СПИСОК */
+.ticker-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-height:520px;overflow-y:auto;
+    background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:14px;}
+.tick-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.03);
+    border:1px solid var(--stroke);border-radius:12px;padding:11px 13px;transition:.2s;}
+.tick-item:hover{border-color:rgba(63,214,255,.4);}
+.tick-item .tn{font-weight:800;color:var(--violet);font-size:.82rem;min-width:34px;}
+.tick-item .tt{flex:1;font-size:.8rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.tick-item .tp{font-size:.85rem;font-weight:700;color:var(--cyan);white-space:nowrap;}
+.tick-item .tb{padding:6px 13px;border-radius:16px;border:none;cursor:pointer;font-size:.72rem;font-weight:700;
+    background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;font-family:inherit;white-space:nowrap;}
+.tick-item .tb:disabled{background:rgba(139,92,246,.2);color:#c4b5fd;cursor:not-allowed;}
 
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .step{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:26px 22px;}
@@ -138,52 +124,41 @@ section{padding:50px 0;}
 .step h3{font-size:1.05rem;margin-bottom:8px;}
 .step p{color:var(--dim);font-size:.9rem;}
 
-/* ТИКЕР-БЛОК */
-.ticker-buy{
-    display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;
-    background:linear-gradient(120deg,rgba(139,92,246,.15),rgba(63,214,255,.08));
-    border:1px solid var(--stroke);border-radius:18px;padding:26px 28px;
-}
-.ticker-buy h3{font-size:1.3rem;margin-bottom:6px;}
-.ticker-buy p{color:var(--dim);font-size:.9rem;max-width:460px;}
-.ticker-buy .cost{font-size:1.8rem;font-weight:800;color:var(--amber);}
-.ticker-buy .cost small{font-size:.8rem;color:var(--dim);font-weight:400;}
-
 /* МОДАЛКИ */
-.overlay{position:fixed;inset:0;z-index:100;display:none;background:rgba(3,4,10,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;}
+.overlay{position:fixed;inset:0;z-index:100;display:none;background:rgba(3,4,10,.88);
+    backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;}
 .overlay.on{display:flex;}
-.modal{background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:28px;width:100%;max-width:440px;max-height:92vh;overflow-y:auto;}
+.modal{background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:28px;
+    width:100%;max-width:440px;max-height:92vh;overflow-y:auto;}
 .modal h3{font-size:1.25rem;margin-bottom:6px;}
 .modal .sub{color:var(--dim);font-size:.86rem;margin-bottom:20px;}
 .field{margin-bottom:13px;}
 .field label{display:block;font-size:.78rem;color:var(--dim);margin-bottom:6px;}
-.field input,.field textarea,.field select{
-    width:100%;padding:11px 13px;border-radius:10px;background:rgba(255,255,255,.04);
-    border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.9rem;outline:none;
-}
+.field input,.field textarea,.field select{width:100%;padding:11px 13px;border-radius:10px;background:rgba(255,255,255,.04);
+    border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.9rem;outline:none;}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--cyan);}
 .field textarea{resize:vertical;min-height:90px;font-family:monospace;font-size:.82rem;}
 .modal .btn{width:100%;margin-top:8px;}
 .close-x{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--dim);font-size:1.5rem;cursor:pointer;}
 .modal-rel{position:relative;}
-
-/* СЕГМЕНТЫ */
 .seg{display:flex;gap:6px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;}
-.seg-btn{flex:1;padding:9px 6px;border-radius:9px;border:none;cursor:pointer;font-size:.78rem;background:transparent;color:var(--dim);font-weight:600;font-family:inherit;transition:.2s;}
+.seg-btn{flex:1;padding:9px 6px;border-radius:9px;border:none;cursor:pointer;font-size:.78rem;
+    background:transparent;color:var(--dim);font-weight:600;font-family:inherit;transition:.2s;}
 .seg-btn.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
 .preview{margin-top:10px;border-radius:10px;overflow:hidden;display:none;}
 .preview img{width:100%;display:block;}
-.total{padding:14px;border-radius:12px;background:rgba(63,214,255,.08);border:1px solid rgba(63,214,255,.25);text-align:center;font-weight:800;font-size:1.2rem;color:var(--cyan);margin:14px 0 6px;}
+.total{padding:14px;border-radius:12px;background:rgba(63,214,255,.08);border:1px solid rgba(63,214,255,.25);
+    text-align:center;font-weight:800;font-size:1.2rem;color:var(--cyan);margin:14px 0 6px;}
 
 /* ЧАТ */
-.chat-btn{
-    position:fixed;bottom:22px;right:22px;z-index:90;width:58px;height:58px;border-radius:50%;
+.chat-btn{position:fixed;bottom:22px;right:22px;z-index:90;width:58px;height:58px;border-radius:50%;
     border:none;cursor:pointer;background:linear-gradient(135deg,var(--violet),var(--cyan));
     color:#070810;font-size:1.5rem;box-shadow:0 0 30px rgba(139,92,246,.5);
-    display:flex;align-items:center;justify-content:center;transition:.25s;
-}
+    display:flex;align-items:center;justify-content:center;transition:.25s;}
 .chat-btn:hover{transform:scale(1.08);}
-.chat-panel{position:fixed;bottom:92px;right:22px;z-index:91;width:340px;max-width:calc(100vw - 44px);background:var(--card);border:1px solid var(--stroke);border-radius:18px;overflow:hidden;display:none;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.6);}
+.chat-panel{position:fixed;bottom:92px;right:22px;z-index:91;width:340px;max-width:calc(100vw - 44px);
+    background:var(--card);border:1px solid var(--stroke);border-radius:18px;overflow:hidden;display:none;
+    flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.6);}
 .chat-panel.on{display:flex;}
 .chat-head{padding:15px 18px;border-bottom:1px solid var(--stroke);display:flex;align-items:center;gap:10px;}
 .chat-head .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);}
@@ -194,12 +169,14 @@ section{padding:50px 0;}
 .cm.me{align-self:flex-end;background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(63,214,255,.25));}
 .cm.sys{align-self:center;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);color:var(--lime);font-size:.76rem;text-align:center;}
 .chat-foot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--stroke);}
-.chat-foot input{flex:1;padding:11px 13px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);color:var(--text);font-size:.86rem;outline:none;font-family:inherit;}
+.chat-foot input{flex:1;padding:11px 13px;border-radius:10px;background:rgba(255,255,255,.05);
+    border:1px solid var(--stroke);color:var(--text);font-size:.86rem;outline:none;font-family:inherit;}
 .chat-foot input:focus{border-color:var(--cyan);}
 .chat-foot button{padding:0 16px;border-radius:10px;border:none;cursor:pointer;background:var(--cyan);color:#070810;font-weight:700;}
 
 /* АДМИНКА */
-.admin-fab{position:fixed;bottom:22px;left:22px;z-index:90;width:46px;height:46px;border-radius:50%;border:1px solid var(--stroke);background:rgba(255,255,255,.05);color:var(--dim);cursor:pointer;font-size:1.15rem;transition:.25s;}
+.admin-fab{position:fixed;bottom:22px;left:22px;z-index:90;width:46px;height:46px;border-radius:50%;
+    border:1px solid var(--stroke);background:rgba(255,255,255,.05);color:var(--dim);cursor:pointer;font-size:1.15rem;transition:.25s;}
 .admin-fab:hover{background:rgba(255,255,255,.12);color:var(--text);}
 .tabbar{display:flex;gap:6px;margin-bottom:18px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;}
 .tab{flex:1;padding:9px 4px;border-radius:9px;border:none;background:transparent;color:var(--dim);cursor:pointer;font-size:.78rem;font-weight:600;font-family:inherit;transition:.2s;}
@@ -217,23 +194,19 @@ section{padding:50px 0;}
 .mini.del{background:rgba(255,80,80,.18);color:var(--red);}
 .mini.act{background:rgba(74,222,128,.18);color:var(--lime);}
 .adm-stat{font-size:.7rem;color:var(--dim);margin-top:8px;}
-.tick-row{display:flex;align-items:center;gap:8px;padding:9px 10px;border-bottom:1px solid var(--stroke);font-size:.82rem;}
-.tick-row span{flex:1;}
 .order-card{background:rgba(255,255,255,.03);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px;font-size:.82rem;}
 .order-card .oc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
 .order-card .oc-top b{color:var(--cyan);}
 .order-card .oc-line{color:var(--dim);font-size:.76rem;}
 footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color:var(--dim);font-size:.82rem;margin-top:40px;}
 
-@media(max-width:860px){
+@media(max-width:900px){
     nav .links{display:none;}
-    .stats{grid-template-columns:1fr;}
+    .stats{grid-template-columns:repeat(2,1fr);}
     .slot-grid{grid-template-columns:1fr;}
     .steps{grid-template-columns:1fr;}
-    .map-wrap{grid-template-columns:1fr;}
-    .map-side-col{flex-direction:row;}
+    .ticker-list{grid-template-columns:1fr;}
     .chat-panel{width:calc(100vw - 44px);right:22px;}
-    .ticker-buy{flex-direction:column;text-align:center;}
 }
 </style>
 </head>
@@ -257,14 +230,15 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
 <main class="wrap">
     <section class="hero">
         <h1>Реклама, которую <span>видно</span>.<br>Место, которое продаётся.</h1>
-        <p>Выбирайте сектор на карте площадки, загружайте баннер или вставляйте свой код — размещение стартует сразу после оплаты.</p>
+        <p>Смотрите, где именно будет стоять ваш баннер, сколько людей его увидит и сколько это стоит. Оплата — и реклама сразу в работе.</p>
         <div class="hero-btns">
-            <a href="#slots" class="btn btn-main">Свободные места</a>
+            <a href="#slots" class="btn btn-main">Выбрать место</a>
             <a href="#ticker" class="btn btn-ghost">Купить бегущую строку</a>
         </div>
         <div class="stats">
-            <div class="stat"><b id="stFree">0</b><span>свободных секторов</span></div>
-            <div class="stat"><b id="stTotal">0</b><span>всего мест</span></div>
+            <div class="stat"><b id="stFree">0</b><span>свободных мест</span></div>
+            <div class="stat"><b id="stTotal">0</b><span>всего секторов</span></div>
+            <div class="stat"><b id="stMin">0</b><span>₽ от / месяц</span></div>
             <div class="stat"><b>24/7</b><span>приём заявок</span></div>
         </div>
     </section>
@@ -272,71 +246,36 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     <section id="slots">
         <div class="sec-head">
             <h2>Рекламные секторы</h2>
-            <p>Посмотрите на карту: цифры — это места, где может стоять ваш баннер. Нажмите на цифру, чтобы перейти к сектору.</p>
+            <p>Каждое место подписано: где стоит, какой размер баннера и сколько показов в месяц. Выбирайте фильтрами.</p>
         </div>
 
-        <div class="map-wrap">
-            <div class="map-browser">
-                <div class="map-top">
-                    <i style="background:#ff5f57"></i><i style="background:#febc2e"></i><i style="background:#28c840"></i>
-                    <span class="map-url">adnex.ru</span>
-                </div>
-                <div class="map-page">
-                    <div class="map-zone">
-                        <span class="mz-tag">Шапка сайта</span>
-                        <div class="mz-chips" id="mzchips-header"></div>
-                    </div>
-                    <div class="map-mid">
-                        <div class="map-zone">
-                            <span class="mz-tag">Контент</span>
-                            <div class="mz-chips" id="mzchips-content"></div>
-                        </div>
-                        <div class="map-zone">
-                            <span class="mz-tag">Боковая колонка</span>
-                            <div class="mz-chips" id="mzchips-sidebar"></div>
-                        </div>
-                    </div>
-                    <div class="map-zone">
-                        <span class="mz-tag">Подвал</span>
-                        <div class="mz-chips" id="mzchips-footer"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="map-side-col">
-                <div class="map-zone">
-                    <span class="mz-tag">Всплывающее окно</span>
-                    <div class="mz-chips" id="mzchips-popup"></div>
-                </div>
-                <div class="map-zone map-phone">
-                    <span class="mz-tag">Мобильная версия</span>
-                    <div class="mz-chips" id="mzchips-mobile"></div>
-                </div>
-            </div>
+        <div class="filterbar">
+            <select id="fZone">
+                <option value="all">Все зоны</option>
+            </select>
+            <select id="fStatus">
+                <option value="all">Все места</option>
+                <option value="free">Только свободные</option>
+                <option value="busy">Только занятые</option>
+            </select>
+            <select id="fSort">
+                <option value="id">По порядку</option>
+                <option value="price-asc">Сначала дешёвые</option>
+                <option value="price-desc">Сначала дорогие</option>
+                <option value="views">По охвату</option>
+            </select>
+            <input id="fSearch" placeholder="Поиск: шапка, каталог, попап…">
         </div>
 
-        <div class="map-legend">
-            <span><i class="leg-dot" style="background:rgba(74,222,128,.6)"></i> свободно</span>
-            <span><i class="leg-dot" style="background:rgba(139,92,246,.7)"></i> занято</span>
-        </div>
-
-        <div class="slot-grid" id="slotGrid"></div>
+        <div id="slotZones"></div>
     </section>
 
     <section id="ticker">
         <div class="sec-head">
             <h2>Бегущая строка</h2>
-            <p>Строка в самом верху сайта — её видят все посетители без исключения.</p>
+            <p>50 мест в строке наверху сайта. Её видят все посетители без исключения. Выбирайте любое свободное место.</p>
         </div>
-        <div class="ticker-buy">
-            <div>
-                <h3>Разместить свою строку</h3>
-                <p>Ваш текст будет бежать по верху страницы на каждой странице сайта. Идеально для акций и объявлений.</p>
-            </div>
-            <div style="text-align:center">
-                <div class="cost"><span id="tickerPriceView">800</span> ₽<small> / мес</small></div>
-                <button class="btn btn-main" style="margin-top:12px" onclick="openOrder('ticker')">Купить строку</button>
-            </div>
-        </div>
+        <div class="ticker-list" id="tickerList"></div>
     </section>
 
     <section id="how">
@@ -345,7 +284,7 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
             <p>Три шага — и ваша реклама в работе.</p>
         </div>
         <div class="steps">
-            <div class="step"><div class="num">01</div><h3>Выберите сектор</h3><p>Смотрите карту и свободные места, выбирайте подходящее.</p></div>
+            <div class="step"><div class="num">01</div><h3>Выберите сектор</h3><p>Фильтруйте по зоне, цене и охвату. Нажмите «Забронировать» на подходящем.</p></div>
             <div class="step"><div class="num">02</div><h3>Загрузите рекламу</h3><p>Картинка, текст со ссылкой или готовый HTML-код — на выбор.</p></div>
             <div class="step"><div class="num">03</div><h3>Оплатите</h3><p>После оплаты место закрепляется за вами, баннер сразу появляется.</p></div>
         </div>
@@ -368,7 +307,6 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     </div>
 </div>
 
-<!-- МОДАЛКА ПОКУПКИ -->
 <div class="overlay" id="orderOverlay">
     <div class="modal modal-rel">
         <button class="close-x" onclick="closeOrder()">×</button>
@@ -398,10 +336,7 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
             <textarea id="oHtml" placeholder="<a href='https://...'><img src='https://...'></a>"></textarea>
         </div>
 
-        <div class="field">
-            <label>Ссылка при клике</label>
-            <input id="oUrl" placeholder="https://ваш-сайт.ru">
-        </div>
+        <div class="field"><label>Ссылка при клике</label><input id="oUrl" placeholder="https://ваш-сайт.ru"></div>
         <div class="field"><label>Ваше имя</label><input id="oName" placeholder="Иван"></div>
         <div class="field"><label>Контакт (телефон или Telegram)</label><input id="oContact" placeholder="@username или +7…"></div>
         <div class="field">
@@ -418,9 +353,8 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     </div>
 </div>
 
-<!-- МОДАЛКА АДМИНКИ -->
 <div class="overlay" id="adminOverlay">
-    <div class="modal modal-rel" style="max-width:580px">
+    <div class="modal modal-rel" style="max-width:600px">
         <button class="close-x" onclick="closeAdmin()">×</button>
         <h3>Панель управления</h3>
         <div class="sub">Полный контроль над площадкой.</div>
@@ -432,7 +366,7 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
 
         <div id="adminPanel" style="display:none">
             <div class="tabbar">
-                <button class="tab active" data-tab="slots">Слоты</button>
+                <button class="tab active" data-tab="slots">Секторы</button>
                 <button class="tab" data-tab="ticker">Строка</button>
                 <button class="tab" data-tab="orders">Заявки</button>
                 <button class="tab" data-tab="settings">Настройки</button>
@@ -440,28 +374,19 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
 
             <div class="tabpane" id="tab-slots">
                 <div class="adm-add">
-                    <input id="aName" placeholder="Название (Сектор 10)">
-                    <input id="aPos" placeholder="Позиция / описание">
+                    <input id="aName" placeholder="Название (Сектор 50)">
+                    <input id="aPos" placeholder="Где именно стоит">
+                    <input id="aSize" placeholder="Размер (970×90)">
                     <input id="aPrice" type="number" placeholder="Цена, ₽/мес">
-                    <select id="aZone">
-                        <option value="header">Шапка сайта</option>
-                        <option value="content">Внутри контента</option>
-                        <option value="sidebar">Боковая колонка</option>
-                        <option value="popup">Всплывающее окно</option>
-                        <option value="mobile">Мобильная версия</option>
-                        <option value="footer">Подвал сайта</option>
-                    </select>
+                    <input id="aViews" type="number" placeholder="Показов в месяц">
+                    <select id="aZone"></select>
                     <button class="btn btn-main" onclick="adminAdd()">+ Добавить сектор</button>
                 </div>
                 <div id="adminSlots"></div>
             </div>
 
             <div class="tabpane" id="tab-ticker" style="display:none">
-                <div class="adm-add">
-                    <input id="tLine" placeholder="Текст строки">
-                    <button class="btn btn-main" onclick="tickerAdd()">+ Добавить строку</button>
-                </div>
-                <div class="field"><label>Цена бегущей строки, ₽/мес</label><input id="tPrice" type="number"></div>
+                <div class="field"><label>Цена места в бегущей строке, ₽/мес</label><input id="tPrice" type="number"></div>
                 <button class="btn btn-ghost" onclick="tickerSavePrice()">Сохранить цену</button>
                 <div id="adminTicker" style="margin-top:14px"></div>
             </div>
@@ -474,6 +399,7 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
             <div class="tabpane" id="tab-settings" style="display:none">
                 <div class="field"><label>Новый пароль админки</label><input id="sPass" placeholder="новый пароль"></div>
                 <button class="btn btn-main" onclick="settingsSave()">Сохранить пароль</button>
+                <button class="btn btn-ghost" style="margin-top:10px" onclick="resetData()">Сбросить данные площадки</button>
             </div>
         </div>
     </div>
@@ -490,39 +416,118 @@ const CONFIG = {
 
 /* ================== ЗОНЫ ПЛОЩАДКИ ================== */
 const ZONES = {
-    header:  { label: 'Шапка сайта',       icon: '⬒' },
-    sidebar: { label: 'Боковая колонка',   icon: '▤' },
-    content: { label: 'Внутри контента',   icon: '▦' },
-    popup:   { label: 'Всплывающее окно',  icon: '◱' },
-    mobile:  { label: 'Мобильная версия',  icon: '▯' },
-    footer:  { label: 'Подвал сайта',      icon: '⬓' }
+    header:  { label:'Шапка сайта',        icon:'⬒', desc:'Самое видное место — верх каждой страницы' },
+    sidebar: { label:'Боковая колонка',    icon:'▤', desc:'Сбоку от основного контента' },
+    content: { label:'Внутри контента',    icon:'▦', desc:'Между статьями и блоками' },
+    category:{ label:'Каталог и рубрики',  icon:'▥', desc:'На страницах списков и категорий' },
+    popup:   { label:'Всплывающее окно',   icon:'◱', desc:'Появляется поверх сайта' },
+    mobile:  { label:'Мобильная версия',   icon:'▯', desc:'Для посетителей со смартфонов' },
+    player:  { label:'Видео и плеер',      icon:'▶', desc:'Реклама внутри видеоплеера' },
+    footer:  { label:'Подвал сайта',       icon:'⬓', desc:'Низ каждой страницы' }
 };
+
+/* ================== ДАННЫЕ СЕКТОРОВ ==================
+   [название, зона, где стоит, размер, цена ₽/мес, показов/мес] */
+const SLOTS_RAW = [
+    // --- Шапка ---
+    ['Топ-баннер над меню','header','Над главным меню, виден всем без прокрутки','970×90',15000,220000],
+    ['Баннер под меню','header','Под навигацией на каждой странице','970×90',11000,200000],
+    ['Логотип-партнёр в шапке','header','Рядом с логотипом сайта','200×60',9000,180000],
+    ['Кнопка-CTA в шапке','header','Кнопка справа в шапке','180×50',7000,160000],
+    ['Строка под шапкой','header','Полоса сразу под меню','970×60',6000,150000],
+    ['Мобильный баннер в шапке','header','Верх мобильной версии','320×50',4000,90000],
+    // --- Сайдбар ---
+    ['Правый верхний баннер','sidebar','Справа, сразу под шапкой','300×250',4000,120000],
+    ['Правый средний баннер','sidebar','Справа, в середине страницы','300×250',3500,110000],
+    ['Правый нижний баннер','sidebar','Справа, внизу страницы','300×250',3000,100000],
+    ['Липкий баннер в колонке','sidebar','Всегда виден при прокрутке','300×600',6000,140000],
+    ['Левый вертикальный баннер','sidebar','Слева от контента','240×400',3800,95000],
+    ['Блок «Партнёры»','sidebar','Блок ссылок в колонке','300×200',2500,80000],
+    ['Мини-баннер в колонке','sidebar','Компактный блок в сайдбаре','300×100',1800,60000],
+    ['Ротация баннеров','sidebar','Показ по очереди с другими','300×250',3200,105000],
+    // --- Контент ---
+    ['Баннер перед статьёй','content','Над заголовком статьи','970×250',5000,170000],
+    ['Баннер после 1-го абзаца','content','Сразу после вступления','728×90',3500,150000],
+    ['Баннер в середине статьи','content','Разрывает длинный текст','728×90',3000,140000],
+    ['Баннер после статьи','content','Под текстом, перед комментариями','728×90',2800,130000],
+    ['Нативный блок в тексте','content','Выглядит как часть статьи','600×300',4500,120000],
+    ['Карусель внутри контента','content','Слайдер из нескольких баннеров','728×200',5200,160000],
+    ['Блок между постами','content','В ленте материалов','728×90',3000,135000],
+    ['Баннер в галерее','content','Среди изображений','400×400',2600,85000],
+    ['Спонсорский блок','content','Отдельный выделенный блок','728×150',4200,115000],
+    ['Подпись под статьёй','content','Текстовая строка в конце','600×60',1500,70000],
+    // --- Каталог ---
+    ['Верх каталога','category','Над списком товаров','970×90',3800,130000],
+    ['Баннер между товарами','category','В сетке карточек','728×90',3000,120000],
+    ['Карточка-промо в сетке','category','Выделенная карточка среди товаров','300×300',3500,100000],
+    ['Баннер рубрики','category','На странице категории','728×120',2800,95000],
+    ['Липкий баннер каталога','category','Держится при прокрутке каталога','300×600',4800,110000],
+    ['Низ каталога','category','Под списком товаров','970×90',2400,80000],
+    // --- Попап ---
+    ['Всплывающее при входе','popup','Появляется через 5 секунд','600×400',7000,90000],
+    ['Модальное при уходе','popup','Показывается при попытке уйти','500×400',6000,80000],
+    ['Всплывающее снизу','popup','Полоса снизу экрана','728×120',4000,70000],
+    ['Окно подписки','popup','Поверх контента','400×300',3500,65000],
+    ['Баннер паузы','popup','Когда вкладка неактивна','600×500',5000,75000],
+    // --- Мобильная ---
+    ['Мобильный топ','mobile','Верх экрана на смартфоне','320×100',3500,95000],
+    ['Мобильный под контентом','mobile','Под статьёй в мобильной версии','320×100',2800,85000],
+    ['Мобильный между блоками','mobile','В ленте на телефоне','320×50',2000,70000],
+    ['Мобильный внизу','mobile','Закреплён внизу экрана','320×100',2200,65000],
+    ['Мобильный интерстишл','mobile','Полноэкранный на телефоне','320×480',4500,80000],
+    ['Мобильный нативный','mobile','Вписан в ленту','320×200',2600,60000],
+    ['Мобильный в каталоге','mobile','Среди товаров на смартфоне','320×100',2400,55000],
+    // --- Видео ---
+    ['Пре-ролл 15 сек','player','Перед началом видео','видео 15с',8000,100000],
+    ['Мид-ролл 10 сек','player','В середине ролика','видео 10с',6500,85000],
+    ['Оверлей на видео','player','Поверх плеера','баннер',5500,90000],
+    ['Пост-ролл 10 сек','player','После окончания видео','видео 10с',4000,60000],
+    // --- Подвал ---
+    ['Баннер в подвале','footer','Над копирайтом','970×90',1500,60000],
+    ['Блок партнёров в подвале','footer','Ряд логотипов внизу','728×90',1200,50000],
+    ['Строка в подвале','footer','Текстовая полоса','970×60',1000,45000]
+];
 
 /* ================== ХРАНИЛИЩЕ ================== */
-const LS_STATE = 'adnex_state_v2';
-const LS_ORDERS = 'adnex_orders_v2';
+const LS_STATE  = 'adnex_state_v3';
+const LS_ORDERS = 'adnex_orders_v3';
 
-const DEFAULT_STATE = {
-    slots: [
-        { id:1, name:'Сектор 01', pos:'Баннер в шапке — виден всем сразу', price:5000, status:'free', ad:null, zone:'header' },
-        { id:2, name:'Сектор 02', pos:'Боковой баннер на главной', price:3000, status:'free', ad:null, zone:'sidebar' },
-        { id:3, name:'Сектор 03', pos:'Блок внутри статьи', price:2000, status:'free', ad:null, zone:'content' },
-        { id:4, name:'Сектор 04', pos:'Всплывающее окно при входе', price:7000, status:'free', ad:null, zone:'popup' },
-        { id:5, name:'Сектор 05', pos:'Реклама в мобильной версии', price:2500, status:'free', ad:null, zone:'mobile' },
-        { id:6, name:'Сектор 06', pos:'Подвал сайта — все страницы', price:1500, status:'free', ad:null, zone:'footer' }
-    ],
-    ticker: [
-        'Реклама на площадке — от 1 500 ₽/мес',
-        'Свободные секторы обновляются каждый день',
-        'Разместите баннер и получайте клиентов'
-    ],
-    settings: { password: 'admin2060', tickerPrice: 800 }
-};
+function buildDefault(){
+    const slots = SLOTS_RAW.map((r, i) => ({
+        id: i + 1, name: r[0], zone: r[1], pos: r[2], size: r[3],
+        price: r[4], views: r[5], status: 'free', ad: null
+    }));
+    // несколько занятых мест для наглядности
+    const demo = [
+        [2,  { type:'text', text:'Здесь могла быть ваша реклама', url:'', buyer:'Demo', views:0 }],
+        [7,  { type:'text', text:'Ваш баннер 300×250', url:'', buyer:'Demo', views:0 }],
+        [16, { type:'text', text:'Реклама в статье', url:'', buyer:'Demo', views:0 }],
+        [31, { type:'text', text:'Всплывающее окно', url:'', buyer:'Demo', views:0 }],
+        [43, { type:'text', text:'Видео-реклама', url:'', buyer:'Demo', views:0 }]
+    ];
+    demo.forEach(([id, ad]) => {
+        const s = slots.find(x => x.id === id);
+        if(s){ s.status = 'busy'; s.ad = ad; }
+    });
+
+    const tickers = [];
+    for(let i = 0; i < 50; i++){
+        tickers.push({
+            id: i + 1, text: '', price: 500 + (i % 5) * 100,
+            status: 'free', buyer: ''
+        });
+    }
+    // пара занятых строк
+    tickers[0].status = 'busy'; tickers[0].text = 'Скидки на рекламу до конца месяца'; tickers[0].buyer = 'Demo';
+    tickers[4].status = 'busy'; tickers[4].text = 'Разместите баннер — получите клиентов'; tickers[4].buyer = 'Demo';
+
+    return { slots, tickers, settings: { password:'admin2060', tickerPrice:600 } };
+}
 
 function clone(o){ return JSON.parse(JSON.stringify(o)); }
 function loadState(){
-    try{ const s = localStorage.getItem(LS_STATE); return s ? JSON.parse(s) : clone(DEFAULT_STATE); }
-    catch(e){ return clone(DEFAULT_STATE); }
+    try{ const s = localStorage.getItem(LS_STATE); return s ? JSON.parse(s) : buildDefault(); }
+    catch(e){ return buildDefault(); }
 }
 function loadOrders(){
     try{ const s = localStorage.getItem(LS_ORDERS); return s ? JSON.parse(s) : []; }
@@ -533,33 +538,39 @@ let orders = loadOrders();
 function saveState(){ localStorage.setItem(LS_STATE, JSON.stringify(state)); }
 function saveOrders(){ localStorage.setItem(LS_ORDERS, JSON.stringify(orders)); }
 function escapeHtml(s){
-    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+        ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
+function money(n){ return Number(n).toLocaleString('ru-RU'); }
 
 /* ================== TELEGRAM ================== */
 async function sendToTelegram(text){
     if(!CONFIG.BOT_TOKEN || CONFIG.BOT_TOKEN.indexOf('ВСТАВЬ') === 0){
-        console.warn('Telegram не настроен. Сообщение:', text);
+        console.warn('Telegram не настроен:', text);
         return false;
     }
     try{
         const res = await fetch('https://api.telegram.org/bot' + CONFIG.BOT_TOKEN + '/sendMessage', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ chat_id: CONFIG.CHAT_ID, text: text, parse_mode: 'HTML' })
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ chat_id: CONFIG.CHAT_ID, text, parse_mode:'HTML' })
         });
         return res.ok;
     }catch(e){ console.error(e); return false; }
 }
 
-/* ================== ОТРИСОВКА ================== */
-const viewedThisSession = new Set();
-
-function renderTicker(){
-    const html = state.ticker.map(t => '<b>✦</b> ' + escapeHtml(t)).join(' &nbsp;&nbsp; ');
+/* ================== БЕГУЩАЯ СТРОКА СВЕРХУ ================== */
+function renderTopTicker(){
+    const busy = state.tickers.filter(t => t.status === 'busy' && t.text);
+    const msgs = busy.length
+        ? busy.map(t => t.text)
+        : ['Реклама на площадке — от 1 000 ₽/мес', '50 мест в бегущей строке', 'Свободные секторы обновляются каждый день'];
+    const html = msgs.map(t => '<b>✦</b> ' + escapeHtml(t)).join(' &nbsp;&nbsp; ');
     document.getElementById('tickerTrack').innerHTML =
         '<span>' + html + '</span><span>' + html + '</span>';
 }
+
+/* ================== ОТРИСОВКА СЕКТОРОВ ================== */
+const viewedThisSession = new Set();
 
 function renderAd(ad){
     let inner = '<div class="ad-box">';
@@ -567,7 +578,7 @@ function renderAd(ad){
         inner += '<a href="' + escapeHtml(ad.url || '#') + '" target="_blank" rel="noopener">' +
                  '<img src="' + ad.img + '" alt="Реклама"></a>';
     }else if(ad.type === 'html' && ad.html){
-        inner += '<div class="ad-html">' + ad.html + '</div>';
+        inner += '<div style="padding:10px">' + ad.html + '</div>';
     }else{
         inner += '<a class="ad-text" href="' + escapeHtml(ad.url || '#') + '" target="_blank" rel="noopener">' +
                  escapeHtml(ad.text || 'Реклама') + '</a>';
@@ -576,132 +587,193 @@ function renderAd(ad){
     return inner;
 }
 
-/* КАРТА */
-function renderMap(){
-    Object.keys(ZONES).forEach(z => {
-        const box = document.getElementById('mzchips-' + z);
-        if(box) box.innerHTML = '';
+function getFilteredSlots(){
+    const zone   = document.getElementById('fZone').value;
+    const status = document.getElementById('fStatus').value;
+    const sort   = document.getElementById('fSort').value;
+    const q      = document.getElementById('fSearch').value.trim().toLowerCase();
+
+    let list = state.slots.filter(s => {
+        if(zone !== 'all' && s.zone !== zone) return false;
+        if(status === 'free' && s.status !== 'free') return false;
+        if(status === 'busy' && s.status !== 'busy') return false;
+        if(q && !((s.name + ' ' + s.pos + ' ' + ZONES[s.zone].label).toLowerCase().includes(q))) return false;
+        return true;
     });
-    state.slots.forEach((s, i) => {
-        const z = ZONES[s.zone] ? s.zone : 'content';
-        const box = document.getElementById('mzchips-' + z);
-        if(!box) return;
-        const chip = document.createElement('button');
-        chip.className = 'zchip ' + (s.status === 'busy' ? 'busy' : 'free');
-        chip.textContent = i + 1;
-        chip.title = s.name + ' — ' + (s.status === 'busy' ? 'занято' : 'свободно');
-        chip.addEventListener('click', () => {
-            const card = document.getElementById('slot-' + s.id);
-            if(card){
-                card.scrollIntoView({ behavior:'smooth', block:'center' });
-                card.classList.add('flash');
-                setTimeout(() => card.classList.remove('flash'), 1200);
-            }
-        });
-        box.appendChild(chip);
-    });
+
+    if(sort === 'price-asc')  list.sort((a,b) => a.price - b.price);
+    else if(sort === 'price-desc') list.sort((a,b) => b.price - a.price);
+    else if(sort === 'views') list.sort((a,b) => b.views - a.views);
+    else list.sort((a,b) => a.id - b.id);
+    return list;
+}
+
+function slotCard(s){
+    const zone = ZONES[s.zone];
+    const card = document.createElement('div');
+    card.className = 'slot';
+    card.id = 'slot-' + s.id;
+
+    if(s.status === 'busy' && s.ad && !viewedThisSession.has(s.id)){
+        viewedThisSession.add(s.id);
+        s.ad.views = (s.ad.views || 0) + 1;
+        saveState();
+    }
+
+    let inner =
+        '<div class="slot-head">' +
+            '<span class="slot-num">' + s.id + '</span>' +
+            '<div class="slot-title"><b>' + escapeHtml(s.name) + '</b>' +
+            '<span class="slot-zone">' + zone.icon + ' ' + zone.label + '</span></div>' +
+            '<span class="badge ' + (s.status === 'busy' ? 'busy' : 'free') + '">' +
+                (s.status === 'busy' ? 'занято' : 'свободно') + '</span>' +
+        '</div>' +
+        '<div class="slot-desc">' + escapeHtml(s.pos) + '</div>' +
+        '<div class="slot-specs">' +
+            '<span>📐 ' + escapeHtml(s.size) + '</span>' +
+            '<span>👁 ~' + money(s.views) + ' показов</span>' +
+            '<span>📅 от 1 месяца</span>' +
+            '<span>📈 отчёт по кликам</span>' +
+        '</div>';
+
+    if(s.status === 'busy' && s.ad){
+        inner += renderAd(s.ad);
+        inner += '<button class="btn btn-ghost" disabled>Место занято</button>';
+    }else{
+        inner += '<div class="price">' + money(s.price) + ' ₽<small> / мес</small></div>';
+        inner += '<button class="btn btn-main" onclick="openOrder(' + s.id + ')">Забронировать</button>';
+    }
+    card.innerHTML = inner;
+    return card;
 }
 
 function renderSlots(){
-    const grid = document.getElementById('slotGrid');
-    grid.innerHTML = '';
-    state.slots.forEach((s, i) => {
-        if(s.status === 'busy' && s.ad && !viewedThisSession.has(s.id)){
-            viewedThisSession.add(s.id);
-            s.ad.views = (s.ad.views || 0) + 1;
-            saveState();
-        }
-        const card = document.createElement('div');
-        card.className = 'slot';
-        card.id = 'slot-' + s.id;
-        const zone = ZONES[s.zone] || ZONES.content;
+    const box = document.getElementById('slotZones');
+    box.innerHTML = '';
+    const list = getFilteredSlots();
 
-        let inner =
-            '<div class="slot-head">' +
-                '<span class="slot-num">' + (i + 1) + '</span>' +
-                '<div class="slot-title">' +
-                    '<b>' + escapeHtml(s.name) + '</b>' +
-                    '<span class="slot-zone">' + zone.icon + ' ' + zone.label + '</span>' +
-                '</div>' +
-                '<span class="badge ' + (s.status === 'busy' ? 'busy' : 'free') + '">' +
-                    (s.status === 'busy' ? 'занято' : 'свободно') + '</span>' +
-            '</div>' +
-            '<div class="slot-desc">' + escapeHtml(s.pos) + '</div>';
+    if(!list.length){
+        box.innerHTML = '<div style="text-align:center;color:var(--dim);padding:40px">Ничего не найдено — измените фильтры.</div>';
+        updateStats();
+        return;
+    }
 
-        if(s.status === 'busy' && s.ad){
-            inner += renderAd(s.ad);
-            const until = s.ad.until ? ' · до ' + s.ad.until : '';
-            inner += '<div class="ad-meta">Реклама: ' + escapeHtml(s.ad.buyer || 'заказчик') + until + '</div>';
-            inner += '<button class="btn btn-ghost" disabled>Место занято</button>';
-        }else{
-            inner += '<div class="slot-meta">' +
-                        '<span>📅 от 1 месяца</span>' +
-                        '<span>🖼 баннер до 900 px</span>' +
-                        '<span>📈 отчёт по показам</span>' +
-                     '</div>';
-            inner += '<div class="price">' + s.price.toLocaleString('ru-RU') + ' ₽<small> / мес</small></div>';
-            inner += '<button class="btn btn-main" onclick="openOrder(' + s.id + ')">Забронировать</button>';
-        }
+    // группируем по зонам в порядке ZONES
+    Object.keys(ZONES).forEach(z => {
+        const inZone = list.filter(s => s.zone === z);
+        if(!inZone.length) return;
+        const free = inZone.filter(s => s.status === 'free').length;
 
-        card.innerHTML = inner;
-        grid.appendChild(card);
+        const group = document.createElement('div');
+        group.className = 'zone-group';
+        group.innerHTML =
+            '<div class="zone-head">' +
+                '<span class="zi">' + ZONES[z].icon + '</span>' +
+                '<div><div class="zt">' + ZONES[z].label + '</div>' +
+                '<div class="zd">' + ZONES[z].desc + '</div></div>' +
+                '<span class="zc">' + free + ' свободно</span>' +
+            '</div>';
+
+        const grid = document.createElement('div');
+        grid.className = 'slot-grid';
+        inZone.forEach(s => grid.appendChild(slotCard(s)));
+        group.appendChild(grid);
+        box.appendChild(group);
     });
 
-    const free = state.slots.filter(s => s.status !== 'busy').length;
+    updateStats();
+}
+
+function updateStats(){
+    const free = state.slots.filter(s => s.status === 'free').length;
     document.getElementById('stFree').textContent = free;
     document.getElementById('stTotal').textContent = state.slots.length;
+    const prices = state.slots.filter(s => s.status === 'free').map(s => s.price);
+    document.getElementById('stMin').textContent = prices.length ? money(Math.min.apply(null, prices)) : '—';
+}
+
+/* ================== ОТРИСОВКА ТИКЕРА ================== */
+function renderTickerList(){
+    const box = document.getElementById('tickerList');
+    box.innerHTML = '';
+    state.tickers.forEach(t => {
+        const row = document.createElement('div');
+        row.className = 'tick-item';
+        const free = t.status === 'free';
+        row.innerHTML =
+            '<span class="tn">№' + t.id + '</span>' +
+            '<span class="tt">' + (free ? 'Свободное место в строке' : escapeHtml(t.text)) + '</span>' +
+            '<span class="tp">' + money(t.price) + ' ₽</span>' +
+            (free
+                ? '<button class="tb" onclick="openTickerOrder(' + t.id + ')">Купить</button>'
+                : '<button class="tb" disabled>Занято</button>');
+        box.appendChild(row);
+    });
 }
 
 function renderAll(){
-    renderTicker();
+    renderTopTicker();
     renderSlots();
-    renderMap();
-    document.getElementById('tickerPriceView').textContent =
-        Number(state.settings.tickerPrice).toLocaleString('ru-RU');
+    renderTickerList();
 }
+
+/* ================== ФИЛЬТРЫ ================== */
+function initFilters(){
+    const zSel = document.getElementById('fZone');
+    Object.keys(ZONES).forEach(z => {
+        const o = document.createElement('option');
+        o.value = z; o.textContent = ZONES[z].label;
+        zSel.appendChild(o);
+    });
+    ['fZone','fStatus','fSort'].forEach(id =>
+        document.getElementById(id).addEventListener('change', renderSlots));
+    document.getElementById('fSearch').addEventListener('input', renderSlots);
+}
+initFilters();
 renderAll();
 
 /* ================== МОДАЛКА ПОКУПКИ ================== */
-let orderCtx = { mode:'slot', slotId:null, price:0, isAdmin:false };
+let orderCtx = { mode:'slot', slotId:null, tickerId:null, price:0 };
 let orderType = 'image';
 let orderImage = '';
 
 function openOrder(id){
-    orderCtx.mode = (id === 'ticker') ? 'ticker' : 'slot';
-    orderCtx.isAdmin = false;
-    const title = document.getElementById('orderTitle');
-    const sub = document.getElementById('orderSubtitle');
+    const s = state.slots.find(x => x.id === id);
+    if(!s || s.status === 'busy') return;
+    orderCtx = { mode:'slot', slotId:id, tickerId:null, price:s.price };
+    document.getElementById('orderTitle').textContent = 'Бронь: ' + s.name;
+    document.getElementById('orderSubtitle').textContent = s.pos + ' · ' + money(s.price) + ' ₽/мес';
+    document.getElementById('typeField').style.display = 'block';
+    setType('image');
+    resetOrderForm();
+    document.getElementById('orderOverlay').classList.add('on');
+}
 
-    if(orderCtx.mode === 'ticker'){
-        orderCtx.price = Number(state.settings.tickerPrice);
-        title.textContent = 'Бегущая строка';
-        sub.textContent = 'Строка вверху сайта · ' + orderCtx.price.toLocaleString('ru-RU') + ' ₽/мес';
-        document.getElementById('typeField').style.display = 'none';
-        setType('text');
-        document.getElementById('oText').value = '';
-        document.getElementById('oText').placeholder = 'Текст бегущей строки';
-    }else{
-        const s = state.slots.find(x => x.id === id);
-        if(!s || s.status === 'busy') return;
-        orderCtx.slotId = id;
-        orderCtx.price = s.price;
-        title.textContent = 'Бронь: ' + s.name;
-        sub.textContent = s.pos + ' · ' + s.price.toLocaleString('ru-RU') + ' ₽/мес';
-        document.getElementById('typeField').style.display = 'block';
-        setType('image');
-    }
+function openTickerOrder(id){
+    const t = state.tickers.find(x => x.id === id);
+    if(!t || t.status === 'busy') return;
+    orderCtx = { mode:'ticker', slotId:null, tickerId:id, price:t.price };
+    document.getElementById('orderTitle').textContent = 'Место в бегущей строке №' + t.id;
+    document.getElementById('orderSubtitle').textContent = 'Строка наверху сайта · ' + money(t.price) + ' ₽/мес';
+    document.getElementById('typeField').style.display = 'none';
+    setType('text');
+    resetOrderForm();
+    document.getElementById('oText').placeholder = 'Текст вашей бегущей строки';
+    document.getElementById('orderOverlay').classList.add('on');
+}
 
+function resetOrderForm(){
     orderImage = '';
     document.getElementById('oPreview').style.display = 'none';
     document.getElementById('oPreviewImg').src = '';
     document.getElementById('oFile').value = '';
     document.getElementById('oHtml').value = '';
+    document.getElementById('oText').value = '';
     document.getElementById('oName').value = '';
     document.getElementById('oContact').value = '';
     document.getElementById('oUrl').value = '';
     document.getElementById('oTerm').value = '1';
     updateTotal();
-    document.getElementById('orderOverlay').classList.add('on');
 }
 function closeOrder(){ document.getElementById('orderOverlay').classList.remove('on'); }
 
@@ -710,14 +782,12 @@ function setType(t){
     document.querySelectorAll('#typeSeg .seg-btn').forEach(b =>
         b.classList.toggle('active', b.dataset.type === t));
     document.querySelector('.t-image').style.display = (t === 'image') ? 'block' : 'none';
-    document.querySelector('.t-text').style.display = (t === 'text') ? 'block' : 'none';
-    document.querySelector('.t-html').style.display = (t === 'html') ? 'block' : 'none';
+    document.querySelector('.t-text').style.display  = (t === 'text')  ? 'block' : 'none';
+    document.querySelector('.t-html').style.display  = (t === 'html')  ? 'block' : 'none';
 }
-document.querySelectorAll('#typeSeg .seg-btn').forEach(b => {
-    b.addEventListener('click', () => setType(b.dataset.type));
-});
+document.querySelectorAll('#typeSeg .seg-btn').forEach(b =>
+    b.addEventListener('click', () => setType(b.dataset.type)));
 
-/* Загрузка картинки со сжатием */
 document.getElementById('oFile').addEventListener('change', function(){
     const file = this.files[0];
     if(!file) return;
@@ -728,7 +798,7 @@ document.getElementById('oFile').addEventListener('change', function(){
             const maxW = 900;
             const scale = Math.min(1, maxW / img.width);
             const c = document.createElement('canvas');
-            c.width = Math.round(img.width * scale);
+            c.width  = Math.round(img.width * scale);
             c.height = Math.round(img.height * scale);
             c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
             orderImage = c.toDataURL('image/jpeg', 0.82);
@@ -742,113 +812,87 @@ document.getElementById('oFile').addEventListener('change', function(){
 
 function termDiscount(m){
     if(m >= 12) return 0.20;
-    if(m >= 6) return 0.15;
-    if(m >= 3) return 0.10;
+    if(m >= 6)  return 0.15;
+    if(m >= 3)  return 0.10;
     return 0;
 }
 function calcTotal(){
     const m = parseInt(document.getElementById('oTerm').value, 10) || 1;
-    const base = orderCtx.price * m;
-    return Math.round(base * (1 - termDiscount(m)));
+    return Math.round(orderCtx.price * m * (1 - termDiscount(m)));
 }
 function updateTotal(){
-    document.getElementById('oTotal').textContent = 'Итого: ' + calcTotal().toLocaleString('ru-RU') + ' ₽';
+    document.getElementById('oTotal').textContent = 'Итого: ' + money(calcTotal()) + ' ₽';
 }
 document.getElementById('oTerm').addEventListener('change', updateTotal);
 
 document.getElementById('orderSubmit').addEventListener('click', async () => {
-    const name = document.getElementById('oName').value.trim();
+    const name    = document.getElementById('oName').value.trim();
     const contact = document.getElementById('oContact').value.trim();
-    const url = document.getElementById('oUrl').value.trim();
-    const text = document.getElementById('oText').value.trim();
-    const html = document.getElementById('oHtml').value.trim();
-    const months = parseInt(document.getElementById('oTerm').value, 10) || 1;
+    const url     = document.getElementById('oUrl').value.trim();
+    const text    = document.getElementById('oText').value.trim();
+    const html    = document.getElementById('oHtml').value.trim();
+    const months  = parseInt(document.getElementById('oTerm').value, 10) || 1;
 
     if(!name || !contact){ alert('Заполните имя и контакт.'); return; }
+
     if(orderCtx.mode === 'ticker'){
         if(!text){ alert('Введите текст строки.'); return; }
-    }else if(orderType === 'image' && !orderImage){
-        alert('Загрузите картинку баннера.'); return;
-    }else if(orderType === 'html' && !html){
-        alert('Вставьте HTML-код баннера.'); return;
-    }else if(orderType === 'text' && !text){
-        alert('Введите текст объявления.'); return;
+    }else{
+        if(orderType === 'image' && !orderImage){ alert('Загрузите картинку баннера.'); return; }
+        if(orderType === 'html'  && !html){ alert('Вставьте HTML-код баннера.'); return; }
+        if(orderType === 'text'  && !text){ alert('Введите текст объявления.'); return; }
     }
 
     const btn = document.getElementById('orderSubmit');
-    btn.textContent = 'Обработка…';
-    btn.disabled = true;
+    btn.textContent = 'Обработка…'; btn.disabled = true;
 
     const until = new Date();
     until.setMonth(until.getMonth() + months);
     const untilStr = until.toLocaleDateString('ru-RU');
     const total = calcTotal();
 
+    let what = '';
     if(orderCtx.mode === 'ticker'){
-        state.ticker.push(text + (url ? ' — ' + url : ''));
+        const t = state.tickers.find(x => x.id === orderCtx.tickerId);
+        if(t){ t.status = 'busy'; t.text = text + (url ? ' — ' + url : ''); t.buyer = name; }
+        what = 'Бегущая строка №' + orderCtx.tickerId;
     }else{
         const s = state.slots.find(x => x.id === orderCtx.slotId);
         if(s){
             s.status = 'busy';
-            s.ad = {
-                type: orderType,
-                img: orderType === 'image' ? orderImage : '',
-                text: text,
-                html: html,
-                url: url,
-                buyer: name,
-                contact: contact,
-                months: months,
-                until: untilStr,
-                views: 0,
-                clicks: 0
-            };
+            s.ad = { type: orderType, img: orderType === 'image' ? orderImage : '',
+                     text, html, url, buyer: name, contact, months, until: untilStr, views: 0 };
         }
+        what = (state.slots.find(x => x.id === orderCtx.slotId) || {}).name;
     }
 
-    const orderRecord = {
-        id: Date.now(),
-        mode: orderCtx.mode,
-        slot: orderCtx.mode === 'slot'
-            ? (state.slots.find(x => x.id === orderCtx.slotId) || {}).name
-            : 'Бегущая строка',
+    orders.unshift({
+        id: Date.now(), slot: what,
         type: orderCtx.mode === 'ticker' ? 'ticker' : orderType,
-        name: name,
-        contact: contact,
-        url: url,
-        text: orderCtx.mode === 'ticker' ? text : (text || ''),
-        months: months,
-        total: total,
+        name, contact, url, text, months, total,
         date: new Date().toLocaleString('ru-RU')
-    };
-    orders.unshift(orderRecord);
-    saveOrders();
-    saveState();
+    });
+    saveOrders(); saveState();
 
     const tgText =
         '🚀 <b>Новая покупка на площадке</b>\n\n' +
-        '<b>Что:</b> ' + orderRecord.slot + '\n' +
-        '<b>Тип:</b> ' + orderRecord.type + '\n' +
+        '<b>Что:</b> ' + what + '\n' +
         '<b>Имя:</b> ' + name + '\n' +
         '<b>Контакт:</b> ' + contact + '\n' +
         (url ? '<b>Ссылка:</b> ' + url + '\n' : '') +
         (text ? '<b>Текст:</b> ' + text + '\n' : '') +
         '<b>Срок:</b> ' + months + ' мес.\n' +
-        '<b>Сумма:</b> ' + total.toLocaleString('ru-RU') + ' ₽\n' +
-        '\n🕒 ' + new Date().toLocaleString('ru-RU');
-
+        '<b>Сумма:</b> ' + money(total) + ' ₽\n\n🕒 ' + new Date().toLocaleString('ru-RU');
     await sendToTelegram(tgText);
 
-    btn.textContent = 'Разместить';
-    btn.disabled = false;
-    closeOrder();
-    renderAll();
+    btn.textContent = 'Разместить'; btn.disabled = false;
+    closeOrder(); renderAll();
     alert('Готово! Размещение активировано. Реквизиты для оплаты пришлём в ответном сообщении.');
 });
 
 /* ================== ЧАТ ================== */
 const chatPanel = document.getElementById('chatPanel');
-const chatBody = document.getElementById('chatBody');
+const chatBody  = document.getElementById('chatBody');
 let chatStarted = false;
 
 document.getElementById('chatBtn').addEventListener('click', () => {
@@ -860,17 +904,14 @@ document.getElementById('chatBtn').addEventListener('click', () => {
 });
 function addChat(text, cls){
     const d = document.createElement('div');
-    d.className = 'cm ' + cls;
-    d.textContent = text;
-    chatBody.appendChild(d);
-    chatBody.scrollTop = chatBody.scrollHeight;
+    d.className = 'cm ' + cls; d.textContent = text;
+    chatBody.appendChild(d); chatBody.scrollTop = chatBody.scrollHeight;
 }
 async function sendChat(){
     const f = document.getElementById('chatField');
     const v = f.value.trim();
     if(!v) return;
-    addChat(v, 'me');
-    f.value = '';
+    addChat(v, 'me'); f.value = '';
     const ok = await sendToTelegram('💬 <b>Сообщение из чата</b>\n\n' + v + '\n\n🕒 ' + new Date().toLocaleString('ru-RU'));
     addChat(ok ? 'Доставлено оператору.' : 'Чат не подключён — оставьте заявку через кнопку «Забронировать».', 'sys');
 }
@@ -907,6 +948,8 @@ function zoneOptions(sel){
 }
 
 function renderAdmin(){
+    // селект зон в форме добавления
+    document.getElementById('aZone').innerHTML = zoneOptions('header');
     renderAdminSlots();
     renderAdminTicker();
     renderAdminOrders();
@@ -925,17 +968,19 @@ function renderAdminSlots(){
                 '<input class="a-in sm" type="number" value="' + s.price + '" data-id="' + s.id + '" data-f="price">' +
             '</div>' +
             '<input class="a-in" style="margin-top:8px" value="' + escapeHtml(s.pos) + '" data-id="' + s.id + '" data-f="pos">' +
+            '<div class="adm-row" style="margin-top:8px">' +
+                '<input class="a-in" value="' + escapeHtml(s.size) + '" data-id="' + s.id + '" data-f="size">' +
+                '<input class="a-in sm" type="number" value="' + s.views + '" data-id="' + s.id + '" data-f="views">' +
+            '</div>' +
             '<select class="a-in" style="margin-top:8px" data-id="' + s.id + '" data-f="zone">' + zoneOptions(s.zone) + '</select>' +
             '<div class="adm-btns">' +
                 '<button class="mini" onclick="adminSave(' + s.id + ')">💾 Сохранить</button>' +
-                '<button class="mini act" onclick="adminAd(' + s.id + ')">🎨 Реклама</button>' +
-                '<button class="mini" onclick="adminToggle(' + s.id + ')">' + (s.status === 'busy' ? 'Освободить' : 'Занять') + '</button>' +
+                '<button class="mini" onclick="adminAd(' + s.id + ')">🎨 Реклама</button>' +
+                '<button class="mini act" onclick="adminToggle(' + s.id + ')">' + (s.status === 'busy' ? 'Освободить' : 'Занять') + '</button>' +
                 '<button class="mini del" onclick="adminDel(' + s.id + ')">✕</button>' +
             '</div>' +
-            '<div class="adm-stat">' +
-                (s.status === 'busy' ? '● занято' : '○ свободно') +
-                (s.ad ? ' · просмотры: ' + (s.ad.views || 0) + ' · клики: ' + (s.ad.clicks || 0) : '') +
-            '</div>';
+            '<div class="adm-stat">' + (s.status === 'busy' ? '● занято' : '○ свободно') +
+                (s.ad ? ' · просмотры: ' + (s.ad.views || 0) : '') + '</div>';
         box.appendChild(d);
     });
 }
@@ -945,30 +990,32 @@ function adminSave(id){
     if(!s) return;
     document.querySelectorAll('[data-id="' + id + '"]').forEach(inp => {
         const f = inp.dataset.f;
-        if(f === 'price') s.price = parseInt(inp.value, 10) || 0;
+        if(f === 'price' || f === 'views') s[f] = parseInt(inp.value, 10) || 0;
         else s[f] = inp.value;
     });
     saveState(); renderAll(); renderAdmin();
 }
 
 function adminAdd(){
-    const name = document.getElementById('aName').value.trim();
-    const pos = document.getElementById('aPos').value.trim();
+    const name  = document.getElementById('aName').value.trim();
+    const pos   = document.getElementById('aPos').value.trim();
+    const size  = document.getElementById('aSize').value.trim();
     const price = parseInt(document.getElementById('aPrice').value, 10);
-    const zone = document.getElementById('aZone').value;
+    const views = parseInt(document.getElementById('aViews').value, 10) || 0;
+    const zone  = document.getElementById('aZone').value;
     if(!name || !price){ alert('Заполните название и цену.'); return; }
-    state.slots.push({ id: Date.now(), name, pos: pos || 'Рекламное место', price, status:'free', ad:null, zone });
+    const maxId = state.slots.reduce((m, s) => Math.max(m, s.id), 0);
+    state.slots.push({ id: maxId + 1, name, pos: pos || 'Рекламное место',
+        size: size || '728×90', price, views, status: 'free', ad: null, zone });
     saveState(); renderAll(); renderAdmin();
-    document.getElementById('aName').value = '';
-    document.getElementById('aPos').value = '';
-    document.getElementById('aPrice').value = '';
+    ['aName','aPos','aSize','aPrice','aViews'].forEach(id => document.getElementById(id).value = '');
 }
 
 function adminToggle(id){
     const s = state.slots.find(x => x.id === id);
     if(!s) return;
     if(s.status === 'busy'){ s.status = 'free'; s.ad = null; }
-    else{ s.status = 'busy'; s.ad = s.ad || { type:'text', text:'Рекламное место', url:'', buyer:'—', views:0, clicks:0 }; }
+    else{ s.status = 'busy'; s.ad = s.ad || { type:'text', text:'Рекламное место', url:'', buyer:'—', views:0 }; }
     saveState(); renderAll(); renderAdmin();
 }
 
@@ -978,63 +1025,60 @@ function adminDel(id){
     saveState(); renderAll(); renderAdmin();
 }
 
-/* Реклама через админку — открываем ту же модалку, но без Telegram */
 function adminAd(id){
     const s = state.slots.find(x => x.id === id);
     if(!s) return;
-    orderCtx.mode = 'slot';
-    orderCtx.slotId = id;
-    orderCtx.price = s.price;
-    orderCtx.isAdmin = true;
+    orderCtx = { mode:'slot', slotId:id, tickerId:null, price:s.price };
     document.getElementById('orderTitle').textContent = 'Реклама: ' + s.name;
     document.getElementById('orderSubtitle').textContent = 'Заполните вручную или оставьте как есть.';
     document.getElementById('typeField').style.display = 'block';
     setType(s.ad && s.ad.type ? s.ad.type : 'image');
+    resetOrderForm();
     if(s.ad){
-        document.getElementById('oText').value = s.ad.text || '';
-        document.getElementById('oHtml').value = s.ad.html || '';
-        document.getElementById('oUrl').value = s.ad.url || '';
-        document.getElementById('oName').value = s.ad.buyer || '';
-        document.getElementById('oContact').value = s.ad.contact || '';
+        document.getElementById('oText').value    = s.ad.text || '';
+        document.getElementById('oHtml').value    = s.ad.html || '';
+        document.getElementById('oUrl').value     = s.ad.url || '';
+        document.getElementById('oName').value    = s.ad.buyer || '';
         if(s.ad.img){
             orderImage = s.ad.img;
             document.getElementById('oPreviewImg').src = s.ad.img;
             document.getElementById('oPreview').style.display = 'block';
         }
-    }else{
-        document.getElementById('oText').value = '';
-        document.getElementById('oHtml').value = '';
-        document.getElementById('oUrl').value = '';
-        document.getElementById('oName').value = '';
-        document.getElementById('oContact').value = '';
-        orderImage = '';
-        document.getElementById('oPreview').style.display = 'none';
     }
     updateTotal();
     document.getElementById('orderOverlay').classList.add('on');
 }
 
-/* ================== СТРОКА ================== */
+/* ---- строка в админке ---- */
 function renderAdminTicker(){
     const box = document.getElementById('adminTicker');
     box.innerHTML = '';
-    state.ticker.forEach((t, i) => {
+    const busy = state.tickers.filter(t => t.status === 'busy').length;
+    const head = document.createElement('div');
+    head.className = 'adm-stat';
+    head.style.marginBottom = '10px';
+    head.textContent = 'Занято ' + busy + ' из ' + state.tickers.length + ' мест.';
+    box.appendChild(head);
+
+    state.tickers.forEach(t => {
         const d = document.createElement('div');
-        d.className = 'tick-row';
-        d.innerHTML = '<span>' + escapeHtml(t) + '</span>' +
-                      '<button class="mini del" onclick="tickerDel(' + i + ')">✕</button>';
+        d.className = 'tick-item';
+        d.style.marginBottom = '8px';
+        const free = t.status === 'free';
+        d.innerHTML =
+            '<span class="tn">№' + t.id + '</span>' +
+            '<span class="tt">' + (free ? 'свободно' : escapeHtml(t.text)) + '</span>' +
+            '<span class="tp">' + money(t.price) + ' ₽</span>' +
+            '<button class="mini ' + (free ? 'act' : 'del') + '" onclick="tickerToggle(' + t.id + ')">' +
+                (free ? 'Занять' : 'Освободить') + '</button>';
         box.appendChild(d);
     });
 }
-function tickerAdd(){
-    const v = document.getElementById('tLine').value.trim();
-    if(!v) return;
-    state.ticker.push(v);
-    saveState(); renderAll(); renderAdminTicker();
-    document.getElementById('tLine').value = '';
-}
-function tickerDel(i){
-    state.ticker.splice(i, 1);
+function tickerToggle(id){
+    const t = state.tickers.find(x => x.id === id);
+    if(!t) return;
+    if(t.status === 'busy'){ t.status = 'free'; t.text = ''; t.buyer = ''; }
+    else{ t.status = 'busy'; t.text = t.text || 'Рекламное объявление'; t.buyer = t.buyer || '—'; }
     saveState(); renderAll(); renderAdminTicker();
 }
 function tickerSavePrice(){
@@ -1045,38 +1089,28 @@ function tickerSavePrice(){
     alert('Цена сохранена.');
 }
 
-/* ================== ЗАЯВКИ ================== */
+/* ---- заявки ---- */
 function renderAdminOrders(){
     const box = document.getElementById('adminOrders');
     box.innerHTML = '';
-    if(!orders.length){
-        box.innerHTML = '<div class="adm-stat">Пока заявок нет.</div>';
-        return;
-    }
+    if(!orders.length){ box.innerHTML = '<div class="adm-stat">Пока заявок нет.</div>'; return; }
     orders.forEach(o => {
         const d = document.createElement('div');
         d.className = 'order-card';
         d.innerHTML =
             '<div class="oc-top"><b>' + escapeHtml(o.slot) + '</b>' +
             '<button class="mini del" onclick="orderDel(' + o.id + ')">✕</button></div>' +
-            '<div class="oc-line">Тип: ' + escapeHtml(o.type) + ' · ' + o.months + ' мес. · ' + o.total.toLocaleString('ru-RU') + ' ₽</div>' +
+            '<div class="oc-line">Тип: ' + escapeHtml(o.type) + ' · ' + o.months + ' мес. · ' + money(o.total) + ' ₽</div>' +
             '<div class="oc-line">Имя: ' + escapeHtml(o.name) + ' · ' + escapeHtml(o.contact) + '</div>' +
             (o.url ? '<div class="oc-line">Ссылка: ' + escapeHtml(o.url) + '</div>' : '') +
             '<div class="oc-line">' + escapeHtml(o.date) + '</div>';
         box.appendChild(d);
     });
 }
-function orderDel(id){
-    orders = orders.filter(o => o.id !== id);
-    saveOrders(); renderAdminOrders();
-}
-function ordersClear(){
-    if(!confirm('Очистить все заявки?')) return;
-    orders = [];
-    saveOrders(); renderAdminOrders();
-}
+function orderDel(id){ orders = orders.filter(o => o.id !== id); saveOrders(); renderAdminOrders(); }
+function ordersClear(){ if(!confirm('Очистить все заявки?')) return; orders = []; saveOrders(); renderAdminOrders(); }
 
-/* ================== НАСТРОЙКИ ================== */
+/* ---- настройки ---- */
 function settingsSave(){
     const p = document.getElementById('sPass').value.trim();
     if(!p){ alert('Введите пароль.'); return; }
@@ -1084,6 +1118,12 @@ function settingsSave(){
     saveState();
     document.getElementById('sPass').value = '';
     alert('Пароль изменён.');
+}
+function resetData(){
+    if(!confirm('Сбросить площадку к начальному виду? Все изменения и заявки удалятся.')) return;
+    localStorage.removeItem(LS_STATE);
+    localStorage.removeItem(LS_ORDERS);
+    location.reload();
 }
 </script>
 </body>
