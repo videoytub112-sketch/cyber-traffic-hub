@@ -2,9 +2,9 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>ADNEX MVP: Пробная зона видео</title>
+  <title>ADNEX MVP: Загрузка и показ рекламы</title>
   <style>
-    :root { --primary: #2c3e50; --accent: #3498db; --success: #2ecc71; --danger: #e74c3c; --bg: #f5f5f5; --card: #ffffff; }
+    :root { --primary: #2c3e50; --accent: #3498db; --success: #2ecc71; --danger: #e74c3c; --bg: #f5f5f5; --card: #ffffff; --border: #ddd; }
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; background: var(--bg); color: #333; }
     header { background: var(--primary); color: #fff; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     .container { max-width: 1200px; margin: 0 auto; padding: 1.5rem; }
@@ -13,11 +13,13 @@
     .main-content { background: var(--card); padding: 1.25rem; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
     h2 { margin-top: 0; color: var(--primary); }
     label { display: block; margin-top: 1rem; font-weight: 600; color: #555; }
-    input, select { width: 100%; padding: 0.625rem; margin-top: 0.375rem; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+    input, select { width: 100%; padding: 0.625rem; margin-top: 0.375rem; border: 1px solid var(--border); border-radius: 4px; box-sizing: border-box; }
     button { background: var(--accent); color: #fff; border: none; padding: 0.75rem 1.25rem; cursor: pointer; border-radius: 4px; font-weight: 600; transition: background 0.2s; }
     button:hover { background: #2980b9; }
     button.buy { background: var(--success); }
     button.buy:hover { background: #27ae60; }
+    button.danger { background: var(--danger); }
+    button.danger:hover { background: #c0392b; }
     .player-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; border-radius: 8px; overflow: hidden; margin-top: 1.5rem; }
     video, iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
     .status-badge { padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; color: #fff; text-transform: uppercase; font-weight: 700; }
@@ -26,37 +28,50 @@
     .log { margin-top: 1.5rem; padding: 0.75rem; background: #eee; border-radius: 4px; font-family: monospace; font-size: 0.875rem; max-height: 200px; overflow-y: auto; }
     .price-tag { font-weight: bold; color: var(--primary); margin-top: 0.5rem; }
     .hidden { display: none; }
+    .upload-preview { margin-top: 1rem; width: 100%; height: 180px; background: #000; border-radius: 4px; overflow: hidden; display: none; }
+    .upload-preview video { width: 100%; height: 100%; object-fit: cover; }
+    .file-info { margin-top: 0.5rem; font-size: 0.875rem; color: #666; }
   </style>
 </head>
 <body>
   <header>
-    <h1>ADNEX: Пробная зона</h1>
-    <div id="userStatus">Посетитель (тест)</div>
+    <h1>ADNEX: Загрузка рекламы</h1>
+    <div id="userStatus">Тестовый режим (Frontend Only)</div>
   </header>
   <div class="container">
     <div class="grid">
       <div class="sidebar">
-        <h2>Выбор зоны</h2>
-        <select id="zoneSelect">
-          <option value="all">Все зоны</option>
-          <option value="player" selected>Видео и плеер</option>
-        </select>
+        <h2>Слоты зоны</h2>
         <div id="zoneDetails"></div>
       </div>
       <div class="main-content">
-        <h2>Зона: Видео и плеер</h2>
-        <p>Выберите тип рекламы и протестируйте показ.</p>
+        <h2>Загрузка и бронирование рекламы</h2>
+        <p>Выберите тип и загрузите файл (эмуляция). В реальном проекте файл уйдет на S3/CDN.</p>
+        
         <label for="adType">Тип размещения</label>
         <select id="adType">
-          <option value="vast">Рекламный ролик (VAST/VPAID)</option>
-          <option value="banner">Баннер поверх плеера</option>
+          <option value="upload">Загрузить видеофайл (собственный ролик)</option>
           <option value="live">Live-трансляция (аренда)</option>
+          <option value="banner">Баннер (ссылка)</option>
         </select>
 
-        <!-- Форма бронирования Live -->
+        <!-- Форма загрузки файла -->
+        <div id="uploadForm" class="hidden">
+          <label for="adFile">Выберите видеофайл (MP4)</label>
+          <input type="file" id="adFile" accept="video/mp4">
+          <div class="upload-preview" id="previewBox">
+            <video id="previewVideo" controls loop></video>
+          </div>
+          <div class="file-info" id="fileInfo"></div>
+          <label for="duration">Длительность показа (сек)</label>
+          <input type="number" id="duration" value="15" min="5" max="300">
+          <button class="buy" onclick="confirmUpload()">Подтвердить загрузку и купить слот</button>
+        </div>
+
+        <!-- Форма Live -->
         <div id="liveForm" class="hidden">
           <label for="rtmpUrl">RTMP URL потока</label>
-          <input type="text" id="rtmpUrl" placeholder="rtmp://example.com/stream">
+          <input type="text" id="rtmpUrl" placeholder="rtmp://...">
           <label for="startDate">Дата и время начала</label>
           <input type="datetime-local" id="startDate">
           <label for="endDate">Дата и время окончания</label>
@@ -67,15 +82,15 @@
           <button class="buy" onclick="bookLiveSlot()">Купить слот</button>
         </div>
 
-        <!-- Форма загрузки VAST/Баннера (для теста) -->
-        <div id="vastForm" class="hidden">
-          <label for="vastUrl">URL VAST-тега или ссылка на баннер</label>
-          <input type="text" id="vastUrl" placeholder="https://...">
-          <button class="buy" onclick="triggerAdTest()">Запустить тест рекламы</button>
+        <!-- Форма Баннера -->
+        <div id="bannerForm" class="hidden">
+          <label for="bannerUrl">Ссылка на баннер (JPG/PNG)</label>
+          <input type="text" id="bannerUrl" placeholder="https://...">
+          <button class="buy" onclick="triggerBannerTest()">Показать баннер</button>
         </div>
 
         <div class="player-wrapper">
-          <video id="mainPlayer" controls poster="https://via.placeholder.com/1280x720?text=Основной+контент">
+          <video id="mainPlayer" poster="https://via.placeholder.com/1280x720?text=Основной+контент" controls>
             <source src="https://via.placeholder.com/1280x720?text=Видео+контент" type="video/mp4">
           </video>
           <div id="adOverlay" class="hidden" style="position:absolute; top:0; left:0; width:100%; height:100%; z-index:9999; background:#000;"></div>
@@ -88,17 +103,56 @@
   <script>
     // Данные слотов
     const SLOTS = [
-      { id: 'p1', name: 'Плеер A (24/7)', pricePerHour: 1200, status: 'free', rtmpUrl: '' },
-      { id: 'p2', name: 'Плеер B (прайм 18–23)', pricePerHour: 1800, status: 'free', rtmpUrl: '' }
+      { id: 'p1', name: 'Плеер A (24/7)', pricePerHour: 1200, status: 'free', content: null, type: null },
+      { id: 'p2', name: 'Плеер B (прайм 18–23)', pricePerHour: 1800, status: 'free', content: null, type: null }
     ];
+
+    // Переменные состояния
+    let currentFile = null;
+    let currentFileUrl = null;
 
     // Инициализация
     document.getElementById('adType').addEventListener('change', (e) => {
+      document.getElementById('uploadForm').classList.toggle('hidden', e.target.value !== 'upload');
       document.getElementById('liveForm').classList.toggle('hidden', e.target.value !== 'live');
-      document.getElementById('vastForm').classList.toggle('hidden', e.target.value !== 'vast' && e.target.value !== 'banner');
+      document.getElementById('bannerForm').classList.toggle('hidden', e.target.value !== 'banner');
+      
+      // Сброс превью при переключении
+      if(e.target.value !== 'upload') {
+        document.getElementById('previewBox').style.display = 'none';
+        currentFile = null;
+        currentFileUrl = null;
+      }
     });
 
-    // Расчет стоимости
+    // Обработка выбора файла
+    document.getElementById('adFile').addEventListener('change', (e) => {
+      const file = e.target.files;
+      if (!file) return;
+      
+      if (file.type !== 'video/mp4') {
+        alert('Пожалуйста, загрузите файл формата MP4');
+        e.target.value = '';
+        return;
+      }
+
+      currentFile = file;
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        currentFileUrl = event.target.result; // Data URL для превью
+        const preview = document.getElementById('previewVideo');
+        const box = document.getElementById('previewBox');
+        const info = document.getElementById('fileInfo');
+        
+        preview.src = currentFileUrl;
+        box.style.display = 'block';
+        info.textContent = `Файл: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} МБ)`;
+        log(`Файл выбран: \${file.name}`);
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Расчет стоимости Live
     function calculateLiveCost() {
       const start = new Date(document.getElementById('startDate').value).getTime();
       const end = new Date(document.getElementById('endDate').value).getTime();
@@ -108,12 +162,54 @@
       return hours * price;
     }
 
-    // Обновление стоимости в реальном времени
-    document.getElementById('startDate').addEventListener('input', () => document.getElementById('liveCost').textContent = calculateLiveCost());
-    document.getElementById('endDate').addEventListener('input', () => document.getElementById('liveCost').textContent = calculateLiveCost());
-    document.getElementById('pricePerHour').addEventListener('input', () => document.getElementById('liveCost').textContent = calculateLiveCost());
+    // Обновление UI боковой панели
+    function updateUI() {
+      const details = document.getElementById('zoneDetails');
+      details.innerHTML = SLOTS.map(s => `
+        <div style="margin-top:1rem; padding:0.75rem; background:#f9f9f9; border-radius:4px; border-left:4px solid \${s.status === 'free' ? 'var(--success)' : 'var(--danger)'}">
+          <strong>\${s.name}</strong>
+          <div class="status-badge status-${s.status === 'free' ? 'free' : 'busy'}">${s.status.toUpperCase()}</div>
+          \${s.type === 'upload' ? `<div style="color:#666; font-size:0.8rem;">Загружен ролик</div>` : ''}
+          <div class="price-tag">\${s.pricePerHour} ₽/час</div>
+        </div>
+      `).join('');
+    }
 
-    // Покупка слота (Live)
+    // Подтверждение загрузки (Эмуляция отправки на сервер)
+    function confirmUpload() {
+      if (!currentFile) {
+        alert('Сначала выберите файл');
+        return;
+      }
+      
+      const slot = SLOTS.find(s => s.status === 'free');
+      if (!slot) {
+        alert('Нет свободных слотов');
+        return;
+      }
+
+      // ЭМУЛЯЦИЯ ЗАГРУЗКИ:
+      // В реальности здесь был бы fetch('/api/upload', { formData })
+      // и получение URL от CDN (например, https://cdn.adnex.com/video/123.mp4)
+      
+      log(`Эмуляция загрузки файла "\${currentFile.name}" на CDN...`);
+      setTimeout(() => {
+        log(`Файл успешно загружен. URL: https://cdn.adnex.com/uploads/\${Date.now()}.mp4`);
+        
+        // Сохраняем "URL" в слот
+        slot.status = 'busy';
+        slot.type = 'upload';
+        slot.content = `https://cdn.adnex.com/uploads/\${Date.now()}.mp4`; // Имитация CDN URL
+        
+        updateUI();
+        alert('Ролик успешно загружен и забронирован! Проверьте плеер.');
+        
+        // Сразу запускаем показ для теста
+        triggerAdTest();
+      }, 1500); // Имитация задержки сети 1.5 сек
+    }
+
+    // Покупка Live слота
     function bookLiveSlot() {
       const rtmpUrl = document.getElementById('rtmpUrl').value.trim();
       const start = document.getElementById('startDate').value;
@@ -128,66 +224,88 @@
         return;
       }
       slot.status = 'busy';
-      slot.rtmpUrl = rtmpUrl;
+      slot.type = 'live';
+      slot.content = rtmpUrl;
       slot.startDate = new Date(start).getTime();
       slot.endDate = new Date(end).getTime();
-      log(`Слот ${slot.name} забронирован: ${start} — \${end}`);
+      log(`Слот \${slot.name} забронирован (Live)`);
       updateUI();
-      alert('Слот успешно куплен! Проверьте плеер ниже.');
+      alert('Слот успешно куплен!');
     }
 
-    // Тест рекламы (VAST/Баннер) - имитация показа
-    function triggerAdTest() {
-      const url = document.getElementById('vastUrl').value.trim();
+    // Показ баннера
+    function triggerBannerTest() {
+      const url = document.getElementById('bannerUrl').value.trim();
       if (!url) {
-        alert('Введите URL для теста');
+        alert('Введите ссылку');
         return;
       }
+      showAdOverlay(`<img src="\${url}" style="width:100%; height:100%; object-fit:cover;">`);
+    }
+
+    // Универсальный запуск теста рекламы (для кнопки "Подтвердить загрузку")
+    function triggerAdTest() {
+      const slot = SLOTS.find(s => s.status === 'busy');
+      if (!slot) return;
+
+      if (slot.type === 'upload') {
+        // Показываем загруженное видео
+        showAdOverlay(`<video id="adVideo" src="\${slot.content}" controls autoplay muted style="width:100%; height:100%; object-fit:cover;"></video>`);
+      } else if (slot.type === 'live') {
+        showAdOverlay(`<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.5rem; background:#000;">LIVE STREAM<br><small>\${slot.content}</small></div>`);
+      }
+    }
+
+    // Функция отображения оверлея
+    function showAdOverlay(htmlContent) {
       const overlay = document.getElementById('adOverlay');
       const player = document.getElementById('mainPlayer');
-      
-      // Простая эмуляция: если ссылка содержит картинку - показываем как баннер, иначе заглушку
-      if (url.match(/\.(jpg|jpeg|png|gif)\$/i)) {
-        overlay.innerHTML = `<img src="\${url}" style="width:100%; height:100%; object-fit:cover;">`;
-      } else {
-        overlay.innerHTML = `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.5rem; background:#333;">Рекламный блок<br><small>\${url}</small></div>`;
-      }
+      overlay.innerHTML = htmlContent;
       overlay.style.display = 'block';
       player.pause();
-      log(`Запущен тестовый показ рекламы: \${url}`);
-      
-      // Автоматическое скрытие через 15 секунд (имитация пропуска)
-      setTimeout(() => {
-        overlay.style.display = 'none';
-        log('Рекламный блок завершен');
-      }, 15000);
+      log('Рекламный блок активен');
+
+      // Если это видео, ждем окончания или ставим авто-закрытие через 30 сек для теста
+      const adVideo = document.getElementById('adVideo');
+      if (adVideo) {
+        adVideo.addEventListener('ended', () => {
+          overlay.style.display = 'none';
+          player.play();
+          log('Реклама завершена (видео кончилось)');
+        });
+      } else {
+        setTimeout(() => {
+          overlay.style.display = 'none';
+          player.play();
+          log('Рекламный блок завершен (таймер)');
+        }, 30000);
+      }
     }
 
     // Эмуляция автопереключения по расписанию
     function checkLiveSchedule() {
       const now = Date.now();
-      const active = SLOTS.find(s => s.status === 'busy' && now >= s.startDate && now <= s.endDate);
-      const overlay = document.getElementById('adOverlay');
-      const player = document.getElementById('mainPlayer');
+      const active = SLOTS.find(s => s.status === 'busy' && s.type === 'live' && now >= s.startDate && now <= s.endDate);
+      
       if (active) {
-        overlay.innerHTML = `<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.5rem; background:#000;">LIVE STREAM<br><small>RTMP: \${active.rtmpUrl}</small></div>`;
-        overlay.style.display = 'block';
-        player.pause();
-        log('Активен live-поток');
-      } else if (overlay.style.display === 'block' && !document.getElementById('vastUrl').value) {
-        // Если нет активной рекламы и это не ручной тест - возвращаем основной контент
-        overlay.style.display = 'none';
-        log('Основной контент');
+        // Если сейчас время лайва, форсируем показ лайва вместо загруженного видео
+        const slot = SLOTS.find(s => s.status === 'busy' && s.type === 'live');
+        if (slot) {
+            showAdOverlay(`<div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:1.5rem; background:#000;">LIVE STREAM ON AIR<br><small>\${slot.content}</small></div>`);
+        }
       }
     }
 
-    // Обновление UI боковой панели
-    function updateUI() {
-      const details = document.getElementById('zoneDetails');
-      details.innerHTML = SLOTS.map(s => `
-        <div style="margin-top:1rem; padding:0.75rem; background:#f9f9f9; border-radius:4px; border-left:4px solid \${s.status === 'free' ? 'var(--success)' : 'var(--danger)'}">
-          <strong>\${s.name}</strong>
-          <div class="status-badge status-${s.status === 'free' ? 'free' : 'busy'}">${s.status.toUpperCase()}</div>
-          <div class="price-tag">\${s.pricePerHour} ₽/час</div>
-        </div>
-      `).
+    function log(msg) {
+      const log = document.getElementById('log');
+      log.textContent += `[${new Date().toLocaleTimeString()}] ${msg}\n`;
+      log.scrollTop = log.scrollHeight;
+    }
+
+    // Старт
+    updateUI();
+    setInterval(checkLiveSchedule, 60000);
+    checkLiveSchedule();
+  </script>
+</body>
+</html>
