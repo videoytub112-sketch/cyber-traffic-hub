@@ -3,50 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADNEX — прямой рекламный эфир</title>
+<title>ADNEX — реклама, эфир и заработок</title>
 <style>
 :root{
-    --bg:#070810;--card:#0e1020;--stroke:rgba(120,150,255,0.14);
-    --cyan:#3fd6ff;--violet:#8b5cf6;--lime:#4ade80;--amber:#fbbf24;
-    --text:#e6ebff;--dim:#8a93b8;--red:#ff4d4d;
+--bg:#070810;--card:#0e1020;--stroke:rgba(120,150,255,0.14);
+--cyan:#3fd6ff;--violet:#8b5cf6;--lime:#4ade80;--amber:#fbbf24;
+--text:#e6ebff;--dim:#8a93b8;--red:#ff6b6b;
 }
 *{margin:0;padding:0;box-sizing:border-box;}
-body{
-    background:radial-gradient(1200px 600px at 50% -10%,#131735 0%,#070810 55%);
-    color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-    min-height:100vh;line-height:1.5;
-}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px;}
-header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);
-    background:rgba(7,8,16,0.92);border-bottom:1px solid var(--stroke);}
-nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0;}
-.logo{font-size:1.25rem;font-weight:800;letter-spacing:2px;
-    background:linear-gradient(90deg,var(--cyan),var(--violet));
-    -webkit-background-clip:text;background-clip:text;color:transparent;}
+body{background:radial-gradient(1200px 600px at 50% -10%,#131735 0%,#070810 55%);
+color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;line-height:1.5;}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px;}
+a{color:var(--cyan);}
+header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:rgba(7,8,16,0.92);border-bottom:1px solid var(--stroke);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:12px;}
+.logo{font-size:1.25rem;font-weight:800;letter-spacing:2px;background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;cursor:pointer;}
 .logo small{display:block;font-size:.58rem;color:var(--dim);letter-spacing:1.5px;font-weight:400;}
-nav .links{display:flex;gap:24px;font-size:.9rem;}
-nav .links a{color:var(--dim);text-decoration:none;transition:.2s;}
+nav .links{display:flex;gap:20px;font-size:.9rem;}
+nav .links a{color:var(--dim);text-decoration:none;transition:.2s;cursor:pointer;}
 nav .links a:hover{color:var(--text);}
-.nav-cta{padding:9px 20px;border-radius:24px;font-size:.85rem;text-decoration:none;
-    background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;font-weight:700;}
-
-/* БЕГУЩАЯ СТРОКА */
-.ticker-bar{overflow:hidden;white-space:nowrap;background:#0a0d20;
-    border-bottom:1px solid rgba(251,191,36,.35);height:42px;display:flex;align-items:center;}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.nav-cta{padding:9px 20px;border-radius:24px;font-size:.85rem;text-decoration:none;border:none;cursor:pointer;background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;font-weight:700;font-family:inherit;}
+.ticker-bar{overflow:hidden;white-space:nowrap;background:#0a0d20;border-bottom:1px solid rgba(251,191,36,.35);height:42px;display:flex;align-items:center;}
 .ticker-track{display:inline-flex;white-space:nowrap;animation:tick 45s linear infinite;}
-.ticker-track span{padding-right:70px;font-size:.85rem;color:var(--amber);font-weight:700;letter-spacing:.3px;}
+.ticker-track span{padding-right:70px;font-size:.85rem;color:var(--amber);font-weight:700;}
 .ticker-track b{color:var(--cyan);}
 @keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
-.hero{padding:50px 0 28px;text-align:center;}
-.hero h1{font-size:clamp(1.8rem,5.5vw,3rem);font-weight:800;letter-spacing:-.5px;line-height:1.12;margin-bottom:16px;}
+.hero{padding:50px 0 30px;text-align:center;}
+.hero h1{font-size:clamp(1.8rem,5.5vw,3rem);font-weight:800;line-height:1.12;margin-bottom:16px;}
 .hero h1 span{background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
-.hero p{color:var(--dim);max-width:620px;margin:0 auto 26px;font-size:1.02rem;}
+.hero p{color:var(--dim);max-width:640px;margin:0 auto 26px;font-size:1.02rem;}
 .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
-.btn{padding:14px 30px;border-radius:32px;border:none;cursor:pointer;
-    font-size:.96rem;font-weight:700;text-decoration:none;transition:.25s;font-family:inherit;}
+.btn{padding:14px 30px;border-radius:32px;border:none;cursor:pointer;font-size:.96rem;font-weight:700;text-decoration:none;transition:.25s;font-family:inherit;}
 .btn-main{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;box-shadow:0 0 34px rgba(139,92,246,.4);}
-.btn-main:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(63,214,255,.5);}
+.btn-main:hover{transform:translateY(-3px);}
 .btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--stroke);}
 .btn-ghost:hover{background:rgba(255,255,255,.1);}
 .btn-sm{padding:10px 20px;font-size:.85rem;border-radius:22px;}
@@ -54,1000 +44,928 @@ section{padding:40px 0;}
 .sec-head{text-align:center;margin-bottom:28px;}
 .sec-head h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:10px;}
 .sec-head p{color:var(--dim);max-width:620px;margin:0 auto;}
-
-/* ЭФИР + ЧАТ */
 .live-wrap{display:grid;grid-template-columns:1fr 330px;gap:16px;align-items:stretch;}
-.live-wrap > *{min-height:0;}
-.broadcast{background:#05060f;border:1px solid var(--stroke);border-radius:20px;
-    overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);display:flex;flex-direction:column;min-height:0;}
+.live-wrap>*{min-height:0;}
+.broadcast{background:#05060f;border:1px solid var(--stroke);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
 .bc-screen{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#05060f;}
-
-.bc-slide{position:absolute;inset:0;display:block;opacity:0;transition:opacity .6s ease;
-    text-decoration:none;overflow:hidden;cursor:pointer;}
-.bc-slide.on{opacity:1;pointer-events:auto;}
+.bc-slide{position:absolute;inset:0;display:block;opacity:0;transition:opacity .6s;text-decoration:none;overflow:hidden;cursor:pointer;}
+.bc-slide.on{opacity:1;}
 .bc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-.bc-body{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;
-    align-items:flex-start;justify-content:center;text-align:left;padding:5% 26% 5% 7%;}
+.bc-body{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;padding:5% 26% 5% 7%;}
 .bc-slide.img .bc-body{background:linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.35) 55%,transparent 100%);}
-.bc-brand{font-size:clamp(1.2rem,3.6vw,2.4rem);font-weight:800;letter-spacing:1px;
-    text-transform:uppercase;margin-bottom:10px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.6);}
-.bc-slogan{font-size:clamp(.85rem,2vw,1.3rem);font-weight:600;color:rgba(255,255,255,.94);
-    text-shadow:0 2px 10px rgba(0,0,0,.6);}
-
-/* кнопка — СБОКУ справа */
-.bc-cta{position:absolute;right:26px;top:50%;transform:translateY(-50%);z-index:4;
-    padding:13px 26px;border-radius:30px;font-weight:800;background:rgba(0,0,0,.45);
-    border:2px solid rgba(255,255,255,.85);color:#fff;font-size:.9rem;transition:.2s;white-space:nowrap;}
+.bc-brand{font-size:clamp(1.2rem,3.6vw,2.4rem);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.6);}
+.bc-slogan{font-size:clamp(.85rem,2vw,1.3rem);font-weight:600;color:rgba(255,255,255,.94);}
+.bc-cta{position:absolute;right:26px;top:50%;transform:translateY(-50%);z-index:4;padding:13px 26px;border-radius:30px;font-weight:800;background:rgba(0,0,0,.45);border:2px solid rgba(255,255,255,.85);color:#fff;font-size:.9rem;transition:.2s;white-space:nowrap;}
 .bc-slide:hover .bc-cta{background:#fff;color:#111;}
-
-.bc-top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;
-    justify-content:space-between;align-items:center;padding:16px 18px;
-    background:linear-gradient(180deg,rgba(0,0,0,.55),transparent);pointer-events:none;}
-.live-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red);
-    color:#fff;font-weight:800;font-size:.78rem;letter-spacing:1.5px;padding:6px 14px;border-radius:20px;}
+.bc-top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;justify-content:space-between;align-items:center;padding:16px 18px;background:linear-gradient(180deg,rgba(0,0,0,.55),transparent);pointer-events:none;}
+.live-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;font-weight:800;font-size:.78rem;letter-spacing:1.5px;padding:6px 14px;border-radius:20px;}
 .live-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1.1s infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:.35;transform:scale(.7);}}
-.viewers{font-size:.8rem;color:#fff;background:rgba(0,0,0,.45);padding:6px 14px;border-radius:20px;
-    display:inline-flex;align-items:center;gap:7px;}
-.viewers i{width:7px;height:7px;border-radius:50%;background:var(--lime);display:inline-block;box-shadow:0 0 8px var(--lime);}
-.bc-bottom{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:14px 18px 16px;
-    background:linear-gradient(0deg,rgba(0,0,0,.7),transparent);pointer-events:none;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
+.viewers{font-size:.8rem;color:#fff;background:rgba(0,0,0,.45);padding:6px 14px;border-radius:20px;display:inline-flex;align-items:center;gap:7px;}
+.viewers i{width:7px;height:7px;border-radius:50%;background:var(--lime);display:inline-block;}
+.bc-bottom{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:14px 18px 16px;background:linear-gradient(0deg,rgba(0,0,0,.7),transparent);pointer-events:none;}
 .bc-now{font-size:.8rem;color:#fff;margin-bottom:8px;display:flex;justify-content:space-between;gap:10px;}
 .bc-now b{color:var(--amber);}
 .bc-progress{height:4px;border-radius:4px;background:rgba(255,255,255,.18);overflow:hidden;}
 .bc-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));}
-.bc-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
-    padding:14px 20px;background:var(--card);border-top:1px solid var(--stroke);}
-.bc-foot .info{font-size:.85rem;color:var(--dim);}
-.bc-foot .info b{color:var(--text);}
-.bc-foot .price{font-size:1.4rem;font-weight:800;color:var(--cyan);}
-.bc-foot .price small{font-size:.75rem;color:var(--dim);font-weight:400;}
-
-/* ЧАТ ЭФИРА */
-.live-chat{background:var(--card);border:1px solid var(--stroke);border-radius:20px;
-    display:flex;flex-direction:column;overflow:hidden;min-height:0;height:100%;}
+.live-chat{background:var(--card);border:1px solid var(--stroke);border-radius:20px;display:flex;flex-direction:column;overflow:hidden;min-height:0;height:100%;}
 .lc-head{padding:14px 16px;border-bottom:1px solid var(--stroke);display:flex;align-items:center;gap:9px;flex:none;}
-.lc-head .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);}
+.lc-head .dot{width:8px;height:8px;border-radius:50%;background:var(--red);}
 .lc-head b{font-size:.92rem;}
 .lc-head span{margin-left:auto;font-size:.72rem;color:var(--dim);}
 .lc-body{flex:1 1 auto;min-height:0;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px;}
-.lc-msg{display:flex;gap:8px;font-size:.82rem;animation:appear .3s ease;}
-@keyframes appear{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
-.lc-av{width:26px;height:26px;border-radius:50%;flex:none;display:flex;align-items:center;
-    justify-content:center;font-size:.7rem;font-weight:800;color:#070810;}
-.lc-txt{min-width:0;}
+.lc-msg{display:flex;gap:8px;font-size:.82rem;}
+.lc-av{width:26px;height:26px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#070810;}
 .lc-txt b{color:var(--cyan);font-size:.78rem;}
-.lc-txt div{color:var(--text);opacity:.92;word-wrap:break-word;}
+.lc-txt div{word-wrap:break-word;}
 .lc-txt a{color:var(--cyan);text-decoration:underline;word-break:break-all;}
 .lc-foot{display:flex;gap:8px;padding:10px;border-top:1px solid var(--stroke);flex:none;}
-.lc-foot input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);
-    border:1px solid var(--stroke);color:var(--text);font-size:.84rem;outline:none;font-family:inherit;}
-.lc-foot input:focus{border-color:var(--cyan);}
+.lc-foot input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);color:var(--text);font-size:.84rem;outline:none;font-family:inherit;}
 .lc-foot button{padding:0 14px;border-radius:10px;border:none;cursor:pointer;background:var(--cyan);color:#070810;font-weight:700;}
 
-/* ОЧЕРЕДЬ */
-.playlist{margin-top:20px;}
-.pl-head{font-size:1.02rem;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:9px;}
-.pl-head span{font-size:.75rem;color:var(--dim);font-weight:400;}
-.pl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:12px;}
-.pl-item{background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:13px 15px;transition:.25s;}
-.pl-item:hover{border-color:rgba(63,214,255,.4);}
-.pl-item.now{border-color:var(--cyan);box-shadow:0 0 0 1px rgba(63,214,255,.4);}
-.pl-thumb{width:100%;height:72px;object-fit:cover;border-radius:8px;margin-bottom:8px;display:block;background:#05060f;}
-.pl-item .pl-time{font-size:.7rem;color:var(--cyan);font-weight:700;margin-bottom:4px;}
-.pl-item .pl-name{font-size:.9rem;font-weight:700;margin-bottom:2px;}
-.pl-item .pl-sub{font-size:.75rem;color:var(--dim);}
-.pl-tag{display:inline-block;font-size:.62rem;padding:2px 8px;border-radius:8px;margin-bottom:6px;
-    background:rgba(63,214,255,.14);color:var(--cyan);font-weight:700;}
-
-.ticker-buy{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;
-    background:linear-gradient(120deg,rgba(139,92,246,.15),rgba(63,214,255,.08));
-    border:1px solid var(--stroke);border-radius:18px;padding:26px 28px;}
-.ticker-buy h3{font-size:1.3rem;margin-bottom:6px;}
-.ticker-buy p{color:var(--dim);font-size:.9rem;max-width:460px;}
-.ticker-buy .cost{font-size:1.8rem;font-weight:800;color:var(--amber);}
-.ticker-buy .cost small{font-size:.8rem;color:var(--dim);font-weight:400;}
-
+/* КАБИНЕТ */
+.cab-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.cab-card{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:18px;}
+.cab-card b{display:block;font-size:1.5rem;font-weight:800;color:var(--cyan);}
+.cab-card span{font-size:.78rem;color:var(--dim);}
+.tabs{display:flex;gap:6px;margin-bottom:18px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;flex-wrap:wrap;}
+.tab{flex:1;min-width:110px;padding:10px 8px;border-radius:9px;border:none;background:transparent;color:var(--dim);cursor:pointer;font-size:.82rem;font-weight:600;font-family:inherit;transition:.2s;}
+.tab.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
+.pane{display:none;}
+.pane.on{display:block;}
+.ref-box{background:rgba(63,214,255,.06);border:1px solid rgba(63,214,255,.25);border-radius:14px;padding:16px;margin-bottom:16px;}
+.ref-link{display:flex;gap:8px;margin-top:10px;}
+.ref-link input{flex:1;padding:11px;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid var(--stroke);color:var(--cyan);font-family:monospace;font-size:.82rem;outline:none;}
+.list{display:flex;flex-direction:column;gap:10px;}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--card);border:1px solid var(--stroke);border-radius:14px;padding:14px 16px;flex-wrap:wrap;}
+.row .nm{font-weight:700;}
+.row .sb{font-size:.78rem;color:var(--dim);}
+.badge{font-size:.68rem;padding:4px 10px;border-radius:12px;font-weight:700;}
+.badge.ok{background:rgba(74,222,128,.15);color:var(--lime);}
+.badge.no{background:rgba(255,107,107,.15);color:var(--red);}
+.badge.wait{background:rgba(251,191,36,.15);color:var(--amber);}
+.field{margin-bottom:13px;}
+.field label{display:block;font-size:.78rem;color:var(--dim);margin-bottom:6px;}
+.field input,.field select,.field textarea{width:100%;padding:11px 13px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.9rem;outline:none;}
+.field input:focus,.field select:focus{border-color:var(--cyan);}
+.overlay{position:fixed;inset:0;z-index:100;display:none;background:rgba(3,4,10,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;}
+.overlay.on{display:flex;}
+.modal{background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:28px;width:100%;max-width:440px;max-height:92vh;overflow-y:auto;position:relative;}
+.modal h3{font-size:1.25rem;margin-bottom:6px;}
+.modal .sub{color:var(--dim);font-size:.86rem;margin-bottom:18px;}
+.modal .btn{width:100%;margin-top:8px;}
+.close-x{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--dim);font-size:1.5rem;cursor:pointer;}
+.seg{display:flex;gap:6px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;}
+.seg-btn{flex:1;padding:10px 6px;border-radius:9px;border:none;cursor:pointer;font-size:.8rem;background:transparent;color:var(--dim);font-weight:700;font-family:inherit;transition:.2s;}
+.seg-btn.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
+.total{padding:14px;border-radius:12px;background:rgba(63,214,255,.08);border:1px solid rgba(63,214,255,.25);text-align:center;font-weight:800;font-size:1.2rem;color:var(--cyan);margin:14px 0 6px;}
+.preview{margin-top:10px;border-radius:10px;overflow:hidden;display:none;border:1px solid var(--stroke);}
+.preview img{width:100%;display:block;}
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .step{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:26px 22px;}
 .step .num{font-size:2rem;font-weight:800;margin-bottom:12px;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .step h3{font-size:1.05rem;margin-bottom:8px;}
 .step p{color:var(--dim);font-size:.9rem;}
-
-.overlay{position:fixed;inset:0;z-index:100;display:none;background:rgba(3,4,10,.88);
-    backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;}
-.overlay.on{display:flex;}
-.modal{background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:28px;
-    width:100%;max-width:460px;max-height:92vh;overflow-y:auto;position:relative;}
-.modal h3{font-size:1.25rem;margin-bottom:6px;}
-.modal .sub{color:var(--dim);font-size:.86rem;margin-bottom:20px;}
-.field{margin-bottom:13px;}
-.field label{display:block;font-size:.78rem;color:var(--dim);margin-bottom:6px;}
-.field input,.field textarea,.field select{width:100%;padding:11px 13px;border-radius:10px;
-    background:rgba(255,255,255,.04);border:1px solid var(--stroke);color:var(--text);
-    font-family:inherit;font-size:.9rem;outline:none;}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--cyan);}
-.field input[type=color]{padding:4px;height:44px;cursor:pointer;}
-.field input[type=file]{padding:9px;font-size:.82rem;cursor:pointer;}
-.modal .btn{width:100%;margin-top:8px;}
-.close-x{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--dim);font-size:1.5rem;cursor:pointer;}
-.total{padding:14px;border-radius:12px;background:rgba(63,214,255,.08);border:1px solid rgba(63,214,255,.25);
-    text-align:center;font-weight:800;font-size:1.2rem;color:var(--cyan);margin:14px 0 6px;}
-.seg{display:flex;gap:6px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;}
-.seg-btn{flex:1;padding:10px 6px;border-radius:9px;border:none;cursor:pointer;font-size:.8rem;
-    background:transparent;color:var(--dim);font-weight:700;font-family:inherit;transition:.2s;}
-.seg-btn.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
-.preview{margin-top:10px;border-radius:10px;overflow:hidden;display:none;border:1px solid var(--stroke);}
-.preview img{width:100%;display:block;}
-
-.chat-btn{position:fixed;bottom:22px;right:22px;z-index:90;width:56px;height:56px;border-radius:50%;
-    border:none;cursor:pointer;background:linear-gradient(135deg,var(--violet),var(--cyan));
-    color:#070810;font-size:1.4rem;box-shadow:0 0 30px rgba(139,92,246,.5);
-    display:flex;align-items:center;justify-content:center;transition:.25s;}
-.chat-btn:hover{transform:scale(1.08);}
-.chat-panel{position:fixed;bottom:90px;right:22px;z-index:91;width:340px;max-width:calc(100vw - 44px);
-    background:var(--card);border:1px solid var(--stroke);border-radius:18px;overflow:hidden;
-    display:none;flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.6);}
-.chat-panel.on{display:flex;}
-.chat-head{padding:15px 18px;border-bottom:1px solid var(--stroke);display:flex;align-items:center;gap:10px;}
-.chat-head .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);}
-.chat-head b{font-size:.95rem;}
-.chat-head span{margin-left:auto;font-size:.72rem;color:var(--dim);}
-.chat-body{padding:16px;height:250px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
-.chat-body .cm{max-width:85%;font-size:.85rem;padding:10px 13px;border-radius:13px;line-height:1.4;word-wrap:break-word;}
-.cm a{color:#fff;text-decoration:underline;word-break:break-all;}
-.cm.me{align-self:flex-end;background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(63,214,255,.25));}
-.cm.sys{align-self:center;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);color:var(--lime);font-size:.76rem;text-align:center;}
-.chat-foot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--stroke);}
-.chat-foot input{flex:1;padding:11px 13px;border-radius:10px;background:rgba(255,255,255,.05);
-    border:1px solid var(--stroke);color:var(--text);font-size:.86rem;outline:none;font-family:inherit;}
-.chat-foot button{padding:0 16px;border-radius:10px;border:none;cursor:pointer;background:var(--cyan);color:#070810;font-weight:700;}
-
-.admin-fab{position:fixed;bottom:22px;left:22px;z-index:90;width:46px;height:46px;border-radius:50%;
-    border:1px solid var(--stroke);background:rgba(255,255,255,.05);color:var(--dim);cursor:pointer;
-    font-size:1.15rem;transition:.25s;}
+.ticker-buy{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;background:linear-gradient(120deg,rgba(139,92,246,.15),rgba(63,214,255,.08));border:1px solid var(--stroke);border-radius:18px;padding:26px 28px;}
+.ticker-buy h3{font-size:1.3rem;margin-bottom:6px;}
+.ticker-buy p{color:var(--dim);font-size:.9rem;max-width:460px;}
+.ticker-buy .cost{font-size:1.8rem;font-weight:800;color:var(--amber);}
+.ticker-buy .cost small{font-size:.8rem;color:var(--dim);font-weight:400;}
+.admin-fab{position:fixed;bottom:22px;left:22px;z-index:90;width:46px;height:46px;border-radius:50%;border:1px solid var(--stroke);background:rgba(255,255,255,.05);color:var(--dim);cursor:pointer;font-size:1.15rem;}
 .admin-fab:hover{background:rgba(255,255,255,.12);color:var(--text);}
-.tabbar{display:flex;gap:6px;margin-bottom:18px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;}
-.tab{flex:1;padding:9px 4px;border-radius:9px;border:none;background:transparent;color:var(--dim);cursor:pointer;font-size:.78rem;font-weight:600;font-family:inherit;transition:.2s;}
-.tab.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
 .adm-card{background:rgba(255,255,255,.03);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px;}
-.adm-row{display:flex;gap:8px;}
-.a-in{width:100%;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,.05);
-    border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.82rem;outline:none;}
-.a-in:focus{border-color:var(--cyan);}
+.a-in{width:100%;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.82rem;outline:none;margin-top:8px;}
 .mini{padding:6px 11px;border-radius:8px;border:none;cursor:pointer;font-size:.74rem;font-weight:600;font-family:inherit;background:rgba(63,214,255,.18);color:var(--cyan);}
 .mini.del{background:rgba(255,80,80,.18);color:var(--red);}
-.mini.act{background:rgba(74,222,128,.18);color:var(--lime);}
 .adm-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
 .adm-stat{font-size:.72rem;color:var(--dim);margin-top:8px;}
-.tick-row{display:flex;align-items:center;gap:8px;padding:9px 10px;border-bottom:1px solid var(--stroke);font-size:.82rem;}
-.tick-row span{flex:1;}
-.order-card{background:rgba(255,255,255,.03);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px;font-size:.82rem;}
-.order-card .oc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
-.order-card .oc-top b{color:var(--cyan);}
-.order-card .oc-line{color:var(--dim);font-size:.76rem;}
 footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color:var(--dim);font-size:.82rem;margin-top:40px;}
-
+.hide{display:none!important;}
+.watchbox{background:#05060f;border:1px solid var(--stroke);border-radius:16px;overflow:hidden;}
+.watchscreen{position:relative;width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;text-align:center;padding:8%;}
+.watchbar{height:5px;background:rgba(255,255,255,.15);}
+.watchbar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));}
 @media(max-width:900px){
-    nav .links{display:none;}
-    .live-wrap{grid-template-columns:1fr;}
-    .live-chat{height:340px;}
-    .steps{grid-template-columns:1fr;}
-    .bc-foot{flex-direction:column;align-items:flex-start;}
-    .bc-foot .btn-main{width:100%;text-align:center;}
-    .chat-panel{width:calc(100vw - 44px);right:22px;}
-}
-@media(max-width:600px){
-    .bc-cta{right:12px;padding:9px 15px;font-size:.74rem;border-width:1.5px;}
-    .bc-body{padding:4% 33% 4% 5%;}
-    .bc-brand{letter-spacing:.5px;}
+nav .links{display:none;}
+.live-wrap{grid-template-columns:1fr;}
+.live-chat{height:320px;}
+.cab-grid{grid-template-columns:repeat(2,1fr);}
+.steps{grid-template-columns:1fr;}
 }
 </style>
 </head>
 <body>
 
 <header>
-    <div class="wrap">
-        <nav>
-            <div class="logo">ADNEX<small>прямой рекламный эфир</small></div>
-            <div class="links">
-                <a href="#live">Эфир</a>
-                <a href="#ticker">Бегущая строка</a>
-                <a href="#how">Как купить</a>
-            </div>
-            <a href="#live" class="nav-cta">В эфир</a>
-        </nav>
-    </div>
-    <div class="ticker-bar"><div class="ticker-track" id="tickerTrack"></div></div>
+<div class="wrap">
+<nav>
+<div class="logo" onclick="showView('landing')">ADNEX<small>реклама · эфир · заработок</small></div>
+<div class="links">
+<a onclick="showView('landing')">Главная</a>
+<a onclick="goCabinet()">Кабинет</a>
+<a onclick="showView('landing');scrollTo2('earn')">Заработать</a>
+</div>
+<div class="nav-right" id="navRight"></div>
+</nav>
+</div>
+<div class="ticker-bar"><div class="ticker-track" id="tickerTrack"></div></div>
 </header>
 
 <main class="wrap">
 
-    <section class="hero">
-        <h1>Твоя реклама — <span>в прямом эфире</span>.<br>Прямо сейчас, на глазах у всех.</h1>
-        <p>Непрерывный рекламный канал: посетители заходят — и сразу видят, как крутится эфир. Клик по рекламе ведёт на сайт рекламодателя.</p>
-        <div class="hero-btns">
-            <a href="#live" class="btn btn-main">Занять место в эфире</a>
-            <a href="#ticker" class="btn btn-ghost">Купить бегущую строку</a>
-        </div>
-    </section>
+<!-- ЛЕНДИНГ -->
+<div id="view-landing">
+<section class="hero">
+<h1>Смотри рекламу — <span>зарабатывай</span>.<br>Размещай рекламу — получай клиентов.</h1>
+<p>Прямой рекламный эфир, заработок за просмотры и клики, реферальная программа из трёх уровней. Регистрация бесплатная.</p>
+<div class="hero-btns">
+<button class="btn btn-main" onclick="openAuth('register')">Зарегистрироваться</button>
+<button class="btn btn-ghost" onclick="scrollTo2('live')">Смотреть эфир</button>
+</div>
+</section>
 
-    <section id="live">
-        <div class="sec-head">
-            <h2>Прямой эфир рекламы</h2>
-            <p>Здесь непрерывно крутится реклама рекламодателей — картинкой или текстом. Нажмите на слайд или на кнопку справа, чтобы перейти на сайт.</p>
-        </div>
+<section id="live">
+<div class="sec-head">
+<h2>Прямой эфир рекламы</h2>
+<p>Реклама рекламодателей — картинкой или текстом. Клик по слайду ведёт на сайт.</p>
+</div>
+<div class="live-wrap">
+<div class="broadcast">
+<div class="bc-screen" id="bcScreen">
+<div class="bc-top">
+<span class="live-badge"><i class="live-dot"></i>LIVE</span>
+<span class="viewers"><i></i>смотрят: <b id="viewersCount">0</b></span>
+</div>
+<div class="bc-bottom">
+<div class="bc-now"><span>Сейчас в эфире: <b id="nowBrand">—</b></span><span id="nowCountdown">— с</span></div>
+<div class="bc-progress"><i id="bcProgress"></i></div>
+</div>
+</div>
+</div>
+<div class="live-chat">
+<div class="lc-head"><span class="dot"></span><b>Чат эфира</b><span id="lcOnline">онлайн</span></div>
+<div class="lc-body" id="lcBody"></div>
+<div class="lc-foot">
+<input id="lcInput" placeholder="Написать в чат…" autocomplete="off">
+<button id="lcSend">➤</button>
+</div>
+</div>
+</div>
+</section>
 
-        <div class="live-wrap">
-            <div class="broadcast">
-                <div class="bc-screen" id="bcScreen">
-                    <div class="bc-top">
-                        <span class="live-badge"><i class="live-dot"></i>LIVE</span>
-                        <span class="viewers"><i></i>смотрят: <b id="viewersCount">0</b></span>
-                    </div>
-                    <div class="bc-bottom">
-                        <div class="bc-now">
-                            <span>Сейчас в эфире: <b id="nowBrand">—</b></span>
-                            <span id="nowCountdown">— с</span>
-                        </div>
-                        <div class="bc-progress"><i id="bcProgress"></i></div>
-                    </div>
-                </div>
-                <div class="bc-foot">
-                    <div class="info">
-                        <b>Одно место в эфире — 30 дней.</b><br>
-                        Слайд показывается по кругу, клик ведёт на ваш сайт.
-                    </div>
-                    <div style="text-align:right">
-                        <div class="price" id="bcPrice">6 900 ₽<small> / мес</small></div>
-                    </div>
-                    <button class="btn btn-main btn-sm" onclick="openBuy()">Встать в эфир</button>
-                </div>
-            </div>
+<section id="earn">
+<div class="sec-head">
+<h2>Как заработать</h2>
+<p>Просмотры, клики и рефералы — три источника дохода.</p>
+</div>
+<div class="steps">
+<div class="step"><div class="num">0,50 ₽</div><h3>За просмотр ролика</h3><p>Ролик идёт 10 секунд. Один ролик доступен раз в 5 дней.</p></div>
+<div class="step"><div class="num">1 ₽</div><h3>За переход по рекламе</h3><p>Клик засчитывается, если вы пробудете на сайте рекламодателя 10 секунд.</p></div>
+<div class="step"><div class="num">10 / 3 / 1 %</div><h3>Реферальная программа</h3><p>Три уровня: с покупок ваших приглашённых и с их активности.</p></div>
+</div>
+</section>
 
-            <div class="live-chat">
-                <div class="lc-head"><span class="dot"></span><b>Чат эфира</b><span id="lcOnline">онлайн</span></div>
-                <div class="lc-body" id="lcBody"></div>
-                <div class="lc-foot">
-                    <input id="lcInput" placeholder="Написать в чат…" autocomplete="off">
-                    <button id="lcSend">➤</button>
-                </div>
-            </div>
-        </div>
+<section id="ticker">
+<div class="sec-head">
+<h2>Бегущая строка</h2>
+<p>Строка в самом верху сайта — её видят все. Можно купить и без регистрации.</p>
+</div>
+<div class="ticker-buy">
+<div>
+<h3>Разместить свою строку</h3>
+<p>Ваш текст будет бежать по верху страницы. Идеально для акций и объявлений.</p>
+</div>
+<div style="text-align:center">
+<div class="cost"><span id="tickerPriceView">800</span> ₽<small> / мес</small></div>
+<button class="btn btn-main" style="margin-top:12px" onclick="openTicker()">Купить строку</button>
+</div>
+</div>
+</section>
+</div>
 
-        <div class="playlist">
-            <div class="pl-head">Очередь эфира <span id="plCount"></span></div>
-            <div class="pl-grid" id="plGrid"></div>
-        </div>
-    </section>
+<!-- КАБИНЕТ -->
+<div id="view-cabinet" class="hide">
+<section>
+<div class="sec-head"><h2 id="cabHello">Личный кабинет</h2><p id="cabSub"></p></div>
+<div class="cab-grid">
+<div class="cab-card"><b id="cBalance">0 ₽</b><span>Баланс</span></div>
+<div class="cab-card"><b id="cViews">0</b><span>Просмотров</span></div>
+<div class="cab-card"><b id="cClicks">0</b><span>Кликов</span></div>
+<div class="cab-card"><b id="cRefs">0</b><span>Рефералов</span></div>
+</div>
 
-    <section id="ticker">
-        <div class="sec-head">
-            <h2>Бегущая строка</h2>
-            <p>Строка в самом верху сайта — её видят все посетители без исключения.</p>
-        </div>
-        <div class="ticker-buy">
-            <div>
-                <h3>Разместить свою строку</h3>
-                <p>Ваш текст будет бежать по верху страницы на каждой странице сайта. Идеально для акций и объявлений.</p>
-            </div>
-            <div style="text-align:center">
-                <div class="cost"><span id="tickerPriceView">800</span> ₽<small> / мес</small></div>
-                <button class="btn btn-main" style="margin-top:12px" onclick="openTicker()">Купить строку</button>
-            </div>
-        </div>
-    </section>
+<div class="tabs">
+<button class="tab active" data-pane="p-over">Обзор</button>
+<button class="tab" data-pane="p-earn">Заработок</button>
+<button class="tab" data-pane="p-ref">Рефералка</button>
+<button class="tab" data-pane="p-buy">Купить рекламу</button>
+<button class="tab" data-pane="p-hist">История</button>
+</div>
 
-    <section id="how">
-        <div class="sec-head">
-            <h2>Как купить место</h2>
-            <p>Три шага — и ваша реклама в работе.</p>
-        </div>
-        <div class="steps">
-            <div class="step"><div class="num">01</div><h3>Оформляете рекламу</h3><p>Загружаете картинку или пишете текст — прямо в форме.</p></div>
-            <div class="step"><div class="num">02</div><h3>Оплачиваете</h3><p>Место закрепляется за вами на выбранный срок.</p></div>
-            <div class="step"><div class="num">03</div><h3>Вы в эфире</h3><p>Слайд встаёт в ротацию, клик ведёт на ваш сайт.</p></div>
-        </div>
-    </section>
+<div class="pane on" id="p-over">
+<div class="ref-box">
+<b>Ваша реферальная ссылка</b>
+<div class="sb" style="font-size:.82rem;color:var(--dim)">Приглашайте людей — получайте процент с их покупок и активности.</div>
+<div class="ref-link"><input id="refLink" readonly><button class="mini" onclick="copyRef()">Копировать</button></div>
+</div>
+<div class="list" id="overRefs"></div>
+</div>
+
+<div class="pane" id="p-earn">
+<div id="earnCooldown" class="ref-box hide"></div>
+<div class="list" id="earnList"></div>
+</div>
+
+<div class="pane" id="p-ref">
+<div class="ref-box">
+<b>Три уровня программы</b>
+<div class="sb" style="font-size:.82rem;color:var(--dim);margin-top:6px">
+1 уровень — 10% с покупок и 0,01 ₽ за просмотр / 0,10 ₽ за клик.<br>
+2 уровень — 3% с покупок.<br>
+3 уровень — 1% с покупок.
+</div>
+</div>
+<div class="list" id="refList"></div>
+</div>
+
+<div class="pane" id="p-buy">
+<div class="field"><label>Название бренда</label><input id="bBrand" placeholder="Coffee House" maxlength="30"></div>
+<div class="field"><label>Слоган / текст</label><input id="bSlogan" placeholder="Кофе, который бодрит" maxlength="90"></div>
+<div class="field"><label>Ссылка при клике</label><input id="bUrl" placeholder="https://ваш-сайт.ru"></div>
+<div class="field"><label>Цвет слайда</label><input type="color" id="bColor" value="#8b5cf6" style="height:44px;padding:4px"></div>
+<div class="field"><label>Картинка (необязательно)</label><input type="file" id="bImg" accept="image/*">
+<div class="preview" id="bPreview"><img id="bPreviewImg" alt=""></div></div>
+<div class="field"><label>Срок размещения</label>
+<select id="bTerm">
+<option value="1">1 месяц</option>
+<option value="3">3 месяца (−10%)</option>
+<option value="6">6 месяцев (−15%)</option>
+<option value="12">12 месяцев (−20%)</option>
+</select></div>
+<div class="total" id="bTotal">Итого: 0 ₽</div>
+<button class="btn btn-main" onclick="buyAd()">Оплатить и встать в эфир</button>
+</div>
+
+<div class="pane" id="p-hist">
+<div class="list" id="histList"></div>
+</div>
+</section>
+</div>
+
 </main>
 
-<footer><div class="wrap">© ADNEX · прямой рекламный эфир · заявки принимаются круглосуточно</div></footer>
+<footer><div class="wrap">© ADNEX · прототип · данные хранятся в браузере</div></footer>
 
-<button class="admin-fab" title="Панель управления">⚙</button>
-<button class="chat-btn" id="chatBtn">💬</button>
+<button class="admin-fab" title="Админка" onclick="openAdmin()">⚙</button>
 
-<div class="chat-panel" id="chatPanel">
-    <div class="chat-head"><span class="dot"></span><b>Написать нам</b><span>онлайн</span></div>
-    <div class="chat-body" id="chatBody"></div>
-    <div class="chat-foot">
-        <input id="chatField" placeholder="Ваше сообщение…" autocomplete="off">
-        <button id="chatSend">➤</button>
-    </div>
+<!-- РЕГИСТРАЦИЯ / ВХОД -->
+<div class="overlay" id="authOverlay">
+<div class="modal">
+<button class="close-x" onclick="closeAuth()">×</button>
+<h3 id="authTitle">Регистрация</h3>
+<div class="sub" id="authSub">Бесплатно. Нужна для заработка и покупки рекламы.</div>
+<div class="seg" id="authSeg">
+<button type="button" class="seg-btn active" data-mode="register">Регистрация</button>
+<button type="button" class="seg-btn" data-mode="login">Вход</button>
+</div>
+<div style="height:14px"></div>
+<div class="field" id="authNameField"><label>Имя</label><input id="aName" placeholder="Иван"></div>
+<div class="field"><label>Email</label><input id="aEmail" placeholder="you@mail.ru" autocomplete="email"></div>
+<div class="field"><label>Пароль</label><input id="aPass" type="password" placeholder="••••••" autocomplete="current-password"></div>
+<div class="field hide" id="authRefField"><label>Код пригласившего (если есть)</label><input id="aRef" placeholder="например AB12CD"></div>
+<button class="btn btn-main" id="authSubmit" onclick="doAuth()">Зарегистрироваться</button>
+</div>
 </div>
 
-<div class="overlay" id="buyOverlay">
-    <div class="modal">
-        <button class="close-x" onclick="closeBuy()">×</button>
-        <h3>Место в прямом эфире</h3>
-        <div class="sub">Ваш слайд будет крутиться по кругу всем посетителям. Клик — переход на ваш сайт.</div>
-
-        <div class="field">
-            <label>Что показываем в эфире</label>
-            <div class="seg" id="bTypeSeg">
-                <button type="button" class="seg-btn active" data-type="text">Текстом</button>
-                <button type="button" class="seg-btn" data-type="image">Фотографией</button>
-            </div>
-        </div>
-
-        <div class="field" id="bImgField" style="display:none">
-            <label>Картинка рекламы (JPG/PNG)</label>
-            <input type="file" id="bImg" accept="image/*">
-            <div class="preview" id="bPreview"><img id="bPreviewImg" alt=""></div>
-        </div>
-
-        <div class="field"><label>Название бренда</label><input id="bBrand" placeholder="Coffee House" maxlength="30"></div>
-        <div class="field"><label>Слоган / текст</label><input id="bSlogan" placeholder="Кофе, который бодрит" maxlength="90"></div>
-        <div class="field" id="bColorField"><label>Цвет текстового слайда</label><input type="color" id="bColor" value="#8b5cf6"></div>
-        <div class="field"><label>Ссылка при клике</label><input id="bUrl" placeholder="https://ваш-сайт.ru"></div>
-        <div class="field"><label>Ваше имя</label><input id="bName" placeholder="Иван"></div>
-        <div class="field"><label>Контакт (телефон или Telegram)</label><input id="bContact" placeholder="@username или +7…"></div>
-        <div class="field">
-            <label>Срок размещения</label>
-            <select id="bTerm">
-                <option value="1">1 месяц</option>
-                <option value="3">3 месяца (−10%)</option>
-                <option value="6">6 месяцев (−15%)</option>
-                <option value="12">12 месяцев (−20%)</option>
-            </select>
-        </div>
-        <div class="total" id="bTotal">Итого: 6 900 ₽</div>
-        <button class="btn btn-main" id="buySubmit">Оплатить и встать в эфир</button>
-    </div>
-</div>
-
+<!-- ПОКУПКА СТРОКИ -->
 <div class="overlay" id="tickOverlay">
-    <div class="modal">
-        <button class="close-x" onclick="closeTicker()">×</button>
-        <h3>Бегущая строка</h3>
-        <div class="sub" id="tickSub">Строка наверху сайта.</div>
-        <div class="field"><label>Текст строки</label><input id="tText" placeholder="Ваше объявление" maxlength="120"></div>
-        <div class="field"><label>Ссылка</label><input id="tUrl" placeholder="https://ваш-сайт.ru"></div>
-        <div class="field"><label>Ваше имя</label><input id="tName" placeholder="Иван"></div>
-        <div class="field"><label>Контакт</label><input id="tContact" placeholder="@username или +7…"></div>
-        <div class="field">
-            <label>Срок размещения</label>
-            <select id="tTerm">
-                <option value="1">1 месяц</option>
-                <option value="3">3 месяца (−10%)</option>
-                <option value="6">6 месяцев (−15%)</option>
-                <option value="12">12 месяцев (−20%)</option>
-            </select>
-        </div>
-        <div class="total" id="tTotal">Итого: 800 ₽</div>
-        <button class="btn btn-main" id="tickSubmit">Оплатить</button>
-    </div>
+<div class="modal">
+<button class="close-x" onclick="closeTicker()">×</button>
+<h3>Бегущая строка</h3>
+<div class="sub" id="tickSub"></div>
+<div class="field"><label>Текст строки</label><input id="tText" placeholder="Ваше объявление" maxlength="120"></div>
+<div class="field"><label>Ссылка</label><input id="tUrl" placeholder="https://ваш-сайт.ru"></div>
+<div class="field"><label>Ваше имя</label><input id="tName" placeholder="Иван"></div>
+<div class="field"><label>Контакт</label><input id="tContact" placeholder="@username или +7…"></div>
+<div class="field"><label>Срок</label><select id="tTerm">
+<option value="1">1 месяц</option><option value="3">3 месяца (−10%)</option>
+<option value="6">6 месяцев (−15%)</option><option value="12">12 месяцев (−20%)</option>
+</select></div>
+<div class="total" id="tTotal">Итого: 800 ₽</div>
+<button class="btn btn-main" onclick="submitTicker()">Оплатить</button>
+</div>
 </div>
 
+<!-- ПРОСМОТР РОЛИКА -->
+<div class="overlay" id="watchOverlay">
+<div class="modal" style="max-width:560px">
+<h3>Просмотр ролика</h3>
+<div class="sub">Досмотрите до конца — начислим 0,50 ₽.</div>
+<div class="watchbox">
+<div class="watchscreen" id="watchScreen"></div>
+<div class="watchbar"><i id="watchBar"></i></div>
+</div>
+<div style="text-align:center;margin-top:14px;color:var(--dim);font-size:.85rem" id="watchHint">Осталось: 10 с</div>
+<a id="watchLink" class="btn btn-main hide" style="text-align:center;margin-top:10px" target="_blank" rel="noopener">Перейти на сайт (+1 ₽)</a>
+</div>
+</div>
+
+<!-- АДМИНКА -->
 <div class="overlay" id="adminOverlay">
-    <div class="modal" style="max-width:580px">
-        <button class="close-x" onclick="closeAdmin()">×</button>
-        <h3>Панель управления</h3>
-        <div class="sub">Полный контроль над площадкой.</div>
-        <div id="adminLogin">
-            <div class="field"><label>Пароль</label><input id="adminPass" type="password" placeholder="••••••"></div>
-            <button class="btn btn-main" onclick="adminLogin()">Войти</button>
-        </div>
-        <div id="adminPanel" style="display:none">
-            <div class="tabbar">
-                <button class="tab active" data-tab="ads">Эфир</button>
-                <button class="tab" data-tab="ticker">Строка</button>
-                <button class="tab" data-tab="orders">Заявки</button>
-                <button class="tab" data-tab="set">Настройки</button>
-            </div>
-            <div class="tabpane" id="tab-ads">
-                <div class="field"><label>Цена места в эфире, ₽/мес</label><input id="aPrice" type="number"></div>
-                <button class="btn btn-ghost" onclick="savePrice()">Сохранить цену</button>
-                <div id="adminAds" style="margin-top:16px"></div>
-            </div>
-            <div class="tabpane" id="tab-ticker" style="display:none">
-                <div class="field"><label>Цена бегущей строки, ₽/мес</label><input id="tPrice" type="number"></div>
-                <button class="btn btn-ghost" onclick="saveTickerPrice()">Сохранить цену</button>
-                <div id="adminTicker" style="margin-top:16px"></div>
-            </div>
-            <div class="tabpane" id="tab-orders" style="display:none">
-                <button class="btn btn-ghost" style="margin-bottom:14px" onclick="clearOrders()">Очистить все заявки</button>
-                <div id="adminOrders"></div>
-            </div>
-            <div class="tabpane" id="tab-set" style="display:none">
-                <div class="field"><label>Новый пароль админки</label><input id="sPass" placeholder="новый пароль"></div>
-                <button class="btn btn-main" onclick="savePass()">Сохранить пароль</button>
-                <button class="btn btn-ghost" style="margin-top:10px" onclick="resetAll()">Сбросить данные площадки</button>
-            </div>
-        </div>
-    </div>
+<div class="modal" style="max-width:580px">
+<button class="close-x" onclick="closeAdmin()">×</button>
+<h3>Панель управления</h3>
+<div class="sub">Прототип админки.</div>
+<div id="adminLogin">
+<div class="field"><label>Пароль</label><input id="adminPass" type="password" placeholder="••••••"></div>
+<button class="btn btn-main" onclick="adminLogin()">Войти</button>
+</div>
+<div id="adminPanel" class="hide">
+<div class="tabs">
+<button class="tab active" data-apane="a-ads">Реклама</button>
+<button class="tab" data-apane="a-users">Люди</button>
+<button class="tab" data-apane="a-orders">Заявки</button>
+<button class="tab" data-apane="a-set">Цены</button>
+</div>
+<div class="pane on" id="a-ads"><div id="adminAds"></div></div>
+<div class="pane" id="a-users"><div id="adminUsers"></div></div>
+<div class="pane" id="a-orders"><div id="adminOrders"></div></div>
+<div class="pane" id="a-set">
+<div class="field"><label>Цена места в эфире, ₽/мес</label><input id="aPrice" type="number"></div>
+<div class="field"><label>Цена строки, ₽/мес</label><input id="aTick" type="number"></div>
+<div class="field"><label>Выплата за просмотр, ₽</label><input id="aView" type="number" step="0.01"></div>
+<div class="field"><label>Выплата за клик, ₽</label><input id="aClick" type="number" step="0.01"></div>
+<button class="btn btn-ghost" onclick="saveSettings()">Сохранить</button>
+<button class="btn btn-ghost" style="margin-top:8px" onclick="resetAll()">Сбросить всё</button>
+</div>
+</div>
+</div>
 </div>
 
 <script>
-/* ==========================================================
-   TELEGRAM (необязательно)
-   ========================================================== */
+/* ================= НАСТРОЙКА TELEGRAM (необязательно) ================= */
 const CONFIG = { BOT_TOKEN:'ВСТАВЬ_ТОКЕН_БОТА', CHAT_ID:'ВСТАВЬ_CHAT_ID' };
 async function sendTg(text){
-    if(!CONFIG.BOT_TOKEN || CONFIG.BOT_TOKEN.indexOf('ВСТАВЬ')===0){ console.warn('TG:',text); return false; }
-    try{
-        const r = await fetch('https://api.telegram.org/bot'+CONFIG.BOT_TOKEN+'/sendMessage',{
-            method:'POST',headers:{'Content-Type':'application/json'},
-            body:JSON.stringify({chat_id:CONFIG.CHAT_ID,text,parse_mode:'HTML'})});
-        return r.ok;
-    }catch(e){ return false; }
+  if(!CONFIG.BOT_TOKEN || CONFIG.BOT_TOKEN.indexOf('ВСТАВЬ')===0){ console.warn('TG:',text); return false; }
+  try{
+    const r=await fetch('https://api.telegram.org/bot'+CONFIG.BOT_TOKEN+'/sendMessage',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({chat_id:CONFIG.CHAT_ID,text,parse_mode:'HTML'})});
+    return r.ok;
+  }catch(e){ return false; }
 }
 
-/* ==========================================================
-   ДЕМО-КАРТИНКИ
-   ========================================================== */
-function svgDemo(brand, slogan, color){
-    const svg =
-    '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450">'+
-    '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1">'+
-    '<stop offset="0" stop-color="'+color+'"/><stop offset="1" stop-color="#05060f"/>'+
-    '</linearGradient></defs>'+
-    '<rect width="800" height="450" fill="url(#g)"/>'+
-    '<circle cx="660" cy="90" r="130" fill="rgba(255,255,255,.06)"/>'+
-    '<circle cx="120" cy="380" r="100" fill="rgba(255,255,255,.05)"/>'+
-    '<text x="400" y="215" font-family="Arial, sans-serif" font-size="56" font-weight="bold" fill="#ffffff" text-anchor="middle">'+brand+'</text>'+
-    '<text x="400" y="272" font-family="Arial, sans-serif" font-size="24" fill="rgba(255,255,255,.92)" text-anchor="middle">'+slogan+'</text>'+
-    '</svg>';
-    return 'data:image/svg+xml;utf8,'+encodeURIComponent(svg);
+/* ================= ХРАНИЛИЩЕ ================= */
+const LS='adnex_proto_v1', LS_ORD='adnex_proto_orders_v1', LS_SES='adnex_proto_session_v1';
+
+function svgDemo(brand,slogan,color){
+  const s='<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450">'+
+  '<defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="'+color+'"/>'+
+  '<stop offset="1" stop-color="#05060f"/></linearGradient></defs>'+
+  '<rect width="800" height="450" fill="url(#g)"/>'+
+  '<text x="400" y="215" font-family="Arial" font-size="56" font-weight="bold" fill="#fff" text-anchor="middle">'+brand+'</text>'+
+  '<text x="400" y="272" font-family="Arial" font-size="24" fill="rgba(255,255,255,.92)" text-anchor="middle">'+slogan+'</text></svg>';
+  return 'data:image/svg+xml;utf8,'+encodeURIComponent(s);
 }
 
-/* ==========================================================
-   ДАННЫЕ
-   ========================================================== */
-const LS='adnex_air_v5', LS_ORD='adnex_air_orders_v5';
-
-const DEMO_ADS = [
-    {type:'text', brand:'Coffee House', slogan:'Кофе, который бодрит с первой секунды', color:'#b45309', url:'https://example.com'},
-    {type:'image', brand:'AUTO DRIVE', slogan:'Тест-драйв бесплатно', color:'#0e7490', url:'https://example.com',
-        img: svgDemo('AUTO DRIVE','Тест-драйв бесплатно — запишись сегодня','#0e7490')},
-    {type:'text', brand:'FIT ZONE', slogan:'Первое занятие в зале — бесплатно', color:'#15803d', url:'https://example.com'},
-    {type:'image', brand:'NovaTech', slogan:'Гаджеты будущего', color:'#4338ca', url:'https://example.com',
-        img: svgDemo('NovaTech','Гаджеты, которые понимают тебя','#4338ca')},
-    {type:'text', brand:'Bloom Flowers', slogan:'Букет за 60 минут по городу', color:'#be185d', url:'https://example.com'},
-    {type:'image', brand:'Pizza Roma', slogan:'Две пиццы по цене одной', color:'#c2410c', url:'https://example.com',
-        img: svgDemo('Pizza Roma','Две пиццы по цене одной до конца недели','#c2410c')},
-    {type:'text', brand:'СтройДом', slogan:'Ремонт под ключ с гарантией 5 лет', color:'#166534', url:'https://example.com'},
-    {type:'text', brand:'Fashion Mall', slogan:'Скидки до 70% на новую коллекцию', color:'#7c3aed', url:'https://example.com'}
+const DEMO_ADS=[
+  {id:'d1',type:'text',brand:'Coffee House',slogan:'Кофе, который бодрит',color:'#b45309',url:'https://example.com'},
+  {id:'d2',type:'image',brand:'AUTO DRIVE',slogan:'Тест-драйв бесплатно',color:'#0e7490',url:'https://example.com',img:svgDemo('AUTO DRIVE','Тест-драйв бесплатно','#0e7490')},
+  {id:'d3',type:'text',brand:'FIT ZONE',slogan:'Первое занятие бесплатно',color:'#15803d',url:'https://example.com'},
+  {id:'d4',type:'image',brand:'NovaTech',slogan:'Гаджеты будущего',color:'#4338ca',url:'https://example.com',img:svgDemo('NovaTech','Гаджеты будущего','#4338ca')},
+  {id:'d5',type:'text',brand:'Bloom Flowers',slogan:'Букет за 60 минут',color:'#be185d',url:'https://example.com'}
 ];
-
-const DEFAULT_TICKER = [
-    'Реклама в прямом эфире — от 800 ₽/мес',
-    'Сейчас в эфире: 8 рекламодателей',
-    'Хочешь своё место в эфире? Нажми «Встать в эфир»',
-    'Бегущую строку видят все посетители сайта'
-];
+const DEF_TICKER=['Реклама в прямом эфире — от 800 ₽/мес','Хочешь своё место в эфире? Зарегистрируйся и купи','Заработок за просмотры и клики — до 1 ₽ за переход'];
 
 function defState(){
-    return {
-        price: 6900,
-        tickerPrice: 800,
-        ads: DEMO_ADS.map(a => Object.assign({}, a)),
-        ticker: DEFAULT_TICKER.slice(),
-        password: 'admin2060'
-    };
+  return {
+    price:6900, tickerPrice:800, viewPay:0.5, clickPay:1,
+    refL1:0.10, refL2:0.03, refL3:0.01, refView:0.01, refClick:0.10,
+    cooldownDays:5,
+    ads:DEMO_ADS.map(a=>Object.assign({},a)),
+    ticker:DEF_TICKER.slice(),
+    users:[], password:'admin2060'
+  };
 }
-function load(){
-    let s = null;
-    try{ s = JSON.parse(localStorage.getItem(LS)); }catch(e){ s = null; }
-    if(!s || typeof s !== 'object') return defState();
-    if(!Array.isArray(s.ads) || !s.ads.length) s.ads = DEMO_ADS.map(a=>Object.assign({},a));
-    if(!Array.isArray(s.ticker) || !s.ticker.length) s.ticker = DEFAULT_TICKER.slice();
-    if(!s.price) s.price = 6900;
-    if(!s.tickerPrice) s.tickerPrice = 800;
-    if(!s.password) s.password = 'admin2060';
-    return s;
+function loadState(){
+  let s=null; try{ s=JSON.parse(localStorage.getItem(LS)); }catch(e){}
+  if(!s||typeof s!=='object') return defState();
+  const d=defState();
+  for(const k in d){ if(!(k in s)) s[k]=d[k]; }
+  if(!Array.isArray(s.ads)||!s.ads.length) s.ads=d.ads;
+  if(!Array.isArray(s.ticker)||!s.ticker.length) s.ticker=d.ticker;
+  if(!Array.isArray(s.users)) s.users=[];
+  return s;
 }
-function loadOrders(){ try{const s=localStorage.getItem(LS_ORD);return s?JSON.parse(s):[];}catch(e){return [];} }
-let state=load(); let orders=loadOrders();
+let state=loadState();
+let orders=[]; try{ orders=JSON.parse(localStorage.getItem(LS_ORD))||[]; }catch(e){}
+let meId=localStorage.getItem(LS_SES)||null;
+
 function save(){ localStorage.setItem(LS,JSON.stringify(state)); }
 function saveOrders(){ localStorage.setItem(LS_ORD,JSON.stringify(orders)); }
+function saveSession(){ if(meId) localStorage.setItem(LS_SES,meId); else localStorage.removeItem(LS_SES); }
+function me(){ return state.users.find(u=>u.id===meId)||null; }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
-function money(n){ return Number(n).toLocaleString('ru-RU'); }
+function money(n){ return (Math.round(n*100)/100).toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function linkify(t){ return esc(t).replace(/(https?:\/\/[^\s<]+)/g,u=>'<a href="'+u+'" target="_blank" rel="noopener">'+u+'</a>'); }
+function refCode(){ return Math.random().toString(36).slice(2,8).toUpperCase(); }
 
-/* ссылки в тексте становятся кликабельными */
-function linkify(text){
-    return esc(text).replace(/(https?:\/\/[^\s<]+)/g, function(u){
-        return '<a href="'+u+'" target="_blank" rel="noopener">'+u+'</a>';
-    });
-}
-
-function compressImage(file, cb, maxW){
-    maxW = maxW || 900;
-    const reader = new FileReader();
-    reader.onload = e => {
-        const img = new Image();
-        img.onload = () => {
-            const scale = Math.min(1, maxW / img.width);
-            const c = document.createElement('canvas');
-            c.width  = Math.round(img.width * scale);
-            c.height = Math.round(img.height * scale);
-            c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-            cb(c.toDataURL('image/jpeg', 0.78));
-        };
-        img.onerror = () => cb(e.target.result);
-        img.src = e.target.result;
+function compressImage(file,cb,maxW){
+  maxW=maxW||900;
+  const r=new FileReader();
+  r.onload=e=>{
+    const img=new Image();
+    img.onload=()=>{
+      const sc=Math.min(1,maxW/img.width);
+      const c=document.createElement('canvas');
+      c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc);
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      cb(c.toDataURL('image/jpeg',0.78));
     };
-    reader.readAsDataURL(file);
+    img.onerror=()=>cb(e.target.result);
+    img.src=e.target.result;
+  };
+  r.readAsDataURL(file);
 }
 
-/* ==========================================================
-   БЕГУЩАЯ СТРОКА
-   ========================================================== */
-function renderTicker(){
-    let list = state.ticker;
-    if(!Array.isArray(list) || !list.length) list = DEFAULT_TICKER;
-    const html = list.map(t=>'<b>✦</b> '+esc(t)).join(' &nbsp;&nbsp; ');
-    document.getElementById('tickerTrack').innerHTML =
-        '<span>'+html+'</span><span>'+html+'</span>';
+/* ================= НАВИГАЦИЯ ================= */
+function showView(v){
+  document.getElementById('view-landing').classList.toggle('hide', v!=='landing');
+  document.getElementById('view-cabinet').classList.toggle('hide', v!=='cabinet');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function scrollTo2(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }
+function goCabinet(){
+  if(!me()){ openAuth('login'); return; }
+  showView('cabinet'); renderCabinet();
+}
+function renderNav(){
+  const box=document.getElementById('navRight');
+  const u=me();
+  if(u){
+    box.innerHTML='<span style="font-size:.85rem;color:var(--dim)">'+esc(u.name)+'</span>'+
+      '<button class="nav-cta" onclick="goCabinet()">Кабинет</button>'+
+      '<button class="mini del" onclick="logout()">Выйти</button>';
+  } else {
+    box.innerHTML='<button class="nav-cta" onclick="openAuth(\'register\')">Регистрация</button>'+
+      '<button class="mini" onclick="openAuth(\'login\')">Вход</button>';
+  }
 }
 
-/* ==========================================================
-   ЭФИР
-   ========================================================== */
-const SLIDE_SECONDS = 7;
-let current = 0, elapsed = 0, slides = [];
-
-function buildSlides(){
-    const screen = document.getElementById('bcScreen');
-    slides.forEach(s=>s.remove());
-    const ads = (state.ads && state.ads.length) ? state.ads : DEMO_ADS;
-    const anchor = screen.querySelector('.bc-bottom');
-
-    slides = ads.map(ad => {
-        const a = document.createElement('a');
-        const isImg = (ad.type === 'image' && ad.img);
-        a.className = 'bc-slide' + (isImg ? ' img' : '');
-        a.href = ad.url || '#';
-        a.target = '_blank';
-        a.rel = 'noopener';
-        if(!isImg){
-            a.style.background = 'linear-gradient(135deg,'+(ad.color||'#4338ca')+' 0%, #05060f 120%)';
-        }
-
-        let inner = '';
-        if(isImg){
-            inner += '<img class="bc-img" src="'+ad.img+'" alt="'+esc(ad.brand)+'">';
-        }
-        inner +=
-            '<div class="bc-body">'+
-                (ad.brand ? '<div class="bc-brand">'+esc(ad.brand)+'</div>' : '')+
-                (ad.slogan ? '<div class="bc-slogan">'+esc(ad.slogan)+'</div>' : '')+
-            '</div>'+
-            '<span class="bc-cta">Перейти на сайт →</span>';
-
-        a.innerHTML = inner;
-        screen.insertBefore(a, anchor);
-        return a;
-    });
-
-    if(current >= slides.length) current = 0;
-    showSlide(current);
-    renderPlaylist();
+/* ================= АВТОРИЗАЦИЯ ================= */
+let authMode='register';
+document.querySelectorAll('#authSeg .seg-btn').forEach(b=>{
+  b.addEventListener('click',()=>{
+    authMode=b.dataset.mode;
+    document.querySelectorAll('#authSeg .seg-btn').forEach(x=>x.classList.toggle('active',x.dataset.mode===authMode));
+    document.getElementById('authNameField').classList.toggle('hide',authMode!=='register');
+    document.getElementById('authRefField').classList.toggle('hide',authMode!=='register');
+    document.getElementById('authTitle').textContent = authMode==='register'?'Регистрация':'Вход';
+    document.getElementById('authSubmit').textContent = authMode==='register'?'Зарегистрироваться':'Войти';
+  });
+});
+function openAuth(mode){
+  authMode=mode||'register';
+  document.querySelectorAll('#authSeg .seg-btn').forEach(x=>x.classList.toggle('active',x.dataset.mode===authMode));
+  document.getElementById('authNameField').classList.toggle('hide',authMode!=='register');
+  document.getElementById('authRefField').classList.toggle('hide',authMode!=='register');
+  document.getElementById('authTitle').textContent = authMode==='register'?'Регистрация':'Вход';
+  document.getElementById('authSubmit').textContent = authMode==='register'?'Зарегистрироваться':'Войти';
+  document.getElementById('authOverlay').classList.add('on');
 }
-function showSlide(i){
-    slides.forEach((s,idx)=>s.classList.toggle('on', idx===i));
-    const ad = state.ads[i] || DEMO_ADS[i];
-    if(ad) document.getElementById('nowBrand').textContent = ad.brand;
-    elapsed = 0;
+function closeAuth(){ document.getElementById('authOverlay').classList.remove('on'); }
+
+function doAuth(){
+  const email=document.getElementById('aEmail').value.trim().toLowerCase();
+  const pass=document.getElementById('aPass').value;
+  const name=document.getElementById('aName').value.trim();
+  const ref=document.getElementById('aRef').value.trim().toUpperCase();
+
+  if(!email||!pass){ alert('Заполните email и пароль.'); return; }
+  if(authMode==='register'){
+    if(!name){ alert('Введите имя.'); return; }
+    if(state.users.some(u=>u.email===email)){ alert('Такой email уже зарегистрирован.'); return; }
+    let parent=null;
+    if(ref) parent=state.users.find(u=>u.code===ref)||null;
+    const u={
+      id:'u'+Date.now()+Math.floor(Math.random()*999),
+      email, pass, name, balance:0,
+      code:refCode(),
+      refBy: parent?parent.id:null,
+      views:0, clicks:0, lastView:0,
+      history:[], refEarn:0,
+      created:new Date().toLocaleString('ru-RU')
+    };
+    state.users.push(u);
+    meId=u.id; save(); saveSession();
+    closeAuth();
+    showView('cabinet'); renderCabinet(); renderNav();
+    alert('Добро пожаловать, '+name+'! Баланс пополняется за просмотры и клики.');
+  } else {
+    const u=state.users.find(x=>x.email===email && x.pass===pass);
+    if(!u){ alert('Неверный email или пароль.'); return; }
+    meId=u.id; saveSession(); closeAuth();
+    showView('cabinet'); renderCabinet(); renderNav();
+  }
 }
-function tick(){
-    if(!slides.length) return;
-    elapsed += 0.25;
-    const left = Math.max(0, SLIDE_SECONDS - elapsed);
-    document.getElementById('nowCountdown').textContent = left.toFixed(1)+' с';
-    document.getElementById('bcProgress').style.width = (elapsed/SLIDE_SECONDS*100)+'%';
-    if(elapsed >= SLIDE_SECONDS){
-        current = (current + 1) % slides.length;
-        showSlide(current);
-        markPlaylist();
+function logout(){ meId=null; saveSession(); renderNav(); showView('landing'); }
+
+/* ================= РЕФЕРАЛЬНЫЕ ВЫПЛАТЫ ================= */
+function payRefChain(payerId, amountRub, reason){
+  // 1 уровень 10%, 2 — 3%, 3 — 1%
+  let cur=state.users.find(u=>u.id===payerId);
+  const rates=[state.refL1,state.refL2,state.refL3];
+  for(let lvl=0; lvl<3; lvl++){
+    if(!cur||!cur.refBy) break;
+    const up=state.users.find(u=>u.id===cur.refBy);
+    if(!up) break;
+    const bonus=Math.round(amountRub*rates[lvl]*100)/100;
+    if(bonus>0){
+      up.balance=Math.round((up.balance+bonus)*100)/100;
+      up.refEarn=Math.round((up.refEarn+bonus)*100)/100;
+      up.history.unshift({t:new Date().toLocaleString('ru-RU'),d:'Реферал '+lvl+1+' уровня: '+reason,sum:bonus});
     }
+    cur=up;
+  }
 }
-setInterval(tick, 250);
-
-let viewers = 214;
-function renderViewers(){
-    viewers += Math.floor(Math.random()*7) - 2;
-    if(viewers < 150) viewers = 150 + Math.floor(Math.random()*40);
-    document.getElementById('viewersCount').textContent = money(viewers);
-    document.getElementById('lcOnline').textContent = money(Math.round(viewers/6))+' в чате';
-}
-setInterval(renderViewers, 3500);
-renderViewers();
-
-function renderPlaylist(){
-    const box = document.getElementById('plGrid');
-    box.innerHTML = '';
-    const ads = (state.ads && state.ads.length) ? state.ads : DEMO_ADS;
-    document.getElementById('plCount').textContent = '· '+ads.length+' роликов по кругу';
-    ads.forEach((ad,i)=>{
-        const d = document.createElement('div');
-        d.className = 'pl-item'+(i===current?' now':'');
-        const isImg = (ad.type === 'image' && ad.img);
-        d.innerHTML =
-            (isImg ? '<img class="pl-thumb" src="'+ad.img+'" alt="">' : '')+
-            '<span class="pl-tag">'+(isImg?'фото':'текст')+'</span>'+
-            '<div class="pl-time">'+(i===current?'● в эфире':'далее')+'</div>'+
-            '<div class="pl-name" style="color:'+(ad.color||'#8b5cf6')+'">'+esc(ad.brand)+'</div>'+
-            '<div class="pl-sub">'+esc(ad.slogan)+'</div>';
-        box.appendChild(d);
-    });
-}
-function markPlaylist(){
-    document.querySelectorAll('.pl-item').forEach((el,i)=>{
-        el.classList.toggle('now', i===current);
-        const t = el.querySelector('.pl-time');
-        if(t) t.textContent = (i===current?'● в эфире':'далее');
-    });
+function payRefActivity(payerId, isClick){
+  const u=state.users.find(x=>x.id===payerId);
+  if(!u||!u.refBy) return;
+  const up=state.users.find(x=>x.id===u.refBy);
+  if(!up) return;
+  const bonus=isClick?state.refClick:state.refView;
+  up.balance=Math.round((up.balance+bonus)*100)/100;
+  up.refEarn=Math.round((up.refEarn+bonus)*100)/100;
+  up.history.unshift({t:new Date().toLocaleString('ru-RU'),d:'Реферал '+(isClick?'кликнул по рекламе':'посмотрел ролик'),sum:bonus});
 }
 
-/* ==========================================================
-   ЧАТ ЭФИРА — боты (20 шт., раз в час) + живые зрители
-   ========================================================== */
-const BOT_NAMES = ['Марина','Алексей','Дмитрий','Ольга','Игорь','Екатерина','Сергей','Юлия',
-                   'Андрей','Анастасия','Павел','Елена','Максим','Татьяна','Роман','Ирина',
-                   'Владимир','Светлана','Николай','Оксана'];
-const BOT_MSGS = [
-    'О, эфир реально живой 🔥',
-    'Кто уже заказал тут рекламу?',
-    'Клик по баннеру ведёт на сайт, удобно',
-    'Прикольно, как на ТВ-канале',
-    'А сколько стоит место в эфире?',
-    'Уже вижу, куда поставлю свою картинку',
-    'Смотрю минут пять, не оторваться',
-    'Ребят, тут очередь эфира внизу, посмотрите',
-    'Мой бренд тут смотрелся бы отлично',
-    'Наконец-то нормальная рекламная площадка',
-    'Кто из Краснодара? 🙌',
-    'Строка сверху тоже прикольная',
-    'Вот площадка, где я заказал рекламу: https://adnex.ru',
-    'Подскажите, сколько стоит эфир на месяц?',
-    'Отличная идея с прямой трансляцией'
-];
-const BOT_COUNT = 20;         // сколько всего ботов
-const BOT_PERIOD = 3600000;   // каждый бот пишет раз в час
-
-function botColor(){ const h = Math.floor(Math.random()*360); return 'hsl('+h+',70%,60%)'; }
-
-function addLiveMsg(name, text, color){
-    const body = document.getElementById('lcBody');
-    if(!body) return;
-    const d = document.createElement('div');
-    d.className = 'lc-msg';
-    d.innerHTML =
-        '<span class="lc-av" style="background:'+(color||botColor())+'">'+esc(name[0])+'</span>'+
-        '<span class="lc-txt"><b>'+esc(name)+'</b><div>'+linkify(text)+'</div></span>';
-    body.appendChild(d);
-    while(body.children.length > 60) body.removeChild(body.firstChild);
-    body.scrollTop = body.scrollHeight;
-}
-
-/* стартовые сообщения, чтобы чат не был пустым */
-['Марина','Дмитрий','Ольга'].forEach(function(n,i){ addLiveMsg(n, BOT_MSGS[i]); });
-
-/* 20 ботов, каждый раз в час, со сдвигом по времени */
-BOT_NAMES.slice(0, BOT_COUNT).forEach(function(name, i){
-    const offset = Math.round((BOT_PERIOD / BOT_COUNT) * i) + Math.floor(Math.random()*20000);
-    setTimeout(function(){
-        addLiveMsg(name, BOT_MSGS[Math.floor(Math.random()*BOT_MSGS.length)]);
-        setInterval(function(){
-            addLiveMsg(name, BOT_MSGS[Math.floor(Math.random()*BOT_MSGS.length)]);
-        }, BOT_PERIOD);
-    }, offset);
+/* ================= КАБИНЕТ ================= */
+document.querySelectorAll('.tab').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    ['p-over','p-earn','p-ref','p-buy','p-hist'].forEach(id=>document.getElementById(id).classList.remove('on'));
+    document.getElementById(t.dataset.pane).classList.add('on');
+  });
 });
 
-/* сообщение от живого зрителя */
-function sendLive(){
-    const inp = document.getElementById('lcInput');
-    const v = inp.value.trim();
-    if(!v) return;
-    addLiveMsg('Вы', v, '#3fd6ff');
-    inp.value = '';
-    sendTg('💬 <b>Сообщение в чат эфира</b>\n\n'+v);
+function renderCabinet(){
+  const u=me(); if(!u) return;
+  document.getElementById('cabHello').textContent='Кабинет: '+u.name;
+  document.getElementById('cabSub').textContent='Реферальный код: '+u.code;
+  document.getElementById('cBalance').textContent=money(u.balance)+' ₽';
+  document.getElementById('cViews').textContent=u.views;
+  document.getElementById('cClicks').textContent=u.clicks;
+  const direct=state.users.filter(x=>x.refBy===u.id).length;
+  document.getElementById('cRefs').textContent=direct;
+
+  document.getElementById('refLink').value=location.origin+location.pathname+'?ref='+u.code;
+
+  // обзор: рефералы 1 уровня
+  const d1=state.users.filter(x=>x.refBy===u.id);
+  document.getElementById('overRefs').innerHTML = d1.length
+    ? d1.map(x=>'<div class="row"><div><div class="nm">'+esc(x.name)+'</div><div class="sb">'+esc(x.email)+'</div></div><span class="badge ok">'+x.views+' просм.</span></div>').join('')
+    : '<div class="row"><div class="sb">Пока никого не пригласили. Скопируйте ссылку выше.</div></div>';
+
+  // заработок
+  const cd=state.cooldownDays*24*3600*1000;
+  const left=u.lastView+cd-Date.now();
+  const cdBox=document.getElementById('earnCooldown');
+  const earnList=document.getElementById('earnList');
+  if(left>0){
+    const h=Math.floor(left/3600000), m=Math.floor(left%3600000/60000);
+    cdBox.classList.remove('hide');
+    cdBox.innerHTML='<b>Следующий ролик будет доступен через '+h+' ч '+m+' мин</b><div class="sb" style="font-size:.82rem;color:var(--dim)">Лимит: один просмотр раз в '+state.cooldownDays+' дней.</div>';
+  } else {
+    cdBox.classList.add('hide');
+  }
+  const ads=state.ads;
+  earnList.innerHTML=ads.map((a,i)=>{
+    return '<div class="row"><div><div class="nm">'+esc(a.brand)+'</div><div class="sb">'+esc(a.slogan)+'</div></div>'+
+      (left>0
+        ? '<span class="badge wait">недоступно</span>'
+        : '<button class="mini" onclick="startWatch('+i+')">Смотреть (+'+money(state.viewPay)+' ₽)</button>')+
+      '</div>';
+  }).join('');
+
+  // рефералка: все уровни
+  const lvl1=state.users.filter(x=>x.refBy===u.id);
+  const lvl2=lvl1.flatMap(x=>state.users.filter(y=>y.refBy===x.id));
+  const lvl3=lvl2.flatMap(x=>state.users.filter(y=>y.refBy===x.id));
+  let html='';
+  html+=refBlock('1 уровень — 10% и активность',lvl1);
+  html+=refBlock('2 уровень — 3%',lvl2);
+  html+=refBlock('3 уровень — 1%',lvl3);
+  document.getElementById('refList').innerHTML=html;
+
+  // история
+  document.getElementById('histList').innerHTML = u.history.length
+    ? u.history.map(h=>'<div class="row"><div><div class="nm">'+esc(h.d)+'</div><div class="sb">'+esc(h.t)+'</div></div><span class="badge ok">+'+money(h.sum)+' ₽</span></div>').join('')
+    : '<div class="row"><div class="sb">История пуста.</div></div>';
+
+  document.getElementById('bTotal').textContent='Итого: '+money(calcBuy())+' ₽';
 }
-document.getElementById('lcSend').addEventListener('click', sendLive);
-document.getElementById('lcInput').addEventListener('keydown', function(e){ if(e.key==='Enter') sendLive(); });
-
-/* ==========================================================
-   ПОКУПКА: ЭФИР
-   ========================================================== */
-let buyType = 'text';
-let buyImage = '';
-
-document.querySelectorAll('#bTypeSeg .seg-btn').forEach(b=>{
-    b.addEventListener('click', ()=>{
-        buyType = b.dataset.type;
-        document.querySelectorAll('#bTypeSeg .seg-btn').forEach(x=>
-            x.classList.toggle('active', x.dataset.type === buyType));
-        document.getElementById('bImgField').style.display = (buyType==='image') ? 'block' : 'none';
-        document.getElementById('bColorField').style.display = (buyType==='image') ? 'none' : 'block';
-        document.getElementById('bSlogan').placeholder = (buyType==='image')
-            ? 'Подпись под картинкой (необязательно)' : 'Кофе, который бодрит';
-    });
-});
-
-document.getElementById('bImg').addEventListener('change', function(){
-    const file = this.files[0];
-    if(!file) return;
-    compressImage(file, dataUrl=>{
-        buyImage = dataUrl;
-        document.getElementById('bPreviewImg').src = dataUrl;
-        document.getElementById('bPreview').style.display = 'block';
-    });
-});
-
-function openBuy(){
-    document.getElementById('bTotal').textContent = 'Итого: '+money(state.price)+' ₽';
-    document.getElementById('buyOverlay').classList.add('on');
+function refBlock(title,arr){
+  return '<div style="font-weight:800;margin:14px 0 8px">'+title+'</div>'+
+    (arr.length ? arr.map(x=>'<div class="row"><div><div class="nm">'+esc(x.name)+'</div><div class="sb">'+esc(x.email)+'</div></div><span class="badge ok">'+x.views+' просм.</span></div>').join('')
+    : '<div class="row"><div class="sb">пусто</div></div>');
 }
-function closeBuy(){ document.getElementById('buyOverlay').classList.remove('on'); }
-function discount(m){ return m>=12?0.20 : m>=6?0.15 : m>=3?0.10 : 0; }
-function calcTotal(){ const m=parseInt(document.getElementById('bTerm').value,10)||1;
-    return Math.round(state.price*m*(1-discount(m))); }
-document.getElementById('bTerm').addEventListener('change',()=>{
-    document.getElementById('bTotal').textContent='Итого: '+money(calcTotal())+' ₽';
+function copyRef(){
+  const el=document.getElementById('refLink');
+  el.select(); document.execCommand('copy');
+  alert('Ссылка скопирована.');
+}
+
+/* ================= ПРОСМОТР РОЛИКА ================= */
+let watchTimer=null, watchAdIndex=0, clickTimer=null;
+function startWatch(i){
+  const u=me(); if(!u) return;
+  const cd=state.cooldownDays*24*3600*1000;
+  if(Date.now()<u.lastView+cd){ alert('Лимит: один ролик раз в '+state.cooldownDays+' дней.'); return; }
+  watchAdIndex=i;
+  const ad=state.ads[i];
+  const scr=document.getElementById('watchScreen');
+  scr.style.background=ad.img?('url('+ad.img+') center/cover'):('linear-gradient(135deg,'+(ad.color||'#4338ca')+',#05060f)');
+  scr.innerHTML='<div style="position:relative;z-index:2"><div style="font-size:1.6rem;font-weight:800">'+esc(ad.brand)+'</div>'+
+    '<div style="opacity:.9">'+esc(ad.slogan)+'</div></div>';
+  document.getElementById('watchLink').classList.add('hide');
+  document.getElementById('watchLink').href=ad.url||'#';
+  document.getElementById('watchOverlay').classList.add('on');
+
+  let t=0; const total=10;
+  document.getElementById('watchBar').style.width='0%';
+  document.getElementById('watchHint').textContent='Осталось: '+total+' с';
+  clearInterval(watchTimer);
+  watchTimer=setInterval(()=>{
+    t+=0.1;
+    document.getElementById('watchBar').style.width=Math.min(100,t/total*100)+'%';
+    const left=Math.max(0,total-t);
+    document.getElementById('watchHint').textContent='Осталось: '+left.toFixed(1)+' с';
+    if(t>=total){
+      clearInterval(watchTimer);
+      finishWatch();
+    }
+  },100);
+}
+function finishWatch(){
+  const u=me(); if(!u) return;
+  const ad=state.ads[watchAdIndex];
+  u.views++; u.lastView=Date.now();
+  u.balance=Math.round((u.balance+state.viewPay)*100)/100;
+  u.history.unshift({t:new Date().toLocaleString('ru-RU'),d:'Просмотр ролика: '+ad.brand,sum:state.viewPay});
+  payRefActivity(u.id,false);
+  save();
+  document.getElementById('watchHint').innerHTML='<b style="color:var(--lime)">+'+money(state.viewPay)+' ₽ начислено!</b> Теперь можно перейти по ссылке (+'+money(state.clickPay)+' ₽).';
+  const link=document.getElementById('watchLink');
+  link.classList.remove('hide');
+  link.onclick=()=>{ startClick(); };
+  renderCabinet();
+}
+function startClick(){
+  const u=me(); if(!u) return;
+  clearTimeout(clickTimer);
+  const ad=state.ads[watchAdIndex];
+  clickTimer=setTimeout(()=>{
+    u.clicks++;
+    u.balance=Math.round((u.balance+state.clickPay)*100)/100;
+    u.history.unshift({t:new Date().toLocaleString('ru-RU'),d:'Клик по рекламе: '+ad.brand,sum:state.clickPay});
+    payRefActivity(u.id,true);
+    save(); renderCabinet();
+    alert('Клик засчитан: +'+money(state.clickPay)+' ₽');
+    document.getElementById('watchOverlay').classList.remove('on');
+  },10000);
+}
+
+/* ================= ПОКУПКА РЕКЛАМЫ (только из кабинета) ================= */
+let buyImg='';
+document.getElementById('bImg').addEventListener('change',function(){
+  const f=this.files[0]; if(!f) return;
+  compressImage(f,d=>{ buyImg=d; document.getElementById('bPreviewImg').src=d; document.getElementById('bPreview').style.display='block'; });
 });
+function disc(m){ return m>=12?0.2:m>=6?0.15:m>=3?0.1:0; }
+function calcBuy(){ const m=parseInt(document.getElementById('bTerm').value,10)||1; return Math.round(state.price*m*(1-disc(m))); }
+document.getElementById('bTerm').addEventListener('change',()=>{ document.getElementById('bTotal').textContent='Итого: '+money(calcBuy())+' ₽'; });
 
-document.getElementById('buySubmit').addEventListener('click', async ()=>{
-    const brand=document.getElementById('bBrand').value.trim();
-    const slogan=document.getElementById('bSlogan').value.trim();
-    const color=document.getElementById('bColor').value;
-    const url=document.getElementById('bUrl').value.trim();
-    const name=document.getElementById('bName').value.trim();
-    const contact=document.getElementById('bContact').value.trim();
-    const m=parseInt(document.getElementById('bTerm').value,10)||1;
+function buyAd(){
+  const u=me();
+  if(!u){ alert('Покупка рекламы доступна только после регистрации.'); openAuth('register'); return; }
+  const brand=document.getElementById('bBrand').value.trim();
+  const slogan=document.getElementById('bSlogan').value.trim();
+  const url=document.getElementById('bUrl').value.trim();
+  const color=document.getElementById('bColor').value;
+  if(!brand||!slogan||!url){ alert('Заполните бренд, слоган и ссылку.'); return; }
+  const m=parseInt(document.getElementById('bTerm').value,10)||1;
+  const total=calcBuy();
 
-    if(!brand){ alert('Укажите название бренда.'); return; }
-    if(buyType==='image' && !buyImage){ alert('Загрузите картинку рекламы.'); return; }
-    if(buyType==='text' && !slogan){ alert('Напишите текст или слоган.'); return; }
-    if(!url){ alert('Укажите ссылку, куда вести при клике.'); return; }
-    if(!name||!contact){ alert('Заполните имя и контакт.'); return; }
+  state.ads.push({id:'u'+Date.now(),type:buyImg?'image':'text',brand,slogan,color,url,img:buyImg||'',owner:u.id});
+  payRefChain(u.id,total,'покупка рекламы в эфире');
+  orders.unshift({id:Date.now(),type:'эфир',brand,slogan,name:u.name,email:u.email,months:m,total,date:new Date().toLocaleString('ru-RU')});
+  save(); saveOrders(); buildSlides();
 
-    const btn=document.getElementById('buySubmit');
-    btn.textContent='Публикуем…'; btn.disabled=true;
+  u.history.unshift({t:new Date().toLocaleString('ru-RU'),d:'Покупка рекламы: '+brand,sum:0});
+  sendTg('📺 Новая реклама: '+brand+' — '+slogan+' — '+url+' — '+money(total)+' ₽');
 
-    state.ads.push({
-        type: buyType,
-        brand: brand,
-        slogan: slogan,
-        color: color,
-        url: url,
-        img: (buyType==='image') ? buyImage : ''
-    });
-    save(); buildSlides();
+  document.getElementById('bBrand').value=''; document.getElementById('bSlogan').value='';
+  document.getElementById('bUrl').value=''; document.getElementById('bImg').value='';
+  document.getElementById('bPreview').style.display='none'; buyImg='';
+  renderCabinet();
+  alert('Готово! Реклама встала в эфир. Реферальные отчисления начислены.');
+}
 
-    const total=calcTotal();
-    orders.unshift({id:Date.now(),type:'эфир',format:buyType,brand,slogan,name,contact,url,months:m,total,
-        date:new Date().toLocaleString('ru-RU')});
-    saveOrders();
-
-    await sendTg('📺 <b>Новая реклама в эфире</b>\n\n<b>Бренд:</b> '+brand+
-        '\n<b>Формат:</b> '+(buyType==='image'?'фото':'текст')+
-        '\n<b>Текст:</b> '+slogan+'\n<b>Ссылка:</b> '+url+
-        '\n<b>Имя:</b> '+name+'\n<b>Контакт:</b> '+contact+
-        '\n<b>Срок:</b> '+m+' мес.\n<b>Сумма:</b> '+money(total)+' ₽');
-
-    btn.textContent='Оплатить и встать в эфир'; btn.disabled=false;
-    closeBuy();
-    ['bBrand','bSlogan','bUrl','bName','bContact'].forEach(id=>document.getElementById(id).value='');
-    document.getElementById('bImg').value='';
-    document.getElementById('bPreview').style.display='none';
-    buyImage='';
-    alert('Готово! Ваша реклама уже в эфире — прокрутите вверх и увидите её.');
-});
-
-/* ==========================================================
-   ПОКУПКА: СТРОКА
-   ========================================================== */
+/* ================= БЕГУЩАЯ СТРОКА (для всех) ================= */
 function openTicker(){
-    document.getElementById('tickSub').textContent = 'Строка наверху сайта · '+money(state.tickerPrice)+' ₽/мес';
-    document.getElementById('tTotal').textContent = 'Итого: '+money(state.tickerPrice)+' ₽';
-    document.getElementById('tickOverlay').classList.add('on');
+  document.getElementById('tickSub').textContent='Строка наверху сайта · '+money(state.tickerPrice)+' ₽/мес';
+  document.getElementById('tTotal').textContent='Итого: '+money(calcTick())+' ₽';
+  const u=me();
+  if(u){ document.getElementById('tName').value=u.name; }
+  document.getElementById('tickOverlay').classList.add('on');
 }
 function closeTicker(){ document.getElementById('tickOverlay').classList.remove('on'); }
-function calcTick(){ const m=parseInt(document.getElementById('tTerm').value,10)||1;
-    return Math.round(state.tickerPrice*m*(1-discount(m))); }
-document.getElementById('tTerm').addEventListener('change',()=>{
-    document.getElementById('tTotal').textContent='Итого: '+money(calcTick())+' ₽';
-});
-document.getElementById('tickSubmit').addEventListener('click', async ()=>{
-    const text=document.getElementById('tText').value.trim();
-    const url=document.getElementById('tUrl').value.trim();
-    const name=document.getElementById('tName').value.trim();
-    const contact=document.getElementById('tContact').value.trim();
-    const m=parseInt(document.getElementById('tTerm').value,10)||1;
-    if(!text){ alert('Введите текст строки.'); return; }
-    if(!name||!contact){ alert('Заполните имя и контакт.'); return; }
+function calcTick(){ const m=parseInt(document.getElementById('tTerm').value,10)||1; return Math.round(state.tickerPrice*m*(1-disc(m))); }
+document.getElementById('tTerm').addEventListener('change',()=>{ document.getElementById('tTotal').textContent='Итого: '+money(calcTick())+' ₽'; });
 
-    const btn=document.getElementById('tickSubmit');
-    btn.textContent='Публикуем…'; btn.disabled=true;
+function submitTicker(){
+  const text=document.getElementById('tText').value.trim();
+  const url=document.getElementById('tUrl').value.trim();
+  const name=document.getElementById('tName').value.trim();
+  const contact=document.getElementById('tContact').value.trim();
+  if(!text||!name||!contact){ alert('Заполните текст, имя и контакт.'); return; }
+  const m=parseInt(document.getElementById('tTerm').value,10)||1;
+  const total=calcTick();
 
-    state.ticker.push(text+(url?' — '+url:''));
-    save(); renderTicker();
-
-    const total=calcTick();
-    orders.unshift({id:Date.now(),type:'строка',brand:'Бегущая строка',slogan:text,name,contact,url,months:m,total,
-        date:new Date().toLocaleString('ru-RU')});
-    saveOrders();
-
-    await sendTg('📢 <b>Новая бегущая строка</b>\n\n<b>Текст:</b> '+text+
-        '\n<b>Имя:</b> '+name+'\n<b>Контакт:</b> '+contact+
-        (url?'\n<b>Ссылка:</b> '+url:'')+'\n<b>Срок:</b> '+m+' мес.\n<b>Сумма:</b> '+money(total)+' ₽');
-
-    btn.textContent='Оплатить'; btn.disabled=false;
-    closeTicker();
-    ['tText','tUrl','tName','tContact'].forEach(id=>document.getElementById(id).value='');
-    alert('Готово! Ваша строка уже бежит вверху сайта.');
-});
-
-/* ==========================================================
-   ЧАТ С ОПЕРАТОРОМ
-   ========================================================== */
-const chatPanel=document.getElementById('chatPanel');
-const chatBody=document.getElementById('chatBody');
-let chatStarted=false;
-document.getElementById('chatBtn').addEventListener('click',()=>{
-    chatPanel.classList.toggle('on');
-    if(!chatStarted){ chatStarted=true; addChat('Здравствуйте! Напишите вопрос — сообщение уйдёт оператору.','sys'); }
-});
-function addChat(text,cls){
-    const d=document.createElement('div'); d.className='cm '+cls;
-    d.innerHTML = linkify(text);
-    chatBody.appendChild(d); chatBody.scrollTop=chatBody.scrollHeight;
+  state.ticker.push(text+(url?' — '+url:''));
+  orders.unshift({id:Date.now(),type:'строка',brand:'Бегущая строка',slogan:text,name,email:contact,months:m,total,date:new Date().toLocaleString('ru-RU')});
+  const u=me();
+  if(u) payRefChain(u.id,total,'покупка бегущей строки');
+  save(); saveOrders(); renderTicker();
+  sendTg('📢 Новая строка: '+text+' — '+name+' — '+contact);
+  closeTicker();
+  ['tText','tUrl','tContact'].forEach(id=>document.getElementById(id).value='');
+  alert('Готово! Ваша строка уже бежит вверху сайта.');
 }
-async function sendChat(){
-    const f=document.getElementById('chatField'); const v=f.value.trim(); if(!v)return;
-    addChat(v,'me'); f.value='';
-    const ok=await sendTg('💬 <b>Сообщение из чата</b>\n\n'+v);
-    addChat(ok?'Доставлено оператору.':'Чат не подключён — оставьте заявку через «Встать в эфир».','sys');
-}
-document.getElementById('chatSend').addEventListener('click',sendChat);
-document.getElementById('chatField').addEventListener('keydown',e=>{if(e.key==='Enter')sendChat();});
 
-/* ==========================================================
-   АДМИНКА
-   ========================================================== */
-document.querySelector('.admin-fab').addEventListener('click',()=>document.getElementById('adminOverlay').classList.add('on'));
+/* ================= ЭФИР ================= */
+const SLIDE_SECONDS=7; let current=0, elapsed=0, slides=[];
+function buildSlides(){
+  const screen=document.getElementById('bcScreen');
+  slides.forEach(s=>s.remove());
+  const ads=(state.ads&&state.ads.length)?state.ads:DEMO_ADS;
+  const anchor=screen.querySelector('.bc-bottom');
+  slides=ads.map(ad=>{
+    const a=document.createElement('a');
+    const isImg=(ad.type==='image'&&ad.img);
+    a.className='bc-slide'+(isImg?' img':'');
+    a.href=ad.url||'#'; a.target='_blank'; a.rel='noopener';
+    if(!isImg) a.style.background='linear-gradient(135deg,'+(ad.color||'#4338ca')+' 0%, #05060f 120%)';
+    a.innerHTML=(isImg?'<img class="bc-img" src="'+ad.img+'" alt="">':'')+
+      '<div class="bc-body"><div class="bc-brand">'+esc(ad.brand)+'</div>'+
+      '<div class="bc-slogan">'+esc(ad.slogan)+'</div></div>'+
+      '<span class="bc-cta">Перейти на сайт →</span>';
+    screen.insertBefore(a,anchor);
+    return a;
+  });
+  if(current>=slides.length) current=0;
+  showSlide(current);
+}
+function showSlide(i){
+  slides.forEach((s,idx)=>s.classList.toggle('on',idx===i));
+  const ad=state.ads[i]||DEMO_ADS[i];
+  if(ad) document.getElementById('nowBrand').textContent=ad.brand;
+  elapsed=0;
+}
+setInterval(()=>{
+  if(!slides.length) return;
+  elapsed+=0.25;
+  document.getElementById('nowCountdown').textContent=Math.max(0,SLIDE_SECONDS-elapsed).toFixed(1)+' с';
+  document.getElementById('bcProgress').style.width=(elapsed/SLIDE_SECONDS*100)+'%';
+  if(elapsed>=SLIDE_SECONDS){ current=(current+1)%slides.length; showSlide(current); }
+},250);
+
+let viewers=214;
+setInterval(()=>{
+  viewers+=Math.floor(Math.random()*7)-2;
+  if(viewers<150) viewers=150+Math.floor(Math.random()*40);
+  document.getElementById('viewersCount').textContent=viewers;
+  document.getElementById('lcOnline').textContent=Math.round(viewers/6)+' в чате';
+},3500);
+document.getElementById('viewersCount').textContent=viewers;
+
+/* чат эфира */
+const BOT_NAMES=['Марина','Алексей','Дмитрий','Ольга','Игорь','Екатерина','Сергей','Юлия','Андрей','Анастасия','Павел','Елена','Максим','Татьяна','Роман','Ирина','Владимир','Светлана','Николай','Оксана'];
+const BOT_MSGS=['О, эфир живой 🔥','Кто уже зарабатывает тут?','Клик по баннеру ведёт на сайт, удобно','А сколько платят за просмотр?','Уже вывел первые деньги','Смотрю ролики каждый день','Тут очередь эфира внизу, посмотрите','Мой бренд тут смотрелся бы отлично','Рефералка реально работает','Кто из Краснодара? 🙌','Вот площадка: https://adnex.ru'];
+function botColor(){ const h=Math.floor(Math.random()*360); return 'hsl('+h+',70%,60%)'; }
+function addLiveMsg(name,text,color){
+  const body=document.getElementById('lcBody'); if(!body) return;
+  const d=document.createElement('div'); d.className='lc-msg';
+  d.innerHTML='<span class="lc-av" style="background:'+(color||botColor())+'">'+esc(name[0])+'</span>'+
+    '<span class="lc-txt"><b>'+esc(name)+'</b><div>'+linkify(text)+'</div></span>';
+  body.appendChild(d);
+  while(body.children.length>60) body.removeChild(body.firstChild);
+  body.scrollTop=body.scrollHeight;
+}
+['Марина','Дмитрий','Ольга'].forEach((n,i)=>addLiveMsg(n,BOT_MSGS[i]));
+BOT_NAMES.slice(0,20).forEach((name,i)=>{
+  const off=Math.round(3600000/20*i)+Math.floor(Math.random()*20000);
+  setTimeout(()=>{
+    addLiveMsg(name,BOT_MSGS[Math.floor(Math.random()*BOT_MSGS.length)]);
+    setInterval(()=>addLiveMsg(name,BOT_MSGS[Math.floor(Math.random()*BOT_MSGS.length)]),3600000);
+  },off);
+});
+function sendLive(){
+  const inp=document.getElementById('lcInput'); const v=inp.value.trim(); if(!v) return;
+  const u=me();
+  addLiveMsg(u?u.name:'Гость',v,'#3fd6ff'); inp.value='';
+  sendTg('💬 Чат эфира: '+v);
+}
+document.getElementById('lcSend').addEventListener('click',sendLive);
+document.getElementById('lcInput').addEventListener('keydown',e=>{ if(e.key==='Enter') sendLive(); });
+
+/* ================= БЕГУЩАЯ СТРОКА (верх) ================= */
+function renderTicker(){
+  const list=(state.ticker&&state.ticker.length)?state.ticker:DEF_TICKER;
+  const html=list.map(t=>'<b>✦</b> '+esc(t)).join(' &nbsp;&nbsp; ');
+  document.getElementById('tickerTrack').innerHTML='<span>'+html+'</span><span>'+html+'</span>';
+}
+
+/* ================= АДМИНКА ================= */
+function openAdmin(){ document.getElementById('adminOverlay').classList.add('on'); }
 function closeAdmin(){ document.getElementById('adminOverlay').classList.remove('on'); }
 function adminLogin(){
-    if(document.getElementById('adminPass').value===state.password){
-        document.getElementById('adminLogin').style.display='none';
-        document.getElementById('adminPanel').style.display='block';
-        renderAdmin();
-    } else alert('Неверный пароль');
+  if(document.getElementById('adminPass').value===state.password){
+    document.getElementById('adminLogin').classList.add('hide');
+    document.getElementById('adminPanel').classList.remove('hide');
+    renderAdmin();
+  } else alert('Неверный пароль');
 }
-document.querySelectorAll('.tab').forEach(t=>{
-    t.addEventListener('click',()=>{
-        document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
-        t.classList.add('active');
-        ['ads','ticker','orders','set'].forEach(id=>document.getElementById('tab-'+id).style.display='none');
-        document.getElementById('tab-'+t.dataset.tab).style.display='block';
-    });
+document.querySelectorAll('.tab[data-apane]').forEach(t=>{
+  t.addEventListener('click',()=>{
+    document.querySelectorAll('.tab[data-apane]').forEach(x=>x.classList.remove('active'));
+    t.classList.add('active');
+    ['a-ads','a-users','a-orders','a-set'].forEach(id=>document.getElementById(id).classList.remove('on'));
+    document.getElementById(t.dataset.apane).classList.add('on');
+  });
 });
 function renderAdmin(){
-    document.getElementById('aPrice').value = state.price;
-    document.getElementById('tPrice').value = state.tickerPrice;
-    renderAdminAds();
-    renderAdminTicker();
-    renderAdminOrders();
-}
-function renderAdminAds(){
-    const box=document.getElementById('adminAds'); box.innerHTML='';
-    state.ads.forEach((ad,i)=>{
-        const isImg = (ad.type === 'image' && ad.img);
-        const d=document.createElement('div'); d.className='adm-card';
-        d.innerHTML =
-            '<div class="adm-row">'+
-                '<input class="a-in" value="'+esc(ad.brand)+'" data-i="'+i+'" data-f="brand">'+
-                '<input class="a-in" style="max-width:70px" type="color" value="'+(ad.color||'#8b5cf6')+'" data-i="'+i+'" data-f="color">'+
-            '</div>'+
-            '<input class="a-in" style="margin-top:8px" value="'+esc(ad.slogan)+'" data-i="'+i+'" data-f="slogan">'+
-            '<input class="a-in" style="margin-top:8px" value="'+esc(ad.url||'')+'" data-i="'+i+'" data-f="url">'+
-            (isImg ? '<img src="'+ad.img+'" style="margin-top:8px;width:100%;border-radius:8px;display:block">' : '')+
-            '<div class="adm-btns">'+
-                '<button class="mini" onclick="admSave('+i+')">💾 Сохранить</button>'+
-                '<button class="mini act" onclick="admSetType('+i+',\'text\')">Текстом</button>'+
-                '<button class="mini act" onclick="admSetType('+i+',\'image\')">Фото</button>'+
-                '<button class="mini del" onclick="admDel('+i+')">✕</button>'+
-            '</div>'+
-            '<input class="a-in" type="file" accept="image/*" style="margin-top:8px" onchange="admImg(event,'+i+')">'+
-            '<div class="adm-stat">Формат: '+(isImg?'фото':'текст')+'</div>';
-        box.appendChild(d);
-    });
+  document.getElementById('aPrice').value=state.price;
+  document.getElementById('aTick').value=state.tickerPrice;
+  document.getElementById('aView').value=state.viewPay;
+  document.getElementById('aClick').value=state.clickPay;
+
+  document.getElementById('adminAds').innerHTML=state.ads.map((a,i)=>
+    '<div class="adm-card">'+
+    '<input class="a-in" value="'+esc(a.brand)+'" data-i="'+i+'" data-f="brand">'+
+    '<input class="a-in" value="'+esc(a.slogan)+'" data-i="'+i+'" data-f="slogan">'+
+    '<input class="a-in" value="'+esc(a.url||'')+'" data-i="'+i+'" data-f="url">'+
+    '<div class="adm-btns"><button class="mini" onclick="admSave('+i+')">Сохранить</button>'+
+    '<button class="mini del" onclick="admDel('+i+')">Удалить</button></div></div>').join('');
+
+  document.getElementById('adminUsers').innerHTML = state.users.length
+    ? state.users.map(u=>'<div class="adm-card"><b>'+esc(u.name)+'</b><div class="adm-stat">'+esc(u.email)+' · код '+u.code+' · баланс '+money(u.balance)+' ₽ · просм. '+u.views+' · кликов '+u.clicks+'</div></div>').join('')
+    : '<div class="adm-stat">Пользователей пока нет.</div>';
+
+  document.getElementById('adminOrders').innerHTML = orders.length
+    ? orders.map(o=>'<div class="adm-card"><b>'+esc(o.brand)+'</b><div class="adm-stat">'+esc(o.name)+' · '+esc(o.email)+' · '+o.months+' мес · '+money(o.total)+' ₽ · '+esc(o.date)+'</div></div>').join('')
+    : '<div class="adm-stat">Заявок нет.</div>';
 }
 function admSave(i){
-    document.querySelectorAll('[data-i="'+i+'"]').forEach(inp=>{
-        if(inp.type !== 'file') state.ads[i][inp.dataset.f]=inp.value;
-    });
-    save(); buildSlides(); renderAdminAds(); alert('Сохранено.');
-}
-function admSetType(i, t){
-    if(t === 'image' && !state.ads[i].img){ alert('Сначала загрузите картинку.'); return; }
-    state.ads[i].type = t;
-    save(); buildSlides(); renderAdminAds();
-}
-function admImg(ev, i){
-    const file = ev.target.files[0];
-    if(!file) return;
-    compressImage(file, dataUrl=>{
-        state.ads[i].img = dataUrl;
-        state.ads[i].type = 'image';
-        save(); buildSlides(); renderAdminAds();
-    });
+  document.querySelectorAll('[data-i="'+i+'"]').forEach(inp=>{ state.ads[i][inp.dataset.f]=inp.value; });
+  save(); buildSlides(); renderAdmin();
 }
 function admDel(i){
-    if(!confirm('Убрать «'+state.ads[i].brand+'» из эфира?')) return;
-    state.ads.splice(i,1);
-    if(!state.ads.length) state.ads = DEMO_ADS.map(a=>Object.assign({},a));
-    save(); buildSlides(); renderAdminAds();
+  if(!confirm('Удалить «'+state.ads[i].brand+'»?')) return;
+  state.ads.splice(i,1);
+  if(!state.ads.length) state.ads=DEMO_ADS.map(a=>Object.assign({},a));
+  save(); buildSlides(); renderAdmin();
 }
-function savePrice(){
-    const p=parseInt(document.getElementById('aPrice').value,10);
-    if(!p){ alert('Введите цену.'); return; }
-    state.price=p; save();
-    document.getElementById('bcPrice').innerHTML = money(p)+' ₽<small> / мес</small>';
-    alert('Цена сохранена.');
-}
-function renderAdminTicker(){
-    const box=document.getElementById('adminTicker'); box.innerHTML='';
-    state.ticker.forEach((t,i)=>{
-        const d=document.createElement('div'); d.className='tick-row';
-        d.innerHTML='<span>'+esc(t)+'</span><button class="mini del" onclick="tickDel('+i+')">✕</button>';
-        box.appendChild(d);
-    });
-}
-function tickDel(i){
-    state.ticker.splice(i,1);
-    if(!state.ticker.length) state.ticker = DEFAULT_TICKER.slice();
-    save(); renderTicker(); renderAdminTicker();
-}
-function saveTickerPrice(){
-    const p=parseInt(document.getElementById('tPrice').value,10);
-    if(!p){ alert('Введите цену.'); return; }
-    state.tickerPrice=p; save();
-    document.getElementById('tickerPriceView').textContent=money(p);
-    alert('Цена сохранена.');
-}
-function renderAdminOrders(){
-    const box=document.getElementById('adminOrders'); box.innerHTML='';
-    if(!orders.length){ box.innerHTML='<div class="adm-stat">Пока заявок нет.</div>'; return; }
-    orders.forEach(o=>{
-        const d=document.createElement('div'); d.className='order-card';
-        d.innerHTML =
-            '<div class="oc-top"><b>'+esc(o.brand)+'</b>'+
-            '<button class="mini del" onclick="ordDel('+o.id+')">✕</button></div>'+
-            '<div class="oc-line">'+esc(o.slogan)+'</div>'+
-            '<div class="oc-line">'+esc(o.name)+' · '+esc(o.contact)+' · '+o.months+' мес · '+money(o.total)+' ₽</div>'+
-            '<div class="oc-line">'+esc(o.date)+'</div>';
-        box.appendChild(d);
-    });
-}
-function ordDel(id){ orders=orders.filter(o=>o.id!==id); saveOrders(); renderAdminOrders(); }
-function clearOrders(){ if(!confirm('Очистить все заявки?'))return; orders=[]; saveOrders(); renderAdminOrders(); }
-function savePass(){
-    const p=document.getElementById('sPass').value.trim(); if(!p){alert('Введите пароль.');return;}
-    state.password=p; save(); document.getElementById('sPass').value=''; alert('Пароль изменён.');
+function saveSettings(){
+  state.price=parseInt(document.getElementById('aPrice').value,10)||state.price;
+  state.tickerPrice=parseInt(document.getElementById('aTick').value,10)||state.tickerPrice;
+  state.viewPay=parseFloat(document.getElementById('aView').value)||state.viewPay;
+  state.clickPay=parseFloat(document.getElementById('aClick').value)||state.clickPay;
+  save(); renderTicker();
+  document.getElementById('tickerPriceView').textContent=state.tickerPrice;
+  alert('Настройки сохранены.');
 }
 function resetAll(){
-    if(!confirm('Сбросить всё к начальному виду?')) return;
-    localStorage.removeItem(LS); localStorage.removeItem(LS_ORD); location.reload();
+  if(!confirm('Сбросить всё?')) return;
+  localStorage.removeItem(LS); localStorage.removeItem(LS_ORD); localStorage.removeItem(LS_SES);
+  location.reload();
 }
 
-/* ==========================================================
-   СТАРТ
-   ========================================================== */
-renderTicker();
-document.getElementById('bcPrice').innerHTML = money(state.price)+' ₽<small> / мес</small>';
-document.getElementById('tickerPriceView').textContent = money(state.tickerPrice);
-buildSlides();
+/* ================= АВТО-РЕФ ИЗ ССЫЛКИ ================= */
+(function(){
+  const p=new URLSearchParams(location.search);
+  const r=p.get('ref');
+  if(r){
+    setTimeout(()=>{
+      if(!me()){ openAuth('register'); document.getElementById('aRef').value=r.toUpperCase(); }
+    },400);
+  }
+})();
+
+/* ================= СТАРТ ================= */
+renderNav(); renderTicker(); buildSlides();
+document.getElementById('tickerPriceView').textContent=state.tickerPrice;
 </script>
 </body>
 </html>
