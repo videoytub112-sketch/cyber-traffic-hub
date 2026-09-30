@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADNEX — прямой рекламный эфир</title>
+<title>ADNEX — рекламная площадка</title>
 <style>
 :root{
     --bg:#070810;--card:#0e1020;--stroke:rgba(120,150,255,0.14);
@@ -30,6 +30,7 @@ nav .links a:hover{color:var(--text);}
 .nav-cta{padding:9px 20px;border-radius:24px;font-size:.85rem;text-decoration:none;
     background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;font-weight:700;}
 
+/* БЕГУЩАЯ СТРОКА */
 .ticker-bar{overflow:hidden;white-space:nowrap;background:rgba(8,10,26,.85);
     border-bottom:1px solid var(--stroke);height:36px;display:flex;align-items:center;}
 .ticker-track{display:inline-flex;white-space:nowrap;animation:tick 55s linear infinite;}
@@ -49,36 +50,28 @@ nav .links a:hover{color:var(--text);}
 .btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--stroke);}
 .btn-ghost:hover{background:rgba(255,255,255,.1);}
 .btn-sm{padding:10px 20px;font-size:.85rem;border-radius:22px;}
+section{padding:44px 0;}
+.sec-head{text-align:center;margin-bottom:30px;}
+.sec-head h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:10px;}
+.sec-head p{color:var(--dim);max-width:620px;margin:0 auto;}
 
-/* ====== ЭФИР ====== */
-section{padding:40px 0;}
-.broadcast{
-    background:#05060f;border:1px solid var(--stroke);border-radius:22px;overflow:hidden;
-    box-shadow:0 30px 80px rgba(0,0,0,.6);
-}
-.bc-screen{
-    position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;
-}
-.bc-slide{
-    position:absolute;inset:0;display:flex;flex-direction:column;
+/* ====== ЭФИР (вместо секторов) ====== */
+.broadcast{background:#05060f;border:1px solid var(--stroke);border-radius:22px;
+    overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);}
+.bc-screen{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#000;}
+.bc-slide{position:absolute;inset:0;display:flex;flex-direction:column;
     align-items:center;justify-content:center;text-align:center;padding:6%;
-    opacity:0;transition:opacity .6s ease;pointer-events:none;
-}
+    opacity:0;transition:opacity .6s ease;pointer-events:none;}
 .bc-slide.on{opacity:1;pointer-events:auto;}
 .bc-brand{font-size:clamp(1.4rem,4vw,2.6rem);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
 .bc-slogan{font-size:clamp(.95rem,2.4vw,1.5rem);font-weight:600;max-width:80%;opacity:.95;}
-.bc-cta{
-    margin-top:26px;padding:13px 30px;border-radius:30px;font-weight:800;
+.bc-cta{margin-top:26px;padding:13px 30px;border-radius:30px;font-weight:800;
     background:rgba(0,0,0,.28);border:2px solid rgba(255,255,255,.75);color:#fff;
-    text-decoration:none;font-size:.95rem;transition:.2s;
-}
+    text-decoration:none;font-size:.95rem;transition:.2s;}
 .bc-cta:hover{background:#fff;color:#111;}
-
-.bc-top{
-    position:absolute;top:0;left:0;right:0;z-index:5;
-    display:flex;justify-content:space-between;align-items:center;padding:16px 18px;
-    background:linear-gradient(180deg,rgba(0,0,0,.55),transparent);
-}
+.bc-top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;
+    justify-content:space-between;align-items:center;padding:16px 18px;
+    background:linear-gradient(180deg,rgba(0,0,0,.55),transparent);}
 .live-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red);
     color:#fff;font-weight:800;font-size:.78rem;letter-spacing:1.5px;padding:6px 14px;border-radius:20px;}
 .live-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1.1s infinite;}
@@ -86,22 +79,18 @@ section{padding:40px 0;}
 .viewers{font-size:.8rem;color:#fff;background:rgba(0,0,0,.45);padding:6px 14px;border-radius:20px;
     display:inline-flex;align-items:center;gap:7px;}
 .viewers i{width:7px;height:7px;border-radius:50%;background:var(--lime);display:inline-block;box-shadow:0 0 8px var(--lime);}
-
 .bc-bottom{position:absolute;bottom:0;left:0;right:0;z-index:5;padding:14px 18px 16px;
     background:linear-gradient(0deg,rgba(0,0,0,.7),transparent);}
 .bc-now{font-size:.8rem;color:#fff;margin-bottom:8px;display:flex;justify-content:space-between;gap:10px;}
 .bc-now b{color:var(--amber);}
 .bc-progress{height:4px;border-radius:4px;background:rgba(255,255,255,.18);overflow:hidden;}
 .bc-progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));transition:width .25s linear;}
-
 .bc-foot{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
     padding:16px 20px;background:var(--card);border-top:1px solid var(--stroke);}
 .bc-foot .info{font-size:.85rem;color:var(--dim);}
 .bc-foot .info b{color:var(--text);}
 .bc-foot .price{font-size:1.5rem;font-weight:800;color:var(--cyan);}
 .bc-foot .price small{font-size:.75rem;color:var(--dim);font-weight:400;}
-
-/* очередь эфира */
 .playlist{margin-top:22px;}
 .pl-head{font-size:1.05rem;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:9px;}
 .pl-head span{font-size:.75rem;color:var(--dim);font-weight:400;}
@@ -113,17 +102,23 @@ section{padding:40px 0;}
 .pl-item .pl-name{font-size:.9rem;font-weight:700;margin-bottom:2px;}
 .pl-item .pl-sub{font-size:.75rem;color:var(--dim);}
 
-/* шаги */
+/* ТИКЕР-БЛОК */
+.ticker-buy{display:flex;align-items:center;gap:20px;flex-wrap:wrap;justify-content:space-between;
+    background:linear-gradient(120deg,rgba(139,92,246,.15),rgba(63,214,255,.08));
+    border:1px solid var(--stroke);border-radius:18px;padding:26px 28px;}
+.ticker-buy h3{font-size:1.3rem;margin-bottom:6px;}
+.ticker-buy p{color:var(--dim);font-size:.9rem;max-width:460px;}
+.ticker-buy .cost{font-size:1.8rem;font-weight:800;color:var(--amber);}
+.ticker-buy .cost small{font-size:.8rem;color:var(--dim);font-weight:400;}
+
+/* ШАГИ */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 .step{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:26px 22px;}
 .step .num{font-size:2rem;font-weight:800;margin-bottom:12px;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .step h3{font-size:1.05rem;margin-bottom:8px;}
 .step p{color:var(--dim);font-size:.9rem;}
-.sec-head{text-align:center;margin-bottom:30px;}
-.sec-head h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:10px;}
-.sec-head p{color:var(--dim);max-width:620px;margin:0 auto;}
 
-/* модалки */
+/* МОДАЛКИ */
 .overlay{position:fixed;inset:0;z-index:100;display:none;background:rgba(3,4,10,.88);
     backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;}
 .overlay.on{display:flex;}
@@ -137,14 +132,13 @@ section{padding:40px 0;}
     background:rgba(255,255,255,.04);border:1px solid var(--stroke);color:var(--text);
     font-family:inherit;font-size:.9rem;outline:none;}
 .field input:focus,.field textarea:focus,.field select:focus{border-color:var(--cyan);}
-.field textarea{resize:vertical;min-height:80px;font-family:monospace;font-size:.82rem;}
 .field input[type=color]{padding:4px;height:44px;cursor:pointer;}
 .modal .btn{width:100%;margin-top:8px;}
 .close-x{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--dim);font-size:1.5rem;cursor:pointer;}
 .total{padding:14px;border-radius:12px;background:rgba(63,214,255,.08);border:1px solid rgba(63,214,255,.25);
     text-align:center;font-weight:800;font-size:1.2rem;color:var(--cyan);margin:14px 0 6px;}
 
-/* чат */
+/* ЧАТ */
 .chat-btn{position:fixed;bottom:22px;right:22px;z-index:90;width:58px;height:58px;border-radius:50%;
     border:none;cursor:pointer;background:linear-gradient(135deg,var(--violet),var(--cyan));
     color:#070810;font-size:1.5rem;box-shadow:0 0 30px rgba(139,92,246,.5);
@@ -167,7 +161,7 @@ section{padding:40px 0;}
     border:1px solid var(--stroke);color:var(--text);font-size:.86rem;outline:none;font-family:inherit;}
 .chat-foot button{padding:0 16px;border-radius:10px;border:none;cursor:pointer;background:var(--cyan);color:#070810;font-weight:700;}
 
-/* админка */
+/* АДМИНКА */
 .admin-fab{position:fixed;bottom:22px;left:22px;z-index:90;width:46px;height:46px;border-radius:50%;
     border:1px solid var(--stroke);background:rgba(255,255,255,.05);color:var(--dim);cursor:pointer;
     font-size:1.15rem;transition:.25s;}
@@ -184,6 +178,8 @@ section{padding:40px 0;}
 .mini.del{background:rgba(255,80,80,.18);color:var(--red);}
 .adm-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
 .adm-stat{font-size:.72rem;color:var(--dim);margin-top:8px;}
+.tick-row{display:flex;align-items:center;gap:8px;padding:9px 10px;border-bottom:1px solid var(--stroke);font-size:.82rem;}
+.tick-row span{flex:1;}
 .order-card{background:rgba(255,255,255,.03);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px;font-size:.82rem;}
 .order-card .oc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
 .order-card .oc-top b{color:var(--cyan);}
@@ -204,13 +200,13 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
 <header>
     <div class="wrap">
         <nav>
-            <div class="logo">ADNEX<small>прямой рекламный эфир</small></div>
+            <div class="logo">ADNEX<small>рекламная площадка</small></div>
             <div class="links">
                 <a href="#live">Эфир</a>
-                <a href="#buy">Купить место</a>
-                <a href="#how">Как это работает</a>
+                <a href="#ticker">Бегущая строка</a>
+                <a href="#how">Как купить</a>
             </div>
-            <a href="#buy" class="nav-cta">В эфир</a>
+            <a href="#live" class="nav-cta">В эфир</a>
         </nav>
     </div>
     <div class="ticker-bar"><div class="ticker-track" id="tickerTrack"></div></div>
@@ -222,12 +218,12 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
         <h1>Твоя реклама — <span>в прямом эфире</span>.<br>Прямо сейчас, на глазах у всех.</h1>
         <p>Это не баннеры по углам. Это непрерывный рекламный канал: посетители заходят — и видят, как крутится эфир. Хочешь, чтобы твой ролик был здесь?</p>
         <div class="hero-btns">
-            <a href="#buy" class="btn btn-main">Занять место в эфире</a>
-            <a href="#live" class="btn btn-ghost">Смотреть, что в эфире</a>
+            <a href="#live" class="btn btn-main">Занять место в эфире</a>
+            <a href="#ticker" class="btn btn-ghost">Купить бегущую строку</a>
         </div>
     </section>
 
-    <!-- ЭФИР -->
+    <!-- ЭФИР (замена секторов) -->
     <section id="live">
         <div class="sec-head">
             <h2>Прямой эфир рекламы</h2>
@@ -240,7 +236,6 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
                     <span class="live-badge"><i class="live-dot"></i>LIVE</span>
                     <span class="viewers"><i></i>смотрят: <b id="viewersCount">0</b></span>
                 </div>
-                <!-- слайды вставляются скриптом -->
                 <div class="bc-bottom">
                     <div class="bc-now">
                         <span>Сейчас в эфире: <b id="nowBrand">—</b></span>
@@ -262,29 +257,35 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
             </div>
         </div>
 
-        <!-- очередь эфира -->
         <div class="playlist">
             <div class="pl-head">Очередь эфира <span id="plCount"></span></div>
             <div class="pl-grid" id="plGrid"></div>
         </div>
     </section>
 
-    <!-- КУПИТЬ -->
-    <section id="buy">
+    <!-- БЕГУЩАЯ СТРОКА -->
+    <section id="ticker">
         <div class="sec-head">
-            <h2>Купить место в эфире</h2>
-            <p>Заполните бренд, слоган и цвет — и ваш рекламный слайд встанет в ротацию сразу после оплаты.</p>
+            <h2>Бегущая строка</h2>
+            <p>Строка в самом верху сайта — её видят все посетители без исключения.</p>
         </div>
-        <div style="text-align:center">
-            <button class="btn btn-main" onclick="openBuy()">Занять место в эфире</button>
+        <div class="ticker-buy">
+            <div>
+                <h3>Разместить свою строку</h3>
+                <p>Ваш текст будет бежать по верху страницы на каждой странице сайта. Идеально для акций и объявлений.</p>
+            </div>
+            <div style="text-align:center">
+                <div class="cost"><span id="tickerPriceView">800</span> ₽<small> / мес</small></div>
+                <button class="btn btn-main" style="margin-top:12px" onclick="openTicker()">Купить строку</button>
+            </div>
         </div>
     </section>
 
     <!-- КАК -->
     <section id="how">
         <div class="sec-head">
-            <h2>Как это работает</h2>
-            <p>Три шага — и реклама уже в эфире.</p>
+            <h2>Как купить место</h2>
+            <p>Три шага — и ваша реклама в работе.</p>
         </div>
         <div class="steps">
             <div class="step"><div class="num">01</div><h3>Оформляете ролик</h3><p>Название бренда, слоган, цвет и ссылка — прямо в форме.</p></div>
@@ -294,7 +295,7 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     </section>
 </main>
 
-<footer><div class="wrap">© ADNEX · прямой рекламный эфир · заявки принимаются круглосуточно</div></footer>
+<footer><div class="wrap">© ADNEX · рекламная площадка · заявки принимаются круглосуточно</div></footer>
 
 <button class="admin-fab" title="Панель управления">⚙</button>
 <button class="chat-btn" id="chatBtn">💬</button>
@@ -308,7 +309,7 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     </div>
 </div>
 
-<!-- МОДАЛКА ПОКУПКИ -->
+<!-- МОДАЛКА: ЭФИР -->
 <div class="overlay" id="buyOverlay">
     <div class="modal">
         <button class="close-x" onclick="closeBuy()">×</button>
@@ -335,12 +336,37 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     </div>
 </div>
 
+<!-- МОДАЛКА: СТРОКА -->
+<div class="overlay" id="tickOverlay">
+    <div class="modal">
+        <button class="close-x" onclick="closeTicker()">×</button>
+        <h3>Бегущая строка</h3>
+        <div class="sub" id="tickSub">Строка наверху сайта.</div>
+
+        <div class="field"><label>Текст строки</label><input id="tText" placeholder="Ваше объявление" maxlength="120"></div>
+        <div class="field"><label>Ссылка</label><input id="tUrl" placeholder="https://ваш-сайт.ru"></div>
+        <div class="field"><label>Ваше имя</label><input id="tName" placeholder="Иван"></div>
+        <div class="field"><label>Контакт</label><input id="tContact" placeholder="@username или +7…"></div>
+        <div class="field">
+            <label>Срок размещения</label>
+            <select id="tTerm">
+                <option value="1">1 месяц</option>
+                <option value="3">3 месяца (−10%)</option>
+                <option value="6">6 месяцев (−15%)</option>
+                <option value="12">12 месяцев (−20%)</option>
+            </select>
+        </div>
+        <div class="total" id="tTotal">Итого: 800 ₽</div>
+        <button class="btn btn-main" id="tickSubmit">Оплатить</button>
+    </div>
+</div>
+
 <!-- АДМИНКА -->
 <div class="overlay" id="adminOverlay">
-    <div class="modal" style="max-width:560px">
+    <div class="modal" style="max-width:580px">
         <button class="close-x" onclick="closeAdmin()">×</button>
         <h3>Панель управления</h3>
-        <div class="sub">Управление эфиром и ценами.</div>
+        <div class="sub">Полный контроль над площадкой.</div>
 
         <div id="adminLogin">
             <div class="field"><label>Пароль</label><input id="adminPass" type="password" placeholder="••••••"></div>
@@ -349,26 +375,33 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
 
         <div id="adminPanel" style="display:none">
             <div class="tabbar">
-                <button class="tab active" data-tab="ads">Реклама в эфире</button>
+                <button class="tab active" data-tab="ads">Эфир</button>
+                <button class="tab" data-tab="ticker">Строка</button>
                 <button class="tab" data-tab="orders">Заявки</button>
                 <button class="tab" data-tab="set">Настройки</button>
             </div>
 
-            <div id="tab-ads">
+            <div class="tabpane" id="tab-ads">
                 <div class="field"><label>Цена места в эфире, ₽/мес</label><input id="aPrice" type="number"></div>
                 <button class="btn btn-ghost" onclick="savePrice()">Сохранить цену</button>
                 <div id="adminAds" style="margin-top:16px"></div>
             </div>
 
-            <div id="tab-orders" style="display:none">
+            <div class="tabpane" id="tab-ticker" style="display:none">
+                <div class="field"><label>Цена бегущей строки, ₽/мес</label><input id="tPrice" type="number"></div>
+                <button class="btn btn-ghost" onclick="saveTickerPrice()">Сохранить цену</button>
+                <div id="adminTicker" style="margin-top:16px"></div>
+            </div>
+
+            <div class="tabpane" id="tab-orders" style="display:none">
                 <button class="btn btn-ghost" style="margin-bottom:14px" onclick="clearOrders()">Очистить все заявки</button>
                 <div id="adminOrders"></div>
             </div>
 
-            <div id="tab-set" style="display:none">
+            <div class="tabpane" id="tab-set" style="display:none">
                 <div class="field"><label>Новый пароль админки</label><input id="sPass" placeholder="новый пароль"></div>
                 <button class="btn btn-main" onclick="savePass()">Сохранить пароль</button>
-                <button class="btn btn-ghost" style="margin-top:10px" onclick="resetAll()">Сбросить данные</button>
+                <button class="btn btn-ghost" style="margin-top:10px" onclick="resetAll()">Сбросить данные площадки</button>
             </div>
         </div>
     </div>
@@ -376,7 +409,7 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
 
 <script>
 /* ==========================================================
-   НАСТРОЙКА TELEGRAM (необязательно)
+   TELEGRAM (необязательно)
    ========================================================== */
 const CONFIG = { BOT_TOKEN:'ВСТАВЬ_ТОКЕН_БОТА', CHAT_ID:'ВСТАВЬ_CHAT_ID' };
 async function sendTg(text){
@@ -392,7 +425,7 @@ async function sendTg(text){
 /* ==========================================================
    ДАННЫЕ
    ========================================================== */
-const LS = 'adnex_air_v1', LS_ORD = 'adnex_air_orders_v1';
+const LS='adnex_air_v1', LS_ORD='adnex_air_orders_v1';
 
 const DEMO_ADS = [
     {brand:'Coffee House', slogan:'Кофе, который бодрит с первой секунды', color:'#b45309', url:'#'},
@@ -406,31 +439,27 @@ const DEMO_ADS = [
 function defState(){
     return {
         price: 6900,
+        tickerPrice: 800,
         ads: DEMO_ADS.map(a => Object.assign({}, a)),
+        ticker: ['Реклама в прямом эфире — от 800 ₽/мес',
+                 'Сейчас в эфире: 6 рекламодателей',
+                 'Хочешь своё место в эфире? Нажми «Встать в эфир»'],
         password: 'admin2060'
     };
 }
-function load(){
-    try{ const s = localStorage.getItem(LS); return s ? JSON.parse(s) : defState(); }catch(e){ return defState(); }
-}
-function loadOrders(){
-    try{ const s = localStorage.getItem(LS_ORD); return s ? JSON.parse(s) : []; }catch(e){ return []; }
-}
-let state = load();
-let orders = loadOrders();
-function save(){ localStorage.setItem(LS, JSON.stringify(state)); }
-function saveOrders(){ localStorage.setItem(LS_ORD, JSON.stringify(orders)); }
+function load(){ try{const s=localStorage.getItem(LS);return s?JSON.parse(s):defState();}catch(e){return defState();} }
+function loadOrders(){ try{const s=localStorage.getItem(LS_ORD);return s?JSON.parse(s):[];}catch(e){return [];} }
+let state=load(); let orders=loadOrders();
+function save(){ localStorage.setItem(LS,JSON.stringify(state)); }
+function saveOrders(){ localStorage.setItem(LS_ORD,JSON.stringify(orders)); }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function money(n){ return Number(n).toLocaleString('ru-RU'); }
 
 /* ==========================================================
-   БЕГУЩАЯ СТРОКА
+   БЕГУЩАЯ СТРОКА (верх)
    ========================================================== */
 function renderTicker(){
-    const base = ['Реклама в прямом эфире — '+money(state.price)+' ₽/мес',
-        'Сейчас в эфире: '+state.ads.length+' рекламодателей',
-        'Хочешь своё место в эфире? Нажми «Встать в эфир»'];
-    const html = base.map(t=>'<b>✦</b> '+esc(t)).join(' &nbsp;&nbsp; ');
+    const html = state.ticker.map(t=>'<b>✦</b> '+esc(t)).join(' &nbsp;&nbsp; ');
     document.getElementById('tickerTrack').innerHTML =
         '<span>'+html+'</span><span>'+html+'</span>';
 }
@@ -439,15 +468,12 @@ function renderTicker(){
    ЭФИР
    ========================================================== */
 const SLIDE_SECONDS = 8;
-let current = 0;
-let elapsed = 0;
-let slides = [];
+let current = 0, elapsed = 0, slides = [];
 
 function buildSlides(){
     const screen = document.getElementById('bcScreen');
-    // удаляем старые слайды, оставляя top/bottom
-    slides.forEach(s => s.remove());
-    slides = state.ads.map((ad,i) => {
+    slides.forEach(s=>s.remove());
+    slides = state.ads.map(ad => {
         const d = document.createElement('div');
         d.className = 'bc-slide';
         d.style.background = 'linear-gradient(135deg,'+ad.color+' 0%, #05060f 120%)';
@@ -462,16 +488,12 @@ function buildSlides(){
     showSlide(current);
     renderPlaylist();
 }
-
 function showSlide(i){
     slides.forEach((s,idx)=>s.classList.toggle('on', idx===i));
     const ad = state.ads[i];
-    if(ad){
-        document.getElementById('nowBrand').textContent = ad.brand;
-    }
+    if(ad) document.getElementById('nowBrand').textContent = ad.brand;
     elapsed = 0;
 }
-
 function tick(){
     if(!slides.length) return;
     elapsed += 0.25;
@@ -481,19 +503,17 @@ function tick(){
     if(elapsed >= SLIDE_SECONDS){
         current = (current + 1) % slides.length;
         showSlide(current);
+        markPlaylist();
     }
 }
 setInterval(tick, 250);
 
-/* счётчик зрителей */
 function renderViewers(){
-    const base = 180 + Math.floor(Math.random()*140);
-    document.getElementById('viewersCount').textContent = money(base);
+    document.getElementById('viewersCount').textContent = money(180 + Math.floor(Math.random()*140));
 }
 setInterval(renderViewers, 4000);
 renderViewers();
 
-/* очередь эфира */
 function renderPlaylist(){
     const box = document.getElementById('plGrid');
     box.innerHTML = '';
@@ -508,13 +528,17 @@ function renderPlaylist(){
         box.appendChild(d);
     });
 }
-setInterval(()=>{
-    document.querySelectorAll('.pl-item').forEach((el,i)=>el.classList.toggle('now', i===current));
-    document.querySelectorAll('.pl-item .pl-time').forEach((el,i)=>el.textContent = (i===current?'● в эфире':'далее'));
-}, 300);
+function markPlaylist(){
+    document.querySelectorAll('.pl-item').forEach((el,i)=>{
+        el.classList.toggle('now', i===current);
+        const t = el.querySelector('.pl-time');
+        if(t) t.textContent = (i===current?'● в эфире':'далее');
+    });
+}
+setInterval(markPlaylist, 300);
 
 /* ==========================================================
-   МОДАЛКА ПОКУПКИ
+   ПОКУПКА: ЭФИР
    ========================================================== */
 function openBuy(){
     document.getElementById('bTotal').textContent = 'Итого: '+money(state.price)+' ₽';
@@ -522,57 +546,93 @@ function openBuy(){
 }
 function closeBuy(){ document.getElementById('buyOverlay').classList.remove('on'); }
 function discount(m){ return m>=12?0.20 : m>=6?0.15 : m>=3?0.10 : 0; }
-function calcTotal(){
-    const m = parseInt(document.getElementById('bTerm').value,10)||1;
-    return Math.round(state.price*m*(1-discount(m)));
-}
+function calcTotal(){ const m=parseInt(document.getElementById('bTerm').value,10)||1;
+    return Math.round(state.price*m*(1-discount(m))); }
 document.getElementById('bTerm').addEventListener('change',()=>{
-    document.getElementById('bTotal').textContent = 'Итого: '+money(calcTotal())+' ₽';
+    document.getElementById('bTotal').textContent='Итого: '+money(calcTotal())+' ₽';
 });
-
 document.getElementById('buySubmit').addEventListener('click', async ()=>{
-    const brand = document.getElementById('bBrand').value.trim();
-    const slogan = document.getElementById('bSlogan').value.trim();
-    const color = document.getElementById('bColor').value;
-    const url = document.getElementById('bUrl').value.trim();
-    const name = document.getElementById('bName').value.trim();
-    const contact = document.getElementById('bContact').value.trim();
-    const m = parseInt(document.getElementById('bTerm').value,10)||1;
+    const brand=document.getElementById('bBrand').value.trim();
+    const slogan=document.getElementById('bSlogan').value.trim();
+    const color=document.getElementById('bColor').value;
+    const url=document.getElementById('bUrl').value.trim();
+    const name=document.getElementById('bName').value.trim();
+    const contact=document.getElementById('bContact').value.trim();
+    const m=parseInt(document.getElementById('bTerm').value,10)||1;
+    if(!brand||!slogan){ alert('Заполните название бренда и слоган.'); return; }
+    if(!name||!contact){ alert('Заполните имя и контакт.'); return; }
 
-    if(!brand || !slogan){ alert('Заполните название бренда и слоган.'); return; }
-    if(!name || !contact){ alert('Заполните имя и контакт.'); return; }
+    const btn=document.getElementById('buySubmit');
+    btn.textContent='Публикуем…'; btn.disabled=true;
 
-    const btn = document.getElementById('buySubmit');
-    btn.textContent = 'Публикуем…'; btn.disabled = true;
+    state.ads.push({brand,slogan,color,url:url||'#'});
+    save(); buildSlides();
 
-    // добавляем рекламу в эфир
-    state.ads.push({brand, slogan, color, url:url||'#'});
-    save();
-    buildSlides();
-
-    const total = calcTotal();
-    orders.unshift({id:Date.now(), brand, slogan, name, contact, url, months:m, total,
+    const total=calcTotal();
+    orders.unshift({id:Date.now(),type:'эфир',brand,slogan,name,contact,url,months:m,total,
         date:new Date().toLocaleString('ru-RU')});
     saveOrders();
 
-    await sendTg('📺 <b>Новая реклама в эфире</b>\n\n'+
-        '<b>Бренд:</b> '+brand+'\n<b>Слоган:</b> '+slogan+'\n'+
-        '<b>Имя:</b> '+name+'\n<b>Контакт:</b> '+contact+'\n'+
-        (url?'<b>Ссылка:</b> '+url+'\n':'')+
-        '<b>Срок:</b> '+m+' мес.\n<b>Сумма:</b> '+money(total)+' ₽');
+    await sendTg('📺 <b>Новая реклама в эфире</b>\n\n<b>Бренд:</b> '+brand+
+        '\n<b>Слоган:</b> '+slogan+'\n<b>Имя:</b> '+name+'\n<b>Контакт:</b> '+contact+
+        (url?'\n<b>Ссылка:</b> '+url:'')+'\n<b>Срок:</b> '+m+' мес.\n<b>Сумма:</b> '+money(total)+' ₽');
 
-    btn.textContent = 'Оплатить и встать в эфир'; btn.disabled = false;
+    btn.textContent='Оплатить и встать в эфир'; btn.disabled=false;
     closeBuy();
     ['bBrand','bSlogan','bUrl','bName','bContact'].forEach(id=>document.getElementById(id).value='');
     alert('Готово! Ваша реклама уже в эфире — прокрутите вверх и увидите её.');
 });
 
 /* ==========================================================
+   ПОКУПКА: СТРОКА
+   ========================================================== */
+function openTicker(){
+    document.getElementById('tickSub').textContent = 'Строка наверху сайта · '+money(state.tickerPrice)+' ₽/мес';
+    document.getElementById('tTotal').textContent = 'Итого: '+money(state.tickerPrice)+' ₽';
+    document.getElementById('tickOverlay').classList.add('on');
+}
+function closeTicker(){ document.getElementById('tickOverlay').classList.remove('on'); }
+function calcTick(){ const m=parseInt(document.getElementById('tTerm').value,10)||1;
+    return Math.round(state.tickerPrice*m*(1-discount(m))); }
+document.getElementById('tTerm').addEventListener('change',()=>{
+    document.getElementById('tTotal').textContent='Итого: '+money(calcTick())+' ₽';
+});
+document.getElementById('tickSubmit').addEventListener('click', async ()=>{
+    const text=document.getElementById('tText').value.trim();
+    const url=document.getElementById('tUrl').value.trim();
+    const name=document.getElementById('tName').value.trim();
+    const contact=document.getElementById('tContact').value.trim();
+    const m=parseInt(document.getElementById('tTerm').value,10)||1;
+    if(!text){ alert('Введите текст строки.'); return; }
+    if(!name||!contact){ alert('Заполните имя и контакт.'); return; }
+
+    const btn=document.getElementById('tickSubmit');
+    btn.textContent='Публикуем…'; btn.disabled=true;
+
+    state.ticker.push(text+(url?' — '+url:''));
+    save(); renderTicker();
+
+    const total=calcTick();
+    orders.unshift({id:Date.now(),type:'строка',brand:'Бегущая строка',slogan:text,name,contact,url,months:m,total,
+        date:new Date().toLocaleString('ru-RU')});
+    saveOrders();
+
+    await sendTg('📢 <b>Новая бегущая строка</b>\n\n<b>Текст:</b> '+text+
+        '\n<b>Имя:</b> '+name+'\n<b>Контакт:</b> '+contact+
+        (url?'\n<b>Ссылка:</b> '+url:'')+'\n<b>Срок:</b> '+m+' мес.\n<b>Сумма:</b> '+money(total)+' ₽');
+
+    btn.textContent='Оплатить'; btn.disabled=false;
+    closeTicker();
+    ['tText','tUrl','tName','tContact'].forEach(id=>document.getElementById(id).value='');
+    alert('Готово! Ваша строка уже бежит вверху сайта.');
+});
+
+/* ==========================================================
    ЧАТ
    ========================================================== */
-const chatPanel = document.getElementById('chatPanel');
-const chatBody = document.getElementById('chatBody');
-let chatStarted = false;
+const chatPanel=document.getElementById('chatPanel');
+const chatBody=document.getElementById('chatBody');
+let chatStarted=false;
 document.getElementById('chatBtn').addEventListener('click',()=>{
     chatPanel.classList.toggle('on');
     if(!chatStarted){ chatStarted=true; addChat('Здравствуйте! Напишите вопрос — сообщение уйдёт оператору.','sys'); }
@@ -606,13 +666,15 @@ document.querySelectorAll('.tab').forEach(t=>{
     t.addEventListener('click',()=>{
         document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
         t.classList.add('active');
-        ['ads','orders','set'].forEach(id=>document.getElementById('tab-'+id).style.display='none');
+        ['ads','ticker','orders','set'].forEach(id=>document.getElementById('tab-'+id).style.display='none');
         document.getElementById('tab-'+t.dataset.tab).style.display='block';
     });
 });
 function renderAdmin(){
     document.getElementById('aPrice').value = state.price;
+    document.getElementById('tPrice').value = state.tickerPrice;
     renderAdminAds();
+    renderAdminTicker();
     renderAdminOrders();
 }
 function renderAdminAds(){
@@ -635,8 +697,7 @@ function renderAdminAds(){
 }
 function admSave(i){
     document.querySelectorAll('[data-i="'+i+'"]').forEach(inp=>{ state.ads[i][inp.dataset.f]=inp.value; });
-    save(); buildSlides(); renderAdminAds();
-    alert('Сохранено.');
+    save(); buildSlides(); renderAdminAds(); alert('Сохранено.');
 }
 function admDel(i){
     if(!confirm('Убрать «'+state.ads[i].brand+'» из эфира?')) return;
@@ -645,8 +706,24 @@ function admDel(i){
 function savePrice(){
     const p=parseInt(document.getElementById('aPrice').value,10);
     if(!p){ alert('Введите цену.'); return; }
-    state.price=p; save(); renderTicker();
+    state.price=p; save();
     document.getElementById('bcPrice').innerHTML = money(p)+' ₽<small> / мес</small>';
+    alert('Цена сохранена.');
+}
+function renderAdminTicker(){
+    const box=document.getElementById('adminTicker'); box.innerHTML='';
+    state.ticker.forEach((t,i)=>{
+        const d=document.createElement('div'); d.className='tick-row';
+        d.innerHTML='<span>'+esc(t)+'</span><button class="mini del" onclick="tickDel('+i+')">✕</button>';
+        box.appendChild(d);
+    });
+}
+function tickDel(i){ state.ticker.splice(i,1); save(); renderTicker(); renderAdminTicker(); }
+function saveTickerPrice(){
+    const p=parseInt(document.getElementById('tPrice').value,10);
+    if(!p){ alert('Введите цену.'); return; }
+    state.tickerPrice=p; save();
+    document.getElementById('tickerPriceView').textContent=money(p);
     alert('Цена сохранена.');
 }
 function renderAdminOrders(){
@@ -679,6 +756,7 @@ function resetAll(){
    ========================================================== */
 renderTicker();
 document.getElementById('bcPrice').innerHTML = money(state.price)+' ₽<small> / мес</small>';
+document.getElementById('tickerPriceView').textContent = money(state.tickerPrice);
 buildSlides();
 </script>
 </body>
