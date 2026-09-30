@@ -3,395 +3,663 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ГАРАЖ ЮГ — шиномонтаж и автосервис</title>
+<title>ADNEX — Реклама и Заработок</title>
 <style>
 :root{
---bg:#0d0f14;--card:#151922;--card2:#1b2130;--stroke:rgba(255,255,255,.08);
---orange:#ff7a18;--amber:#ffb020;--lime:#4ade80;--text:#eef1f6;--dim:#8b94a7;
+  --bg:#070810;--card:#0e1020;--stroke:rgba(120,150,255,0.14);
+  --cyan:#3fd6ff;--violet:#8b5cf6;--lime:#4ade80;--amber:#fbbf24;
+  --text:#e6ebff;--dim:#8a93b8;--red:#ff6b6b;
+  --profit:#f59e0b; /* Цвет комиссии */
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;line-height:1.55;min-height:100vh;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',system-ui,-apple-system,sans-serif;}
+body{background:radial-gradient(1200px 600px at 50% -10%,#131735 0%,#070810 55%); color:var(--text); min-height:100vh; line-height:1.5;}
 .wrap{max-width:1140px;margin:0 auto;padding:0 20px;}
-a{color:var(--orange);text-decoration:none;}
-h1,h2,h3{line-height:1.15;}
+a{color:var(--cyan); text-decoration:none;}
 
-/* ШАПКА */
-header{position:sticky;top:0;z-index:50;backdrop-filter:blur(12px);background:rgba(13,15,20,.9);border-bottom:1px solid var(--stroke);}
-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:14px;}
-.logo{font-weight:900;font-size:1.2rem;letter-spacing:1px;}
-.logo b{color:var(--orange);}
-.logo small{display:block;font-size:.6rem;color:var(--dim);letter-spacing:2px;font-weight:500;}
-nav .links{display:flex;gap:22px;font-size:.88rem;}
-nav .links a{color:var(--dim);transition:.2s;}
-nav .links a:hover{color:var(--text);}
-.nav-phone{display:flex;align-items:center;gap:10px;}
-.nav-phone span{font-size:.9rem;font-weight:700;white-space:nowrap;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 26px;border-radius:12px;border:none;cursor:pointer;font-weight:700;font-family:inherit;font-size:.9rem;transition:.25s;}
-.btn-main{background:linear-gradient(135deg,var(--orange),var(--amber));color:#1a0e00;box-shadow:0 6px 22px rgba(255,122,24,.32);}
-.btn-main:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(255,122,24,.45);}
-.btn-ghost{background:rgba(255,255,255,.06);color:var(--text);border:1px solid var(--stroke);}
-.btn-ghost:hover{background:rgba(255,255,255,.12);}
-.btn-sm{padding:9px 18px;font-size:.82rem;border-radius:10px;}
+/* Header & Nav */
+header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);background:rgba(7,8,16,0.92);border-bottom:1px solid var(--stroke);}
+nav{display:flex;align-items:center;justify-content:space-between;padding:12px 0;gap:12px;}
+.logo{font-size:1.25rem;font-weight:800;letter-spacing:2px;background:linear-gradient(90deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;cursor:pointer;}
+.nav-right{display:flex;gap:10px;align-items:center;}
+.btn{padding:9px 20px;border-radius:24px;border:none;cursor:pointer;font-weight:700;transition:.2s;font-family:inherit;}
+.btn-main{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;box-shadow:0 0 34px rgba(139,92,246,.4);}
+.btn-main:hover{transform:translateY(-3px);}
+.btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--stroke);}
+.btn-sm{padding:8px 16px;font-size:.85rem;border-radius:16px;}
+.hide{display:none!important;}
 
-section{padding:64px 0;}
-.sec-head{text-align:center;margin-bottom:38px;}
+/* Ticker */
+.ticker-bar{overflow:hidden;white-space:nowrap;background:#0a0d20;border-bottom:1px solid rgba(251,191,36,.35);height:42px;display:flex;align-items:center;}
+.ticker-track{display:inline-flex;white-space:nowrap;animation:tick 60s linear infinite;}
+.ticker-track span{padding-right:70px;font-size:.85rem;color:var(--amber);font-weight:700;}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* Sections */
+section{padding:40px 0;}
+.sec-head{text-align:center;margin-bottom:28px;}
 .sec-head h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:10px;}
 .sec-head p{color:var(--dim);max-width:620px;margin:0 auto;}
 
-/* ГЕРОЙ */
-.hero{padding:70px 0 50px;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;}
-.hero h1{font-size:clamp(1.9rem,5vw,3.1rem);font-weight:900;margin-bottom:18px;}
-.hero h1 span{background:linear-gradient(135deg,var(--orange),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent;}
-.hero p{color:var(--dim);font-size:1.05rem;margin-bottom:26px;max-width:520px;}
-.hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
-.hero-facts{display:flex;gap:28px;margin-top:30px;flex-wrap:wrap;}
-.fact b{display:block;font-size:1.5rem;font-weight:800;color:var(--orange);}
-.fact span{font-size:.76rem;color:var(--dim);}
-.hero-art{background:linear-gradient(135deg,var(--card2),var(--card));border:1px solid var(--stroke);border-radius:24px;padding:34px;position:relative;overflow:hidden;}
-.hero-art .circle{position:absolute;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,24,.28),transparent 70%);top:-60px;right:-60px;}
-.hero-art h3{font-size:1.1rem;margin-bottom:14px;position:relative;}
-.hero-art ul{list-style:none;display:flex;flex-direction:column;gap:12px;position:relative;}
-.hero-art li{display:flex;gap:10px;align-items:flex-start;font-size:.9rem;color:var(--dim);}
-.hero-art li b{color:var(--text);}
-.hero-art li i{font-style:normal;color:var(--lime);flex:none;}
+/* Hero */
+.hero{padding:50px 0 30px;text-align:center;}
+.hero h1{font-size:clamp(1.8rem,5.5vw,3rem);font-weight:800;line-height:1.12;margin-bottom:16px;}
+.hero h1 span{background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
 
-/* УСЛУГИ */
-.services{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.srv{background:var(--card);border:1px solid var(--stroke);border-radius:18px;padding:24px;transition:.25s;}
-.srv:hover{border-color:rgba(255,122,24,.4);transform:translateY(-4px);}
-.srv .ico{font-size:1.7rem;margin-bottom:12px;}
-.srv h3{font-size:1.02rem;margin-bottom:8px;}
-.srv p{font-size:.84rem;color:var(--dim);margin-bottom:14px;}
-.srv .p{font-size:1.1rem;font-weight:800;color:var(--amber);}
-.srv .p small{font-size:.72rem;color:var(--dim);font-weight:400;}
+/* Live Stream */
+.live-wrap{display:grid;grid-template-columns:1fr 330px;gap:16px;align-items:stretch;}
+.broadcast{background:#05060f;border:1px solid var(--stroke);border-radius:20px;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
+.bc-screen{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#05060f;}
+.bc-slide{position:absolute;inset:0;display:block;opacity:0;transition:opacity .6s;text-decoration:none;overflow:hidden;cursor:pointer;}
+.bc-slide.on{opacity:1;}
+.bc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+.bc-body{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;text-align:left;padding:5% 26% 5% 7%;}
+.bc-brand{font-size:clamp(1.2rem,3.6vw,2.4rem);font-weight:800;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.6);}
+.bc-slogan{font-size:clamp(.85rem,2vw,1.3rem);font-weight:600;color:rgba(255,255,255,.94);}
+.live-badge{display:inline-flex;align-items:center;gap:8px;background:var(--red);color:#fff;font-weight:800;font-size:.78rem;letter-spacing:1.5px;padding:6px 14px;border-radius:20px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:#fff;animation:pulse 1.1s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:.35;}}
 
-/* КАЛЬКУЛЯТОР */
-.calc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start;}
-.calc{background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:28px;}
-.field{margin-bottom:16px;}
-.field label{display:block;font-size:.8rem;color:var(--dim);margin-bottom:7px;}
-.field select,.field input{width:100%;padding:12px 14px;border-radius:11px;background:var(--card2);border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.92rem;outline:none;}
-.field select:focus,.field input:focus{border-color:var(--orange);}
-.chips{display:flex;gap:8px;flex-wrap:wrap;}
-.chip{padding:9px 15px;border-radius:10px;background:var(--card2);border:1px solid var(--stroke);cursor:pointer;font-size:.82rem;transition:.2s;}
-.chip.on{border-color:var(--orange);background:rgba(255,122,24,.12);color:var(--orange);font-weight:700;}
-.calc-total{background:rgba(255,122,24,.08);border:1px solid rgba(255,122,24,.3);border-radius:14px;padding:18px;text-align:center;margin:18px 0 14px;}
-.calc-total span{font-size:.78rem;color:var(--dim);display:block;}
-.calc-total b{font-size:2rem;font-weight:900;color:var(--orange);}
-.calc-note{font-size:.76rem;color:var(--dim);}
-.calc-side{display:flex;flex-direction:column;gap:14px;}
-.calc-side .card{background:var(--card);border:1px solid var(--stroke);border-radius:18px;padding:22px;}
-.calc-side h3{font-size:1rem;margin-bottom:12px;}
-.calc-side ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.calc-side li{font-size:.86rem;color:var(--dim);display:flex;gap:9px;}
-.calc-side li i{font-style:normal;color:var(--amber);}
+/* Chat */
+.live-chat{background:var(--card);border:1px solid var(--stroke);border-radius:20px;display:flex;flex-direction:column;overflow:hidden;min-height:0;height:100%;}
+.lc-head{padding:14px 16px;border-bottom:1px solid var(--stroke);display:flex;align-items:center;gap:9px;flex:none;}
+.lc-body{flex:1 1 auto;min-height:0;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px;}
+/* Фикс автоскролла чата */
+.lc-body.auto-scroll-active::-webkit-scrollbar { display: none; }
+.lc-msg{display:flex;gap:8px;font-size:.82rem;}
+.lc-av{width:26px;height:26px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:800;color:#070810;}
+.lc-txt b{color:var(--cyan);font-size:.78rem;}
+.lc-txt div{word-wrap:break-word;}
+.lc-txt a{color:var(--cyan);text-decoration:underline;word-break:break-all;}
+.lc-foot{display:flex;gap:8px;padding:10px;border-top:1px solid var(--stroke);flex:none;}
+.lc-foot input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);color:var(--text);font-size:.84rem;outline:none;}
+.lc-foot button{padding:0 14px;border-radius:10px;border:none;cursor:pointer;background:var(--cyan);color:#070810;font-weight:700;}
 
-/* ПРЕИМУЩЕСТВА */
-.adv{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
-.adv .it{background:var(--card);border:1px solid var(--stroke);border-radius:18px;padding:24px;}
-.adv .it b{display:block;font-size:1.6rem;margin-bottom:10px;}
-.adv .it h3{font-size:.98rem;margin-bottom:6px;}
-.adv .it p{font-size:.82rem;color:var(--dim);}
+/* Cabinet */
+.cab-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px;}
+.cab-card{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:18px;}
+.cab-card b{display:block;font-size:1.5rem;font-weight:800;color:var(--cyan);}
+.cab-card span{font-size:.78rem;color:var(--dim);}
+.tabs{display:flex;gap:6px;margin-bottom:18px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;flex-wrap:wrap;}
+.tab{flex:1;min-width:110px;padding:10px 8px;border-radius:9px;border:none;background:transparent;color:var(--dim);cursor:pointer;font-size:.82rem;font-weight:600;font-family:inherit;transition:.2s;}
+.tab.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
+.pane{display:none;}
+.pane.on{display:block;}
 
-/* ОТЗЫВЫ */
-.reviews{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.rev{background:var(--card);border:1px solid var(--stroke);border-radius:18px;padding:24px;}
-.rev .stars{color:var(--amber);margin-bottom:12px;font-size:.9rem;}
-.rev p{font-size:.88rem;color:var(--dim);margin-bottom:16px;}
-.rev .who{display:flex;align-items:center;gap:10px;}
-.rev .av{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--orange),var(--amber));display:flex;align-items:center;justify-content:center;font-weight:800;color:#1a0e00;font-size:.85rem;}
-.rev .who b{font-size:.88rem;display:block;}
-.rev .who span{font-size:.72rem;color:var(--dim);}
+/* Forms & Inputs */
+.field{margin-bottom:13px;}
+.field label{display:block;font-size:.78rem;color:var(--dim);margin-bottom:6px;}
+.field input, .field select, .field textarea{width:100%;padding:11px 13px;border-radius:10px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.9rem;outline:none;}
+.field input:focus{border-color:var(--cyan);}
 
-/* ФОРМА */
-.booking{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;background:linear-gradient(135deg,rgba(255,122,24,.09),rgba(255,176,32,.03));border:1px solid var(--stroke);border-radius:24px;padding:40px;}
-.booking h2{font-size:clamp(1.5rem,3.5vw,2rem);font-weight:800;margin-bottom:12px;}
-.booking p{color:var(--dim);margin-bottom:20px;}
-.booking ul{list-style:none;display:flex;flex-direction:column;gap:10px;}
-.booking li{font-size:.88rem;color:var(--dim);display:flex;gap:9px;}
-.booking li i{font-style:normal;color:var(--lime);}
-.form-card{background:var(--card);border:1px solid var(--stroke);border-radius:18px;padding:28px;}
+/* Stats & Counters */
+.stats-row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px;}
+.stat-box{background:rgba(255,255,255,.03);border:1px solid var(--stroke);border-radius:12px;padding:15px;min-width:200px;}
+.stat-val{font-size:1.4rem;font-weight:800;color:var(--cyan);display:block;}
+.stat-lbl{color:var(--dim);font-size:.85rem;}
 
-/* КОНТАКТЫ */
-.contacts{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
-.map{background:var(--card2);border:1px solid var(--stroke);border-radius:20px;min-height:300px;display:flex;align-items:center;justify-content:center;color:var(--dim);font-size:.88rem;text-align:center;padding:20px;}
-.cont-list{display:flex;flex-direction:column;gap:14px;}
-.cont{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:18px 20px;display:flex;gap:14px;align-items:flex-start;}
-.cont i{font-style:normal;font-size:1.3rem;}
-.cont b{display:block;font-size:.95rem;margin-bottom:2px;}
-.cont span{font-size:.84rem;color:var(--dim);}
+/* Modals */
+.overlay{position:fixed;inset:0;z-index:100;display:none;background:rgba(3,4,10,.88);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;}
+.overlay.on{display:flex;}
+.modal{background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:28px;width:100%;max-width:500px;max-height:92vh;overflow-y:auto;position:relative;}
+.close-x{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--dim);font-size:1.5rem;cursor:pointer;}
 
-/* ПОДВАЛ */
-footer{border-top:1px solid var(--stroke);padding:34px 0;margin-top:50px;}
-.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center;font-size:.82rem;color:var(--dim);}
+/* Footer & Realtime Counter */
+footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color:var(--dim);font-size:.82rem;margin-top:40px;}
+.realtime-counter{
+  position: fixed; bottom: 20px; right: 20px; z-index: 999;
+  background: rgba(7, 8, 16, 0.9); border: 1px solid var(--stroke);
+  border-radius: 12px; padding: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  font-size: 0.8rem; color: var(--text);
+  display: flex; align-items: center; gap: 8px;
+}
+.dot-green { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; animation: pulse 1.5s infinite; }
 
 @media(max-width:900px){
-nav .links{display:none;}
-.hero{grid-template-columns:1fr;padding:44px 0 30px;}
-.services,.adv,.reviews{grid-template-columns:1fr 1fr;}
-.calc-wrap,.booking,.contacts{grid-template-columns:1fr;}
-}
-@media(max-width:560px){
-.services,.adv,.reviews{grid-template-columns:1fr;}
-.nav-phone span{display:none;}
-.booking{padding:26px;}
+  .live-wrap{grid-template-columns:1fr;}
+  .cab-grid{grid-template-columns:repeat(2,1fr);}
+  .realtime-counter{bottom: 10px; right: 10px; font-size: 0.7rem;}
 }
 </style>
 </head>
 <body>
 
 <header>
-<div class="wrap">
-<nav>
-<div class="logo">ГАРАЖ<b>ЮГ</b><small>ШИНОМОНТАЖ · АВТОСЕРВИС</small></div>
-<div class="links">
-<a href="#services">Услуги</a>
-<a href="#calc">Калькулятор</a>
-<a href="#reviews">Отзывы</a>
-<a href="#contacts">Контакты</a>
-</div>
-<div class="nav-phone">
-<span>+7 (900) 000-00-00</span>
-<button class="btn btn-main btn-sm" onclick="scrollTo2('booking')">Записаться</button>
-</div>
-</nav>
-</div>
+  <div class="wrap">
+    <nav>
+      <div class="logo" onclick="showView('landing')">ADNEX<small>реклама · эфир · заработок</small></div>
+      <div class="links">
+        <a onclick="showView('landing')">Главная</a>
+        <a onclick="goCabinet()">Кабинет</a>
+        <a onclick="showView('landing');scrollTo2('earn')">Заработать</a>
+      </div>
+      <div class="nav-right" id="navRight">
+        <span id="userBalanceSpend" class="hide">Баланс (покупка): <b>0 ₽</b></span>
+        <span id="userBalancePay" class="hide">Выплаты: <b>0 ₽</b></span>
+        <button class="btn btn-sm btn-main" onclick="openAuth('register')" id="btnRegister">Регистрация</button>
+        <button class="btn btn-sm btn-ghost" onclick="openAuth('login')" id="btnLogin">Вход</button>
+      </div>
+    </nav>
+  </div>
+  <div class="ticker-bar"><div class="ticker-track" id="tickerTrack"></div></div>
 </header>
 
-<div class="wrap">
+<main class="wrap">
 
-<!-- ГЕРОЙ -->
-<section class="hero">
-<div>
-<h1>Шиномонтаж и ремонт <span>без переплат и очередей</span></h1>
-<p>Работаем с 8 утра до 10 вечера, без выходных. Своё оборудование, честные цены, записи по времени — приезжаете и сразу в работу.</p>
-<div class="hero-btns">
-<button class="btn btn-main" onclick="scrollTo2('calc')">Рассчитать стоимость</button>
-<button class="btn btn-ghost" onclick="scrollTo2('booking')">Записаться онлайн</button>
-</div>
-<div class="hero-facts">
-<div class="fact"><b>15 мин</b><span>средний визит</span></div>
-<div class="fact"><b>7 дней</b><span>работаем в неделю</span></div>
-<div class="fact"><b>14–22"</b><span>любые диски</span></div>
-</div>
-</div>
-<div class="hero-art">
-<div class="circle"></div>
-<h3>Почему к нам возвращаются</h3>
-<ul>
-<li><i>✓</i><span><b>Без накруток.</b> Цена называется до начала работ, а не после.</span></li>
-<li><i>✓</i><span><b>Запись по времени.</b> Не ждёте в очереди на улице.</span></li>
-<li><i>✓</i><span><b>Ремонт проколов.</b> Жгут, грибок, вулканизация — сделаем.</span></li>
-<li><i>✓</i><span><b>Рядом с домом.</b> Заезжайте по пути, без записи — если свободно.</span></li>
-</ul>
-</div>
-</section>
+<!-- LANDING VIEW -->
+<div id="view-landing">
+  <section class="hero">
+    <h1>Смотри рекламу — <span>зарабатывай</span>.<br>Размещай рекламу — получай клиентов.</h1>
+    <p>Прямой рекламный эфир, заработок за просмотры и клики, реферальная программа из трёх уровней. Регистрация бесплатная.</p>
+    <div class="hero-btns">
+      <button class="btn btn-main" onclick="openAuth('register')">Зарегистрироваться</button>
+      <button class="btn btn-ghost" onclick="scrollTo2('live')">Смотреть эфир</button>
+    </div>
+  </section>
 
-<!-- УСЛУГИ -->
-<section id="services">
-<div class="sec-head">
-<h2>Услуги и цены</h2>
-<p>Актуальные цены за одно колесо. Комплект из четырёх — считайте сами или через калькулятор.</p>
-</div>
-<div class="services">
-<div class="srv"><div class="ico">🛞</div><h3>Снятие и установка</h3><p>Аккуратно, без царапин на дисках. Своё оборудование.</p><div class="p">от 100 ₽ <small>/ колесо</small></div></div>
-<div class="srv"><div class="ico">⚖️</div><h3>Балансировка</h3><p>Точная балансировка на станке, без вибрации на скорости.</p><div class="p">от 150 ₽ <small>/ колесо</small></div></div>
-<div class="srv"><div class="ico">🔧</div><h3>Ремонт прокола</h3><p>Жгут, грибок или вулканизация — по ситуации и типу повреждения.</p><div class="p">от 250 ₽ <small>/ прокол</small></div></div>
-<div class="srv"><div class="ico">📐</div><h3>Развал-схождение</h3><p>3D-стенд. Убираем увод в сторону и неравномерный износ.</p><div class="p">от 1 500 ₽ <small>/ авто</small></div></div>
-<div class="srv"><div class="ico">🛢️</div><h3>Замена масла</h3><p>С фильтром, сливом отработки и проверкой уровней.</p><div class="p">от 500 ₽ <small>/ замена</small></div></div>
-<div class="srv"><div class="ico">🩺</div><h3>Диагностика</h3><p>Компьютерная и ходовая. Скажем честно, что чинить, а что — нет.</p><div class="p">от 700 ₽ <small>/ авто</small></div></div>
-</div>
-</section>
+  <section id="live">
+    <div class="sec-head">
+      <h2>Прямой эфир рекламы</h2>
+      <p>Реклама рекламодателей — картинкой или текстом. Клик по слайду ведёт на сайт.</p>
+    </div>
+    <div class="live-wrap">
+      <div class="broadcast">
+        <div class="bc-screen" id="bcScreen">
+          <div class="bc-top">
+            <span class="live-badge"><i class="live-dot"></i>LIVE</span>
+            <span class="viewers"><i></i>смотрят: <b id="viewersCount">0</b></span>
+          </div>
+          <div class="bc-bottom">
+            <div class="bc-now"><span>Сейчас в эфире: <b id="nowBrand">—</b></span><span id="nowCountdown">— с</span></div>
+            <div class="bc-progress"><i id="bcProgress"></i></div>
+          </div>
+        </div>
+      </div>
+      <div class="live-chat">
+        <div class="lc-head"><span class="dot"></span><b>Чат эфира</b><span id="lcOnline">онлайн</span></div>
+        <div class="lc-body" id="lcBody"></div>
+        <div class="lc-foot">
+          <input id="lcInput" placeholder="Написать в чат…" autocomplete="off">
+          <button id="lcSend">➤</button>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<!-- КАЛЬКУЛЯТОР -->
-<section id="calc">
-<div class="sec-head">
-<h2>Калькулятор шиномонтажа</h2>
-<p>Выберите радиус и работы — посчитаем сразу, без звонков и уточнений.</p>
-</div>
-<div class="calc-wrap">
-<div class="calc">
-<div class="field">
-<label>Радиус колеса</label>
-<select id="cRadius">
-<option value="1">R13 – R14</option>
-<option value="1.15">R15 – R16</option>
-<option value="1.35" selected>R17 – R18</option>
-<option value="1.6">R19 – R20</option>
-<option value="1.9">R21 – R22</option>
-</select>
-</div>
-<div class="field">
-<label>Количество колёс</label>
-<div class="chips" id="cCount">
-<div class="chip" data-v="1">1</div>
-<div class="chip" data-v="2">2</div>
-<div class="chip" data-v="3">3</div>
-<div class="chip on" data-v="4">4</div>
-</div>
-</div>
-<div class="field">
-<label>Работы</label>
-<div class="chips" id="cWorks">
-<div class="chip on" data-w="mount" data-b="100">Снятие / установка</div>
-<div class="chip on" data-w="balance" data-b="150">Балансировка</div>
-<div class="chip" data-w="repair" data-b="250">Ремонт прокола</div>
-</div>
-</div>
-<div class="calc-total"><span>Примерная стоимость</span><b id="cTotal">0 ₽</b></div>
-<div class="calc-note">Расчёт ориентировочный. Точную цену мастер назовёт до начала работ.</div>
-</div>
-<div class="calc-side">
-<div class="card">
-<h3>Что входит в стоимость</h3>
-<ul>
-<li><i>•</i><span>Снятие и установка колеса</span></li>
-<li><i>•</i><span>Проверка давления и подкачка</span></li>
-<li><i>•</i><span>Осмотр протектора на износ</span></li>
-<li><i>•</i><span>Подсказка по сезонности шин</span></li>
-</ul>
-</div>
-<div class="card">
-<h3>Когда лучше приехать</h3>
-<ul>
-<li><i>☀</i><span>Утром и днём — свободнее всего</span></li>
-<li><i>🌙</i><span>Вечером в сезон — записывайтесь заранее</span></li>
-<li><i>❄</i><span>В «день переобувки» лучше звонить утром</span></li>
-</ul>
-</div>
-</div>
-</div>
-</section>
+  <section id="earn">
+    <div class="sec-head">
+      <h2>Как заработать</h2>
+      <p>Просмотры, клики и рефералы — три источника дохода.</p>
+    </div>
+    <div class="steps" style="display:grid;grid-template-columns:repeat(3,1fr);gap:18px;">
+      <div class="step" style="background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:26px 22px;">
+        <div class="num" style="font-size:1.6rem;font-weight:800;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;">0.5 ₽</div>
+        <h3>За просмотр ролика</h3>
+        <p>Ролик идёт 10 секунд. Оплата гарантирована.</p>
+      </div>
+      <div class="step" style="background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:26px 22px;">
+        <div class="num" style="font-size:1.6rem;font-weight:800;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;">2 ₽</div>
+        <h3>За переход по рекламе</h3>
+        <p>Клик засчитывается, если вы пробудете на сайте 10 секунд.</p>
+      </div>
+      <div class="step" style="background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:26px 22px;">
+        <div class="num" style="font-size:1.6rem;font-weight:800;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;">10/3/1%</div>
+        <h3>Реферальная программа</h3>
+        <p>Три уровня: с покупок и активности ваших рефералов.</p>
+      </div>
+    </div>
+  </section>
 
-<!-- ПРЕИМУЩЕСТВА -->
-<section>
-<div class="sec-head"><h2>Почему выбирают нас</h2><p>Просто, честно и по делу.</p></div>
-<div class="adv">
-<div class="it"><b>⏱</b><h3>Быстро</h3><p>Комплект шин — за 15–20 минут, без долгих ожиданий.</p></div>
-<div class="it"><b>💬</b><h3>Честно</h3><p>Не навязываем лишнего. Скажем, если ремонт не нужен.</p></div>
-<div class="it"><b>🛠</b><h3>Своё оборудование</h3><p>Станок, балансир, 3D-стенд. Всё в одном месте.</p></div>
-<div class="it"><b>📍</b><h3>Рядом</h3><p>Заезжайте по пути. Если свободно — сделаем сразу.</p></div>
+  <section id="ticker">
+    <div class="sec-head">
+      <h2>Бегущая строка</h2>
+      <p>Строка в самом верху сайта — её видят все. Можно купить и без регистрации.</p>
+    </div>
+    <div class="ticker-buy" style="background:linear-gradient(120deg,rgba(139,92,246,.15),rgba(63,214,255,.08));border:1px solid var(--stroke);border-radius:18px;padding:26px 28px;">
+      <div>
+        <h3>Разместить свою строку</h3>
+        <p>Ваш текст будет бежать по верху страницы. Идеально для акций и объявлений.</p>
+      </div>
+      <div style="text-align:center">
+        <div class="cost"><span id="tickerPriceView">100</span> ₽<small> / мес</small></div>
+        <button class="btn btn-main" style="margin-top:12px" onclick="openTicker()">Купить строку</button>
+      </div>
+    </div>
+  </section>
 </div>
-</section>
 
-<!-- ОТЗЫВЫ -->
-<section id="reviews">
-<div class="sec-head"><h2>Отзывы клиентов</h2><p>Собраны из карт и сообщений.</p></div>
-<div class="reviews">
-<div class="rev">
-<div class="stars">★★★★★</div>
-<p>Переобулся за 15 минут, очереди не было. Цену сказали сразу, без сюрпризов. Буду заезжать сюда.</p>
-<div class="who"><div class="av">А</div><div><b>Алексей</b><span>местный житель</span></div></div>
-</div>
-<div class="rev">
-<div class="stars">★★★★★</div>
-<p>Поймал саморез по дороге. Заехал без записи — прокол починили за 10 минут. Спасибо, выручили.</p>
-<div class="who"><div class="av">М</div><div><b>Марина</b><span>постоянный клиент</span></div></div>
-</div>
-<div class="rev">
-<div class="stars">★★★★★</div>
-<p>Сделали развал-схождение, машину перестало тянуть в сторону. Работой доволен, цены адекватные.</p>
-<div class="who"><div class="av">Д</div><div><b>Дмитрий</b><span>водитель такси</span></div></div>
-</div>
-</div>
-</section>
+<!-- CABINET VIEW -->
+<div id="view-cabinet" class="hide">
+  <section>
+    <div class="sec-head">
+      <h2 id="cabHello">Личный кабинет</h2>
+      <p id="cabSub"></p>
+    </div>
+    
+    <!-- Раздельные балансы -->
+    <div class="stats-row">
+      <div class="stat-box">
+        <span class="stat-lbl">Баланс (покупка рекламы)</span>
+        <span class="stat-val" id="cBalanceSpend">0 ₽</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-lbl">Баланс (выплаты / заработок)</span>
+        <span class="stat-val" id="cBalancePay">0 ₽</span>
+      </div>
+      <div class="stat-box">
+        <span class="stat-lbl">Реферальный доход</span>
+        <span class="stat-val" id="cRefIncome">0 ₽</span>
+      </div>
+    </div>
 
-<!-- ЗАПИСЬ -->
-<section id="booking">
-<div class="booking">
-<div>
-<h2>Запишитесь онлайн — приезжайте ко времени</h2>
-<p>Оставьте номер и удобное время. Перезвоним и подтвердим запись, чтобы вы не ждали в очереди.</p>
-<ul>
-<li><i>✓</i><span>Запись на удобное время</span></li>
-<li><i>✓</i><span>Цена известна заранее</span></li>
-<li><i>✓</i><span>Работаем без выходных, с 8:00 до 22:00</span></li>
-</ul>
-</div>
-<div class="form-card">
-<div class="field"><label>Как вас зовут</label><input id="fName" placeholder="Иван"></div>
-<div class="field"><label>Телефон</label><input id="fPhone" type="tel" placeholder="+7 (___) ___-__-__"></div>
-<div class="field"><label>Услуга</label>
-<select id="fService">
-<option>Шиномонтаж</option>
-<option>Балансировка</option>
-<option>Ремонт прокола</option>
-<option>Развал-схождение</option>
-<option>Замена масла</option>
-<option>Диагностика</option>
-</select></div>
-<div class="field"><label>Удобное время</label><input id="fTime" placeholder="например, сегодня после 18:00"></div>
-<button class="btn btn-main" style="width:100%" onclick="sendBooking()">Записаться</button>
-</div>
-</div>
-</section>
+    <div class="cab-grid">
+      <div class="cab-card"><b id="cViews">0</b><span>Просмотров</span></div>
+      <div class="cab-card"><b id="cClicks">0</b><span>Кликов</span></div>
+      <div class="cab-card"><b id="cRefs">0</b><span>Рефералов</span></div>
+      <div class="cab-card"><b id="cTotalSpent">0 ₽</b><span>Потрачено</span></div>
+    </div>
 
-<!-- КОНТАКТЫ -->
-<section id="contacts">
-<div class="sec-head"><h2>Контакты и адрес</h2><p>Приезжайте или звоните — всегда на связи.</p></div>
-<div class="contacts">
-<div class="cont-list">
-<div class="cont"><i>📞</i><div><b>+7 (900) 000-00-00</b><span>Звонки и запись, с 8:00 до 22:00</span></div></div>
-<div class="cont"><i>📍</i><div><b>Краснодарский край, ст. Великовечное</b><span>улица Ленина, 1 (заезд со стороны трассы)</span></div></div>
-<div class="cont"><i>🕗</i><div><b>Без выходных</b><span>Пн–Вс, с 8:00 до 22:00</span></div></div>
-<div class="cont"><i>💬</i><div><b>WhatsApp / Telegram</b><span>Пишите — ответим быстро</span></div></div>
-</div>
-<div class="map">
-<div>
-<div style="font-size:2rem;margin-bottom:10px">🗺️</div>
-Здесь будет карта<br>
-<span style="font-size:.78rem">Вставлю настоящую карту с меткой, когда вы дадите точный адрес</span>
-</div>
-</div>
-</div>
-</section>
+    <div class="tabs">
+      <button class="tab active" data-pane="p-over">Обзор</button>
+      <button class="tab" data-pane="p-earn">Заработок</button>
+      <button class="tab" data-pane="p-ref">Рефералка</button>
+      <button class="tab" data-pane="p-buy">Купить рекламу</button>
+      <button class="tab" data-pane="p-hist">История</button>
+    </div>
 
+    <!-- PANE: OVERVIEW -->
+    <div class="pane on" id="p-over">
+      <div class="ref-box" style="background:rgba(63,214,255,.06);border:1px solid rgba(63,214,255,.25);border-radius:14px;padding:16px;margin-bottom:16px;">
+        <b>Ваша реферальная ссылка</b>
+        <div class="sb" style="font-size:.82rem;color:var(--dim);margin-top:6px">Приглашайте людей — получайте процент с их покупок и активности.</div>
+        <div class="ref-link" style="display:flex;gap:8px;margin-top:10px;">
+          <input id="refLink" readonly style="flex:1;padding:11px;border-radius:10px;background:rgba(0,0,0,.3);border:1px solid var(--stroke);color:var(--cyan);font-family:monospace;font-size:.82rem;outline:none;">
+          <button class="btn btn-sm btn-main" onclick="copyRef()">Копировать</button>
+        </div>
+      </div>
+      <div class="list" id="overRefs"></div>
+    </div>
+
+    <!-- PANE: EARN -->
+    <div class="pane" id="p-earn">
+      <div class="field"><label>Пополнить баланс (для покупок рекламы)</label><input type="number" id="inpAddSpend" placeholder="Сумма в рублях"><button class="btn btn-main" style="margin-top:5px" onclick="addBalance('spend')">Пополнить</button></div>
+      <div class="field"><label>Вывести средства (заработок)</label><input type="text" id="inpWithdraw" placeholder="Номер карты или кошелек"><button class="btn btn-main" style="margin-top:5px" onclick="addBalance('pay')">Запросить выплату</button></div>
+      <div class="list" id="earnList"></div>
+    </div>
+
+    <!-- PANE: REF -->
+    <div class="pane" id="p-ref">
+      <div class="ref-box" style="background:rgba(63,214,255,.06);border:1px solid rgba(63,214,255,.25);border-radius:14px;padding:16px;">
+        <b>Три уровня программы</b>
+        <div class="sb" style="font-size:.82rem;color:var(--dim);margin-top:6px">
+          1 уровень — 10% с покупок и 0,01 ₽ за просмотр / 0,10 ₽ за клик реферала.<br>
+          2 уровень — 3% с покупок.<br>
+          3 уровень — 1% с покупок.
+        </div>
+      </div>
+      <div class="list" id="refList"></div>
+    </div>
+
+    <!-- PANE: BUY (Только для зарегистрированных) -->
+    <div class="pane" id="p-buy">
+      <div class="field"><label>Название бренда</label><input id="bBrand" placeholder="Coffee House" maxlength="30"></div>
+      <div class="field"><label>Слоган / текст</label><input id="bSlogan" placeholder="Кофе, который бодрит" maxlength="90"></div>
+      <div class="field"><label>Ссылка при клике</label><input id="bUrl" placeholder="https://ваш-сайт.ru"></div>
+      <div class="field"><label>Тип размещения</label>
+        <select id="bType">
+          <option value="views">Только просмотры (дешевле)</option>
+          <option value="clicks">Только клики (дороже)</option>
+          <option value="mixed">Смешанный (оптимально)</option>
+        </select>
+      </div>
+      <div class="field"><label>Количество показов/кликов</label>
+        <input type="number" id="bCount" placeholder="Например, 1000" min="100" value="1000">
+        <div class="sb" style="color:var(--dim);font-size:.8rem;">Минимум 100 единиц.</div>
+      </div>
+      <div class="field"><label>Срок размещения</label>
+        <select id="bTerm">
+          <option value="1">1 месяц</option>
+          <option value="3">3 месяца (−10%)</option>
+          <option value="6">6 месяцев (−15%)</option>
+          <option value="12">12 месяцев (−20%)</option>
+        </select>
+      </div>
+      <div class="total" style="padding:14px;border-radius:12px;background:rgba(63,214,255,.08);border:1px solid rgba(63,214,255,.25);text-align:center;font-weight:800;font-size:1.2rem;color:var(--cyan);" id="bTotal">Итого: 0 ₽</div>
+      <button class="btn btn-main" onclick="buyAd()">Оплатить и встать в эфир</button>
+    </div>
+
+    <!-- PANE: HISTORY -->
+    <div class="pane" id="p-hist">
+      <div class="list" id="histList"></div>
+    </div>
+  </section>
 </div>
+
+</main>
 
 <footer>
-<div class="wrap foot">
-<span>© ГАРАЖ ЮГ — шиномонтаж и автосервис</span>
-<span>Пн–Вс, 8:00–22:00 · +7 (900) 000-00-00</span>
-</div>
+  <div class="wrap">
+    <div style="display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:10px;">
+      <div class="dot-green"></div>
+      <span style="font-size:.9rem;">Сейчас на сайте: <b id="realtimeVisitors">12</b> чел.</span>
+    </div>
+    © ADNEX · Прототип · Данные хранятся в браузере
+  </div>
 </footer>
 
+<!-- MODALS -->
+<div class="overlay" id="authOverlay">
+  <div class="modal">
+    <button class="close-x" onclick="closeAuth()">×</button>
+    <h3 id="authTitle">Регистрация</h3>
+    <div class="sub" id="authSub">Бесплатно. Нужна для заработка и покупки рекламы.</div>
+    <div class="seg" style="display:flex;gap:6px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;margin-bottom:14px;">
+      <button type="button" class="seg-btn active" data-mode="register" style="flex:1;min-width:110px;padding:10px 8px;border-radius:9px;border:none;background:transparent;color:var(--dim);cursor:pointer;font-size:.82rem;font-weight:600;font-family:inherit;transition:.2s;" onclick="setAuthMode('register')">Регистрация</button>
+      <button type="button" class="seg-btn" data-mode="login" style="flex:1;min-width:110px;padding:10px 8px;border-radius:9px;border:none;background:transparent;color:var(--dim);cursor:pointer;font-size:.82rem;font-weight:600;font-family:inherit;transition:.2s;" onclick="setAuthMode('login')">Вход</button>
+    </div>
+    <div style="height:14px"></div>
+    <div class="field" id="authNameField"><label>Имя</label><input id="aName" placeholder="Иван"></div>
+    <div class="field"><label>Email</label><input id="aEmail" placeholder="you@mail.ru" autocomplete="email"></div>
+    <div class="field"><label>Пароль</label><input id="aPass" type="password" placeholder="••••••" autocomplete="current-password"></div>
+    <div class="field hide" id="authRefField"><label>Код пригласившего (если есть)</label><input id="aRef" placeholder="например AB12CD"></div>
+    <button class="btn btn-main" id="authSubmit" onclick="doAuth()">Зарегистрироваться</button>
+  </div>
+</div>
+
+<div class="overlay" id="tickOverlay">
+  <div class="modal">
+    <button class="close-x" onclick="closeTicker()">×</button>
+    <h3>Бегущая строка</h3>
+    <div class="sub" id="tickSub">Доступно даже без регистрации.</div>
+    <div class="field"><label>Текст строки</label><input id="tText" placeholder="Ваше объявление" maxlength="120"></div>
+    <div class="field"><label>Ссылка</label><input id="tUrl" placeholder="https://ваш-сайт.ru"></div>
+    <div class="field"><label>Ваше имя</label><input id="tName" placeholder="Иван"></div>
+    <div class="field"><label>Контакт</label><input id="tContact" placeholder="@username или +7…"></div>
+    <div class="field"><label>Срок</label>
+      <select id="tTerm">
+        <option value="1">1 месяц</option>
+        <option value="3">3 месяца (−10%)</option>
+        <option value="6">6 месяцев (−15%)</option>
+        <option value="12">12 месяцев (−20%)</option>
+      </select>
+    </div>
+    <div class="total" style="padding:14px;border-radius:12px;background:rgba(63,214,255,.08);border:1px solid rgba(63,214,255,.25);text-align:center;font-weight:800;font-size:1.2rem;color:var(--cyan);" id="tTotal">Итого: 100 ₽</div>
+    <button class="btn btn-main" onclick="submitTicker()">Оплатить</button>
+  </div>
+</div>
+
+<div class="overlay" id="watchOverlay">
+  <div class="modal" style="max-width:560px">
+    <h3>Просмотр ролика</h3>
+    <div class="sub">Досмотрите до конца — начислим 0.5 ₽.</div>
+    <div class="watchbox" style="background:#05060f;border:1px solid var(--stroke);border-radius:16px;overflow:hidden;">
+      <div class="watchscreen" id="watchScreen" style="position:relative;width:100%;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;text-align:center;padding:8%;color:var(--dim);">Загрузка рекламы...</div>
+      <div class="watchbar" style="height:5px;background:rgba(255,255,255,.15);"><i id="watchBar" style="display:block;height:100%;width:0;background:linear-gradient(90deg,var(--cyan),var(--violet));"></i></div>
+    </div>
+    <div style="text-align:center;margin-top:14px;color:var(--dim);font-size:.85rem" id="watchHint">Осталось: 10 с</div>
+    <a id="watchLink" class="btn btn-main hide" style="text-align:center;margin-top:10px" target="_blank" rel="noopener">Перейти на сайт (+2 ₽)</a>
+  </div>
+</div>
+
+<!-- ADMIN PANEL (HIDDEN BY DEFAULT) -->
+<button class="admin-fab" title="Админка" onclick="openAdmin()" style="position:fixed;bottom:22px;left:22px;z-index:90;width:46px;height:46px;border-radius:50%;border:1px solid var(--stroke);background:rgba(255,255,255,.05);color:var(--dim);cursor:pointer;font-size:1.15rem;display:none;">⚙</button>
+
+<div class="overlay" id="adminOverlay">
+  <div class="modal" style="max-width:580px">
+    <button class="close-x" onclick="closeAdmin()">×</button>
+    <h3>Панель управления</h3>
+    <div class="sub">Прототип админки.</div>
+    <div id="adminLogin">
+      <div class="field"><label>Пароль</label><input id="adminPass" type="password" placeholder="••••••"></div>
+      <button class="btn btn-main" onclick="adminLogin()">Войти</button>
+    </div>
+    <div id="adminPanel" class="hide">
+      <div class="tabs">
+        <button class="tab active" data-apane="a-ads">Реклама</button>
+        <button class="tab" data-apane="a-users">Люди</button>
+        <button class="tab" data-apane="a-orders">Заявки</button>
+        <button class="tab" data-apane="a-set">Цены</button>
+      </div>
+      <div class="pane on" id="a-ads"><div id="adminAds"></div></div>
+      <div class="pane" id="a-users"><div id="adminUsers"></div></div>
+      <div class="pane" id="a-orders"><div id="adminOrders"></div></div>
+      <div class="pane" id="a-set">
+        <div class="field"><label>Цена места в эфире, ₽/мес</label><input id="aPrice" type="number"></div>
+        <div class="field"><label>Цена строки, ₽/мес</label><input id="aTick" type="number"></div>
+        <div class="field"><label>Выплата за просмотр, ₽</label><input id="aView" type="number" step="0.01"></div>
+        <div class="field"><label>Выплата за клик, ₽</label><input id="aClick" type="number" step="0.01"></div>
+        <div class="field"><label>Перезарядка ролика, дней</label><input id="aCd" type="number"></div>
+        <button class="btn btn-ghost" onclick="saveSettings()">Сохранить</button>
+        <button class="btn btn-ghost" style="margin-top:8px" onclick="resetAll()">Сбросить всё</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
-/* Прокрутка */
-function scrollTo2(id){ const el=document.getElementById(id); if(el) el.scrollIntoView({behavior:'smooth'}); }
-document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
-  e.preventDefault(); const el=document.querySelector(a.getAttribute('href'));
-  if(el) el.scrollIntoView({behavior:'smooth'});
-}));
+/* ================= КОНФИГУРАЦИЯ И ЭКОНОМИКА ================= */
+const CONFIG = {
+  // Цены для рекламодателя (то, что платит клиент)
+  pricePerView: 10,      // 10 ₽ за просмотр
+  pricePerClick: 50,     // 50 ₽ за клик
+  
+  // Выплаты исполнителю (то, что получает пользователь)
+  payPerView: 0.5,       // 0.5 ₽ за просмотр
+  payPerClick: 2,        // 2 ₽ за клик
+  
+  // Реферальные ставки (от суммы покупки/выплаты реферала)
+  refRates: { level1: 0.10, level2: 0.03, level3: 0.01 },
+  refRatesView: { level1: 0.01, level2: 0, level3: 0 }, // За просмотры рефералов
+  refRatesClick: { level1: 0.10, level2: 0, level3: 0 }, // За клики рефералов
+  
+  // Цены на бегущую строку
+  tickerPriceBase: 100,
+  
+  // Сроки и скидки
+  discounts: { 1: 0, 3: 0.10, 6: 0.15, 12: 0.20 }
+};
 
-/* Калькулятор */
-let cCount=4;
-document.querySelectorAll('#cCount .chip').forEach(ch=>ch.addEventListener('click',()=>{
-  document.querySelectorAll('#cCount .chip').forEach(x=>x.classList.remove('on'));
-  ch.classList.add('on'); cCount=parseInt(ch.dataset.v,10); calc();
-}));
-document.querySelectorAll('#cWorks .chip').forEach(ch=>ch.addEventListener('click',()=>{
-  ch.classList.toggle('on'); calc();
-}));
-document.getElementById('cRadius').addEventListener('change',calc);
-function calc(){
-  const k=parseFloat(document.getElementById('cRadius').value);
-  let per=0;
-  document.querySelectorAll('#cWorks .chip.on').forEach(ch=>{ per+=parseFloat(ch.dataset.b); });
-  const total=Math.round(per*k*cCount);
-  document.getElementById('cTotal').textContent=total.toLocaleString('ru-RU')+' ₽';
-}
-calc();
+/* ================= ХРАНИЛИЩЕ ================= */
+const LS_KEY = 'adnex_proto_v3';
 
-/* Форма записи */
-function sendBooking(){
-  const name=document.getElementById('fName').value.trim();
-  const phone=document.getElementById('fPhone').value.trim();
-  const service=document.getElementById('fService').value;
-  const time=document.getElementById('fTime').value.trim();
-  if(!name||!phone){ alert('Заполните имя и телефон — мы перезвоним для подтверждения.'); return; }
-  alert('Спасибо, '+name+'! Заявка на «'+service+'» принята'+(time?' на '+time:'')+'. Мастер свяжется по номеру '+phone+'.');
-  ['fName','fPhone','fTime'].forEach(id=>document.getElementById(id).value='');
+function loadState() {
+  let s = null;
+  try { s = JSON.parse(localStorage.getItem(LS_KEY)); } catch(e) {}
+  if (!s) return defaultState();
+  
+  // Миграция старых данных, если нужно
+  if (!s.balance_spend) s.balance_spend = 0;
+  if (!s.balance_pay) s.balance_pay = 0;
+  if (!s.ref_income) s.ref_income = 0;
+  return s;
 }
-</script>
-</body>
-</html>
+
+function saveState(s) {
+  try { localStorage.setItem(LS_KEY, JSON.stringify(s)); } catch(e) { console.error('Storage error', e); }
+}
+
+function defaultState() {
+  return {
+    user: null, // null если не авторизован
+    balance_spend: 0, // Баланс для покупок рекламы
+    balance_pay: 0,   // Баланс для выплат/заработка
+    ref_income: 0,    // Накопленный реферальный доход
+    stats: {
+      registrations: 0,
+      total_withdrawals: 0,
+      current_visitors: 12 // Эмуляция
+    },
+    ads: [],
+    ticker: [],
+    users: [], // Список пользователей (для прототипа)
+    history: []
+  };
+}
+
+let state = loadState();
+
+/* ================= ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ================= */
+function fmt(num) { return (num || 0).toLocaleString('ru-RU'); }
+function fmtMoney(num) { return (num || 0).toLocaleString('ru-RU') + ' ₽'; }
+
+function updateUI() {
+  const u = state.user;
+  const isAuth = !!u;
+  
+  document.getElementById('btnRegister').style.display = isAuth ? 'none' : 'inline-block';
+  document.getElementById('btnLogin').style.display = isAuth ? 'none' : 'inline-block';
+  
+  const navRight = document.getElementById('navRight');
+  const balSpendEl = document.getElementById('userBalanceSpend');
+  const balPayEl = document.getElementById('userBalancePay');
+  
+  if (isAuth) {
+    navRight.style.display = 'flex';
+    balSpendEl.style.display = 'inline';
+    balPayEl.style.display = 'inline';
+    balSpendEl.innerHTML = `Баланс (покупка): <b>\${fmtMoney(state.balance_spend)}</b>`;
+    balPayEl.innerHTML = `Выплаты: <b>\${fmtMoney(state.balance_pay)}</b>`;
+    
+    // Обновление кабинета
+    document.getElementById('cBalanceSpend').innerText = fmtMoney(state.balance_spend);
+    document.getElementById('cBalancePay').innerText = fmtMoney(state.balance_pay);
+    document.getElementById('cRefIncome').innerText = fmtMoney(state.ref_income);
+    
+    // Скрыть кнопки покупки рекламы на главной для гостей? 
+    // По ТЗ: "Покупка рекламы — только из кабинета". 
+    // Значит, на главной у гостей кнопки покупки рекламы быть не должно.
+    // Но в коде выше я оставил только кнопку "Регистрация".
+  } else {
+    navRight.style.display = 'none';
+    balSpendEl.style.display = 'none';
+    balPayEl.style.display = 'none';
+  }
+}
+
+/* ================= АВТОРИЗАЦИЯ И РЕГИСТРАЦИЯ ================= */
+function setAuthMode(mode) {
+  const title = document.getElementById('authTitle');
+  const sub = document.getElementById('authSub');
+  const refField = document.getElementById('authRefField');
+  const btn = document.getElementById('authSubmit');
+  
+  if (mode === 'register') {
+    title.innerText = 'Регистрация';
+    sub.innerText = 'Создайте аккаунт, чтобы зарабатывать и размещать рекламу.';
+    refField.classList.remove('hide');
+    btn.innerText = 'Зарегистрироваться';
+  } else {
+    title.innerText = 'Вход';
+    sub.innerText = 'Введите данные для входа.';
+    refField.classList.add('hide');
+    btn.innerText = 'Войти';
+  }
+}
+
+function doAuth() {
+  const name = document.getElementById('aName').value.trim();
+  const email = document.getElementById('aEmail').value.trim();
+  const pass = document.getElementById('aPass').value.trim();
+  const refCode = document.getElementById('aRef').value.trim();
+  const mode = document.querySelector('.seg-btn.active').dataset.mode;
+  
+  if (!name || !email || !pass) return alert('Заполните все поля');
+  
+  if (mode === 'register') {
+    // Проверка на существование
+    const existing = state.users.find(u => u.email === email);
+    if (existing) return alert('Пользователь с таким email уже существует');
+    
+    const newUser = {
+      id: Date.now().toString(),
+      name, email, pass,
+      ref_code: Math.random().toString(36).substring(2, 8).toUpperCase(),
+      referrer: refCode || null,
+      created_at: new Date().toISOString()
+    };
+    
+    state.users.push(newUser);
+    state.stats.registrations++; // Эмуляция регистрации
+    
+    // Если был реферал, начисляем ему бонус (для демо)
+    if (refCode) {
+      const refUser = state.users.find(u => u.ref_code === refCode);
+      if (refUser) {
+        // Начисляем рефералу приветственный бонус
+        if (!state.ref_income) state.ref_income = 0;
+        state.ref_income += 50; // Бонус за регистрацию реферала
+        alert(`Вы зарегистрированы по реферальной ссылке! Реферал получит бонус.`);
+      }
+    }
+    
+    state.user = newUser;
+    saveState(state);
+    closeAuth();
+    updateUI();
+    alert('Регистрация успешна! Добро пожаловать в кабинет.');
+    goCabinet();
+    
+  } else {
+    const user = state.users.find(u => u.email === email && u.pass === pass);
+    if (!user) return alert('Неверный логин или пароль');
+    
+    state.user = user;
+    saveState(state);
+    closeAuth();
+    updateUI();
+    goCabinet();
+  }
+}
+
+function goCabinet() {
+  document.getElementById('view-landing').classList.add('hide');
+  document.getElementById('view-cabinet').classList.remove('hide');
+  window.scrollTo(0,0);
+}
+
+function showView(view) {
+  if (view === 'landing') {
+    document.getElementById('view-cabinet').classList.add('hide');
+    document.getElementById('view-landing').classList.remove('hide');
+  }
+  window.scrollTo(0,0);
+}
+
+function scrollTo2(id) {
+  document.getElementById(id).scrollIntoView({behavior: 'smooth'});
+}
+
+function copyRef() {
+  const link = document.getElementById('refLink');
+  link.select();
+  document.execCommand('copy');
+  alert('Ссылка скопирована!');
+}
+
+/* ================= ЧАТ (ИСПРАВЛЕННЫЙ) ================= */
+function initChat() {
+  const body = document.getElementById('lcBody');
+  const input = document.getElementById('lcInput');
+  const send = document.getElementById('lcSend');
+  
+  // Эмуляция сообщений
+  const msgs = [
+    {u: 'Admin', t: 'Добро пожаловать в чат эфира!', c: '#8b5cf6'},
+    {u: 'User123', t: 'Сколько платят за клик?', c: '#3fd6ff'},
+    {u: 'User456', t: 'Ссылка на мой проект: https://example.com', c: '#fbbf24'}
+  ];
+  
+  msgs.forEach(m => addChatMessage(m.u, m.t, m.c));
+  
+  send.onclick = () => {
+    const text = input.value.trim();
+    if (!text) return;
+    addChatMessage(state.user ? state.user.name : 'Гость', text, '#fff');
+    input.value = '';
+    // Здесь будет отправка на сервер
+  };
+  
+  input.onkeydown = e => { if (e.key === 'Enter') send.click(); };
+}
+
+function add
