@@ -1,1130 +1,167 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADNEX — рекламная площадка</title>
-<style>
-:root{
-    --bg:#070810;--card:#0e1020;--card2:#12152a;--stroke:rgba(120,150,255,0.14);
-    --cyan:#3fd6ff;--violet:#8b5cf6;--lime:#4ade80;--amber:#fbbf24;
-    --text:#e6ebff;--dim:#8a93b8;--red:#ff6b6b;
-}
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-    background:radial-gradient(1200px 600px at 50% -10%,#131735 0%,#070810 55%);
-    color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-    min-height:100vh;line-height:1.5;
-}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px;}
-header{position:sticky;top:0;z-index:40;backdrop-filter:blur(14px);
-    background:rgba(7,8,16,0.85);border-bottom:1px solid var(--stroke);}
-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 0;}
-.logo{font-size:1.3rem;font-weight:800;letter-spacing:2px;
-    background:linear-gradient(90deg,var(--cyan),var(--violet));
-    -webkit-background-clip:text;background-clip:text;color:transparent;}
-.logo small{display:block;font-size:.6rem;color:var(--dim);letter-spacing:1.5px;font-weight:400;}
-nav .links{display:flex;gap:24px;font-size:.9rem;}
-nav .links a{color:var(--dim);text-decoration:none;transition:.2s;}
-nav .links a:hover{color:var(--text);}
-.nav-cta{padding:9px 20px;border-radius:24px;font-size:.85rem;text-decoration:none;
-    background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;font-weight:700;}
-
-/* БЕГУЩАЯ СТРОКА */
-.ticker-bar{overflow:hidden;white-space:nowrap;background:rgba(8,10,26,.85);
-    border-bottom:1px solid var(--stroke);height:36px;display:flex;align-items:center;}
-.ticker-track{display:inline-flex;white-space:nowrap;animation:tick 60s linear infinite;}
-.ticker-track span{padding-right:70px;font-size:.8rem;color:var(--amber);font-weight:600;}
-.ticker-track b{color:var(--cyan);}
-@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%);}}
-
-.hero{padding:60px 0 40px;text-align:center;}
-.hero h1{font-size:clamp(1.9rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.5px;line-height:1.12;margin-bottom:18px;}
-.hero h1 span{background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
-.hero p{color:var(--dim);max-width:600px;margin:0 auto 30px;font-size:1.05rem;}
-.hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;}
-.btn{padding:15px 32px;border-radius:32px;border:none;cursor:pointer;
-    font-size:.98rem;font-weight:700;text-decoration:none;transition:.25s;font-family:inherit;}
-.btn-main{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;box-shadow:0 0 34px rgba(139,92,246,.4);}
-.btn-main:hover{transform:translateY(-3px);box-shadow:0 0 50px rgba(63,214,255,.5);}
-.btn-ghost{background:rgba(255,255,255,.05);color:var(--text);border:1px solid var(--stroke);}
-.btn-ghost:hover{background:rgba(255,255,255,.1);}
-.btn-sm{padding:10px 20px;font-size:.85rem;border-radius:22px;}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:44px;}
-.stat{padding:20px 14px;border-radius:16px;background:var(--card);border:1px solid var(--stroke);text-align:center;}
-.stat b{display:block;font-size:1.7rem;font-weight:800;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
-.stat span{font-size:.78rem;color:var(--dim);}
-section{padding:44px 0;}
-.sec-head{text-align:center;margin-bottom:30px;}
-.sec-head h2{font-size:clamp(1.5rem,4vw,2.2rem);font-weight:800;margin-bottom:10px;}
-.sec-head p{color:var(--dim);max-width:620px;margin:0 auto;}
-
-/* ФИЛЬТРЫ */
-.filterbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:center;
-    background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:14px;margin-bottom:26px;}
-.filterbar select,.filterbar input{padding:10px 14px;border-radius:10px;background:rgba(255,255,255,.04);
-    border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.85rem;outline:none;}
-.filterbar select:focus,.filterbar input:focus{border-color:var(--cyan);}
-.filterbar input{flex:1;min-width:180px;}
-
-/* ГРУППЫ ЗОН */
-.zone-group{margin-bottom:34px;}
-.zone-head{display:flex;align-items:center;gap:12px;margin-bottom:14px;padding-bottom:10px;
-    border-bottom:1px solid var(--stroke);}
-.zone-head .zi{font-size:1.3rem;color:var(--cyan);}
-.zone-head .zt{font-size:1.15rem;font-weight:800;}
-.zone-head .zd{font-size:.8rem;color:var(--dim);flex:1;}
-.zone-head .zc{font-size:.78rem;color:var(--lime);background:rgba(74,222,128,.12);
-    border:1px solid rgba(74,222,128,.3);padding:4px 12px;border-radius:12px;white-space:nowrap;}
-
-.slot-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.slot{background:var(--card);border:1px solid var(--stroke);border-radius:16px;
-    padding:18px;display:flex;flex-direction:column;transition:.3s;}
-.slot:hover{transform:translateY(-4px);border-color:rgba(63,214,255,.4);}
-.slot.flash{border-color:var(--cyan);box-shadow:0 0 0 2px rgba(63,214,255,.45),0 16px 40px rgba(0,0,0,.5);}
-.slot-head{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;}
-.slot-num{width:32px;height:32px;flex:none;border-radius:9px;display:flex;align-items:center;justify-content:center;
-    font-weight:800;font-size:.9rem;background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
-.slot-title{flex:1;min-width:0;}
-.slot-title b{display:block;font-size:.98rem;line-height:1.25;}
-.slot-zone{font-size:.7rem;color:var(--cyan);}
-.badge{font-size:.64rem;padding:3px 9px;border-radius:10px;font-weight:700;text-transform:uppercase;white-space:nowrap;}
-.badge.free{background:rgba(74,222,128,.15);color:var(--lime);border:1px solid rgba(74,222,128,.3);}
-.badge.busy{background:rgba(139,92,246,.15);color:#c4b5fd;border:1px solid rgba(139,92,246,.3);}
-.slot-desc{font-size:.82rem;color:var(--dim);margin-bottom:12px;min-height:34px;}
-.slot-specs{display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:.72rem;color:var(--dim);margin-bottom:12px;}
-.slot-specs span{display:flex;align-items:center;gap:5px;}
-.slot .price{font-size:1.35rem;font-weight:800;color:var(--cyan);margin-bottom:12px;margin-top:auto;}
-.slot .price small{font-size:.75rem;color:var(--dim);font-weight:400;}
-.slot .btn{width:100%;padding:11px;text-align:center;font-size:.88rem;}
-.slot .btn:disabled{opacity:.4;cursor:not-allowed;transform:none;}
-
-.ad-box{border-radius:10px;overflow:hidden;margin-bottom:12px;background:#05060f;border:1px solid rgba(63,214,255,.2);}
-.ad-box img{width:100%;display:block;}
-.ad-text{display:block;padding:14px;text-align:center;font-weight:700;color:var(--cyan);text-decoration:none;font-size:.9rem;transition:.2s;}
-.ad-text:hover{background:rgba(63,214,255,.08);}
-.ad-meta{font-size:.68rem;color:var(--dim);margin-bottom:10px;}
-
-/* ТИКЕР-СПИСОК */
-.ticker-list{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-height:520px;overflow-y:auto;
-    background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:14px;}
-.tick-item{display:flex;align-items:center;gap:10px;background:rgba(255,255,255,.03);
-    border:1px solid var(--stroke);border-radius:12px;padding:11px 13px;transition:.2s;}
-.tick-item:hover{border-color:rgba(63,214,255,.4);}
-.tick-item .tn{font-weight:800;color:var(--violet);font-size:.82rem;min-width:34px;}
-.tick-item .tt{flex:1;font-size:.8rem;color:var(--dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.tick-item .tp{font-size:.85rem;font-weight:700;color:var(--cyan);white-space:nowrap;}
-.tick-item .tb{padding:6px 13px;border-radius:16px;border:none;cursor:pointer;font-size:.72rem;font-weight:700;
-    background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;font-family:inherit;white-space:nowrap;}
-.tick-item .tb:disabled{background:rgba(139,92,246,.2);color:#c4b5fd;cursor:not-allowed;}
-
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
-.step{background:var(--card);border:1px solid var(--stroke);border-radius:16px;padding:26px 22px;}
-.step .num{font-size:2rem;font-weight:800;margin-bottom:12px;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent;}
-.step h3{font-size:1.05rem;margin-bottom:8px;}
-.step p{color:var(--dim);font-size:.9rem;}
-
-/* МОДАЛКИ */
-.overlay{position:fixed;inset:0;z-index:100;display:none;background:rgba(3,4,10,.88);
-    backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:16px;}
-.overlay.on{display:flex;}
-.modal{background:var(--card);border:1px solid var(--stroke);border-radius:20px;padding:28px;
-    width:100%;max-width:440px;max-height:92vh;overflow-y:auto;}
-.modal h3{font-size:1.25rem;margin-bottom:6px;}
-.modal .sub{color:var(--dim);font-size:.86rem;margin-bottom:20px;}
-.field{margin-bottom:13px;}
-.field label{display:block;font-size:.78rem;color:var(--dim);margin-bottom:6px;}
-.field input,.field textarea,.field select{width:100%;padding:11px 13px;border-radius:10px;background:rgba(255,255,255,.04);
-    border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.9rem;outline:none;}
-.field input:focus,.field textarea:focus,.field select:focus{border-color:var(--cyan);}
-.field textarea{resize:vertical;min-height:90px;font-family:monospace;font-size:.82rem;}
-.modal .btn{width:100%;margin-top:8px;}
-.close-x{position:absolute;top:16px;right:18px;background:none;border:none;color:var(--dim);font-size:1.5rem;cursor:pointer;}
-.modal-rel{position:relative;}
-.seg{display:flex;gap:6px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;}
-.seg-btn{flex:1;padding:9px 6px;border-radius:9px;border:none;cursor:pointer;font-size:.78rem;
-    background:transparent;color:var(--dim);font-weight:600;font-family:inherit;transition:.2s;}
-.seg-btn.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
-.preview{margin-top:10px;border-radius:10px;overflow:hidden;display:none;}
-.preview img{width:100%;display:block;}
-.total{padding:14px;border-radius:12px;background:rgba(63,214,255,.08);border:1px solid rgba(63,214,255,.25);
-    text-align:center;font-weight:800;font-size:1.2rem;color:var(--cyan);margin:14px 0 6px;}
-
-/* ЧАТ */
-.chat-btn{position:fixed;bottom:22px;right:22px;z-index:90;width:58px;height:58px;border-radius:50%;
-    border:none;cursor:pointer;background:linear-gradient(135deg,var(--violet),var(--cyan));
-    color:#070810;font-size:1.5rem;box-shadow:0 0 30px rgba(139,92,246,.5);
-    display:flex;align-items:center;justify-content:center;transition:.25s;}
-.chat-btn:hover{transform:scale(1.08);}
-.chat-panel{position:fixed;bottom:92px;right:22px;z-index:91;width:340px;max-width:calc(100vw - 44px);
-    background:var(--card);border:1px solid var(--stroke);border-radius:18px;overflow:hidden;display:none;
-    flex-direction:column;box-shadow:0 20px 60px rgba(0,0,0,.6);}
-.chat-panel.on{display:flex;}
-.chat-head{padding:15px 18px;border-bottom:1px solid var(--stroke);display:flex;align-items:center;gap:10px;}
-.chat-head .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime);}
-.chat-head b{font-size:.95rem;}
-.chat-head span{margin-left:auto;font-size:.72rem;color:var(--dim);}
-.chat-body{padding:16px;height:270px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
-.chat-body .cm{max-width:85%;font-size:.85rem;padding:10px 13px;border-radius:13px;line-height:1.4;}
-.cm.me{align-self:flex-end;background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(63,214,255,.25));}
-.cm.sys{align-self:center;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);color:var(--lime);font-size:.76rem;text-align:center;}
-.chat-foot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--stroke);}
-.chat-foot input{flex:1;padding:11px 13px;border-radius:10px;background:rgba(255,255,255,.05);
-    border:1px solid var(--stroke);color:var(--text);font-size:.86rem;outline:none;font-family:inherit;}
-.chat-foot input:focus{border-color:var(--cyan);}
-.chat-foot button{padding:0 16px;border-radius:10px;border:none;cursor:pointer;background:var(--cyan);color:#070810;font-weight:700;}
-
-/* АДМИНКА */
-.admin-fab{position:fixed;bottom:22px;left:22px;z-index:90;width:46px;height:46px;border-radius:50%;
-    border:1px solid var(--stroke);background:rgba(255,255,255,.05);color:var(--dim);cursor:pointer;font-size:1.15rem;transition:.25s;}
-.admin-fab:hover{background:rgba(255,255,255,.12);color:var(--text);}
-.tabbar{display:flex;gap:6px;margin-bottom:18px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);border-radius:12px;padding:4px;}
-.tab{flex:1;padding:9px 4px;border-radius:9px;border:none;background:transparent;color:var(--dim);cursor:pointer;font-size:.78rem;font-weight:600;font-family:inherit;transition:.2s;}
-.tab.active{background:linear-gradient(120deg,var(--violet),var(--cyan));color:#070810;}
-.adm-add{display:grid;gap:8px;margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--stroke);}
-.adm-add input,.adm-add select{padding:10px 12px;border-radius:9px;background:rgba(255,255,255,.04);border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.85rem;outline:none;}
-.adm-add input:focus,.adm-add select:focus{border-color:var(--cyan);}
-.adm-card{background:rgba(255,255,255,.03);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px;}
-.adm-row{display:flex;gap:8px;}
-.a-in{width:100%;padding:8px 10px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid var(--stroke);color:var(--text);font-family:inherit;font-size:.82rem;outline:none;}
-.a-in:focus{border-color:var(--cyan);}
-.a-in.sm{max-width:110px;}
-.adm-btns{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;}
-.mini{padding:6px 11px;border-radius:8px;border:none;cursor:pointer;font-size:.74rem;font-weight:600;font-family:inherit;background:rgba(63,214,255,.18);color:var(--cyan);}
-.mini.del{background:rgba(255,80,80,.18);color:var(--red);}
-.mini.act{background:rgba(74,222,128,.18);color:var(--lime);}
-.adm-stat{font-size:.7rem;color:var(--dim);margin-top:8px;}
-.order-card{background:rgba(255,255,255,.03);border:1px solid var(--stroke);border-radius:12px;padding:12px;margin-bottom:10px;font-size:.82rem;}
-.order-card .oc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
-.order-card .oc-top b{color:var(--cyan);}
-.order-card .oc-line{color:var(--dim);font-size:.76rem;}
-footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color:var(--dim);font-size:.82rem;margin-top:40px;}
-
-@media(max-width:900px){
-    nav .links{display:none;}
-    .stats{grid-template-columns:repeat(2,1fr);}
-    .slot-grid{grid-template-columns:1fr;}
-    .steps{grid-template-columns:1fr;}
-    .ticker-list{grid-template-columns:1fr;}
-    .chat-panel{width:calc(100vw - 44px);right:22px;}
-}
-</style>
+  <meta charset="UTF-8">
+  <title>ADNEX MVP: Видео и плеер + Live</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 16px; background: #f5f5f5; }
+    .container { max-width: 1200px; margin: 0 auto; }
+    header { background: #2c3e50; color: #fff; padding: 16px; margin-bottom: 16px; }
+    .grid { display: grid; grid-template-columns: 280px 1fr; gap: 16px; }
+    .sidebar { background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .main-content { background: #fff; padding: 16px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    h2 { margin-top: 0; }
+    label { display: block; margin-top: 12px; font-weight: bold; }
+    input, select { width: 100%; padding: 8px; margin-top: 4px; box-sizing: border-box; }
+    button { background: #3498db; color: #fff; border: none; padding: 10px 16px; cursor: pointer; margin-top: 12px; }
+    button:hover { background: #2980b9; }
+    .player-wrapper { position: relative; width: 100%; padding-bottom: 56.25%; background: #000; border-radius: 8px; overflow: hidden; margin-top: 16px; }
+    video, iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+    .status-badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; color: #fff; }
+    .status-free { background: #2ecc71; }
+    .status-busy { background: #e74c3c; }
+    .log { margin-top: 16px; padding: 8px; background: #eee; border-radius: 4px; font-size: 12px; }
+  </style>
 </head>
 <body>
-
-<header>
-    <div class="wrap">
-        <nav>
-            <div class="logo">ADNEX<small>рекламная площадка</small></div>
-            <div class="links">
-                <a href="#slots">Места</a>
-                <a href="#ticker">Бегущая строка</a>
-                <a href="#how">Как купить</a>
-            </div>
-            <a href="#slots" class="nav-cta">Забронировать</a>
-        </nav>
+  <div class="container">
+    <header>
+      <h1>ADNEX MVP: Рекламные зоны</h1>
+    </header>
+    <div class="grid">
+      <div class="sidebar">
+        <h2>Выбор зоны</h2>
+        <select id="zoneSelect">
+          <option value="all">Все зоны</option>
+          <option value="header">Шапка сайта</option>
+          <option value="sidebar">Боковая колонка</option>
+          <option value="content">Внутри контента</option>
+          <option value="catalog">Каталог и рубрики</option>
+          <option value="popup">Всплывающее окно</option>
+          <option value="mobile">Мобильная версия</option>
+          <option value="player" selected>Видео и плеер</option>
+          <option value="footer">Подвал сайта</option>
+        </select>
+        <div id="zoneDetails"></div>
+      </div>
+      <div class="main-content">
+        <h2>Зона: Видео и плеер</h2>
+        <p>Выберите тип размещения и забронируйте слот.</p>
+        <label for="adType">Тип размещения</label>
+        <select id="adType">
+          <option value="vast">VAST/VPAID ролик (пре/мид/пост)</option>
+          <option value="banner">Баннер поверх плеера (оверлей)</option>
+          <option value="live">Live‑трансляция (платная аренда)</option>
+        </select>
+        <div id="liveForm" style="display:none;">
+          <label for="rtmpUrl">RTMP URL потока</label>
+          <input type="text" id="rtmpUrl" placeholder="rtmp://...">
+          <label for="startDate">Дата начала</label>
+          <input type="datetime-local" id="startDate">
+          <label for="endDate">Дата окончания</label>
+          <input type="datetime-local" id="endDate">
+          <label for="pricePerHour">Цена за час (₽)</label>
+          <input type="number" id="pricePerHour" value="1200">
+          <button onclick="bookLiveSlot()">Забронировать live‑слот</button>
+          <div id="liveCost" style="margin-top:8px; font-weight:bold;"></div>
+        </div>
+        <div class="player-wrapper">
+          <video id="mainPlayer" controls poster="https://via.placeholder.com/1280x720?text=Основной+контент">
+            <source src="https://via.placeholder.com/1280x720?text=Видео+контент" type="video/mp4">
+          </video>
+          <div id="liveOverlay" style="display:none; position:absolute; top:0; left:0; width:100%; height:100%; z-index:9999;"></div>
+        </div>
+        <div class="log" id="log"></div>
+      </div>
     </div>
-    <div class="ticker-bar"><div class="ticker-track" id="tickerTrack"></div></div>
-</header>
+  </div>
 
-<main class="wrap">
-    <section class="hero">
-        <h1>Реклама, которую <span>видно</span>.<br>Место, которое продаётся.</h1>
-        <p>Смотрите, где именно будет стоять ваш баннер, сколько людей его увидит и сколько это стоит. Оплата — и реклама сразу в работе.</p>
-        <div class="hero-btns">
-            <a href="#slots" class="btn btn-main">Выбрать место</a>
-            <a href="#ticker" class="btn btn-ghost">Купить бегущую строку</a>
-        </div>
-        <div class="stats">
-            <div class="stat"><b id="stFree">0</b><span>свободных мест</span></div>
-            <div class="stat"><b id="stTotal">0</b><span>всего секторов</span></div>
-            <div class="stat"><b id="stMin">0</b><span>₽ от / месяц</span></div>
-            <div class="stat"><b>24/7</b><span>приём заявок</span></div>
-        </div>
-    </section>
-
-    <section id="slots">
-        <div class="sec-head">
-            <h2>Рекламные секторы</h2>
-            <p>Каждое место подписано: где стоит, какой размер баннера и сколько показов в месяц. Выбирайте фильтрами.</p>
-        </div>
-
-        <div class="filterbar">
-            <select id="fZone">
-                <option value="all">Все зоны</option>
-            </select>
-            <select id="fStatus">
-                <option value="all">Все места</option>
-                <option value="free">Только свободные</option>
-                <option value="busy">Только занятые</option>
-            </select>
-            <select id="fSort">
-                <option value="id">По порядку</option>
-                <option value="price-asc">Сначала дешёвые</option>
-                <option value="price-desc">Сначала дорогие</option>
-                <option value="views">По охвату</option>
-            </select>
-            <input id="fSearch" placeholder="Поиск: шапка, каталог, попап…">
-        </div>
-
-        <div id="slotZones"></div>
-    </section>
-
-    <section id="ticker">
-        <div class="sec-head">
-            <h2>Бегущая строка</h2>
-            <p>50 мест в строке наверху сайта. Её видят все посетители без исключения. Выбирайте любое свободное место.</p>
-        </div>
-        <div class="ticker-list" id="tickerList"></div>
-    </section>
-
-    <section id="how">
-        <div class="sec-head">
-            <h2>Как купить место</h2>
-            <p>Три шага — и ваша реклама в работе.</p>
-        </div>
-        <div class="steps">
-            <div class="step"><div class="num">01</div><h3>Выберите сектор</h3><p>Фильтруйте по зоне, цене и охвату. Нажмите «Забронировать» на подходящем.</p></div>
-            <div class="step"><div class="num">02</div><h3>Загрузите рекламу</h3><p>Картинка, текст со ссылкой или готовый HTML-код — на выбор.</p></div>
-            <div class="step"><div class="num">03</div><h3>Оплатите</h3><p>После оплаты место закрепляется за вами, баннер сразу появляется.</p></div>
-        </div>
-    </section>
-</main>
-
-<footer>
-    <div class="wrap">© ADNEX · рекламная площадка · заявки принимаются круглосуточно</div>
-</footer>
-
-<button class="admin-fab" title="Панель управления">⚙</button>
-<button class="chat-btn" id="chatBtn">💬</button>
-
-<div class="chat-panel" id="chatPanel">
-    <div class="chat-head"><span class="dot"></span><b>Написать нам</b><span>онлайн</span></div>
-    <div class="chat-body" id="chatBody"></div>
-    <div class="chat-foot">
-        <input id="chatField" placeholder="Ваше сообщение…" autocomplete="off">
-        <button id="chatSend">➤</button>
-    </div>
-</div>
-
-<div class="overlay" id="orderOverlay">
-    <div class="modal modal-rel">
-        <button class="close-x" onclick="closeOrder()">×</button>
-        <h3 id="orderTitle">Оформление размещения</h3>
-        <div class="sub" id="orderSubtitle"></div>
-
-        <div class="field" id="typeField">
-            <label>Что размещаем</label>
-            <div class="seg" id="typeSeg">
-                <button type="button" class="seg-btn active" data-type="image">Баннер</button>
-                <button type="button" class="seg-btn" data-type="text">Текст + ссылка</button>
-                <button type="button" class="seg-btn" data-type="html">HTML-код</button>
-            </div>
-        </div>
-
-        <div class="field t-image">
-            <label>Картинка баннера</label>
-            <input type="file" id="oFile" accept="image/*">
-            <div class="preview" id="oPreview"><img id="oPreviewImg" alt=""></div>
-        </div>
-        <div class="field t-text" style="display:none">
-            <label>Текст объявления</label>
-            <input id="oText" placeholder="Ваше предложение" maxlength="120">
-        </div>
-        <div class="field t-html" style="display:none">
-            <label>HTML-код баннера</label>
-            <textarea id="oHtml" placeholder="<a href='https://...'><img src='https://...'></a>"></textarea>
-        </div>
-
-        <div class="field"><label>Ссылка при клике</label><input id="oUrl" placeholder="https://ваш-сайт.ru"></div>
-        <div class="field"><label>Ваше имя</label><input id="oName" placeholder="Иван"></div>
-        <div class="field"><label>Контакт (телефон или Telegram)</label><input id="oContact" placeholder="@username или +7…"></div>
-        <div class="field">
-            <label>Срок размещения</label>
-            <select id="oTerm">
-                <option value="1">1 месяц</option>
-                <option value="3">3 месяца (−10%)</option>
-                <option value="6">6 месяцев (−15%)</option>
-                <option value="12">12 месяцев (−20%)</option>
-            </select>
-        </div>
-        <div class="total" id="oTotal">Итого: 0 ₽</div>
-        <button class="btn btn-main" id="orderSubmit">Разместить</button>
-    </div>
-</div>
-
-<div class="overlay" id="adminOverlay">
-    <div class="modal modal-rel" style="max-width:600px">
-        <button class="close-x" onclick="closeAdmin()">×</button>
-        <h3>Панель управления</h3>
-        <div class="sub">Полный контроль над площадкой.</div>
-
-        <div id="adminLogin">
-            <div class="field"><label>Пароль</label><input id="adminPass" type="password" placeholder="••••••"></div>
-            <button class="btn btn-main" onclick="adminLogin()">Войти</button>
-        </div>
-
-        <div id="adminPanel" style="display:none">
-            <div class="tabbar">
-                <button class="tab active" data-tab="slots">Секторы</button>
-                <button class="tab" data-tab="ticker">Строка</button>
-                <button class="tab" data-tab="orders">Заявки</button>
-                <button class="tab" data-tab="settings">Настройки</button>
-            </div>
-
-            <div class="tabpane" id="tab-slots">
-                <div class="adm-add">
-                    <input id="aName" placeholder="Название (Сектор 50)">
-                    <input id="aPos" placeholder="Где именно стоит">
-                    <input id="aSize" placeholder="Размер (970×90)">
-                    <input id="aPrice" type="number" placeholder="Цена, ₽/мес">
-                    <input id="aViews" type="number" placeholder="Показов в месяц">
-                    <select id="aZone"></select>
-                    <button class="btn btn-main" onclick="adminAdd()">+ Добавить сектор</button>
-                </div>
-                <div id="adminSlots"></div>
-            </div>
-
-            <div class="tabpane" id="tab-ticker" style="display:none">
-                <div class="field"><label>Цена места в бегущей строке, ₽/мес</label><input id="tPrice" type="number"></div>
-                <button class="btn btn-ghost" onclick="tickerSavePrice()">Сохранить цену</button>
-                <div id="adminTicker" style="margin-top:14px"></div>
-            </div>
-
-            <div class="tabpane" id="tab-orders" style="display:none">
-                <button class="btn btn-ghost" style="margin-bottom:14px" onclick="ordersClear()">Очистить все заявки</button>
-                <div id="adminOrders"></div>
-            </div>
-
-            <div class="tabpane" id="tab-settings" style="display:none">
-                <div class="field"><label>Новый пароль админки</label><input id="sPass" placeholder="новый пароль"></div>
-                <button class="btn btn-main" onclick="settingsSave()">Сохранить пароль</button>
-                <button class="btn btn-ghost" style="margin-top:10px" onclick="resetData()">Сбросить данные площадки</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-/* ============================================================
-   TELEGRAM — впиши токен бота и свой chat_id.
-   ============================================================ */
-const CONFIG = {
-    BOT_TOKEN: 'ВСТАВЬ_ТОКЕН_БОТА',
-    CHAT_ID:   'ВСТАВЬ_СВОЙ_CHAT_ID'
-};
-
-/* ================== ЗОНЫ ПЛОЩАДКИ ================== */
-const ZONES = {
-    header:  { label:'Шапка сайта',        icon:'⬒', desc:'Самое видное место — верх каждой страницы' },
-    sidebar: { label:'Боковая колонка',    icon:'▤', desc:'Сбоку от основного контента' },
-    content: { label:'Внутри контента',    icon:'▦', desc:'Между статьями и блоками' },
-    category:{ label:'Каталог и рубрики',  icon:'▥', desc:'На страницах списков и категорий' },
-    popup:   { label:'Всплывающее окно',   icon:'◱', desc:'Появляется поверх сайта' },
-    mobile:  { label:'Мобильная версия',   icon:'▯', desc:'Для посетителей со смартфонов' },
-    player:  { label:'Видео и плеер',      icon:'▶', desc:'Реклама внутри видеоплеера' },
-    footer:  { label:'Подвал сайта',       icon:'⬓', desc:'Низ каждой страницы' }
-};
-
-/* ================== ДАННЫЕ СЕКТОРОВ ==================
-   [название, зона, где стоит, размер, цена ₽/мес, показов/мес] */
-const SLOTS_RAW = [
-    // --- Шапка ---
-    ['Топ-баннер над меню','header','Над главным меню, виден всем без прокрутки','970×90',15000,220000],
-    ['Баннер под меню','header','Под навигацией на каждой странице','970×90',11000,200000],
-    ['Логотип-партнёр в шапке','header','Рядом с логотипом сайта','200×60',9000,180000],
-    ['Кнопка-CTA в шапке','header','Кнопка справа в шапке','180×50',7000,160000],
-    ['Строка под шапкой','header','Полоса сразу под меню','970×60',6000,150000],
-    ['Мобильный баннер в шапке','header','Верх мобильной версии','320×50',4000,90000],
-    // --- Сайдбар ---
-    ['Правый верхний баннер','sidebar','Справа, сразу под шапкой','300×250',4000,120000],
-    ['Правый средний баннер','sidebar','Справа, в середине страницы','300×250',3500,110000],
-    ['Правый нижний баннер','sidebar','Справа, внизу страницы','300×250',3000,100000],
-    ['Липкий баннер в колонке','sidebar','Всегда виден при прокрутке','300×600',6000,140000],
-    ['Левый вертикальный баннер','sidebar','Слева от контента','240×400',3800,95000],
-    ['Блок «Партнёры»','sidebar','Блок ссылок в колонке','300×200',2500,80000],
-    ['Мини-баннер в колонке','sidebar','Компактный блок в сайдбаре','300×100',1800,60000],
-    ['Ротация баннеров','sidebar','Показ по очереди с другими','300×250',3200,105000],
-    // --- Контент ---
-    ['Баннер перед статьёй','content','Над заголовком статьи','970×250',5000,170000],
-    ['Баннер после 1-го абзаца','content','Сразу после вступления','728×90',3500,150000],
-    ['Баннер в середине статьи','content','Разрывает длинный текст','728×90',3000,140000],
-    ['Баннер после статьи','content','Под текстом, перед комментариями','728×90',2800,130000],
-    ['Нативный блок в тексте','content','Выглядит как часть статьи','600×300',4500,120000],
-    ['Карусель внутри контента','content','Слайдер из нескольких баннеров','728×200',5200,160000],
-    ['Блок между постами','content','В ленте материалов','728×90',3000,135000],
-    ['Баннер в галерее','content','Среди изображений','400×400',2600,85000],
-    ['Спонсорский блок','content','Отдельный выделенный блок','728×150',4200,115000],
-    ['Подпись под статьёй','content','Текстовая строка в конце','600×60',1500,70000],
-    // --- Каталог ---
-    ['Верх каталога','category','Над списком товаров','970×90',3800,130000],
-    ['Баннер между товарами','category','В сетке карточек','728×90',3000,120000],
-    ['Карточка-промо в сетке','category','Выделенная карточка среди товаров','300×300',3500,100000],
-    ['Баннер рубрики','category','На странице категории','728×120',2800,95000],
-    ['Липкий баннер каталога','category','Держится при прокрутке каталога','300×600',4800,110000],
-    ['Низ каталога','category','Под списком товаров','970×90',2400,80000],
-    // --- Попап ---
-    ['Всплывающее при входе','popup','Появляется через 5 секунд','600×400',7000,90000],
-    ['Модальное при уходе','popup','Показывается при попытке уйти','500×400',6000,80000],
-    ['Всплывающее снизу','popup','Полоса снизу экрана','728×120',4000,70000],
-    ['Окно подписки','popup','Поверх контента','400×300',3500,65000],
-    ['Баннер паузы','popup','Когда вкладка неактивна','600×500',5000,75000],
-    // --- Мобильная ---
-    ['Мобильный топ','mobile','Верх экрана на смартфоне','320×100',3500,95000],
-    ['Мобильный под контентом','mobile','Под статьёй в мобильной версии','320×100',2800,85000],
-    ['Мобильный между блоками','mobile','В ленте на телефоне','320×50',2000,70000],
-    ['Мобильный внизу','mobile','Закреплён внизу экрана','320×100',2200,65000],
-    ['Мобильный интерстишл','mobile','Полноэкранный на телефоне','320×480',4500,80000],
-    ['Мобильный нативный','mobile','Вписан в ленту','320×200',2600,60000],
-    ['Мобильный в каталоге','mobile','Среди товаров на смартфоне','320×100',2400,55000],
-    // --- Видео ---
-    ['Пре-ролл 15 сек','player','Перед началом видео','видео 15с',8000,100000],
-    ['Мид-ролл 10 сек','player','В середине ролика','видео 10с',6500,85000],
-    ['Оверлей на видео','player','Поверх плеера','баннер',5500,90000],
-    ['Пост-ролл 10 сек','player','После окончания видео','видео 10с',4000,60000],
-    // --- Подвал ---
-    ['Баннер в подвале','footer','Над копирайтом','970×90',1500,60000],
-    ['Блок партнёров в подвале','footer','Ряд логотипов внизу','728×90',1200,50000],
-    ['Строка в подвале','footer','Текстовая полоса','970×60',1000,45000]
-];
-
-/* ================== ХРАНИЛИЩЕ ================== */
-const LS_STATE  = 'adnex_state_v3';
-const LS_ORDERS = 'adnex_orders_v3';
-
-function buildDefault(){
-    const slots = SLOTS_RAW.map((r, i) => ({
-        id: i + 1, name: r[0], zone: r[1], pos: r[2], size: r[3],
-        price: r[4], views: r[5], status: 'free', ad: null
-    }));
-    // несколько занятых мест для наглядности
-    const demo = [
-        [2,  { type:'text', text:'Здесь могла быть ваша реклама', url:'', buyer:'Demo', views:0 }],
-        [7,  { type:'text', text:'Ваш баннер 300×250', url:'', buyer:'Demo', views:0 }],
-        [16, { type:'text', text:'Реклама в статье', url:'', buyer:'Demo', views:0 }],
-        [31, { type:'text', text:'Всплывающее окно', url:'', buyer:'Demo', views:0 }],
-        [43, { type:'text', text:'Видео-реклама', url:'', buyer:'Demo', views:0 }]
+  <script>
+    // Данные слотов
+    const SLOTS = [
+      { id: 'p1', zone: 'player', name: 'Плеер A (24/7)', type: 'live', pricePerHour: 1200, status: 'free', rtmpUrl: '' },
+      { id: 'p2', zone: 'player', name: 'Плеер B (прайм 18–23)', type: 'live', pricePerHour: 1800, status: 'free', rtmpUrl: '' }
     ];
-    demo.forEach(([id, ad]) => {
-        const s = slots.find(x => x.id === id);
-        if(s){ s.status = 'busy'; s.ad = ad; }
+
+    // Инициализация
+    document.getElementById('adType').addEventListener('change', (e) => {
+      const form = document.getElementById('liveForm');
+      form.style.display = e.target.value === 'live' ? 'block' : 'none';
     });
 
-    const tickers = [];
-    for(let i = 0; i < 50; i++){
-        tickers.push({
-            id: i + 1, text: '', price: 500 + (i % 5) * 100,
-            status: 'free', buyer: ''
-        });
-    }
-    // пара занятых строк
-    tickers[0].status = 'busy'; tickers[0].text = 'Скидки на рекламу до конца месяца'; tickers[0].buyer = 'Demo';
-    tickers[4].status = 'busy'; tickers[4].text = 'Разместите баннер — получите клиентов'; tickers[4].buyer = 'Demo';
-
-    return { slots, tickers, settings: { password:'admin2060', tickerPrice:600 } };
-}
-
-function clone(o){ return JSON.parse(JSON.stringify(o)); }
-function loadState(){
-    try{ const s = localStorage.getItem(LS_STATE); return s ? JSON.parse(s) : buildDefault(); }
-    catch(e){ return buildDefault(); }
-}
-function loadOrders(){
-    try{ const s = localStorage.getItem(LS_ORDERS); return s ? JSON.parse(s) : []; }
-    catch(e){ return []; }
-}
-let state = loadState();
-let orders = loadOrders();
-function saveState(){ localStorage.setItem(LS_STATE, JSON.stringify(state)); }
-function saveOrders(){ localStorage.setItem(LS_ORDERS, JSON.stringify(orders)); }
-function escapeHtml(s){
-    return String(s == null ? '' : s).replace(/[&<>"']/g, c =>
-        ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-}
-function money(n){ return Number(n).toLocaleString('ru-RU'); }
-
-/* ================== TELEGRAM ================== */
-async function sendToTelegram(text){
-    if(!CONFIG.BOT_TOKEN || CONFIG.BOT_TOKEN.indexOf('ВСТАВЬ') === 0){
-        console.warn('Telegram не настроен:', text);
-        return false;
-    }
-    try{
-        const res = await fetch('https://api.telegram.org/bot' + CONFIG.BOT_TOKEN + '/sendMessage', {
-            method:'POST', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ chat_id: CONFIG.CHAT_ID, text, parse_mode:'HTML' })
-        });
-        return res.ok;
-    }catch(e){ console.error(e); return false; }
-}
-
-/* ================== БЕГУЩАЯ СТРОКА СВЕРХУ ================== */
-function renderTopTicker(){
-    const busy = state.tickers.filter(t => t.status === 'busy' && t.text);
-    const msgs = busy.length
-        ? busy.map(t => t.text)
-        : ['Реклама на площадке — от 1 000 ₽/мес', '50 мест в бегущей строке', 'Свободные секторы обновляются каждый день'];
-    const html = msgs.map(t => '<b>✦</b> ' + escapeHtml(t)).join(' &nbsp;&nbsp; ');
-    document.getElementById('tickerTrack').innerHTML =
-        '<span>' + html + '</span><span>' + html + '</span>';
-}
-
-/* ================== ОТРИСОВКА СЕКТОРОВ ================== */
-const viewedThisSession = new Set();
-
-function renderAd(ad){
-    let inner = '<div class="ad-box">';
-    if(ad.type === 'image' && ad.img){
-        inner += '<a href="' + escapeHtml(ad.url || '#') + '" target="_blank" rel="noopener">' +
-                 '<img src="' + ad.img + '" alt="Реклама"></a>';
-    }else if(ad.type === 'html' && ad.html){
-        inner += '<div style="padding:10px">' + ad.html + '</div>';
-    }else{
-        inner += '<a class="ad-text" href="' + escapeHtml(ad.url || '#') + '" target="_blank" rel="noopener">' +
-                 escapeHtml(ad.text || 'Реклама') + '</a>';
-    }
-    inner += '</div>';
-    return inner;
-}
-
-function getFilteredSlots(){
-    const zone   = document.getElementById('fZone').value;
-    const status = document.getElementById('fStatus').value;
-    const sort   = document.getElementById('fSort').value;
-    const q      = document.getElementById('fSearch').value.trim().toLowerCase();
-
-    let list = state.slots.filter(s => {
-        if(zone !== 'all' && s.zone !== zone) return false;
-        if(status === 'free' && s.status !== 'free') return false;
-        if(status === 'busy' && s.status !== 'busy') return false;
-        if(q && !((s.name + ' ' + s.pos + ' ' + ZONES[s.zone].label).toLowerCase().includes(q))) return false;
-        return true;
-    });
-
-    if(sort === 'price-asc')  list.sort((a,b) => a.price - b.price);
-    else if(sort === 'price-desc') list.sort((a,b) => b.price - a.price);
-    else if(sort === 'views') list.sort((a,b) => b.views - a.views);
-    else list.sort((a,b) => a.id - b.id);
-    return list;
-}
-
-function slotCard(s){
-    const zone = ZONES[s.zone];
-    const card = document.createElement('div');
-    card.className = 'slot';
-    card.id = 'slot-' + s.id;
-
-    if(s.status === 'busy' && s.ad && !viewedThisSession.has(s.id)){
-        viewedThisSession.add(s.id);
-        s.ad.views = (s.ad.views || 0) + 1;
-        saveState();
+    // Расчёт стоимости live‑слота
+    function calculateLiveCost() {
+      const start = new Date(document.getElementById('startDate').value).getTime();
+      const end = new Date(document.getElementById('endDate').value).getTime();
+      const price = parseFloat(document.getElementById('pricePerHour').value);
+      if (isNaN(start) || isNaN(end) || isNaN(price)) return 0;
+      const hours = Math.ceil((end - start) / (1000 * 60 * 60));
+      return hours * price;
     }
 
-    let inner =
-        '<div class="slot-head">' +
-            '<span class="slot-num">' + s.id + '</span>' +
-            '<div class="slot-title"><b>' + escapeHtml(s.name) + '</b>' +
-            '<span class="slot-zone">' + zone.icon + ' ' + zone.label + '</span></div>' +
-            '<span class="badge ' + (s.status === 'busy' ? 'busy' : 'free') + '">' +
-                (s.status === 'busy' ? 'занято' : 'свободно') + '</span>' +
-        '</div>' +
-        '<div class="slot-desc">' + escapeHtml(s.pos) + '</div>' +
-        '<div class="slot-specs">' +
-            '<span>📐 ' + escapeHtml(s.size) + '</span>' +
-            '<span>👁 ~' + money(s.views) + ' показов</span>' +
-            '<span>📅 от 1 месяца</span>' +
-            '<span>📈 отчёт по кликам</span>' +
-        '</div>';
-
-    if(s.status === 'busy' && s.ad){
-        inner += renderAd(s.ad);
-        inner += '<button class="btn btn-ghost" disabled>Место занято</button>';
-    }else{
-        inner += '<div class="price">' + money(s.price) + ' ₽<small> / мес</small></div>';
-        inner += '<button class="btn btn-main" onclick="openOrder(' + s.id + ')">Забронировать</button>';
-    }
-    card.innerHTML = inner;
-    return card;
-}
-
-function renderSlots(){
-    const box = document.getElementById('slotZones');
-    box.innerHTML = '';
-    const list = getFilteredSlots();
-
-    if(!list.length){
-        box.innerHTML = '<div style="text-align:center;color:var(--dim);padding:40px">Ничего не найдено — измените фильтры.</div>';
-        updateStats();
+    // Бронирование live‑слота
+    function bookLiveSlot() {
+      const rtmpUrl = document.getElementById('rtmpUrl').value.trim();
+      const start = document.getElementById('startDate').value;
+      const end = document.getElementById('endDate').value;
+      if (!rtmpUrl || !start || !end) {
+        alert('Заполните все поля');
         return;
+      }
+      const slot = SLOTS.find(s => s.status === 'free');
+      if (!slot) {
+        alert('Нет свободных live‑слотов');
+        return;
+      }
+      slot.status = 'busy';
+      slot.rtmpUrl = rtmpUrl;
+      slot.startDate = new Date(start).getTime();
+      slot.endDate = new Date(end).getTime();
+      log(`Слот ${slot.name} забронирован: ${start} — ${end}, RTMP: ${rtmpUrl}`);
+      updateUI();
     }
 
-    // группируем по зонам в порядке ZONES
-    Object.keys(ZONES).forEach(z => {
-        const inZone = list.filter(s => s.zone === z);
-        if(!inZone.length) return;
-        const free = inZone.filter(s => s.status === 'free').length;
-
-        const group = document.createElement('div');
-        group.className = 'zone-group';
-        group.innerHTML =
-            '<div class="zone-head">' +
-                '<span class="zi">' + ZONES[z].icon + '</span>' +
-                '<div><div class="zt">' + ZONES[z].label + '</div>' +
-                '<div class="zd">' + ZONES[z].desc + '</div></div>' +
-                '<span class="zc">' + free + ' свободно</span>' +
-            '</div>';
-
-        const grid = document.createElement('div');
-        grid.className = 'slot-grid';
-        inZone.forEach(s => grid.appendChild(slotCard(s)));
-        group.appendChild(grid);
-        box.appendChild(group);
-    });
-
-    updateStats();
-}
-
-function updateStats(){
-    const free = state.slots.filter(s => s.status === 'free').length;
-    document.getElementById('stFree').textContent = free;
-    document.getElementById('stTotal').textContent = state.slots.length;
-    const prices = state.slots.filter(s => s.status === 'free').map(s => s.price);
-    document.getElementById('stMin').textContent = prices.length ? money(Math.min.apply(null, prices)) : '—';
-}
-
-/* ================== ОТРИСОВКА ТИКЕРА ================== */
-function renderTickerList(){
-    const box = document.getElementById('tickerList');
-    box.innerHTML = '';
-    state.tickers.forEach(t => {
-        const row = document.createElement('div');
-        row.className = 'tick-item';
-        const free = t.status === 'free';
-        row.innerHTML =
-            '<span class="tn">№' + t.id + '</span>' +
-            '<span class="tt">' + (free ? 'Свободное место в строке' : escapeHtml(t.text)) + '</span>' +
-            '<span class="tp">' + money(t.price) + ' ₽</span>' +
-            (free
-                ? '<button class="tb" onclick="openTickerOrder(' + t.id + ')">Купить</button>'
-                : '<button class="tb" disabled>Занято</button>');
-        box.appendChild(row);
-    });
-}
-
-function renderAll(){
-    renderTopTicker();
-    renderSlots();
-    renderTickerList();
-}
-
-/* ================== ФИЛЬТРЫ ================== */
-function initFilters(){
-    const zSel = document.getElementById('fZone');
-    Object.keys(ZONES).forEach(z => {
-        const o = document.createElement('option');
-        o.value = z; o.textContent = ZONES[z].label;
-        zSel.appendChild(o);
-    });
-    ['fZone','fStatus','fSort'].forEach(id =>
-        document.getElementById(id).addEventListener('change', renderSlots));
-    document.getElementById('fSearch').addEventListener('input', renderSlots);
-}
-initFilters();
-renderAll();
-
-/* ================== МОДАЛКА ПОКУПКИ ================== */
-let orderCtx = { mode:'slot', slotId:null, tickerId:null, price:0 };
-let orderType = 'image';
-let orderImage = '';
-
-function openOrder(id){
-    const s = state.slots.find(x => x.id === id);
-    if(!s || s.status === 'busy') return;
-    orderCtx = { mode:'slot', slotId:id, tickerId:null, price:s.price };
-    document.getElementById('orderTitle').textContent = 'Бронь: ' + s.name;
-    document.getElementById('orderSubtitle').textContent = s.pos + ' · ' + money(s.price) + ' ₽/мес';
-    document.getElementById('typeField').style.display = 'block';
-    setType('image');
-    resetOrderForm();
-    document.getElementById('orderOverlay').classList.add('on');
-}
-
-function openTickerOrder(id){
-    const t = state.tickers.find(x => x.id === id);
-    if(!t || t.status === 'busy') return;
-    orderCtx = { mode:'ticker', slotId:null, tickerId:id, price:t.price };
-    document.getElementById('orderTitle').textContent = 'Место в бегущей строке №' + t.id;
-    document.getElementById('orderSubtitle').textContent = 'Строка наверху сайта · ' + money(t.price) + ' ₽/мес';
-    document.getElementById('typeField').style.display = 'none';
-    setType('text');
-    resetOrderForm();
-    document.getElementById('oText').placeholder = 'Текст вашей бегущей строки';
-    document.getElementById('orderOverlay').classList.add('on');
-}
-
-function resetOrderForm(){
-    orderImage = '';
-    document.getElementById('oPreview').style.display = 'none';
-    document.getElementById('oPreviewImg').src = '';
-    document.getElementById('oFile').value = '';
-    document.getElementById('oHtml').value = '';
-    document.getElementById('oText').value = '';
-    document.getElementById('oName').value = '';
-    document.getElementById('oContact').value = '';
-    document.getElementById('oUrl').value = '';
-    document.getElementById('oTerm').value = '1';
-    updateTotal();
-}
-function closeOrder(){ document.getElementById('orderOverlay').classList.remove('on'); }
-
-function setType(t){
-    orderType = t;
-    document.querySelectorAll('#typeSeg .seg-btn').forEach(b =>
-        b.classList.toggle('active', b.dataset.type === t));
-    document.querySelector('.t-image').style.display = (t === 'image') ? 'block' : 'none';
-    document.querySelector('.t-text').style.display  = (t === 'text')  ? 'block' : 'none';
-    document.querySelector('.t-html').style.display  = (t === 'html')  ? 'block' : 'none';
-}
-document.querySelectorAll('#typeSeg .seg-btn').forEach(b =>
-    b.addEventListener('click', () => setType(b.dataset.type)));
-
-document.getElementById('oFile').addEventListener('change', function(){
-    const file = this.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = e => {
-        const img = new Image();
-        img.onload = () => {
-            const maxW = 900;
-            const scale = Math.min(1, maxW / img.width);
-            const c = document.createElement('canvas');
-            c.width  = Math.round(img.width * scale);
-            c.height = Math.round(img.height * scale);
-            c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
-            orderImage = c.toDataURL('image/jpeg', 0.82);
-            document.getElementById('oPreviewImg').src = orderImage;
-            document.getElementById('oPreview').style.display = 'block';
-        };
-        img.src = e.target.result;
-    };
-    reader.readAsDataURL(file);
-});
-
-function termDiscount(m){
-    if(m >= 12) return 0.20;
-    if(m >= 6)  return 0.15;
-    if(m >= 3)  return 0.10;
-    return 0;
-}
-function calcTotal(){
-    const m = parseInt(document.getElementById('oTerm').value, 10) || 1;
-    return Math.round(orderCtx.price * m * (1 - termDiscount(m)));
-}
-function updateTotal(){
-    document.getElementById('oTotal').textContent = 'Итого: ' + money(calcTotal()) + ' ₽';
-}
-document.getElementById('oTerm').addEventListener('change', updateTotal);
-
-document.getElementById('orderSubmit').addEventListener('click', async () => {
-    const name    = document.getElementById('oName').value.trim();
-    const contact = document.getElementById('oContact').value.trim();
-    const url     = document.getElementById('oUrl').value.trim();
-    const text    = document.getElementById('oText').value.trim();
-    const html    = document.getElementById('oHtml').value.trim();
-    const months  = parseInt(document.getElementById('oTerm').value, 10) || 1;
-
-    if(!name || !contact){ alert('Заполните имя и контакт.'); return; }
-
-    if(orderCtx.mode === 'ticker'){
-        if(!text){ alert('Введите текст строки.'); return; }
-    }else{
-        if(orderType === 'image' && !orderImage){ alert('Загрузите картинку баннера.'); return; }
-        if(orderType === 'html'  && !html){ alert('Вставьте HTML-код баннера.'); return; }
-        if(orderType === 'text'  && !text){ alert('Введите текст объявления.'); return; }
+    // Эмуляция автопереключения по расписанию
+    function checkLiveSchedule() {
+      const now = Date.now();
+      const active = SLOTS.find(s => s.status === 'busy' && now >= s.startDate && now <= s.endDate);
+      const overlay = document.getElementById('liveOverlay');
+      const player = document.getElementById('mainPlayer');
+      if (active) {
+        overlay.innerHTML = `<iframe src="https://player.cloudflare.com/watch?stream=\${encodeURIComponent(active.rtmpUrl)}" style="width:100%; height:100%; border:none;"></iframe>`;
+        overlay.style.display = 'block';
+        player.pause();
+        log('Активен live‑поток');
+      } else {
+        overlay.style.display = 'none';
+        log('Основной контент');
+      }
     }
 
-    const btn = document.getElementById('orderSubmit');
-    btn.textContent = 'Обработка…'; btn.disabled = true;
-
-    const until = new Date();
-    until.setMonth(until.getMonth() + months);
-    const untilStr = until.toLocaleDateString('ru-RU');
-    const total = calcTotal();
-
-    let what = '';
-    if(orderCtx.mode === 'ticker'){
-        const t = state.tickers.find(x => x.id === orderCtx.tickerId);
-        if(t){ t.status = 'busy'; t.text = text + (url ? ' — ' + url : ''); t.buyer = name; }
-        what = 'Бегущая строка №' + orderCtx.tickerId;
-    }else{
-        const s = state.slots.find(x => x.id === orderCtx.slotId);
-        if(s){
-            s.status = 'busy';
-            s.ad = { type: orderType, img: orderType === 'image' ? orderImage : '',
-                     text, html, url, buyer: name, contact, months, until: untilStr, views: 0 };
-        }
-        what = (state.slots.find(x => x.id === orderCtx.slotId) || {}).name;
+    // Обновление UI
+    function updateUI() {
+      const cost = calculateLiveCost();
+      document.getElementById('liveCost').textContent = cost > 0 ? `Итого: \${cost} ₽` : '';
+      const details = document.getElementById('zoneDetails');
+      details.innerHTML = SLOTS.map(s => `
+        <div style="margin-top:8px; padding:8px; background:#f9f9f9; border-radius:4px;">
+          <span>\${s.name}</span>
+          <span class="status-badge status-${s.status === 'free' ? 'free' : 'busy'}">${s.status.toUpperCase()}</span>
+          <br><small>Цена: \${s.pricePerHour} ₽/час</small>
+        </div>
+      `).join('');
     }
 
-    orders.unshift({
-        id: Date.now(), slot: what,
-        type: orderCtx.mode === 'ticker' ? 'ticker' : orderType,
-        name, contact, url, text, months, total,
-        date: new Date().toLocaleString('ru-RU')
-    });
-    saveOrders(); saveState();
-
-    const tgText =
-        '🚀 <b>Новая покупка на площадке</b>\n\n' +
-        '<b>Что:</b> ' + what + '\n' +
-        '<b>Имя:</b> ' + name + '\n' +
-        '<b>Контакт:</b> ' + contact + '\n' +
-        (url ? '<b>Ссылка:</b> ' + url + '\n' : '') +
-        (text ? '<b>Текст:</b> ' + text + '\n' : '') +
-        '<b>Срок:</b> ' + months + ' мес.\n' +
-        '<b>Сумма:</b> ' + money(total) + ' ₽\n\n🕒 ' + new Date().toLocaleString('ru-RU');
-    await sendToTelegram(tgText);
-
-    btn.textContent = 'Разместить'; btn.disabled = false;
-    closeOrder(); renderAll();
-    alert('Готово! Размещение активировано. Реквизиты для оплаты пришлём в ответном сообщении.');
-});
-
-/* ================== ЧАТ ================== */
-const chatPanel = document.getElementById('chatPanel');
-const chatBody  = document.getElementById('chatBody');
-let chatStarted = false;
-
-document.getElementById('chatBtn').addEventListener('click', () => {
-    chatPanel.classList.toggle('on');
-    if(!chatStarted){
-        chatStarted = true;
-        addChat('Здравствуйте! Напишите вопрос — сообщение сразу уйдёт оператору.', 'sys');
+    // Логирование
+    function log(msg) {
+      const log = document.getElementById('log');
+      log.textContent += `[${new Date().toLocaleTimeString()}] ${msg}\n`;
     }
-});
-function addChat(text, cls){
-    const d = document.createElement('div');
-    d.className = 'cm ' + cls; d.textContent = text;
-    chatBody.appendChild(d); chatBody.scrollTop = chatBody.scrollHeight;
-}
-async function sendChat(){
-    const f = document.getElementById('chatField');
-    const v = f.value.trim();
-    if(!v) return;
-    addChat(v, 'me'); f.value = '';
-    const ok = await sendToTelegram('💬 <b>Сообщение из чата</b>\n\n' + v + '\n\n🕒 ' + new Date().toLocaleString('ru-RU'));
-    addChat(ok ? 'Доставлено оператору.' : 'Чат не подключён — оставьте заявку через кнопку «Забронировать».', 'sys');
-}
-document.getElementById('chatSend').addEventListener('click', sendChat);
-document.getElementById('chatField').addEventListener('keydown', e => { if(e.key === 'Enter') sendChat(); });
 
-/* ================== АДМИНКА ================== */
-document.querySelector('.admin-fab').addEventListener('click', () =>
-    document.getElementById('adminOverlay').classList.add('on'));
-function closeAdmin(){ document.getElementById('adminOverlay').classList.remove('on'); }
-
-function adminLogin(){
-    const pass = document.getElementById('adminPass').value;
-    if(pass === state.settings.password){
-        document.getElementById('adminLogin').style.display = 'none';
-        document.getElementById('adminPanel').style.display = 'block';
-        renderAdmin();
-    }else alert('Неверный пароль');
-}
-
-document.querySelectorAll('.tab').forEach(t => {
-    t.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
-        t.classList.add('active');
-        document.querySelectorAll('.tabpane').forEach(p => p.style.display = 'none');
-        document.getElementById('tab-' + t.dataset.tab).style.display = 'block';
-    });
-});
-
-function zoneOptions(sel){
-    return Object.keys(ZONES).map(z =>
-        '<option value="' + z + '"' + (sel === z ? ' selected' : '') + '>' + ZONES[z].label + '</option>'
-    ).join('');
-}
-
-function renderAdmin(){
-    // селект зон в форме добавления
-    document.getElementById('aZone').innerHTML = zoneOptions('header');
-    renderAdminSlots();
-    renderAdminTicker();
-    renderAdminOrders();
-    document.getElementById('tPrice').value = state.settings.tickerPrice;
-}
-
-function renderAdminSlots(){
-    const box = document.getElementById('adminSlots');
-    box.innerHTML = '';
-    state.slots.forEach(s => {
-        const d = document.createElement('div');
-        d.className = 'adm-card';
-        d.innerHTML =
-            '<div class="adm-row">' +
-                '<input class="a-in" value="' + escapeHtml(s.name) + '" data-id="' + s.id + '" data-f="name">' +
-                '<input class="a-in sm" type="number" value="' + s.price + '" data-id="' + s.id + '" data-f="price">' +
-            '</div>' +
-            '<input class="a-in" style="margin-top:8px" value="' + escapeHtml(s.pos) + '" data-id="' + s.id + '" data-f="pos">' +
-            '<div class="adm-row" style="margin-top:8px">' +
-                '<input class="a-in" value="' + escapeHtml(s.size) + '" data-id="' + s.id + '" data-f="size">' +
-                '<input class="a-in sm" type="number" value="' + s.views + '" data-id="' + s.id + '" data-f="views">' +
-            '</div>' +
-            '<select class="a-in" style="margin-top:8px" data-id="' + s.id + '" data-f="zone">' + zoneOptions(s.zone) + '</select>' +
-            '<div class="adm-btns">' +
-                '<button class="mini" onclick="adminSave(' + s.id + ')">💾 Сохранить</button>' +
-                '<button class="mini" onclick="adminAd(' + s.id + ')">🎨 Реклама</button>' +
-                '<button class="mini act" onclick="adminToggle(' + s.id + ')">' + (s.status === 'busy' ? 'Освободить' : 'Занять') + '</button>' +
-                '<button class="mini del" onclick="adminDel(' + s.id + ')">✕</button>' +
-            '</div>' +
-            '<div class="adm-stat">' + (s.status === 'busy' ? '● занято' : '○ свободно') +
-                (s.ad ? ' · просмотры: ' + (s.ad.views || 0) : '') + '</div>';
-        box.appendChild(d);
-    });
-}
-
-function adminSave(id){
-    const s = state.slots.find(x => x.id === id);
-    if(!s) return;
-    document.querySelectorAll('[data-id="' + id + '"]').forEach(inp => {
-        const f = inp.dataset.f;
-        if(f === 'price' || f === 'views') s[f] = parseInt(inp.value, 10) || 0;
-        else s[f] = inp.value;
-    });
-    saveState(); renderAll(); renderAdmin();
-}
-
-function adminAdd(){
-    const name  = document.getElementById('aName').value.trim();
-    const pos   = document.getElementById('aPos').value.trim();
-    const size  = document.getElementById('aSize').value.trim();
-    const price = parseInt(document.getElementById('aPrice').value, 10);
-    const views = parseInt(document.getElementById('aViews').value, 10) || 0;
-    const zone  = document.getElementById('aZone').value;
-    if(!name || !price){ alert('Заполните название и цену.'); return; }
-    const maxId = state.slots.reduce((m, s) => Math.max(m, s.id), 0);
-    state.slots.push({ id: maxId + 1, name, pos: pos || 'Рекламное место',
-        size: size || '728×90', price, views, status: 'free', ad: null, zone });
-    saveState(); renderAll(); renderAdmin();
-    ['aName','aPos','aSize','aPrice','aViews'].forEach(id => document.getElementById(id).value = '');
-}
-
-function adminToggle(id){
-    const s = state.slots.find(x => x.id === id);
-    if(!s) return;
-    if(s.status === 'busy'){ s.status = 'free'; s.ad = null; }
-    else{ s.status = 'busy'; s.ad = s.ad || { type:'text', text:'Рекламное место', url:'', buyer:'—', views:0 }; }
-    saveState(); renderAll(); renderAdmin();
-}
-
-function adminDel(id){
-    if(!confirm('Удалить сектор?')) return;
-    state.slots = state.slots.filter(x => x.id !== id);
-    saveState(); renderAll(); renderAdmin();
-}
-
-function adminAd(id){
-    const s = state.slots.find(x => x.id === id);
-    if(!s) return;
-    orderCtx = { mode:'slot', slotId:id, tickerId:null, price:s.price };
-    document.getElementById('orderTitle').textContent = 'Реклама: ' + s.name;
-    document.getElementById('orderSubtitle').textContent = 'Заполните вручную или оставьте как есть.';
-    document.getElementById('typeField').style.display = 'block';
-    setType(s.ad && s.ad.type ? s.ad.type : 'image');
-    resetOrderForm();
-    if(s.ad){
-        document.getElementById('oText').value    = s.ad.text || '';
-        document.getElementById('oHtml').value    = s.ad.html || '';
-        document.getElementById('oUrl').value     = s.ad.url || '';
-        document.getElementById('oName').value    = s.ad.buyer || '';
-        if(s.ad.img){
-            orderImage = s.ad.img;
-            document.getElementById('oPreviewImg').src = s.ad.img;
-            document.getElementById('oPreview').style.display = 'block';
-        }
-    }
-    updateTotal();
-    document.getElementById('orderOverlay').classList.add('on');
-}
-
-/* ---- строка в админке ---- */
-function renderAdminTicker(){
-    const box = document.getElementById('adminTicker');
-    box.innerHTML = '';
-    const busy = state.tickers.filter(t => t.status === 'busy').length;
-    const head = document.createElement('div');
-    head.className = 'adm-stat';
-    head.style.marginBottom = '10px';
-    head.textContent = 'Занято ' + busy + ' из ' + state.tickers.length + ' мест.';
-    box.appendChild(head);
-
-    state.tickers.forEach(t => {
-        const d = document.createElement('div');
-        d.className = 'tick-item';
-        d.style.marginBottom = '8px';
-        const free = t.status === 'free';
-        d.innerHTML =
-            '<span class="tn">№' + t.id + '</span>' +
-            '<span class="tt">' + (free ? 'свободно' : escapeHtml(t.text)) + '</span>' +
-            '<span class="tp">' + money(t.price) + ' ₽</span>' +
-            '<button class="mini ' + (free ? 'act' : 'del') + '" onclick="tickerToggle(' + t.id + ')">' +
-                (free ? 'Занять' : 'Освободить') + '</button>';
-        box.appendChild(d);
-    });
-}
-function tickerToggle(id){
-    const t = state.tickers.find(x => x.id === id);
-    if(!t) return;
-    if(t.status === 'busy'){ t.status = 'free'; t.text = ''; t.buyer = ''; }
-    else{ t.status = 'busy'; t.text = t.text || 'Рекламное объявление'; t.buyer = t.buyer || '—'; }
-    saveState(); renderAll(); renderAdminTicker();
-}
-function tickerSavePrice(){
-    const p = parseInt(document.getElementById('tPrice').value, 10);
-    if(!p){ alert('Введите цену.'); return; }
-    state.settings.tickerPrice = p;
-    saveState(); renderAll();
-    alert('Цена сохранена.');
-}
-
-/* ---- заявки ---- */
-function renderAdminOrders(){
-    const box = document.getElementById('adminOrders');
-    box.innerHTML = '';
-    if(!orders.length){ box.innerHTML = '<div class="adm-stat">Пока заявок нет.</div>'; return; }
-    orders.forEach(o => {
-        const d = document.createElement('div');
-        d.className = 'order-card';
-        d.innerHTML =
-            '<div class="oc-top"><b>' + escapeHtml(o.slot) + '</b>' +
-            '<button class="mini del" onclick="orderDel(' + o.id + ')">✕</button></div>' +
-            '<div class="oc-line">Тип: ' + escapeHtml(o.type) + ' · ' + o.months + ' мес. · ' + money(o.total) + ' ₽</div>' +
-            '<div class="oc-line">Имя: ' + escapeHtml(o.name) + ' · ' + escapeHtml(o.contact) + '</div>' +
-            (o.url ? '<div class="oc-line">Ссылка: ' + escapeHtml(o.url) + '</div>' : '') +
-            '<div class="oc-line">' + escapeHtml(o.date) + '</div>';
-        box.appendChild(d);
-    });
-}
-function orderDel(id){ orders = orders.filter(o => o.id !== id); saveOrders(); renderAdminOrders(); }
-function ordersClear(){ if(!confirm('Очистить все заявки?')) return; orders = []; saveOrders(); renderAdminOrders(); }
-
-/* ---- настройки ---- */
-function settingsSave(){
-    const p = document.getElementById('sPass').value.trim();
-    if(!p){ alert('Введите пароль.'); return; }
-    state.settings.password = p;
-    saveState();
-    document.getElementById('sPass').value = '';
-    alert('Пароль изменён.');
-}
-function resetData(){
-    if(!confirm('Сбросить площадку к начальному виду? Все изменения и заявки удалятся.')) return;
-    localStorage.removeItem(LS_STATE);
-    localStorage.removeItem(LS_ORDERS);
-    location.reload();
-}
-</script>
+    // Старт
+    updateUI();
+    setInterval(checkLiveSchedule, 60000); // Проверка каждую минуту
+    checkLiveSchedule();
+  </script>
 </body>
 </html>
