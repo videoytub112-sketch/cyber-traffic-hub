@@ -57,33 +57,28 @@ section{padding:40px 0;}
 
 /* ЭФИР + ЧАТ */
 .live-wrap{display:grid;grid-template-columns:1fr 330px;gap:16px;align-items:stretch;}
+.live-wrap > *{min-height:0;}
 .broadcast{background:#05060f;border:1px solid var(--stroke);border-radius:20px;
-    overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);display:flex;flex-direction:column;}
+    overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6);display:flex;flex-direction:column;min-height:0;}
 .bc-screen{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#05060f;}
 
-.bc-slide{
-    position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;padding:5% 6% 16%;opacity:0;transition:opacity .6s ease;
-    text-decoration:none;overflow:hidden;cursor:pointer;
-}
-.bc-slide.on{opacity:1;}
+.bc-slide{position:absolute;inset:0;display:block;opacity:0;transition:opacity .6s ease;
+    text-decoration:none;overflow:hidden;cursor:pointer;}
+.bc-slide.on{opacity:1;pointer-events:auto;}
 .bc-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
-.bc-body{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;
-    justify-content:center;width:100%;height:100%;}
-.bc-slide.img .bc-body{justify-content:flex-end;border-radius:14px;
-    background:linear-gradient(0deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.15) 55%,transparent 100%);}
-.bc-brand{font-size:clamp(1.3rem,3.8vw,2.5rem);font-weight:800;letter-spacing:1px;
+.bc-body{position:absolute;inset:0;z-index:2;display:flex;flex-direction:column;
+    align-items:flex-start;justify-content:center;text-align:left;padding:5% 26% 5% 7%;}
+.bc-slide.img .bc-body{background:linear-gradient(90deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.35) 55%,transparent 100%);}
+.bc-brand{font-size:clamp(1.2rem,3.6vw,2.4rem);font-weight:800;letter-spacing:1px;
     text-transform:uppercase;margin-bottom:10px;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.6);}
-.bc-slogan{font-size:clamp(.9rem,2.2vw,1.4rem);font-weight:600;max-width:85%;
-    color:rgba(255,255,255,.94);text-shadow:0 2px 10px rgba(0,0,0,.6);}
-.bc-cta{margin-top:22px;padding:12px 28px;border-radius:30px;font-weight:800;
-    background:rgba(0,0,0,.35);border:2px solid rgba(255,255,255,.8);color:#fff;
-    font-size:.92rem;transition:.2s;white-space:nowrap;}
+.bc-slogan{font-size:clamp(.85rem,2vw,1.3rem);font-weight:600;color:rgba(255,255,255,.94);
+    text-shadow:0 2px 10px rgba(0,0,0,.6);}
+
+/* кнопка — СБОКУ справа */
+.bc-cta{position:absolute;right:26px;top:50%;transform:translateY(-50%);z-index:4;
+    padding:13px 26px;border-radius:30px;font-weight:800;background:rgba(0,0,0,.45);
+    border:2px solid rgba(255,255,255,.85);color:#fff;font-size:.9rem;transition:.2s;white-space:nowrap;}
 .bc-slide:hover .bc-cta{background:#fff;color:#111;}
-.bc-hint{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-    z-index:3;background:rgba(0,0,0,.6);color:#fff;padding:9px 18px;border-radius:24px;
-    font-size:.82rem;font-weight:700;opacity:0;transition:.2s;pointer-events:none;}
-.bc-slide:hover .bc-hint{opacity:1;}
 
 .bc-top{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;
     justify-content:space-between;align-items:center;padding:16px 18px;
@@ -108,20 +103,27 @@ section{padding:40px 0;}
 .bc-foot .price{font-size:1.4rem;font-weight:800;color:var(--cyan);}
 .bc-foot .price small{font-size:.75rem;color:var(--dim);font-weight:400;}
 
+/* ЧАТ ЭФИРА */
 .live-chat{background:var(--card);border:1px solid var(--stroke);border-radius:20px;
-    display:flex;flex-direction:column;overflow:hidden;min-height:0;}
-.lc-head{padding:14px 16px;border-bottom:1px solid var(--stroke);display:flex;align-items:center;gap:9px;}
+    display:flex;flex-direction:column;overflow:hidden;min-height:0;height:100%;}
+.lc-head{padding:14px 16px;border-bottom:1px solid var(--stroke);display:flex;align-items:center;gap:9px;flex:none;}
 .lc-head .dot{width:8px;height:8px;border-radius:50%;background:var(--red);box-shadow:0 0 10px var(--red);}
 .lc-head b{font-size:.92rem;}
 .lc-head span{margin-left:auto;font-size:.72rem;color:var(--dim);}
-.lc-body{flex:1;min-height:0;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px;}
+.lc-body{flex:1 1 auto;min-height:0;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:9px;}
 .lc-msg{display:flex;gap:8px;font-size:.82rem;animation:appear .3s ease;}
 @keyframes appear{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
 .lc-av{width:26px;height:26px;border-radius:50%;flex:none;display:flex;align-items:center;
     justify-content:center;font-size:.7rem;font-weight:800;color:#070810;}
+.lc-txt{min-width:0;}
 .lc-txt b{color:var(--cyan);font-size:.78rem;}
-.lc-txt div{color:var(--text);opacity:.9;}
-.lc-foot{padding:10px 14px;border-top:1px solid var(--stroke);font-size:.72rem;color:var(--dim);text-align:center;}
+.lc-txt div{color:var(--text);opacity:.92;word-wrap:break-word;}
+.lc-txt a{color:var(--cyan);text-decoration:underline;word-break:break-all;}
+.lc-foot{display:flex;gap:8px;padding:10px;border-top:1px solid var(--stroke);flex:none;}
+.lc-foot input{flex:1;min-width:0;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);
+    border:1px solid var(--stroke);color:var(--text);font-size:.84rem;outline:none;font-family:inherit;}
+.lc-foot input:focus{border-color:var(--cyan);}
+.lc-foot button{padding:0 14px;border-radius:10px;border:none;cursor:pointer;background:var(--cyan);color:#070810;font-weight:700;}
 
 /* ОЧЕРЕДЬ */
 .playlist{margin-top:20px;}
@@ -192,7 +194,8 @@ section{padding:40px 0;}
 .chat-head b{font-size:.95rem;}
 .chat-head span{margin-left:auto;font-size:.72rem;color:var(--dim);}
 .chat-body{padding:16px;height:250px;overflow-y:auto;display:flex;flex-direction:column;gap:10px;}
-.chat-body .cm{max-width:85%;font-size:.85rem;padding:10px 13px;border-radius:13px;line-height:1.4;}
+.chat-body .cm{max-width:85%;font-size:.85rem;padding:10px 13px;border-radius:13px;line-height:1.4;word-wrap:break-word;}
+.cm a{color:#fff;text-decoration:underline;word-break:break-all;}
 .cm.me{align-self:flex-end;background:linear-gradient(135deg,rgba(139,92,246,.4),rgba(63,214,255,.25));}
 .cm.sys{align-self:center;background:rgba(74,222,128,.08);border:1px solid rgba(74,222,128,.25);color:var(--lime);font-size:.76rem;text-align:center;}
 .chat-foot{display:flex;gap:8px;padding:12px;border-top:1px solid var(--stroke);}
@@ -228,11 +231,16 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
 @media(max-width:900px){
     nav .links{display:none;}
     .live-wrap{grid-template-columns:1fr;}
-    .live-chat{height:320px;}
+    .live-chat{height:340px;}
     .steps{grid-template-columns:1fr;}
     .bc-foot{flex-direction:column;align-items:flex-start;}
     .bc-foot .btn-main{width:100%;text-align:center;}
     .chat-panel{width:calc(100vw - 44px);right:22px;}
+}
+@media(max-width:600px){
+    .bc-cta{right:12px;padding:9px 15px;font-size:.74rem;border-width:1.5px;}
+    .bc-body{padding:4% 33% 4% 5%;}
+    .bc-brand{letter-spacing:.5px;}
 }
 </style>
 </head>
@@ -267,7 +275,7 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     <section id="live">
         <div class="sec-head">
             <h2>Прямой эфир рекламы</h2>
-            <p>Здесь непрерывно крутится реклама рекламодателей — картинкой или текстом. Нажмите на любой слайд, чтобы перейти на сайт рекламодателя.</p>
+            <p>Здесь непрерывно крутится реклама рекламодателей — картинкой или текстом. Нажмите на слайд или на кнопку справа, чтобы перейти на сайт.</p>
         </div>
 
         <div class="live-wrap">
@@ -300,7 +308,10 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
             <div class="live-chat">
                 <div class="lc-head"><span class="dot"></span><b>Чат эфира</b><span id="lcOnline">онлайн</span></div>
                 <div class="lc-body" id="lcBody"></div>
-                <div class="lc-foot">Зрители обсуждают эфир в реальном времени</div>
+                <div class="lc-foot">
+                    <input id="lcInput" placeholder="Написать в чат…" autocomplete="off">
+                    <button id="lcSend">➤</button>
+                </div>
             </div>
         </div>
 
@@ -354,7 +365,6 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     </div>
 </div>
 
-<!-- МОДАЛКА: ЭФИР -->
 <div class="overlay" id="buyOverlay">
     <div class="modal">
         <button class="close-x" onclick="closeBuy()">×</button>
@@ -395,7 +405,6 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     </div>
 </div>
 
-<!-- МОДАЛКА: СТРОКА -->
 <div class="overlay" id="tickOverlay">
     <div class="modal">
         <button class="close-x" onclick="closeTicker()">×</button>
@@ -419,7 +428,6 @@ footer{border-top:1px solid var(--stroke);padding:30px 0;text-align:center;color
     </div>
 </div>
 
-<!-- АДМИНКА -->
 <div class="overlay" id="adminOverlay">
     <div class="modal" style="max-width:580px">
         <button class="close-x" onclick="closeAdmin()">×</button>
@@ -475,7 +483,7 @@ async function sendTg(text){
 }
 
 /* ==========================================================
-   ДЕМО-КАРТИНКИ (рисуем SVG прямо в коде)
+   ДЕМО-КАРТИНКИ
    ========================================================== */
 function svgDemo(brand, slogan, color){
     const svg =
@@ -495,7 +503,7 @@ function svgDemo(brand, slogan, color){
 /* ==========================================================
    ДАННЫЕ
    ========================================================== */
-const LS='adnex_air_v4', LS_ORD='adnex_air_orders_v4';
+const LS='adnex_air_v5', LS_ORD='adnex_air_orders_v5';
 
 const DEMO_ADS = [
     {type:'text', brand:'Coffee House', slogan:'Кофе, который бодрит с первой секунды', color:'#b45309', url:'https://example.com'},
@@ -545,7 +553,13 @@ function saveOrders(){ localStorage.setItem(LS_ORD,JSON.stringify(orders)); }
 function esc(s){ return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 function money(n){ return Number(n).toLocaleString('ru-RU'); }
 
-/* сжатие картинки до 900px и JPEG */
+/* ссылки в тексте становятся кликабельными */
+function linkify(text){
+    return esc(text).replace(/(https?:\/\/[^\s<]+)/g, function(u){
+        return '<a href="'+u+'" target="_blank" rel="noopener">'+u+'</a>';
+    });
+}
+
 function compressImage(file, cb, maxW){
     maxW = maxW || 900;
     const reader = new FileReader();
@@ -607,9 +621,8 @@ function buildSlides(){
             '<div class="bc-body">'+
                 (ad.brand ? '<div class="bc-brand">'+esc(ad.brand)+'</div>' : '')+
                 (ad.slogan ? '<div class="bc-slogan">'+esc(ad.slogan)+'</div>' : '')+
-                '<span class="bc-cta">Перейти на сайт →</span>'+
             '</div>'+
-            '<span class="bc-hint">Нажмите, чтобы открыть сайт</span>';
+            '<span class="bc-cta">Перейти на сайт →</span>';
 
         a.innerHTML = inner;
         screen.insertBefore(a, anchor);
@@ -677,9 +690,11 @@ function markPlaylist(){
 }
 
 /* ==========================================================
-   ЧАТ ЭФИРА — «боты»
+   ЧАТ ЭФИРА — боты (20 шт., раз в час) + живые зрители
    ========================================================== */
-const BOT_NAMES = ['Марина','Alex','Дмитрий','Ольга','Игорь','Kate','Сергей','Юля','Андрей','Настя'];
+const BOT_NAMES = ['Марина','Алексей','Дмитрий','Ольга','Игорь','Екатерина','Сергей','Юлия',
+                   'Андрей','Анастасия','Павел','Елена','Максим','Татьяна','Роман','Ирина',
+                   'Владимир','Светлана','Николай','Оксана'];
 const BOT_MSGS = [
     'О, эфир реально живой 🔥',
     'Кто уже заказал тут рекламу?',
@@ -692,26 +707,54 @@ const BOT_MSGS = [
     'Мой бренд тут смотрелся бы отлично',
     'Наконец-то нормальная рекламная площадка',
     'Кто из Краснодара? 🙌',
-    'Строка сверху тоже прикольная'
+    'Строка сверху тоже прикольная',
+    'Вот площадка, где я заказал рекламу: https://adnex.ru',
+    'Подскажите, сколько стоит эфир на месяц?',
+    'Отличная идея с прямой трансляцией'
 ];
+const BOT_COUNT = 20;         // сколько всего ботов
+const BOT_PERIOD = 3600000;   // каждый бот пишет раз в час
+
 function botColor(){ const h = Math.floor(Math.random()*360); return 'hsl('+h+',70%,60%)'; }
-function addBotMsg(){
+
+function addLiveMsg(name, text, color){
     const body = document.getElementById('lcBody');
     if(!body) return;
-    const name = BOT_NAMES[Math.floor(Math.random()*BOT_NAMES.length)];
-    const text = BOT_MSGS[Math.floor(Math.random()*BOT_MSGS.length)];
     const d = document.createElement('div');
     d.className = 'lc-msg';
     d.innerHTML =
-        '<span class="lc-av" style="background:'+botColor()+'">'+esc(name[0])+'</span>'+
-        '<span class="lc-txt"><b>'+esc(name)+'</b><div>'+esc(text)+'</div></span>';
+        '<span class="lc-av" style="background:'+(color||botColor())+'">'+esc(name[0])+'</span>'+
+        '<span class="lc-txt"><b>'+esc(name)+'</b><div>'+linkify(text)+'</div></span>';
     body.appendChild(d);
-    while(body.children.length > 40) body.removeChild(body.firstChild);
+    while(body.children.length > 60) body.removeChild(body.firstChild);
     body.scrollTop = body.scrollHeight;
 }
-for(let i=0;i<5;i++) addBotMsg();
-setInterval(addBotMsg, 3200);
-setInterval(()=>{ if(Math.random()>0.5) addBotMsg(); }, 5000);
+
+/* стартовые сообщения, чтобы чат не был пустым */
+['Марина','Дмитрий','Ольга'].forEach(function(n,i){ addLiveMsg(n, BOT_MSGS[i]); });
+
+/* 20 ботов, каждый раз в час, со сдвигом по времени */
+BOT_NAMES.slice(0, BOT_COUNT).forEach(function(name, i){
+    const offset = Math.round((BOT_PERIOD / BOT_COUNT) * i) + Math.floor(Math.random()*20000);
+    setTimeout(function(){
+        addLiveMsg(name, BOT_MSGS[Math.floor(Math.random()*BOT_MSGS.length)]);
+        setInterval(function(){
+            addLiveMsg(name, BOT_MSGS[Math.floor(Math.random()*BOT_MSGS.length)]);
+        }, BOT_PERIOD);
+    }, offset);
+});
+
+/* сообщение от живого зрителя */
+function sendLive(){
+    const inp = document.getElementById('lcInput');
+    const v = inp.value.trim();
+    if(!v) return;
+    addLiveMsg('Вы', v, '#3fd6ff');
+    inp.value = '';
+    sendTg('💬 <b>Сообщение в чат эфира</b>\n\n'+v);
+}
+document.getElementById('lcSend').addEventListener('click', sendLive);
+document.getElementById('lcInput').addEventListener('keydown', function(e){ if(e.key==='Enter') sendLive(); });
 
 /* ==========================================================
    ПОКУПКА: ЭФИР
@@ -798,7 +841,6 @@ document.getElementById('buySubmit').addEventListener('click', async ()=>{
     document.getElementById('bImg').value='';
     document.getElementById('bPreview').style.display='none';
     buyImage='';
-    addBotMsg();
     alert('Готово! Ваша реклама уже в эфире — прокрутите вверх и увидите её.');
 });
 
@@ -857,7 +899,8 @@ document.getElementById('chatBtn').addEventListener('click',()=>{
     if(!chatStarted){ chatStarted=true; addChat('Здравствуйте! Напишите вопрос — сообщение уйдёт оператору.','sys'); }
 });
 function addChat(text,cls){
-    const d=document.createElement('div'); d.className='cm '+cls; d.textContent=text;
+    const d=document.createElement('div'); d.className='cm '+cls;
+    d.innerHTML = linkify(text);
     chatBody.appendChild(d); chatBody.scrollTop=chatBody.scrollHeight;
 }
 async function sendChat(){
