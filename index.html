@@ -234,9 +234,21 @@
 
   <script>
     const vipAds = [
-      { img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=320&auto=format&fit=crop', href: 'https://example.com/vip1', alt: 'VIP реклама: премиум размещение' },
-      { img: 'https://images.unsplash.com/photo-1551094233-b0e1339565cf?q=80&w=320&auto=format&fit=crop', href: 'https://example.com/vip2', alt: 'VIP реклама: максимальный охват' },
-      { img: 'https://images.unsplash.com/photo-1556761175-5637489b9877?q=80&w=320&auto=format&fit=crop', href: 'https://example.com/vip3', alt: 'VIP реклама: топовые позиции' }
+      { 
+        img: 'https://images.unsplash.com/photo-1624374255477-8458776d44cf?q=80&w=320&auto=format&fit=crop', 
+        href: 'https://www.ozon.ru', 
+        alt: 'Реклама Ozon: покупайте выгодно' 
+      },
+      { 
+        img: 'https://images.unsplash.com/photo-1624374255477-8458776d44cf?q=80&w=320&auto=format&fit=crop', 
+        href: 'https://www.wildberries.ru', 
+        alt: 'Реклама Wildberries: широкий ассортимент' 
+      },
+      { 
+        img: 'https://images.unsplash.com/photo-1624374255477-8458776d44cf?q=80&w=320&auto=format&fit=crop', 
+        href: 'https://market.yandex.ru', 
+        alt: 'Реклама Яндекс Маркет: лучшие цены' 
+      }
     ];
 
     const slider = document.getElementById('vipSlider');
@@ -247,7 +259,7 @@
         const card = document.createElement('div');
         card.className = 'vip-card';
         card.innerHTML = `
-          <a href="${ad.href}" aria-label="${ad.alt}">
+          <a href="${ad.href}" aria-label="${ad.alt}" target="_blank" rel="noopener noreferrer">
             <img src="${ad.img}" alt="${ad.alt}" loading="lazy">
           </a>
         `;
