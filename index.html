@@ -39,6 +39,12 @@
       max-width: 600px;
       margin: 0 auto 40px;
     }
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
     .btn {
       display: inline-block;
       background: var(--accent);
@@ -51,6 +57,15 @@
     }
     .btn:hover {
       transform: scale(1.03);
+    }
+    .btn-secondary {
+      background: transparent;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+    }
+    .btn-secondary:hover {
+      background: var(--accent);
+      color: #000;
     }
     /* VIP block */
     .vip-banner {
@@ -74,6 +89,10 @@
       padding-bottom: 10px;
       scroll-snap-type: x mandatory;
       scroll-behavior: smooth;
+      scrollbar-width: none;
+    }
+    .vip-slider::-webkit-scrollbar {
+      display: none;
     }
     .vip-card {
       min-width: 320px;
@@ -139,6 +158,8 @@
       h1 { font-size: 2rem; }
       .grid-2x2, .grid-1x3 { grid-template-columns: 1fr; }
       .vip-card { min-width: 280px; max-width: 280px; }
+      .btn-group { flex-direction: column; }
+      .btn, .btn-secondary { width: 100%; text-align: center; }
     }
   </style>
 </head>
@@ -147,7 +168,10 @@
     <div class="container">
       <h1>Рекламные размещения</h1>
       <p class="subtitle">Баннеры и блоки ссылок на топовых площадках. Прозрачная статистика и быстрый старт.</p>
-      <a href="#" class="btn">Купить рекламу в VIP‑блоке. От 1000 ₽/мес</a>
+      <div class="btn-group">
+        <a href="https://vk.ru/idkirik99" class="btn">Купить VIP‑рекламу. От 1000 ₽/мес</a>
+        <a href="https://t.me/vipreklama99" class="btn btn-secondary">Купить рекламу в Telegram</a>
+      </div>
     </div>
   </header>
 
@@ -214,11 +238,19 @@
   </section>
 
   <script>
-    // VIP‑реклама: массив карточек (заполняется в админке)
+    // VIP‑реклама: массив карточек (заполняется в админке — можно добавить 100+ элементов)
     const vipAds = [
       { img: 'https://via.placeholder.com/320x180/333/fff?text=VIP+1', href: 'https://example.com/vip1' },
       { img: 'https://via.placeholder.com/320x180/444/fff?text=VIP+2', href: 'https://example.com/vip2' },
-      { img: 'https://via.placeholder.com/320x180/555/fff?text=VIP+3', href: 'https://example.com/vip3' }
+      { img: 'https://via.placeholder.com/320x180/555/fff?text=VIP+3', href: 'https://example.com/vip3' },
+      { img: 'https://via.placeholder.com/320x180/666/fff?text=VIP+4', href: 'https://example.com/vip4' },
+      { img: 'https://via.placeholder.com/320x180/777/fff?text=VIP+5', href: 'https://example.com/vip5' },
+      { img: 'https://via.placeholder.com/320x180/888/fff?text=VIP+6', href: 'https://example.com/vip6' },
+      { img: 'https://via.placeholder.com/320x180/999/fff?text=VIP+7', href: 'https://example.com/vip7' },
+      { img: 'https://via.placeholder.com/320x180/aaa/fff?text=VIP+8', href: 'https://example.com/vip8' },
+      { img: 'https://via.placeholder.com/320x180/bbb/fff?text=VIP+9', href: 'https://example.com/vip9' },
+      { img: 'https://via.placeholder.com/320x180/ccc/fff?text=VIP+10', href: 'https://example.com/vip10' }
+      // Сюда можно добавить ещё 90+ карточек для ротации
     ];
 
     const slider = document.getElementById('vipSlider');
