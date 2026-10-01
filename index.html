@@ -14,7 +14,7 @@
     }
     body {
       margin: 0;
-      font-family: Inter, sans-serif;
+      font-family: Inter, system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
@@ -53,10 +53,11 @@
       text-decoration: none;
       font-weight: 700;
       border-radius: 4px;
-      transition: transform 0.2s;
+      transition: transform 0.2s, background 0.2s;
     }
     .btn:hover {
       transform: scale(1.03);
+      background: #ff8a55;
     }
     .btn-secondary {
       background: transparent;
@@ -102,6 +103,7 @@
       position: relative;
       scroll-snap-align: start;
       flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     .vip-card img {
       width: 100%;
@@ -134,6 +136,14 @@
       justify-content: center;
       color: var(--muted);
       border: 1px solid #2a2a2a;
+      position: relative;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .ad-slot::before {
+      content: attr(data-label);
+      text-align: center;
+      pointer-events: none;
     }
     .link-block {
       background: var(--card);
@@ -185,26 +195,27 @@
   <section class="container">
     <h2 style="margin-bottom:24px;">Рекламные баннеры</h2>
     <div class="grid-2x2">
-      <div class="ad-slot">[МЕСТО ДЛЯ БАННЕРА 1]</div>
-      <div class="ad-slot">[МЕСТО ДЛЯ БАННЕРА 2]</div>
-      <div class="ad-slot">[МЕСТО ДЛЯ БАННЕРА 3]</div>
-      <div class="ad-slot">[МЕСТО ДЛЯ БАННЕРА 4]</div>
+      <!-- Сюда через админку можно вставлять рекламный код -->
+      <div class="ad-slot" data-label="[БАННЕР 1: вставить код]"></div>
+      <div class="ad-slot" data-label="[БАННЕР 2: вставить код]"></div>
+      <div class="ad-slot" data-label="[БАННЕР 3: вставить код]"></div>
+      <div class="ad-slot" data-label="[БАННЕР 4: вставить код]"></div>
     </div>
   </section>
 
   <section class="container">
     <div class="link-block">
       <h3>Блок ссылок</h3>
-      <p style="color:var(--muted)">[МЕСТО ДЛЯ БЛОКА ССЫЛОК]</p>
+      <p style="color:var(--muted)">[МЕСТО ДЛЯ БЛОКА ССЫЛОК: вставить список или готовый HTML]</p>
     </div>
   </section>
 
   <section class="container">
     <h2 style="margin-bottom:24px;">Дополнительные баннеры</h2>
     <div class="grid-1x3">
-      <div class="ad-slot">[МЕСТО ДЛЯ БАННЕРА 5]</div>
-      <div class="ad-slot">[МЕСТО ДЛЯ БАННЕРА 6]</div>
-      <div class="ad-slot">[МЕСТО ДЛЯ БАННЕРА 7]</div>
+      <div class="ad-slot" data-label="[БАННЕР 5: вставить код]"></div>
+      <div class="ad-slot" data-label="[БАННЕР 6: вставить код]"></div>
+      <div class="ad-slot" data-label="[БАННЕР 7: вставить код]"></div>
     </div>
   </section>
 
@@ -240,12 +251,12 @@
         alt: 'Реклама Ozon: покупайте выгодно' 
       },
       { 
-        img: 'https://images.unsplash.com/photo-1624374255477-8458776d44cf?q=80&w=320&auto=format&fit=crop', 
+        img: 'https://images.unsplash.com/photo-1586718925308-1fbd079d7f5a?q=80&w=320&auto=format&fit=crop', 
         href: 'https://www.wildberries.ru', 
         alt: 'Реклама Wildberries: широкий ассортимент' 
       },
       { 
-        img: 'https://images.unsplash.com/photo-1624374255477-8458776d44cf?q=80&w=320&auto=format&fit=crop', 
+        img: 'https://images.unsplash.com/photo-1611281936815-c9c8b8c7b8f4?q=80&w=320&auto=format&fit=crop', 
         href: 'https://market.yandex.ru', 
         alt: 'Реклама Яндекс Маркет: лучшие цены' 
       }
@@ -258,11 +269,23 @@
       vipAds.forEach(ad => {
         const card = document.createElement('div');
         card.className = 'vip-card';
-        card.innerHTML = `
-          <a href="${ad.href}" aria-label="${ad.alt}" target="_blank" rel="noopener noreferrer">
-            <img src="${ad.img}" alt="${ad.alt}" loading="lazy">
-          </a>
-        `;
+
+        const link = document.createElement('a');
+        link.href = ad.href;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.setAttribute('aria-label', ad.alt);
+
+        const img = document.createElement('img');
+        img.src = ad.img;
+        img.alt = ad.alt;
+        img.loading = 'lazy';
+        img.width = 320;
+        img.height = 180;
+        img.style.display = 'block';
+
+        link.appendChild(img);
+        card.appendChild(link);
         slider.appendChild(card);
       });
     }
@@ -270,7 +293,7 @@
     renderVipCards();
 
     let current = 0;
-    setInterval(() => {
+    const interval = setInterval(() => {
       const cards = slider.querySelectorAll('.vip-card');
       if (cards.length === 0) return;
       current = (current + 1) % cards.length;
