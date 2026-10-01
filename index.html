@@ -208,7 +208,7 @@
       border: 1px solid var(--accent);
       border-radius: 12px;
       padding: 30px;
-      max-width: 500px;
+      max-width: 550px;
       width: 90%;
       max-height: 85vh;
       overflow-y: auto;
@@ -226,7 +226,9 @@
       color: var(--muted);
       font-size: 0.9rem;
     }
-    .admin-field input {
+    .admin-field input[type="url"],
+    .admin-field input[type="text"],
+    .admin-field input[type="password"] {
       width: 100%;
       padding: 10px;
       background: #2a2a2a;
@@ -240,6 +242,52 @@
       outline: none;
       border-color: var(--accent);
     }
+    .admin-field input[type="file"] {
+      width: 100%;
+      padding: 10px;
+      background: #2a2a2a;
+      border: 1px dashed #555;
+      border-radius: 4px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      box-sizing: border-box;
+      cursor: pointer;
+    }
+    .admin-field input[type="file"]::-webkit-file-upload-button {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 700;
+      margin-right: 10px;
+    }
+    .img-preview {
+      margin-top: 8px;
+      max-width: 100%;
+      max-height: 120px;
+      border-radius: 4px;
+      display: none;
+    }
+    .img-or {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin: 12px 0;
+      position: relative;
+    }
+    .img-or::before,
+    .img-or::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 35%;
+      height: 1px;
+      background: #333;
+    }
+    .img-or::before { left: 0; }
+    .img-or::after { right: 0; }
     .admin-btn {
       background: var(--accent);
       color: #000;
@@ -277,9 +325,20 @@
     .ad-list-item .ad-info {
       font-size: 0.85rem;
       color: var(--muted);
+      flex: 1;
+      margin-right: 10px;
+      word-break: break-all;
     }
     .ad-list-item .ad-info strong {
       color: var(--text);
+    }
+    .ad-list-item img {
+      width: 50px;
+      height: 35px;
+      object-fit: cover;
+      border-radius: 4px;
+      margin-right: 10px;
+      flex-shrink: 0;
     }
     .ad-delete-btn {
       background: #ff4444;
@@ -289,6 +348,7 @@
       border-radius: 4px;
       cursor: pointer;
       font-size: 0.8rem;
+      flex-shrink: 0;
     }
     .ad-delete-btn:hover {
       background: #cc2222;
@@ -397,6 +457,12 @@
           <input type="text" id="newAdAlt" placeholder="Реклама магазина">
         </div>
         <div class="admin-field">
+          <label>Загрузить фото с компьютера:</label>
+          <input type="file" id="newAdFile" accept="image/*" onchange="handleFileUpload(event)">
+          <img id="filePreview" class="img-preview" alt="Превью">
+        </div>
+        <div class="img-or">ИЛИ</div>
+        <div class="admin-field">
           <label>Ссылка на картинку (URL):</label>
           <input type="url" id="newAdImg" placeholder="https://example.com/banner.jpg">
         </div>
@@ -430,6 +496,7 @@
     ];
 
     const slider = document.getElementById('vipSlider');
+    let uploadedFileData = null;
 
     function renderVipCards() {
       slider.innerHTML = '';
@@ -469,33 +536,71 @@
       }
       list.innerHTML = vipAds.map((ad, i) => `
         <div class="ad-list-item">
+          <img src="${ad.img}" alt="${ad.alt}" onerror="this.style.display='none'">
           <div class="ad-info">
             <strong>${ad.alt}</strong><br>
-            ${ad.href}<br>
-            <span style="font-size:0.75rem;">${ad.img}</span>
+            ${ad.href}
           </div>
           <button class="ad-delete-btn" onclick="deleteAd(${i})">Удалить</button>
         </div>
       `).join('');
     }
 
-    function addAd() {
-      const href = document.getElementById('newAdHref').value.trim();
-      const alt = document.getElementById('newAdAlt').value.trim();
-      const img = document.getElementById('newAdImg').value.trim();
+    // Загрузка файла с компьютера
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
 
-      if (!href || !alt || !img) {
-        alert('Заполните все поля!');
+      if (file.size > 2000000) {
+        alert('Файл слишком большой! Максимум 2 МБ. Иначе браузер не сохранит.');
+        event.target.value = '';
         return;
       }
 
-      vipAds.push({ img, href, alt });
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        uploadedFileData = e.target.result;
+        const preview = document.getElementById('filePreview');
+        preview.src = uploadedFileData;
+        preview.style.display = 'block';
+        // Очищаем поле URL, чтобы не было путаницы
+        document.getElementById('newAdImg').value = '';
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function addAd() {
+      const href = document.getElementById('newAdHref').value.trim();
+      const alt = document.getElementById('newAdAlt').value.trim();
+      const imgURL = document.getElementById('newAdImg').value.trim();
+
+      if (!href || !alt) {
+        alert('Заполните ссылку и описание!');
+        return;
+      }
+
+      // Определяем источник картинки: файл или URL
+      let finalImg = '';
+      if (uploadedFileData) {
+        finalImg = uploadedFileData;
+      } else if (imgURL) {
+        finalImg = imgURL;
+      } else {
+        alert('Нужно загрузить фото или вставить ссылку на картинку!');
+        return;
+      }
+
+      vipAds.push({ img: finalImg, href, alt });
       localStorage.setItem('vipAds', JSON.stringify(vipAds));
       renderVipCards();
 
+      // Очистка формы
       document.getElementById('newAdHref').value = '';
       document.getElementById('newAdAlt').value = '';
       document.getElementById('newAdImg').value = '';
+      document.getElementById('newAdFile').value = '';
+      document.getElementById('filePreview').style.display = 'none';
+      uploadedFileData = null;
     }
 
     function deleteAd(index) {
@@ -530,7 +635,6 @@
       document.getElementById('admin-overlay').classList.remove('active');
     }
 
-    // Закрытие по клику мимо окна
     document.getElementById('admin-overlay').addEventListener('click', function(e) {
       if (e.target === this) closeAdmin();
     });
