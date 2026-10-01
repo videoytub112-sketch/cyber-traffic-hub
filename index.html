@@ -67,7 +67,6 @@
       background: var(--accent);
       color: #000;
     }
-    /* VIP block */
     .vip-banner {
       background: #2a2a2a;
       padding: 20px;
@@ -114,7 +113,6 @@
       position: absolute;
       inset: 0;
     }
-    /* Grids */
     .grid-2x2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -175,12 +173,11 @@
     </div>
   </header>
 
-  <!-- VIP блок: ротация карточек -->
   <section class="container">
     <div class="vip-banner">
       <span class="vip-promo">VIP‑реклама — приоритет и охват</span>
       <div class="vip-slider" id="vipSlider">
-        <!-- Карточки генерируются JS из массива vipAds -->
+        <!-- Карточки генерируются JS -->
       </div>
     </div>
   </section>
@@ -221,7 +218,6 @@
     </div>
   </footer>
 
-  <!-- Оферта -->
   <section id="offer" class="container" style="padding: 60px 0; border-top: 1px solid #2a2a2a;">
     <h2>Публичная оферта</h2>
     <p style="color:var(--muted);">
@@ -229,7 +225,6 @@
     </p>
   </section>
 
-  <!-- Политика конфиденциальности -->
   <section id="privacy" class="container" style="padding: 60px 0; border-top: 1px solid #2a2a2a;">
     <h2>Политика конфиденциальности</h2>
     <p style="color:var(--muted);">
@@ -238,19 +233,10 @@
   </section>
 
   <script>
-    // VIP‑реклама: массив карточек (заполняется в админке — можно добавить 100+ элементов)
     const vipAds = [
-      { img: 'https://via.placeholder.com/320x180/333/fff?text=VIP+1', href: 'https://example.com/vip1' },
-      { img: 'https://via.placeholder.com/320x180/444/fff?text=VIP+2', href: 'https://example.com/vip2' },
-      { img: 'https://via.placeholder.com/320x180/555/fff?text=VIP+3', href: 'https://example.com/vip3' },
-      { img: 'https://via.placeholder.com/320x180/666/fff?text=VIP+4', href: 'https://example.com/vip4' },
-      { img: 'https://via.placeholder.com/320x180/777/fff?text=VIP+5', href: 'https://example.com/vip5' },
-      { img: 'https://via.placeholder.com/320x180/888/fff?text=VIP+6', href: 'https://example.com/vip6' },
-      { img: 'https://via.placeholder.com/320x180/999/fff?text=VIP+7', href: 'https://example.com/vip7' },
-      { img: 'https://via.placeholder.com/320x180/aaa/fff?text=VIP+8', href: 'https://example.com/vip8' },
-      { img: 'https://via.placeholder.com/320x180/bbb/fff?text=VIP+9', href: 'https://example.com/vip9' },
-      { img: 'https://via.placeholder.com/320x180/ccc/fff?text=VIP+10', href: 'https://example.com/vip10' }
-      // Сюда можно добавить ещё 90+ карточек для ротации
+      { img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=320&auto=format&fit=crop', href: 'https://example.com/vip1', alt: 'VIP реклама: премиум размещение' },
+      { img: 'https://images.unsplash.com/photo-1551094233-b0e1339565cf?q=80&w=320&auto=format&fit=crop', href: 'https://example.com/vip2', alt: 'VIP реклама: максимальный охват' },
+      { img: 'https://images.unsplash.com/photo-1556761175-5637489b9877?q=80&w=320&auto=format&fit=crop', href: 'https://example.com/vip3', alt: 'VIP реклама: топовые позиции' }
     ];
 
     const slider = document.getElementById('vipSlider');
@@ -261,8 +247,8 @@
         const card = document.createElement('div');
         card.className = 'vip-card';
         card.innerHTML = `
-          <a href="\${ad.href}" aria-label="Перейти к рекламе">
-            <img src="\${ad.img}" alt="VIP реклама" loading="lazy">
+          <a href="${ad.href}" aria-label="${ad.alt}">
+            <img src="${ad.img}" alt="${ad.alt}" loading="lazy">
           </a>
         `;
         slider.appendChild(card);
@@ -271,7 +257,6 @@
 
     renderVipCards();
 
-    // Простая ротация: автопрокрутка каждые 5 сек
     let current = 0;
     setInterval(() => {
       const cards = slider.querySelectorAll('.vip-card');
