@@ -94,15 +94,34 @@
     .vip-slider::-webkit-scrollbar {
       display: none;
     }
-    .vip-card {
+    .vip-card-wrap {
       min-width: 320px;
       max-width: 320px;
+      flex-shrink: 0;
+      scroll-snap-align: start;
+    }
+    .click-counter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 6px;
+      font-weight: 700;
+    }
+    .click-counter .click-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .vip-card {
       height: 180px;
       border-radius: 12px;
       overflow: hidden;
       position: relative;
-      scroll-snap-align: start;
-      flex-shrink: 0;
       box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     .vip-card img {
@@ -165,7 +184,7 @@
     @media (max-width: 768px) {
       h1 { font-size: 2rem; }
       .grid-2x2, .grid-1x3 { grid-template-columns: 1fr; }
-      .vip-card { min-width: 280px; max-width: 280px; }
+      .vip-card-wrap { min-width: 280px; max-width: 280px; }
       .btn-group { flex-direction: column; }
       .btn, .btn-secondary { width: 100%; text-align: center; }
     }
@@ -188,9 +207,7 @@
       z-index: 9998;
       box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
-    #admin-gear:hover {
-      transform: scale(1.1);
-    }
+    #admin-gear:hover { transform: scale(1.1); }
     #admin-overlay {
       position: fixed;
       inset: 0;
@@ -200,9 +217,7 @@
       align-items: center;
       justify-content: center;
     }
-    #admin-overlay.active {
-      display: flex;
-    }
+    #admin-overlay.active { display: flex; }
     #admin-box {
       background: var(--card);
       border: 1px solid var(--accent);
@@ -213,13 +228,8 @@
       max-height: 85vh;
       overflow-y: auto;
     }
-    #admin-box h2 {
-      margin: 0 0 20px;
-      color: var(--accent);
-    }
-    .admin-field {
-      margin-bottom: 16px;
-    }
+    #admin-box h2 { margin: 0 0 20px; color: var(--accent); }
+    .admin-field { margin-bottom: 16px; }
     .admin-field label {
       display: block;
       margin-bottom: 6px;
@@ -277,8 +287,7 @@
       margin: 12px 0;
       position: relative;
     }
-    .img-or::before,
-    .img-or::after {
+    .img-or::before, .img-or::after {
       content: '';
       position: absolute;
       top: 50%;
@@ -298,9 +307,7 @@
       cursor: pointer;
       font-size: 1rem;
     }
-    .admin-btn:hover {
-      background: #ff8a55;
-    }
+    .admin-btn:hover { background: #ff8a55; }
     .admin-btn-close {
       background: transparent;
       border: 1px solid #555;
@@ -329,8 +336,17 @@
       margin-right: 10px;
       word-break: break-all;
     }
-    .ad-list-item .ad-info strong {
-      color: var(--text);
+    .ad-list-item .ad-info strong { color: var(--text); }
+    .ad-list-item .ad-clicks {
+      background: var(--accent);
+      color: #000;
+      padding: 4px 10px;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-right: 10px;
+      white-space: nowrap;
+      flex-shrink: 0;
     }
     .ad-list-item img {
       width: 50px;
@@ -350,9 +366,18 @@
       font-size: 0.8rem;
       flex-shrink: 0;
     }
-    .ad-delete-btn:hover {
-      background: #cc2222;
+    .ad-delete-btn:hover { background: #cc2222; }
+    .reset-clicks-btn {
+      background: transparent;
+      border: 1px solid #555;
+      color: var(--muted);
+      padding: 8px 16px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      margin-top: 10px;
     }
+    .reset-clicks-btn:hover { border-color: var(--accent); color: var(--accent); }
   </style>
 </head>
 <body>
@@ -445,7 +470,7 @@
         <button class="admin-btn admin-btn-close" onclick="closeAdmin()">Закрыть</button>
       </div>
 
-      <!-- Панель управления (показывается после ввода пароля) -->
+      <!-- Панель управления -->
       <div id="admin-panel" style="display:none;">
         <h2>Управление VIP-рекламой</h2>
         <div class="admin-field">
@@ -471,6 +496,7 @@
 
         <h3 style="margin-top:24px; color:var(--muted);">Текущая ротация:</h3>
         <div id="adList"></div>
+        <button class="reset-clicks-btn" onclick="resetAllClicks()">Сбросить счётчики кликов</button>
       </div>
     </div>
   </div>
@@ -481,26 +507,46 @@
       {
         img: 'https://images.unsplash.com/photo-1624374255477-8458776d44cf?q=80&w=320&auto=format&fit=crop',
         href: 'https://www.ozon.ru',
-        alt: 'Реклама Ozon: покупайте выгодно'
+        alt: 'Реклама Ozon: покупайте выгодно',
+        clicks: 0
       },
       {
         img: 'https://images.unsplash.com/photo-1586718925308-1fbd079d7f5a?q=80&w=320&auto=format&fit=crop',
         href: 'https://www.wildberries.ru',
-        alt: 'Реклама Wildberries: широкий ассортимент'
+        alt: 'Реклама Wildberries: широкий ассортимент',
+        clicks: 0
       },
       {
         img: 'https://images.unsplash.com/photo-1611281936815-c9c8b8c7b8f4?q=80&w=320&auto=format&fit=crop',
         href: 'https://market.yandex.ru',
-        alt: 'Реклама Яндекс Маркет: лучшие цены'
+        alt: 'Реклама Яндекс Маркет: лучшие цены',
+        clicks: 0
       }
     ];
+
+    // Гарантируем что у каждого объявления есть поле clicks
+    vipAds.forEach(ad => {
+      if (typeof ad.clicks !== 'number') ad.clicks = 0;
+    });
 
     const slider = document.getElementById('vipSlider');
     let uploadedFileData = null;
 
+    function saveAds() {
+      localStorage.setItem('vipAds', JSON.stringify(vipAds));
+    }
+
     function renderVipCards() {
       slider.innerHTML = '';
       vipAds.forEach((ad, index) => {
+        const wrap = document.createElement('div');
+        wrap.className = 'vip-card-wrap';
+
+        // Счётчик кликов над карточкой
+        const counter = document.createElement('div');
+        counter.className = 'click-counter';
+        counter.innerHTML = '<span class="click-dot"></span> Кликов: ' + ad.clicks;
+
         const card = document.createElement('div');
         card.className = 'vip-card';
 
@@ -509,6 +555,14 @@
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
         link.setAttribute('aria-label', ad.alt);
+
+        // Отслеживание клика
+        link.addEventListener('click', function() {
+          vipAds[index].clicks++;
+          saveAds();
+          // Обновляем счётчик сразу
+          counter.innerHTML = '<span class="click-dot"></span> Кликов: ' + vipAds[index].clicks;
+        });
 
         const img = document.createElement('img');
         img.src = ad.img;
@@ -523,7 +577,9 @@
 
         link.appendChild(img);
         card.appendChild(link);
-        slider.appendChild(card);
+        wrap.appendChild(counter);
+        wrap.appendChild(card);
+        slider.appendChild(wrap);
       });
       renderAdList();
     }
@@ -541,6 +597,7 @@
             <strong>${ad.alt}</strong><br>
             ${ad.href}
           </div>
+          <span class="ad-clicks">${ad.clicks || 0} кликов</span>
           <button class="ad-delete-btn" onclick="deleteAd(${i})">Удалить</button>
         </div>
       `).join('');
@@ -563,7 +620,6 @@
         const preview = document.getElementById('filePreview');
         preview.src = uploadedFileData;
         preview.style.display = 'block';
-        // Очищаем поле URL, чтобы не было путаницы
         document.getElementById('newAdImg').value = '';
       };
       reader.readAsDataURL(file);
@@ -579,7 +635,6 @@
         return;
       }
 
-      // Определяем источник картинки: файл или URL
       let finalImg = '';
       if (uploadedFileData) {
         finalImg = uploadedFileData;
@@ -590,8 +645,8 @@
         return;
       }
 
-      vipAds.push({ img: finalImg, href, alt });
-      localStorage.setItem('vipAds', JSON.stringify(vipAds));
+      vipAds.push({ img: finalImg, href, alt, clicks: 0 });
+      saveAds();
       renderVipCards();
 
       // Очистка формы
@@ -605,7 +660,14 @@
 
     function deleteAd(index) {
       vipAds.splice(index, 1);
-      localStorage.setItem('vipAds', JSON.stringify(vipAds));
+      saveAds();
+      renderVipCards();
+    }
+
+    function resetAllClicks() {
+      if (!confirm('Сбросить счётчики кликов у всех объявлений?')) return;
+      vipAds.forEach(ad => ad.clicks = 0);
+      saveAds();
       renderVipCards();
     }
 
@@ -644,7 +706,7 @@
 
     let current = 0;
     const interval = setInterval(() => {
-      const cards = slider.querySelectorAll('.vip-card');
+      const cards = slider.querySelectorAll('.vip-card-wrap');
       if (cards.length === 0) return;
       current = (current + 1) % cards.length;
       cards[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
