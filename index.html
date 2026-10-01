@@ -52,6 +52,50 @@
     .btn:hover {
       transform: scale(1.03);
     }
+    /* VIP block */
+    .vip-banner {
+      background: #2a2a2a;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 40px;
+      border: 1px solid #3a3a3a;
+      text-align: center;
+    }
+    .vip-promo {
+      color: var(--accent);
+      font-weight: 700;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .vip-slider {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      padding-bottom: 10px;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+    }
+    .vip-card {
+      min-width: 320px;
+      max-width: 320px;
+      height: 180px;
+      border-radius: 12px;
+      overflow: hidden;
+      position: relative;
+      scroll-snap-align: start;
+      flex-shrink: 0;
+    }
+    .vip-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .vip-card a {
+      position: absolute;
+      inset: 0;
+    }
+    /* Grids */
     .grid-2x2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -94,6 +138,7 @@
     @media (max-width: 768px) {
       h1 { font-size: 2rem; }
       .grid-2x2, .grid-1x3 { grid-template-columns: 1fr; }
+      .vip-card { min-width: 280px; max-width: 280px; }
     }
   </style>
 </head>
@@ -102,9 +147,19 @@
     <div class="container">
       <h1>Рекламные размещения</h1>
       <p class="subtitle">Баннеры и блоки ссылок на топовых площадках. Прозрачная статистика и быстрый старт.</p>
-      <a href="#" class="btn">Купить рекламу в Telegram</a>
+      <a href="#" class="btn">Купить рекламу в VIP‑блоке. От 1000 ₽/мес</a>
     </div>
   </header>
+
+  <!-- VIP блок: ротация карточек -->
+  <section class="container">
+    <div class="vip-banner">
+      <span class="vip-promo">VIP‑реклама — приоритет и охват</span>
+      <div class="vip-slider" id="vipSlider">
+        <!-- Карточки генерируются JS из массива vipAds -->
+      </div>
+    </div>
+  </section>
 
   <section class="container">
     <h2 style="margin-bottom:24px;">Рекламные баннеры</h2>
@@ -134,8 +189,64 @@
 
   <footer>
     <div class="container">
-      <p>Контакты: info@example.com | Оферта | Политика конфиденциальности</p>
+      <p>
+        Контакты: <a href="https://vk.ru/idkirik99" style="color:var(--accent); text-decoration:underline;">VK: vk.ru/idkirik99</a> | 
+        <a href="#offer" style="color:var(--muted);">Оферта</a> | 
+        <a href="#privacy" style="color:var(--muted);">Политика конфиденциальности</a>
+      </p>
     </div>
   </footer>
+
+  <!-- Оферта -->
+  <section id="offer" class="container" style="padding: 60px 0; border-top: 1px solid #2a2a2a;">
+    <h2>Публичная оферта</h2>
+    <p style="color:var(--muted);">
+      Настоящая оферта является официальным предложением Исполнителя заключить договор на оказание рекламных услуг. Акцептом оферты является оплата услуг. Услуги оказываются на условиях предоплаты. Стоимость размещения определяется тарифами Исполнителя. Исполнитель вправе в одностороннем порядке изменять условия оферты с уведомлением на сайте. Ответственность Исполнителя ограничивается суммой оплаченных услуг.
+    </p>
+  </section>
+
+  <!-- Политика конфиденциальности -->
+  <section id="privacy" class="container" style="padding: 60px 0; border-top: 1px solid #2a2a2a;">
+    <h2>Политика конфиденциальности</h2>
+    <p style="color:var(--muted);">
+      Мы обрабатываем персональные данные (email, телефон, IP) исключительно для исполнения договора и коммуникации. Данные не передаются третьим лицам, кроме случаев, предусмотренных законодательством. Пользователь вправе запросить удаление своих данных. Хранение данных осуществляется в течение срока действия договора и 3 лет после его окончания.
+    </p>
+  </section>
+
+  <script>
+    // VIP‑реклама: массив карточек (заполняется в админке)
+    const vipAds = [
+      { img: 'https://via.placeholder.com/320x180/333/fff?text=VIP+1', href: 'https://example.com/vip1' },
+      { img: 'https://via.placeholder.com/320x180/444/fff?text=VIP+2', href: 'https://example.com/vip2' },
+      { img: 'https://via.placeholder.com/320x180/555/fff?text=VIP+3', href: 'https://example.com/vip3' }
+    ];
+
+    const slider = document.getElementById('vipSlider');
+
+    function renderVipCards() {
+      slider.innerHTML = '';
+      vipAds.forEach(ad => {
+        const card = document.createElement('div');
+        card.className = 'vip-card';
+        card.innerHTML = `
+          <a href="\${ad.href}" aria-label="Перейти к рекламе">
+            <img src="\${ad.img}" alt="VIP реклама" loading="lazy">
+          </a>
+        `;
+        slider.appendChild(card);
+      });
+    }
+
+    renderVipCards();
+
+    // Простая ротация: автопрокрутка каждые 5 сек
+    let current = 0;
+    setInterval(() => {
+      const cards = slider.querySelectorAll('.vip-card');
+      if (cards.length === 0) return;
+      current = (current + 1) % cards.length;
+      cards[current].scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+    }, 5000);
+  </script>
 </body>
 </html>
