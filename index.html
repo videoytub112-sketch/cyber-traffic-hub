@@ -14,7 +14,7 @@
     }
     body {
       margin: 0;
-      font-family: Inter, system-ui, -apple-system, sans-serif;
+      font-family: Inter, system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
       line-height: 1.5;
@@ -55,19 +55,15 @@
       border-radius: 4px;
       transition: transform 0.2s, background 0.2s;
     }
-    .btn:hover {
-      transform: scale(1.03);
-      background: #ff8a55;
-    }
+    .btn:hover { transform: scale(1.03); background: #ff8a55; }
     .btn-secondary {
       background: transparent;
       border: 1px solid var(--accent);
       color: var(--accent);
     }
-    .btn-secondary:hover {
-      background: var(--accent);
-      color: #000;
-    }
+    .btn-secondary:hover { background: var(--accent); color: #000; }
+
+    /* VIP Блок */
     .vip-banner {
       background: #2a2a2a;
       padding: 16px;
@@ -76,24 +72,20 @@
       border: 1px solid #3a3a3a;
       text-align: center;
     }
-    .vip-promo {
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 12px;
-      display: block;
-    }
+    .vip-promo { color: var(--accent); font-weight: 700; margin-bottom: 12px; display: block; }
+    
+    /* Слайдер теперь НЕ дергает страницу */
     .vip-slider {
       display: flex;
       gap: 12px;
       overflow-x: auto;
       padding-bottom: 8px;
       scroll-snap-type: x mandatory;
-      scroll-behavior: smooth;
-      scrollbar-width: none;
+      /* Убрали scroll-behavior: smooth, чтобы не было самопрокрутки */
+      scrollbar-width: none; /* Firefox */
     }
-    .vip-slider::-webkit-scrollbar {
-      display: none;
-    }
+    .vip-slider::-webkit-scrollbar { display: none; } /* Chrome/Safari */
+    
     .vip-card-wrap {
       min-width: 300px;
       max-width: 300px;
@@ -111,11 +103,7 @@
       font-weight: 700;
     }
     .click-counter .click-dot {
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      display: inline-block;
+      width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block;
     }
     .vip-card {
       height: 170px;
@@ -124,32 +112,17 @@
       position: relative;
       box-shadow: 0 4px 10px rgba(0,0,0,0.3);
     }
-    .vip-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-    }
-    .vip-card a {
-      position: absolute;
-      inset: 0;
-    }
-    .grid-2x2 {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
-    .grid-1x3 {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 12px;
-      margin-bottom: 32px;
-    }
+    .vip-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .vip-card a { position: absolute; inset: 0; }
+
+    /* Сетки и слоты (компактно) */
+    .grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+    .grid-1x3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 32px; }
+    
     .ad-slot {
       background: var(--card);
       border-radius: 8px;
-      min-height: 220px;
+      min-height: 220px; /* Высота под баннер */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -159,11 +132,11 @@
       padding: 8px;
       box-sizing: border-box;
     }
-    .ad-slot::before {
-      content: attr(data-label);
-      text-align: center;
-      pointer-events: none;
-    }
+    /* Текст-заглушка внутри слота */
+    .ad-slot::before { content: attr(data-label); text-align: center; pointer-events: none; }
+    /* Если внутри есть баннер, текст не нужен, но стиль остается */
+    .ad-slot > div { width: 100%; height: 100%; } 
+
     .link-block {
       background: var(--card);
       padding: 24px;
@@ -171,16 +144,10 @@
       margin-bottom: 32px;
       border: 1px solid #2a2a2a;
     }
-    .link-block h3 {
-      margin: 0 0 16px;
-      font-size: 1.4rem;
-    }
-    footer {
-      padding: 32px 0;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.9rem;
-    }
+    .link-block h3 { margin: 0 0 16px; font-size: 1.4rem; }
+
+    footer { padding: 32px 0; text-align: center; color: var(--muted); font-size: 0.9rem; }
+
     @media (max-width: 768px) {
       h1 { font-size: 2rem; }
       .grid-2x2, .grid-1x3 { grid-template-columns: 1fr; }
@@ -191,61 +158,106 @@
 
     /* ===== АДМИНКА ===== */
     #admin-gear {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      width: 50px;
-      height: 50px;
-      background: var(--accent);
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      color: #000;
-      z-index: 9998;
+      position: fixed; bottom: 20px; right: 20px;
+      width: 50px; height: 50px; background: var(--accent);
+      border-radius: 50%; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px; color: #000; z-index: 9998;
       box-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
     #admin-gear:hover { transform: scale(1.1); }
     #admin-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.85);
-      display: none;
-      z-index: 9999;
-      align-items: center;
-      justify-content: center;
+      position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+      display: none; z-index: 9999; align-items: center; justify-content: center;
     }
     #admin-overlay.active { display: flex; }
     #admin-box {
-      background: var(--card);
-      border: 1px solid var(--accent);
-      border-radius: 12px;
-      padding: 30px;
-      max-width: 550px;
-      width: 90%;
-      max-height: 85vh;
-      overflow-y: auto;
+      background: var(--card); border: 1px solid var(--accent);
+      border-radius: 12px; padding: 30px; max-width: 550px; width: 90%;
+      max-height: 85vh; overflow-y: auto;
     }
     #admin-box h2 { margin: 0 0 20px; color: var(--accent); }
     .admin-field { margin-bottom: 16px; }
-    .admin-field label {
-      display: block;
-      margin-bottom: 6px;
-      color: var(--muted);
-      font-size: 0.9rem;
+    .admin-field label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 0.9rem; }
+    .admin-field input[type="url"], .admin-field input[type="text"], .admin-field input[type="password"] {
+      width: 100%; padding: 10px; background: #2a2a2a; border: 1px solid #3a3a3a;
+      border-radius: 4px; color: var(--text); font-size: 1rem; box-sizing: border-box;
     }
-    .admin-field input[type="url"],
-    .admin-field input[type="text"],
-    .admin-field input[type="password"] {
-      width: 100%;
-      padding: 10px;
-      background: #2a2a2a;
-      border: 1px solid #3a3a3a;
-      border-radius: 4px;
-      color: var(--text);
-      font-size: 1rem;
-      box-sizing: border-box;
+    .admin-field input:focus { outline: none; border-color: var(--accent); }
+    .admin-field input[type="file"] {
+      width: 100%; padding: 10px; background: #2a2a2a; border: 1px dashed #555;
+      border-radius: 4px; color: var(--muted); font-size: 0.9rem; box-sizing: border-box; cursor: pointer;
     }
-    .
+    .admin-field input[type="file"]::-webkit-file-upload-button {
+      background: var(--accent); color: #000; border: none; padding: 8px 16px;
+      border-radius: 4px; cursor: pointer; font-weight: 700; margin-right: 10px;
+    }
+    .img-preview { margin-top: 8px; max-width: 100%; max-height: 120px; border-radius: 4px; display: none; }
+    .img-or { text-align: center; color: var(--muted); font-size: 0.85rem; margin: 12px 0; position: relative; }
+    .img-or::before, .img-or::after { content: ''; position: absolute; top: 50%; width: 35%; height: 1px; background: #333; }
+    .img-or::before { left: 0; } .img-or::after { right: 0; }
+    .admin-btn {
+      background: var(--accent); color: #000; padding: 12px 24px; border: none;
+      border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 1rem;
+    }
+    .admin-btn:hover { background: #ff8a55; }
+    .admin-btn-close {
+      background: transparent; border: 1px solid #555; color: var(--muted);
+      margin-left: 10px;
+    }
+    .admin-error { color: #ff4444; font-size: 0.9rem; margin-bottom: 12px; display: none; }
+    .ad-list-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px; background: #2a2a2a; border-radius: 4px; margin-bottom: 8px;
+    }
+    .ad-list-item .ad-info {
+      font-size: 0.85rem; color: var(--muted); flex: 1; margin-right: 10px; word-break: break-all;
+    }
+    .ad-list-item .ad-info strong { color: var(--text); }
+    .ad-list-item .ad-clicks {
+      background: var(--accent); color: #000; padding: 4px 10px; border-radius: 4px;
+      font-size: 0.8rem; font-weight: 700; margin-right: 10px; white-space: nowrap; flex-shrink: 0;
+    }
+    .ad-list-item img {
+      width: 50px; height: 35px; object-fit: cover; border-radius: 4px;
+      margin-right: 10px; flex-shrink: 0;
+    }
+    .ad-delete-btn {
+      background: #ff4444; color: #fff; border: none; padding: 6px 12px;
+      border-radius: 4px; cursor: pointer; font-size: 0.8rem; flex-shrink: 0;
+    }
+    .ad-delete-btn:hover { background: #cc2222; }
+    .reset-clicks-btn {
+      background: transparent; border: 1px solid #555; color: var(--muted);
+      padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; margin-top: 10px;
+    }
+    .reset-clicks-btn:hover { border-color: var(--accent); color: var(--accent); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="container">
+      <h1>Рекламные размещения</h1>
+      <p class="subtitle">Баннеры и блоки ссылок на топовых площадках. Прозрачная статистика и быстрый старт.</p>
+      <div class="btn-group">
+        <a href="https://vk.ru/idkirik99" class="btn">Купить VIP-рекламу. От 1000 ₽/мес</a>
+        <a href="https://t.me/vipreklama99" class="btn btn-secondary">Купить рекламу в Telegram</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="container">
+    <div class="vip-banner">
+      <span class="vip-promo">VIP-реклама — приоритет и охват</span>
+      <div class="vip-slider" id="vipSlider">
+        <!-- Карточки генерируются JS -->
+      </div>
+    </div>
+  </section>
+
+  <section class="container">
+    <h2 style="margin-bottom:24px;">Рекламные баннеры</h2>
+    <div class="grid-2x2">
+      <!-- Баннер 1 -->
+      <div
