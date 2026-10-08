@@ -1,783 +1,99 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Рекламные размещения</title>
-  <style>
-    :root {
-      --bg: #121212;
-      --card: #1e1e1e;
-      --accent: #ff6b35;
-      --text: #ffffff;
-      --muted: #a0a0a0;
-    }
-    body {
-      margin: 0;
-      font-family: Inter, system-ui, -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.5;
-      overflow-x: hidden;
-    }
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-    header { padding: 60px 0; text-align: center; }
-    h1 { font-size: 3rem; margin: 0 0 16px; letter-spacing: -1px; }
-    .subtitle { color: var(--muted); font-size: 1.25rem; max-width: 600px; margin: 0 auto 40px; }
-    .btn-group { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      display: inline-block; background: var(--accent); color: #000;
-      padding: 16px 32px; text-decoration: none; font-weight: 700;
-      border-radius: 4px; transition: transform 0.2s, background 0.2s;
-    }
-    .btn:hover { transform: scale(1.03); background: #ff8a55; }
-    .btn-secondary { background: transparent; border: 1px solid var(--accent); color: var(--accent); }
-    .btn-secondary:hover { background: var(--accent); color: #000; }
-
-    /* VIP-баннер */
-    .vip-banner {
-      background: #2a2a2a; padding: 20px; border-radius: 12px;
-      margin-bottom: 40px; border: 1px solid #3a3a3a; text-align: center;
-      overflow: hidden;
-    }
-    .vip-promo { color: var(--accent); font-weight: 700; margin-bottom: 16px; display: block; }
-
-    /* Слайдер — фиксированная высота, нет прыжков */
-    .vip-slider {
-      overflow: hidden; position: relative;
-      height: 230px; min-height: 230px;
-    }
-    .slider-track {
-      display: flex; gap: 24px; width: max-content;
-      animation: scroll-left var(--slide-duration, 40s) linear infinite;
-      height: 230px; align-items: center;
-    }
-    .slider-track:hover { animation-play-state: paused; }
-    @keyframes scroll-left {
-      0% { transform: translateX(0); }
-      100% { transform: translateX(-50%); }
-    }
-    .slider-empty { color: var(--muted); padding: 40px; text-align: center; }
-
-    .vip-card-wrap { min-width: 320px; max-width: 320px; flex-shrink: 0; }
-    .click-counter {
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-      font-size: 0.8rem; color: var(--accent); margin-bottom: 6px; font-weight: 700;
-    }
-    .click-counter .click-dot {
-      width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block;
-    }
-    .vip-card {
-      height: 180px; border-radius: 12px; overflow: hidden; position: relative;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    }
-    .vip-card img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .vip-card a { position: absolute; inset: 0; }
-
-    /* Сетки рекламы */
-    .grid-2x2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 60px; }
-    .grid-1x3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; margin-bottom: 60px; }
-    .ad-slot {
-      background: var(--card); border-radius: 8px; min-height: 250px;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--muted); border: 1px solid #2a2a2a; position: relative;
-      padding: 10px; box-sizing: border-box; overflow: hidden;
-    }
-    .ad-slot::before { content: attr(data-label); text-align: center; pointer-events: none; }
-    .ad-slot[data-html]::before { content: none; }
-    .link-block { background: var(--card); padding: 30px; border-radius: 8px; margin-bottom: 60px; border: 1px solid #2a2a2a; }
-    .link-block h3 { margin: 0 0 20px; font-size: 1.5rem; }
-
-    footer { padding: 40px 0; text-align: center; color: var(--muted); font-size: 0.9rem; }
-
-    @media (max-width: 768px) {
-      h1 { font-size: 2rem; }
-      .grid-2x2, .grid-1x3 { grid-template-columns: 1fr; }
-      .vip-card-wrap { min-width: 280px; max-width: 280px; }
-      .btn-group { flex-direction: column; }
-      .btn, .btn-secondary { width: 100%; text-align: center; }
-    }
-
-    /* ===== АДМИНКА ===== */
-    #admin-gear {
-      position: fixed; bottom: 20px; right: 20px; width: 50px; height: 50px;
-      background: var(--accent); border-radius: 50%; cursor: pointer;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 24px; color: #000; z-index: 9998; box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
-    #admin-gear:hover { transform: scale(1.1); }
-    #admin-overlay {
-      position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-      display: none; z-index: 9999; align-items: center; justify-content: center;
-    }
-    #admin-overlay.active { display: flex; }
-    #admin-box {
-      background: var(--card); border: 1px solid var(--accent); border-radius: 12px;
-      padding: 30px; max-width: 600px; width: 90%; max-height: 85vh; overflow-y: auto;
-    }
-    #admin-box h2 { margin: 0 0 20px; color: var(--accent); }
-    #admin-box h3 { margin: 20px 0 12px; color: var(--muted); font-size: 1.1rem; }
-    .admin-field { margin-bottom: 16px; }
-    .admin-field label { display: block; margin-bottom: 6px; color: var(--muted); font-size: 0.9rem; }
-    .admin-field input[type="url"],
-    .admin-field input[type="text"],
-    .admin-field input[type="password"],
-    .admin-field input[type="number"] {
-      width: 100%; padding: 10px; background: #2a2a2a; border: 1px solid #3a3a3a;
-      border-radius: 4px; color: var(--text); font-size: 1rem; box-sizing: border-box;
-    }
-    .admin-field input:focus { outline: none; border-color: var(--accent); }
-    .admin-field input[type="file"] {
-      width: 100%; padding: 10px; background: #2a2a2a; border: 1px dashed #555;
-      border-radius: 4px; color: var(--muted); font-size: 0.9rem; box-sizing: border-box; cursor: pointer;
-    }
-    .admin-field input[type="file"]::-webkit-file-upload-button {
-      background: var(--accent); color: #000; border: none; padding: 8px 16px;
-      border-radius: 4px; cursor: pointer; font-weight: 700; margin-right: 10px;
-    }
-    .admin-field textarea {
-      width: 100%; padding: 10px; background: #2a2a2a; border: 1px solid #3a3a3a;
-      border-radius: 4px; color: var(--text); font-size: 0.9rem; box-sizing: border-box;
-      resize: vertical; min-height: 80px; font-family: monospace;
-    }
-    .admin-field select {
-      width: 100%; padding: 10px; background: #2a2a2a; border: 1px solid #3a3a3a;
-      border-radius: 4px; color: var(--text); font-size: 1rem; box-sizing: border-box;
-    }
-    .duration-presets { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
-    .duration-presets button {
-      background: #2a2a2a; border: 1px solid #3a3a3a; color: var(--muted);
-      padding: 6px 14px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; transition: all 0.15s;
-    }
-    .duration-presets button:hover, .duration-presets button.active { border-color: var(--accent); color: var(--accent); }
-    .img-preview { margin-top: 8px; max-width: 100%; max-height: 120px; border-radius: 4px; display: none; }
-    .img-or { text-align: center; color: var(--muted); font-size: 0.85rem; margin: 12px 0; position: relative; }
-    .img-or::before, .img-or::after { content: ''; position: absolute; top: 50%; width: 35%; height: 1px; background: #333; }
-    .img-or::before { left: 0; } .img-or::after { right: 0; }
-    .admin-btn {
-      background: var(--accent); color: #000; padding: 12px 24px; border: none;
-      border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 1rem;
-    }
-    .admin-btn:hover { background: #ff8a55; }
-    .admin-btn-close { background: transparent; border: 1px solid #555; color: var(--muted); margin-left: 10px; }
-    .admin-error { color: #ff4444; font-size: 0.9rem; margin-bottom: 12px; display: none; }
-    .ad-list-item {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 10px; background: #2a2a2a; border-radius: 4px; margin-bottom: 8px; gap: 10px;
-    }
-    .ad-list-item .ad-info { font-size: 0.85rem; color: var(--muted); flex: 1; word-break: break-all; }
-    .ad-list-item .ad-info strong { color: var(--text); }
-    .ad-list-item .ad-clicks {
-      background: var(--accent); color: #000; padding: 4px 10px; border-radius: 4px;
-      font-size: 0.8rem; font-weight: 700; white-space: nowrap; flex-shrink: 0;
-    }
-    .ad-list-item .ad-days { font-size: 0.8rem; white-space: nowrap; flex-shrink: 0; }
-    .ad-list-item .ad-days.green { color: #4caf50; }
-    .ad-list-item .ad-days.red { color: #ff4444; }
-    .ad-list-item img { width: 50px; height: 35px; object-fit: cover; border-radius: 4px; flex-shrink: 0; }
-    .ad-delete-btn {
-      background: #ff4444; color: #fff; border: none; padding: 6px 12px;
-      border-radius: 4px; cursor: pointer; font-size: 0.8rem; flex-shrink: 0;
-    }
-    .ad-delete-btn:hover { background: #cc2222; }
-    .reset-clicks-btn {
-      background: transparent; border: 1px solid #555; color: var(--muted);
-      padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 0.85rem; margin-top: 10px;
-    }
-    .reset-clicks-btn:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* ===== ЧАТ ===== */
-    #chat-toggle {
-      position: fixed; bottom: 20px; left: 20px; z-index: 9997;
-      background: var(--accent); color: #000; border: none; border-radius: 50%;
-      width: 56px; height: 56px; font-size: 26px; cursor: pointer;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.5); transition: transform 0.2s;
-    }
-    #chat-toggle:hover { transform: scale(1.1); }
-    #chat-panel {
-      position: fixed; bottom: 0; left: 0; z-index: 9997;
-      width: 340px; height: 500px; max-height: 70vh;
-      background: var(--card); border: 1px solid var(--accent); border-radius: 0 12px 0 0;
-      display: none; flex-direction: column; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    }
-    #chat-panel.active { display: flex; }
-    #chat-header {
-      background: var(--accent); color: #000; padding: 12px 16px; font-weight: 700;
-      display: flex; justify-content: space-between; align-items: center; border-radius: 0 12px 0 0;
-    }
-    #chat-close { background: none; border: none; color: #000; font-size: 22px; cursor: pointer; font-weight: 700; }
-    #chat-messages {
-      flex: 1; overflow-y: auto; padding: 12px; display: flex; flex-direction: column; gap: 8px;
-    }
-    .chat-msg { max-width: 80%; padding: 8px 12px; border-radius: 8px; font-size: 0.9rem; word-break: break-word; }
-    .chat-msg.user { background: #2a2a2a; align-self: flex-start; }
-    .chat-msg.admin { background: var(--accent); color: #000; align-self: flex-end; }
-    .chat-msg .chat-time { font-size: 0.7rem; color: var(--muted); margin-top: 4px; }
-    .chat-msg.admin .chat-time { color: #333; }
-    .chat-msg a { color: var(--accent); text-decoration: underline; }
-    .chat-msg.admin a { color: #000; }
-    #chat-input-area { display: flex; padding: 10px; gap: 8px; border-top: 1px solid #2a2a2a; }
-    #chat-input {
-      flex: 1; padding: 10px; background: #2a2a2a; border: 1px solid #3a3a3a;
-      border-radius: 4px; color: var(--text); font-size: 0.9rem; box-sizing: border-box;
-    }
-    #chat-input:focus { outline: none; border-color: var(--accent); }
-    #chat-send {
-      background: var(--accent); color: #000; border: none; border-radius: 4px;
-      padding: 10px 16px; cursor: pointer; font-weight: 700;
-    }
-    @media (max-width: 480px) {
-      #chat-panel { width: 100%; height: 70vh; border-radius: 0; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Рекламные размещения</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-
-  <header>
-    <div class="container">
-      <h1>Рекламные размещения</h1>
-      <p class="subtitle">Баннеры и блоки ссылок на топовых площадках. Прозрачная статистика и быстрый старт.</p>
-      <div class="btn-group">
-        <a href="https://vk.ru/idkirik99" class="btn">Купить VIP-рекламу. От 1000 &#8381;/мес</a>
-        <a href="https://t.me/vipreklama99" class="btn btn-secondary">Купить рекламу в Telegram</a>
-      </div>
-    </div>
-  </header>
-
-  <section class="container">
-    <div class="vip-banner">
-      <span class="vip-promo">VIP-реклама — приоритет и охват</span>
-      <div class="vip-slider" id="vipSlider"></div>
-    </div>
-  </section>
-
-  <section class="container">
-    <h2 style="margin-bottom:24px;">Рекламные баннеры</h2>
-    <div class="grid-2x2" id="grid-2x2">
-      <div class="ad-slot" data-label="[БАННЕР 1: вставить код]" id="slot-1"></div>
-      <div class="ad-slot" data-label="[БАННЕР 2: вставить код]" id="slot-2"></div>
-      <div class="ad-slot" data-label="[БАННЕР 3: вставить код]" id="slot-3"></div>
-      <div class="ad-slot" data-label="[БАННЕР 4: вставить код]" id="slot-4"></div>
-    </div>
-  </section>
-
-  <section class="container">
-    <div class="link-block">
-      <h3>Блок ссылок</h3>
-      <p style="color:var(--muted)">[МЕСТО ДЛЯ БЛОКА ССЫЛОК: вставить список или готовый HTML]</p>
-    </div>
-  </section>
-
-  <section class="container">
-    <h2 style="margin-bottom:24px;">Дополнительные баннеры</h2>
-    <div class="grid-1x3" id="grid-1x3">
-      <div class="ad-slot" data-label="[БАННЕР 5: вставить код]" id="slot-5"></div>
-      <div class="ad-slot" data-label="[БАННЕР 6: вставить код]" id="slot-6"></div>
-      <div class="ad-slot" data-label="[БАННЕР 7: вставить код]" id="slot-7"></div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <p>
-        Контакты: <a href="https://vk.ru/idkirik99" style="color:var(--accent); text-decoration:underline;">VK: vk.ru/idkirik99</a> |
-        <a href="#offer" style="color:var(--muted);">Оферта</a> |
-        <a href="#privacy" style="color:var(--muted);">Политика конфиденциальности</a>
-      </p>
-    </div>
-  </footer>
-
-  <section id="offer" class="container" style="padding: 60px 0; border-top: 1px solid #2a2a2a;">
-    <h2>Публичная оферта</h2>
-    <p style="color:var(--muted);">
-      Настоящая оферта является официальным предложением Исполнителя заключить договор на оказание рекламных услуг. Акцептом оферты является оплата услуг. Услуги оказываются на условиях предоплаты. Стоимость размещения определяется тарифами Исполнителя. Исполнитель вправе в одностороннем порядке изменять условия оферты с уведомлением на сайте. Ответственность Исполнителя ограничивается суммой оплаченных услуг.
-    </p>
-  </section>
-
-  <section id="privacy" class="container" style="padding: 60px 0; border-top: 1px solid #2a2a2a;">
-    <h2>Политика конфиденциальности</h2>
-    <p style="color:var(--muted);">
-      Мы обрабатываем персональные данные (email, телефон, IP) исключительно для исполнения договора и коммуникации. Данные не передаются третьим лицам, кроме случаев, предусмотренных законодательством. Пользователь вправе запросить удаление своих данных. Хранение данных осуществляется в течение срока действия договора и 3 лет после его окончания.
-    </p>
-  </section>
-
-  <!-- Чат -->
-  <button id="chat-toggle" onclick="toggleChat()">&#128172;</button>
-  <div id="chat-panel">
-    <div id="chat-header">
-      <span>Онлайн-чат</span>
-      <button id="chat-close" onclick="toggleChat()">&times;</button>
-    </div>
-    <div id="chat-messages"></div>
-    <div id="chat-input-area">
-      <input type="text" id="chat-input" placeholder="Напишите сообщение..." onkeydown="if(event.key==='Enter') sendChatMessage()">
-      <button id="chat-send" onclick="sendChatMessage()">&#10148;</button>
-    </div>
-  </div>
-
-  <!-- Админка -->
-  <div id="admin-gear" onclick="openLogin()">&#9881;</div>
-
-  <div id="admin-overlay">
-    <div id="admin-box">
-
-      <!-- Форма входа -->
-      <div id="login-form">
-        <h2>Вход в админку</h2>
-        <div class="admin-error" id="login-error">Неверный пароль!</div>
-        <div class="admin-field">
-          <label>Введите пароль:</label>
-          <input type="password" id="admin-password" placeholder="Пароль" onkeydown="if(event.key==='Enter') checkPassword()">
+    <header>
+        <h1>Рекламные размещения</h1>
+        <p>Баннеры и блоки ссылок на топовых площадках. Прозрачная статистика и быстрый старт.</p>
+        <div class="buttons">
+            <button onclick="openModal()">Купить VIP-рекламу. От 1000 ₽/мес</button>
+            <a href="https://t.me" target="_blank" class="btn-tg">Купить рекламу в Telegram</a>
         </div>
-        <button class="admin-btn" onclick="checkPassword()">Войти</button>
-        <button class="admin-btn admin-btn-close" onclick="closeAdmin()">Закрыть</button>
-      </div>
+    </header>
 
-      <!-- Панель управления -->
-      <div id="admin-panel" style="display:none;">
+    <main>
+        <!-- VIP Карусель -->
+        <section class="vip-section">
+            <h2>VIP-реклама — приоритет и охват</h2>
+            <div class="vip-carousel" id="vipCarousel">
+                <!-- Загружается из API -->
+                <p>Загрузка VIP-баннеров...</p>
+            </div>
+        </section>
 
-        <!-- VIP-карусель -->
-        <h2>Управление VIP-рекламой</h2>
-        <div class="admin-field">
-          <label>Ссылка на сайт клиента:</label>
-          <input type="url" id="newAdHref" placeholder="https://example.com">
-        </div>
-        <div class="admin-field">
-          <label>Описание (alt):</label>
-          <input type="text" id="newAdAlt" placeholder="Реклама магазина">
-        </div>
-        <div class="admin-field">
-          <label>Загрузить фото с компьютера:</label>
-          <input type="file" id="newAdFile" accept="image/*" onchange="handleFileUpload(event)">
-          <img id="filePreview" class="img-preview" alt="Превью">
-        </div>
-        <div class="img-or">ИЛИ</div>
-        <div class="admin-field">
-          <label>Ссылка на картинку (URL):</label>
-          <input type="url" id="newAdImg" placeholder="https://example.com/banner.jpg">
-        </div>
-        <div class="admin-field">
-          <label>Срок размещения (дней):</label>
-          <input type="number" id="newAdDuration" value="30" min="1">
-          <div class="duration-presets">
-            <button type="button" onclick="setDuration(7)">7 дней</button>
-            <button type="button" onclick="setDuration(30)">1 месяц</button>
-            <button type="button" onclick="setDuration(60)">2 месяца</button>
-            <button type="button" onclick="setDuration(90)">3 месяца</button>
-            <button type="button" onclick="setDuration(180)">6 месяцев</button>
-            <button type="button" onclick="setDuration(365)">1 год</button>
-            <button type="button" onclick="setDuration(0)">Бессрочно</button>
-          </div>
-        </div>
-        <button class="admin-btn" onclick="addAd()">Добавить в ротацию</button>
-        <button class="admin-btn admin-btn-close" onclick="closeAdmin()">Закрыть</button>
+        <!-- Стандартная реклама -->
+        <section class="ads-section">
+            <h2>Рекламные баннеры</h2>
+            <h3>Блок ссылок</h3>
+            <div id="htmlLinksSlot" class="links-block">
+                <!-- Место для блока ссылок -->
+            </div>
+            <h2>Дополнительные баннеры</h2>
+            <div id="htmlBannersSlot"></div>
+        </section>
+    </main>
 
-        <h3>Текущая ротация VIP:</h3>
-        <div id="adList"></div>
-        <button class="reset-clicks-btn" onclick="resetAllClicks()">Сбросить счётчики кликов</button>
-
-        <!-- HTML-реклама -->
-        <h3 style="margin-top:30px;">Добавить HTML-рекламу (Яндекс, Google и т.д.)</h3>
-        <div class="admin-field">
-          <label>Название (для отображения в админке):</label>
-          <input type="text" id="htmlAdName" placeholder="Яндекс РСЯ — блок 1">
+    <!-- Онлайн чат -->
+    <div class="chat-widget" id="chatWidget">
+        <div class="chat-header" onclick="toggleChat()">💬 Чат рекламы <span id="closeChat">×</span></div>
+        <div class="chat-body" id="chatBody"></div>
+        <div class="chat-footer">
+            <input type="text" id="chatInput" placeholder="Введите сообщение...">
+            <button onclick="sendChatMessage()">➤</button>
         </div>
-        <div class="admin-field">
-          <label>Куда вставить:</label>
-          <select id="htmlAdSlot">
-            <option value="slot-1">Баннер 1</option>
-            <option value="slot-2">Баннер 2</option>
-            <option value="slot-3">Баннер 3</option>
-            <option value="slot-4">Баннер 4</option>
-            <option value="slot-5">Баннер 5</option>
-            <option value="slot-6">Баннер 6</option>
-            <option value="slot-7">Баннер 7</option>
-          </select>
-        </div>
-        <div class="admin-field">
-          <label>HTML-код рекламы:</label>
-          <textarea id="htmlAdCode" placeholder="Вставьте сюда код от Яндекс РСЯ, Google Ads и т.п."></textarea>
-        </div>
-        <button class="admin-btn" onclick="addHtmlAd()">Вставить рекламу</button>
-
-        <h3 style="margin-top:20px;">Активные HTML-блоки:</h3>
-        <div id="htmlAdList"></div>
-      </div>
     </div>
-  </div>
 
-  <script>
-    // ===== ДАННЫЕ VIP-КАРУСЕЛИ =====
-    let vipAds = JSON.parse(localStorage.getItem('vipAds')) || [
-      {
-        img: 'https://images.unsplash.com/photo-1624374255477-8458776d44cf?q=80&w=320&auto=format&fit=crop',
-        href: 'https://www.ozon.ru',
-        alt: 'Реклама Ozon: покупайте выгодно',
-        clicks: 0,
-        expiresAt: 0
-      },
-      {
-        img: 'https://images.unsplash.com/photo-1586718925308-1fbd079d7f5a?q=80&w=320&auto=format&fit=crop',
-        href: 'https://www.wildberries.ru',
-        alt: 'Реклама Wildberries: широкий ассортимент',
-        clicks: 0,
-        expiresAt: 0
-      },
-      {
-        img: 'https://images.unsplash.com/photo-1611281936815-c9c8b8c7b8f4?q=80&w=320&auto=format&fit=crop',
-        href: 'https://market.yandex.ru',
-        alt: 'Реклама Яндекс Маркет: лучшие цены',
-        clicks: 0,
-        expiresAt: 0
-      }
-    ];
+    <!-- Модальное окно покупки -->
+    <div class="modal" id="orderModal">
+        <div class="modal-content">
+            <h2>Купить VIP-рекламу</h2>
+            <form id="adForm" onsubmit="submitAdOrder(event)">
+                <label>Ссылка на ваш сайт:</label>
+                <input type="url" name="href" required placeholder="https://example.com">
 
-    // Защита от старых данных без полей
-    vipAds.forEach(ad => {
-      if (typeof ad.clicks !== 'number') ad.clicks = 0;
-      if (typeof ad.expiresAt !== 'number') ad.expiresAt = 0;
-    });
+                <label>Короткое описание:</label>
+                <input type="text" name="alt_text" required placeholder="Лучший сервис для...">
 
-    // HTML-реклама
-    let htmlAds = JSON.parse(localStorage.getItem('htmlAds')) || [];
+                <label>Фото карточки (320×180):</label>
+                <input type="file" name="image" accept="image/*" required onchange="previewImage(event)">
+                <div class="preview-box"><img id="imgPreview" alt="Превью"></div>
 
-    // Чат
-    let chatMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
+                <label>Выберите срок:</label>
+                <select name="duration" id="durationSelect" onchange="calculatePrice()">
+                    <option value="1">1 день</option>
+                    <option value="7">7 дней</option>
+                    <option value="30" selected>30 дней</option>
+                    <option value="60">60 дней</option>
+                    <option value="90">90 дней</option>
+                </select>
 
-    const slider = document.getElementById('vipSlider');
-    let uploadedFileData = null;
+                <div class="price-box">Итого к оплате: <span id="totalPrice">1000</span> ₽</div>
 
-    function saveAds() { localStorage.setItem('vipAds', JSON.stringify(vipAds)); }
-    function saveHtmlAds() { localStorage.setItem('htmlAds', JSON.stringify(htmlAds)); }
-    function saveChat() { localStorage.setItem('chatMessages', JSON.stringify(chatMessages)); }
+                <div class="sbp-box">
+                    <strong>Оплата по СБП</strong><br>
+                    Перевод на номер: <span class="phone">+7 989 227-86-35</span><br>
+                    <span class="bank">МТС Банк</span><br>
+                    <small>После оплаты нажмите «Я оплатил»</small>
+                </div>
 
-    // ===== АВТОУДАЛЕНИЕ ПРОСРОЧЕННЫХ =====
-    function purgeExpired() {
-      const now = Date.now();
-      let changed = false;
-      vipAds = vipAds.filter(ad => {
-        if (ad.expiresAt === 0) return true;
-        if (ad.expiresAt <= now) { changed = true; return false; }
-        return true;
-      });
-      if (changed) saveAds();
-      return changed;
-    }
-    purgeExpired();
-    setInterval(() => { if (purgeExpired()) renderVipCards(); }, 60000);
+                <div class="modal-buttons">
+                    <button type="submit" class="btn-submit">Я оплатил — отправить заявку</button>
+                    <button type="button" class="btn-close" onclick="closeModal()">Закрыть</button>
+                </div>
+            </form>
+            <div id="successMessage" class="success-alert hidden">✅ Заявка отправлена! Мы проверим оплату и добавим вашу карточку в VIP-карусель.</div>
+        </div>
+    </div>
 
-    // ===== РЕНДЕР СЛАЙДЕРА =====
-    function renderVipCards() {
-      slider.innerHTML = '';
+    <footer>
+        Контакты: VK: <a href="https://vk.ru" target="_blank">vk.ru/idkirik99</a> | <a href="#oferta">Оферта</a> | <a href="#privacy">Политика конфиденциальности</a>
+    </footer>
 
-      if (vipAds.length === 0) {
-        slider.innerHTML = '<div class="slider-empty">Ротация пуста. Добавьте объявления через админку.</div>';
-        renderAdList();
-        return;
-      }
-
-      const track = document.createElement('div');
-      track.className = 'slider-track';
-      track.id = 'vipTrack';
-
-      // Дублируем карточки 2 раза для бесшовной прокрутки
-      for (let copy = 0; copy < 2; copy++) {
-        vipAds.forEach((ad, index) => {
-          const wrap = document.createElement('div');
-          wrap.className = 'vip-card-wrap';
-
-          const counter = document.createElement('div');
-          counter.className = 'click-counter';
-          counter.innerHTML = '<span class="click-dot"></span> Кликов: ' + ad.clicks;
-
-          const card = document.createElement('div');
-          card.className = 'vip-card';
-
-          const link = document.createElement('a');
-          link.href = ad.href;
-          link.target = '_blank';
-          link.rel = 'noopener noreferrer';
-          link.setAttribute('aria-label', ad.alt);
-
-          link.addEventListener('click', function() {
-            vipAds[index].clicks++;
-            saveAds();
-            document.querySelectorAll('.click-counter').forEach((el, i) => {
-              const adIdx = i % vipAds.length;
-              el.innerHTML = '<span class="click-dot"></span> Кликов: ' + vipAds[adIdx].clicks;
-            });
-          });
-
-          const img = document.createElement('img');
-          img.src = ad.img;
-          img.alt = ad.alt;
-          img.loading = 'lazy';
-          img.width = 320;
-          img.height = 180;
-          img.style.display = 'block';
-          img.onerror = function() {
-            this.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180'%3E%3Crect fill='%23333' width='320' height='180'/%3E%3Ctext fill='%23666' x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='14' font-family='sans-serif'%3EФото не загрузилось%3C/text%3E%3C/svg%3E";
-          };
-
-          link.appendChild(img);
-          card.appendChild(link);
-          wrap.appendChild(counter);
-          wrap.appendChild(card);
-          track.appendChild(wrap);
-        });
-      }
-
-      slider.appendChild(track);
-
-      // Скорость прокрутки: больше карточек — медленнее
-      const duration = Math.max(20, vipAds.length * 8);
-      track.style.setProperty('--slide-duration', duration + 's');
-
-      renderAdList();
-    }
-
-    // ===== РЕНДЕР СПИСКА В АДМИНКЕ =====
-    function renderAdList() {
-      const list = document.getElementById('adList');
-      if (!list) return;
-
-      if (vipAds.length === 0) {
-        list.innerHTML = '<p style="color:var(--muted);">Ротация пуста</p>';
-        return;
-      }
-
-      const now = Date.now();
-      list.innerHTML = vipAds.map((ad, i) => {
-        let daysLeft = '';
-        let daysClass = 'green';
-        if (ad.expiresAt === 0) {
-          daysLeft = 'бессрочно';
-        } else {
-          const msLeft = ad.expiresAt - now;
-          const dLeft = Math.ceil(msLeft / (1000 * 60 * 60 * 24));
-          if (dLeft <= 0) { daysLeft = 'истекло'; daysClass = 'red'; }
-          else if (dLeft <= 3) { daysLeft = dLeft + ' дн. осталось'; daysClass = 'red'; }
-          else { daysLeft = dLeft + ' дн. осталось'; }
-        }
-        return '<div class="ad-list-item">' +
-          '<img src="' + ad.img + '" alt="' + ad.alt + '" onerror="this.style.display=\'none\'">' +
-          '<div class="ad-info"><strong>' + ad.alt + '</strong><br>' + ad.href + '</div>' +
-          '<span class="ad-days ' + daysClass + '">' + daysLeft + '</span>' +
-          '<span class="ad-clicks">' + (ad.clicks || 0) + ' кликов</span>' +
-          '<button class="ad-delete-btn" onclick="deleteAd(' + i + ')">Удалить</button>' +
-        '</div>';
-      }).join('');
-    }
-
-    // ===== ЗАГРУЗКА ФАЙЛА =====
-    function handleFileUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      if (file.size > 2000000) {
-        alert('Файл слишком большой! Максимум 2 МБ.');
-        event.target.value = '';
-        return;
-      }
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        uploadedFileData = e.target.result;
-        const preview = document.getElementById('filePreview');
-        preview.src = uploadedFileData;
-        preview.style.display = 'block';
-        document.getElementById('newAdImg').value = '';
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // ===== БЫСТРЫЙ ВЫБОР СРОКА =====
-    function setDuration(days) {
-      document.getElementById('newAdDuration').value = days;
-      document.querySelectorAll('.duration-presets button').forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-    }
-
-    // ===== ДОБАВЛЕНИЕ VIP-ОБЪЯВЛЕНИЯ =====
-    function addAd() {
-      const href = document.getElementById('newAdHref').value.trim();
-      const alt = document.getElementById('newAdAlt').value.trim();
-      const imgURL = document.getElementById('newAdImg').value.trim();
-      const duration = parseInt(document.getElementById('newAdDuration').value, 10);
-
-      if (!href || !alt) { alert('Заполните ссылку и описание!'); return; }
-
-      let finalImg = '';
-      if (uploadedFileData) finalImg = uploadedFileData;
-      else if (imgURL) finalImg = imgURL;
-      else { alert('Нужно загрузить фото или вставить ссылку на картинку!'); return; }
-
-      let expiresAt = 0;
-      if (duration > 0) expiresAt = Date.now() + duration * 24 * 60 * 60 * 1000;
-
-      vipAds.push({ img: finalImg, href, alt, clicks: 0, expiresAt });
-      saveAds();
-      renderVipCards();
-
-      document.getElementById('newAdHref').value = '';
-      document.getElementById('newAdAlt').value = '';
-      document.getElementById('newAdImg').value = '';
-      document.getElementById('newAdFile').value = '';
-      document.getElementById('filePreview').style.display = 'none';
-      uploadedFileData = null;
-    }
-
-    function deleteAd(index) {
-      vipAds.splice(index, 1);
-      saveAds();
-      renderVipCards();
-    }
-
-    function resetAllClicks() {
-      if (!confirm('Сбросить счётчики кликов у всех объявлений?')) return;
-      vipAds.forEach(ad => ad.clicks = 0);
-      saveAds();
-      renderVipCards();
-    }
-
-    // ===== HTML-РЕКЛАМА =====
-    function applyHtmlAd(ad) {
-      const slot = document.getElementById(ad.slotId);
-      if (!slot) return;
-      slot.setAttribute('data-html', 'true');
-      slot.innerHTML = ad.code;
-      // Выполняем скрипты внутри кода
-      const scripts = slot.querySelectorAll('script');
-      scripts.forEach(oldScript => {
-        const newScript = document.createElement('script');
-        if (oldScript.src) newScript.src = oldScript.src;
-        else newScript.textContent = oldScript.textContent;
-        oldScript.parentNode.replaceChild(newScript, oldScript);
-      });
-    }
-
-    function renderAllHtmlAds() {
-      // Сначала сбрасываем все слоты
-      ['slot-1','slot-2','slot-3','slot-4','slot-5','slot-6','slot-7'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) {
-          el.removeAttribute('data-html');
-          el.innerHTML = '';
-        }
-      });
-      // Потом применяем
-      htmlAds.forEach(ad => applyHtmlAd(ad));
-      renderHtmlAdList();
-    }
-
-    function addHtmlAd() {
-      const name = document.getElementById('htmlAdName').value.trim();
-      const slotId = document.getElementById('htmlAdSlot').value;
-      const code = document.getElementById('htmlAdCode').value.trim();
-
-      if (!name || !code) { alert('Заполните название и код рекламы!'); return; }
-
-      // Удаляем старую рекламу с этого слота
-      htmlAds = htmlAds.filter(ad => ad.slotId !== slotId);
-
-      htmlAds.push({ name, slotId, code });
-      saveHtmlAds();
-      renderAllHtmlAds();
-
-      document.getElementById('htmlAdName').value = '';
-      document.getElementById('htmlAdCode').value = '';
-      alert('Реклама добавлена в слот: ' + slotId);
-    }
-
-    function deleteHtmlAd(index) {
-      htmlAds.splice(index, 1);
-      saveHtmlAds();
-      renderAllHtmlAds();
-    }
-
-    function renderHtmlAdList() {
-      const list = document.getElementById('htmlAdList');
-      if (!list) return;
-      if (htmlAds.length === 0) {
-        list.innerHTML = '<p style="color:var(--muted);">Нет активных HTML-блоков</p>';
-        return;
-      }
-      list.innerHTML = htmlAds.map((ad, i) => {
-        return '<div class="ad-list-item">' +
-          '<div class="ad-info"><strong>' + ad.name + '</strong><br>Слот: ' + ad.slotId + '</div>' +
-          '<button class="ad-delete-btn" onclick="deleteHtmlAd(' + i + ')">Удалить</button>' +
-        '</div>';
-      }).join('');
-    }
-
-    // ===== ЧАТ =====
-    function toggleChat() {
-      document.getElementById('chat-panel').classList.toggle('active');
-      if (document.getElementById('chat-panel').classList.contains('active')) renderChatMessages();
-    }
-
-    function renderChatMessages() {
-      const container = document.getElementById('chat-messages');
-      container.innerHTML = '';
-      chatMessages.forEach(msg => {
-        const div = document.createElement('div');
-        div.className = 'chat-msg ' + (msg.type || 'user');
-        div.innerHTML = linkify(msg.text) + '<div class="chat-time">' + msg.time + '</div>';
-        container.appendChild(div);
-      });
-      container.scrollTop = container.scrollHeight;
-    }
-
-    function linkify(text) {
-      const escaped = text.replace(/</g, '&lt;').replace(/>/g, '&gt;');
-      return escaped.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>');
-    }
-
-    function sendChatMessage() {
-      const input = document.getElementById('chat-input');
-      const text = input.value.trim();
-      if (!text) return;
-      const now = new Date();
-      const time = now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0');
-      chatMessages.push({ text, type: 'user', time });
-      saveChat();
-      input.value = '';
-      renderChatMessages();
-    }
-
-    // ===== АДМИНКА: ВХОД =====
-    const ADMIN_PASSWORD = 'Kirik999';
-
-    function openLogin() {
-      document.getElementById('admin-overlay').classList.add('active');
-      document.getElementById('login-form').style.display = 'block';
-      document.getElementById('admin-panel').style.display = 'none';
-      document.getElementById('login-error').style.display = 'none';
-      document.getElementById('admin-password').value = '';
-    }
-
-    function checkPassword() {
-      const entered = document.getElementById('admin-password').value;
-      if (entered === ADMIN_PASSWORD) {
-        document.getElementById('login-form').style.display = 'none';
-        document.getElementById('admin-panel').style.display = 'block';
-        renderAdList();
-        renderHtmlAdList();
-      } else {
-        document.getElementById('login-error').style.display = 'block';
-      }
-    }
-
-    function closeAdmin() {
-      document.getElementById('admin-overlay').classList.remove('active');
-    }
-
-    document.getElementById('admin-overlay').addEventListener('click', function(e) {
-      if (e.target === this) closeAdmin();
-    });
-
-    // ===== ЗАПУСК =====
-    renderVipCards();
-    renderAllHtmlAds();
-    renderChatMessages();
-  </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
