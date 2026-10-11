@@ -3,97 +3,200 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Рекламные размещения</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Интерфейс рекламного сервиса (Аналог Linkslot)</title>
+    <style>
+        :root {
+            --primary: #007bff;
+            --success: #28a745;
+            --dark: #222;
+            --gray-bg: #f4f6f9;
+        }
+        body { font-family: 'Segoe UI', Arial, sans-serif; background: var(--gray-bg); margin: 0; padding: 0; color: #333; }
+        header { background: #fff; padding: 15px 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: bold; color: var(--primary); text-decoration: none; }
+        .nav-btn { background: #6c757d; color: #fff; border: none; padding: 8px 16px; border-radius: 4px; cursor: pointer; font-size: 14px; }
+        .nav-btn:hover { background: #5a6268; }
+        .container { max-width: 900px; margin: 30px auto; padding: 0 15px; }
+        
+        /* Витрина */
+        .card { background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        h2 { margin-top: 0; color: #444; font-size: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .ad-block { border: 2px dashed var(--primary); padding: 20px; border-radius: 6px; background: #e9f3ff; text-align: center; margin: 20px 0; }
+        .ad-link { margin: 8px 15px; display: inline-block; font-weight: bold; color: #333; text-decoration: none; border-bottom: 1px transparent; transition: 0.2s; }
+        .ad-link:hover { color: var(--primary); text-decoration: underline; }
+        
+        /* Форма */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; font-weight: 600; font-size: 14px; }
+        input { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; font-size: 14px; }
+        input:focus { border-color: var(--primary); outline: none; }
+        .btn-buy { width: 100%; background: var(--success); color: white; border: none; padding: 12px; border-radius: 4px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.2s; }
+        .btn-buy:hover { background: #218838; }
+        
+        /* Таблица Админки */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; font-size: 14px; }
+        th { background: #f8f9fa; font-weight: 600; }
+        .btn-delete { color: #dc3545; text-decoration: none; font-weight: bold; cursor: pointer; }
+        .stats-box { background: #e2f0d9; border-left: 5px solid var(--success); padding: 15px; margin-bottom: 20px; font-size: 16px; border-radius: 0 4px 4px 0; }
+        
+        .hidden { display: none; }
+        .alert { background: #d4edda; color: #155724; padding: 12px; border-radius: 4px; margin-bottom: 15px; font-weight: 500; }
+    </style>
 </head>
 <body>
+
     <header>
-        <h1>Рекламные размещения</h1>
-        <p>Баннеры и блоки ссылок на топовых площадках. Прозрачная статистика и быстрый старт.</p>
-        <div class="buttons">
-            <button onclick="openModal()">Купить VIP-рекламу. От 1000 ₽/мес</button>
-            <a href="https://t.me" target="_blank" class="btn-tg">Купить рекламу в Telegram</a>
-        </div>
+        <a href="#" class="logo" onclick="location.reload()">Linkslot Слон 🐘</a>
+        <button class="nav-btn" id="toggle-btn" onclick="toggleView()">Перейти в Админку</button>
     </header>
 
-    <main>
-        <!-- VIP Карусель -->
-        <section class="vip-section">
-            <h2>VIP-реклама — приоритет и охват</h2>
-            <div class="vip-carousel" id="vipCarousel">
-                <!-- Загружается из API -->
-                <p>Загрузка VIP-баннеров...</p>
+    <div class="container">
+        
+        <!-- СТРАНИЦА ПОЛЬЗОВАТЕЛЯ -->
+        <div id="user-view">
+            <div id="success-alert" class="alert hidden">🎉 Ссылка успешно оплачена и добавлена на витрину!</div>
+            
+            <div class="card">
+                <h2>Витрина прямых рекламодателей (Блок ссылок)</h2>
+                <div class="ad-block" id="links-container">
+                    <a class="ad-link" href="https://google.com" target="_blank">🌐 Поисковая система №1</a>
+                    <a class="ad-link" href="https://github.com" target="_blank">💻 Лучший хостинг для кода</a>
+                    <a class="ad-link" href="#" target="_blank">🚀 Купите рекламу здесь всего за 50 рублей!</a>
+                </div>
             </div>
-        </section>
 
-        <!-- Стандартная реклама -->
-        <section class="ads-section">
-            <h2>Рекламные баннеры</h2>
-            <h3>Блок ссылок</h3>
-            <div id="htmlLinksSlot" class="links-block">
-                <!-- Место для блока ссылок -->
+            <div class="card">
+                <h2>Быстрое размещение ссылки</h2>
+                <form id="ad-form" onsubmit="addLinkFake(event)">
+                    <div class="form-group">
+                        <label>Текст вашей ссылки (до 60 символов):</label>
+                        <input type="text" id="link-text" placeholder="Например: Надежный заработок без вложений" required>
+                    </div>
+                    <div class="form-group">
+                        <label>URL адрес ссылки (включая https://):</label>
+                        <input type="url" id="link-url" placeholder="https://my-site.ru" required>
+                    </div>
+                    <button type="submit" class="btn-buy">Оплатить и разместить за 50 руб.</button>
+                </form>
             </div>
-            <h2>Дополнительные баннеры</h2>
-            <div id="htmlBannersSlot"></div>
-        </section>
-    </main>
-
-    <!-- Онлайн чат -->
-    <div class="chat-widget" id="chatWidget">
-        <div class="chat-header" onclick="toggleChat()">💬 Чат рекламы <span id="closeChat">×</span></div>
-        <div class="chat-body" id="chatBody"></div>
-        <div class="chat-footer">
-            <input type="text" id="chatInput" placeholder="Введите сообщение...">
-            <button onclick="sendChatMessage()">➤</button>
         </div>
+
+        <!-- СТРАНИЦА АДМИНИСТРАТОРА -->
+        <div id="admin-view" class="hidden">
+            <div class="card">
+                <h2>Панель администратора / Статистика дохода</h2>
+                <div class="stats-box">
+                    💵 Общий заработок вашей платформы: <strong id="total-earnings">150</strong> рублей
+                </div>
+                
+                <h3>Модерация рекламных материалов</h3>
+                <div style="overflow-x:auto;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Текст ссылки</th>
+                                <th>Куда ведет (URL)</th>
+                                <th>Переходы</th>
+                                <th>Оплата</th>
+                                <th>Действие</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-table-body">
+                            <tr>
+                                <td>🌐 Поисковая система №1</td>
+                                <td>https://google.com</td>
+                                <td>432 клика</td>
+                                <td>50 руб.</td>
+                                <td><span class="btn-delete" onclick="deleteRow(this, 50)">Удалить</span></td>
+                            </tr>
+                            <tr>
+                                <td>💻 Лучший хостинг для кода</td>
+                                <td>https://github.com</td>
+                                <td>108 кликов</td>
+                                <td>50 руб.</td>
+                                <td><span class="btn-delete" onclick="deleteRow(this, 50)">Удалить</span></td>
+                            </tr>
+                            <tr>
+                                <td>🚀 Купите рекламу здесь всего за 50 рублей!</td>
+                                <td>#</td>
+                                <td>12 кликов</td>
+                                <td>50 руб.</td>
+                                <td><span class="btn-delete" onclick="deleteRow(this, 50)">Удалить</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Модальное окно покупки -->
-    <div class="modal" id="orderModal">
-        <div class="modal-content">
-            <h2>Купить VIP-рекламу</h2>
-            <form id="adForm" onsubmit="submitAdOrder(event)">
-                <label>Ссылка на ваш сайт:</label>
-                <input type="url" name="href" required placeholder="https://example.com">
+    <script>
+        let currentView = 'user';
+        let totalCash = 150;
 
-                <label>Короткое описание:</label>
-                <input type="text" name="alt_text" required placeholder="Лучший сервис для...">
+        function toggleView() {
+            if (currentView === 'user') {
+                document.getElementById('user-view').classList.add('hidden');
+                document.getElementById('admin-view').classList.remove('hidden');
+                document.getElementById('toggle-btn').innerText = 'Вернуться на сайт';
+                document.getElementById('toggle-btn').style.background = '#007bff';
+                currentView = 'admin';
+            } else {
+                document.getElementById('admin-view').classList.add('hidden');
+                document.getElementById('user-view').classList.remove('hidden');
+                document.getElementById('toggle-btn').innerText = 'Перейти в Админку';
+                document.getElementById('toggle-btn').style.background = '#6c757d';
+                currentView = 'user';
+            }
+        }
 
-                <label>Фото карточки (320×180):</label>
-                <input type="file" name="image" accept="image/*" required onchange="previewImage(event)">
-                <div class="preview-box"><img id="imgPreview" alt="Превью"></div>
+        function addLinkFake(e) {
+            e.preventDefault();
+            const text = document.getElementById('link-text').value;
+            const url = document.getElementById('link-url').value;
 
-                <label>Выберите срок:</label>
-                <select name="duration" id="durationSelect" onchange="calculatePrice()">
-                    <option value="1">1 день</option>
-                    <option value="7">7 дней</option>
-                    <option value="30" selected>30 дней</option>
-                    <option value="60">60 дней</option>
-                    <option value="90">90 дней</option>
-                </select>
+            // Добавляем на витрину
+            const container = document.getElementById('links-container');
+            const newLink = document.createElement('a');
+            newLink.className = 'ad-link';
+            newLink.href = url;
+            newLink.target = '_blank';
+            newLink.innerText = text;
+            container.appendChild(newLink);
 
-                <div class="price-box">Итого к оплате: <span id="totalPrice">1000</span> ₽</div>
+            // Добавляем в таблицу админки
+            const tbody = document.getElementById('admin-table-body');
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${text}</td>
+                <td>${url}</td>
+                <td>0 кликов</td>
+                <td>50 руб.</td>
+                <td><span class="btn-delete" onclick="deleteRow(this, 50)">Удалить</span></td>
+            `;
+            tbody.appendChild(tr);
 
-                <div class="sbp-box">
-                    <strong>Оплата по СБП</strong><br>
-                    Перевод на номер: <span class="phone">+7 989 227-86-35</span><br>
-                    <span class="bank">МТС Банк</span><br>
-                    <small>После оплаты нажмите «Я оплатил»</small>
-                </div>
+            // Обновляем кассу в админке
+            totalCash += 50;
+            document.getElementById('total-earnings').innerText = totalCash;
 
-                <div class="modal-buttons">
-                    <button type="submit" class="btn-submit">Я оплатил — отправить заявку</button>
-                    <button type="button" class="btn-close" onclick="closeModal()">Закрыть</button>
-                </div>
-            </form>
-            <div id="successMessage" class="success-alert hidden">✅ Заявка отправлена! Мы проверим оплату и добавим вашу карточку в VIP-карусель.</div>
-        </div>
-    </div>
+            // Показываем уведомление
+            const alertBox = document.getElementById('success-alert');
+            alertBox.classList.remove('hidden');
+            document.getElementById('ad-form').reset();
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            setTimeout(() => { alertBox.classList.add('hidden'); }, 4000);
+        }
 
-    <footer>
-        Контакты: VK: <a href="https://vk.ru" target="_blank">vk.ru/idkirik99</a> | <a href="#oferta">Оферта</a> | <a href="#privacy">Политика конфиденциальности</a>
-    </footer>
-
-    <script src="js/main.js"></script>
+        function deleteRow(element, price) {
+            if(confirm("Вы действительно хотите удалить эту ссылку из системы за нарушение правил?")) {
+                element.closest('tr').remove();
+                totalCash -= price;
+                document.getElementById('total-earnings').innerText = totalCash;
+            }
+        }
+    </script>
 </body>
-</html>
